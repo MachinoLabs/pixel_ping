@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PixelPing | Generate • Scan • Share</title>
+    
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='96' fill='%23061a2b'/%3E%3Crect x='28' y='28' width='456' height='456' rx='80' fill='none' stroke='%230f3a5a' stroke-width='4'/%3E%3Crect x='96' y='96' width='96' height='96' rx='18' fill='%23dff4ff'/%3E%3Crect x='320' y='96' width='96' height='96' rx='18' fill='%23dff4ff'/%3E%3Crect x='96' y='288' width='96' height='96' rx='18' fill='%23dff4ff'/%3E%3Crect x='140' y='140' width='16' height='16' rx='4' fill='%2327cfff'/%3E%3C/svg%3E">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        ppBase: '#061a2b',
+                        ppDark: '#0f3a5a',
+                        ppLight: '#dff4ff',
+                        ppBlue: '#27cfff',
+                        ppGreen: '#3cff8f'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Base & Inputs */
+        input[type=range] { accent-color: #27cfff; }
+        input[type=color] { border: none; padding: 0; background: none; }
+        input[type=color]::-webkit-color-swatch-wrapper { padding: 0; }
+        input[type=color]::-webkit-color-swatch { border: 2px solid #0f3a5a; border-radius: 0.5rem; }
+
+        /* Background Eye Candy */
+        .pixel-bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; background-color: #f8fafc; transition: background-color 0.3s; }
+        .dark .pixel-bg { background-color: #061a2b; background-image: radial-gradient(#0f3a5a 1px, transparent 1px); background-size: 30px 30px; }
+        .floating-pixel { position: absolute; border-radius: 4px; opacity: 0; animation: floatUp infinite linear; }
+        @keyframes floatUp { 0% { transform: translateY(100vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.4; } 90% { opacity: 0.4; } 100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; } }
+
+        /* CSS Masking */
+        .qr-mask-layer { -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; mask-size: contain; mask-repeat: no-repeat; mask-position: center; transition: -webkit-mask-image 0.3s ease; }
+
+        /* Form Hiding */
+        .payload-form { display: none; }
+        .payload-form.active { display: block; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* ==========================================
+           FULL INFO MODAL COMPONENT CSS
+           ========================================== */
+        .ml-info-btn { min-width: 38px; height: 38px; border-radius: 999px; border: 1px solid rgba(15, 23, 42, 0.3); background: rgba(15, 23, 42, 0.06); color: inherit; font-size: 1.1rem; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; padding: 0; touch-action: manipulation; transition: background 0.2s; }
+        .dark .ml-info-btn { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); }
+        .ml-info-btn:hover { background: rgba(15, 23, 42, 0.12); }
+        .dark .ml-info-btn:hover { background: rgba(255,255,255,0.2); }
+        
+        .ml-info-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(2px); z-index: 998; }
+        .ml-info-modal { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 999; padding: 16px; }
+        .ml-info-modal[hidden], .ml-info-overlay[hidden] { display: none; }
+        
+        .ml-info-modal-inner { background: #f7f6f2; color: #111827; border-radius: 12px; padding: 16px; width: 100%; max-width: 420px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); font-family: system-ui, -apple-system, sans-serif; }
+        .ml-info-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .ml-info-header h2 { margin: 0; font-size: 16px; font-weight: 700; }
+        
+        .ml-info-close { border: none; background: rgba(0,0,0,0.05); border-radius: 50%; width: 28px; height: 28px; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; touch-action: manipulation; }
+        .ml-info-close:hover { background: rgba(0,0,0,0.1); }
+        
+        .ml-info-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 8px; }
+        .ml-info-tab { border-radius: 999px; border: 1px solid rgba(15, 23, 42, 0.18); background: rgba(15, 23, 42, 0.02); padding: 6px 12px; font-size: 12px; font-weight: 500; cursor: pointer; touch-action: manipulation; transition: all 0.2s; }
+        .ml-info-tab-active { background: #0b1220; color: #f9fafb; border-color: #0b1220; }
+        
+        .ml-info-body { max-height: 55vh; overflow-y: auto; font-size: 13px; line-height: 1.5; padding-right: 4px; }
+        .ml-info-body h3 { margin: 4px 0 4px; font-size: 14px; }
+        .ml-info-body p, .ml-info-body ul { margin-top: 0; margin-bottom: 12px; }
+        .ml-info-body a { color: #2563eb; text-decoration: none; font-weight: 500; }
+        .ml-info-body a:hover { text-decoration: underline; }
+        .ml-info-panel[hidden] { display: none; }
+        
+        /* Other Games Grid */
+        .ml-other-games { display: grid; grid-template-columns: 1fr; gap: 8px; }
+        .ml-other-tile { display: block; padding: 10px 12px; border-radius: 9px; border: 1px solid rgba(15, 23, 42, 0.18); background: #ffffff; text-decoration: none; color: #111827; transition: background 0.2s, transform 0.1s; }
+        .ml-other-tile:hover { background: #f1f5f9; transform: translateY(-1px); }
+        .ml-other-title { font-weight: 700; font-size: 14px; margin-bottom: 2px; }
+        .ml-other-sub { font-size: 12px; opacity: 0.7; }
+        
+        /* Footer */
+        .footer-tag { margin-top: 0; margin-bottom: 8px; font-weight: 500; }
+        .footer-credits { font-size: 13px; line-height: 1.6; }
+        
+        /* Scrollbar */
+        .ml-info-body::-webkit-scrollbar { width: 6px; }
+        .ml-info-body::-webkit-scrollbar-track { background: rgba(0,0,0,0.05); border-radius: 10px; }
+        .ml-info-body::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 10px; }
+    </style>
+</head>
+<body class="text-slate-900 dark:text-ppLight min-h-screen font-sans antialiased flex flex-col items-center p-4 md:p-8 transition-colors duration-300 relative z-0">
+
+    <div class="pixel-bg" id="pixel-bg"></div>
+
+    <header class="w-full max-w-5xl mb-8 flex items-center justify-between z-10 relative">
+        <div class="flex items-center gap-4">
+            <svg class="w-10 h-10 md:w-12 md:h-12" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <rect width="512" height="512" rx="96" fill="#061a2b"/>
+                <rect x="28" y="28" width="456" height="456" rx="80" fill="none" stroke="#0f3a5a" stroke-width="4"/>
+                <rect x="96" y="96" width="96" height="96" rx="18" fill="#dff4ff"/>
+                <rect x="320" y="96" width="96" height="96" rx="18" fill="#dff4ff"/>
+                <rect x="96" y="288" width="96" height="96" rx="18" fill="#dff4ff"/>
+                <rect x="140" y="140" width="16" height="16" rx="4" fill="#27cfff"/>
+                <rect x="364" y="140" width="16" height="16" rx="4" fill="#27cfff"/>
+                <rect x="140" y="332" width="16" height="16" rx="4" fill="#3cff8f"/>
+            </svg>
+            <div>
+                <h1 class="text-2xl md:text-3xl font-bold tracking-wide text-slate-900 dark:text-white transition-colors">PixelPing</h1>
+                <p class="text-blue-600 dark:text-ppGreen text-[10px] md:text-xs tracking-[0.2em] uppercase mt-1">Generate &bull; Scan &bull; Share</p>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+            <div id="offline-badge" class="hidden px-3 py-1 bg-slate-200 dark:bg-ppDark text-slate-700 dark:text-ppBlue text-xs rounded-full border border-slate-300 dark:border-ppBlue">Offline Ready</div>
+            <button id="themeToggle" class="ml-info-btn" aria-label="Toggle Theme">
+                <svg id="icon-sun" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                <svg id="icon-moon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+            </button>
+            <button id="infoBtn" class="ml-info-btn" type="button" aria-label="App info">ⓘ</button>
+        </div>
+    </header>
+
+    <main class="w-full max-w-5xl grid grid-cols-1 md:grid-cols-12 gap-8 z-10 relative">
+        
+        <div class="md:col-span-7 space-y-6 bg-white/90 dark:bg-ppDark/90 backdrop-blur-md p-6 rounded-2xl border border-slate-200 dark:border-gray-800 shadow-2xl transition-colors">
+            
+            <div class="flex justify-between items-center border-b border-slate-200 dark:border-gray-700 pb-2">
+                <h3 class="text-sm font-medium text-blue-600 dark:text-ppBlue uppercase tracking-wide">Data & Content</h3>
+                <button id="btn-clear" class="text-xs text-red-500 hover:text-red-700 font-semibold px-2 py-1 rounded bg-red-50 dark:bg-red-900/20 transition-colors">Clear Canvas</button>
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-slate-700 dark:text-white mb-1">What should this code do?</label>
+                <select id="payload-type" class="w-full bg-white dark:bg-slate-800 text-slate-900 dark:text-white px-4 py-3 rounded-lg border-2 border-blue-400 dark:border-ppBlue focus:outline-none focus:ring-2 focus:ring-blue-600 font-bold transition-colors shadow-sm">
+                    <option value="url">Open a Website (URL)</option>
+                    <option value="tel">Make a Phone Call</option>
+                    <option value="sms">Send a Text Message</option>
+                    <option value="email">Send an Email</option>
+                    <option value="wifi">Join a Wi-Fi Network</option>
+                    <option value="vcard">Share Contact Info (vCard)</option>
+                </select>
+            </div>
+
+            <div id="dynamic-forms-container" class="p-4 bg-slate-50 dark:bg-ppBase/50 rounded-xl border border-slate-200 dark:border-gray-700/50">
+                <div id="form-url" class="payload-form active space-y-3">
+                    <div>
+                        <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Website Address</label>
+                        <input type="url" id="pl-url" placeholder="https://" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
+                    </div>
+                </div>
+                <div id="form-tel" class="payload-form space-y-3">
+                    <div>
+                        <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Phone Number</label>
+                        <input type="tel" id="pl-tel" placeholder="e.g. +1 555-0199" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
+                    </div>
+                </div>
+                <div id="form-sms" class="payload-form space-y-3">
+                    <div>
+                        <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Recipient Number</label>
+                        <input type="tel" id="pl-sms-to" placeholder="e.g. 555-0199" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Pre-filled Message</label>
+                        <textarea id="pl-sms-msg" placeholder="I am at the job site..." class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none" rows="2"></textarea>
+                    </div>
+                </div>
+                <div id="form-email" class="payload-form space-y-3">
+                    <div>
+                        <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">To Address</label>
+                        <input type="email" id="pl-email-to" placeholder="support@pixelping.app" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Subject</label>
+                        <input type="text" id="pl-email-sub" placeholder="Ticket Request" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
+                    </div>
+                </div>
+                <div id="form-wifi" class="payload-form space-y-3">
+                    <div>
+                        <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Network Name (SSID)</label>
+                        <input type="text" id="pl-wifi-ssid" placeholder="GuestNetwork" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Password</label>
+                        <input type="text" id="pl-wifi-pass" placeholder="Network Password" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Security Type</label>
+                        <select id="pl-wifi-type" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:outline-none">
+                            <option value="WPA">WPA/WPA2</option>
+                            <option value="WEP">WEP</option>
+                            <option value="nopass">None (Open Network)</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="form-vcard" class="payload-form space-y-3">
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">First Name</label>
+                            <input type="text" id="pl-vc-first" placeholder="Jane" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Last Name</label>
+                            <input type="text" id="pl-vc-last" placeholder="Doe" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Phone</label>
+                            <input type="tel" id="pl-vc-phone" placeholder="555-0199" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Company</label>
+                            <input type="text" id="pl-vc-org" placeholder="PixelPing Inc." class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-slate-200 dark:border-gray-700">
+                <div class="space-y-4">
+                    <h3 class="text-sm font-medium text-blue-600 dark:text-ppBlue border-b border-slate-200 dark:border-gray-700 pb-2 uppercase tracking-wide">Structure</h3>
+                    
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 dark:text-white mb-1">Outer Shape Mask</label>
+                        <select id="qr-mask" class="pl-input w-full bg-slate-50 dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:outline-none">
+                            <option value="none">Square (Safe)</option>
+                            <option value="rounded">Rounded Square</option>
+                        </select>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Data Pixel</label>
+                            <select id="qr-dots-type" class="pl-input w-full bg-slate-50 dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:outline-none">
+                                <option value="square">Square</option>
+                                <option value="dots" selected>Dots</option>
+                                <option value="rounded">Rounded</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Corner Eye</label>
+                            <select id="qr-corners-type" class="pl-input w-full bg-slate-50 dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:outline-none">
+                                <option value="square">Square</option>
+                                <option value="dot" selected>Circular</option>
+                                <option value="extra-rounded">Rounded</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <h3 class="text-sm font-medium text-blue-600 dark:text-ppBlue border-b border-slate-200 dark:border-gray-700 pb-2 uppercase tracking-wide">Aesthetics</h3>
+                    
+                    <div>
+                        <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Center Icon</label>
+                        <select id="qr-icon" class="pl-input w-full bg-slate-50 dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:outline-none">
+                            <option value="">None</option>
+                            <option value="heart">Heart</option>
+                            <option value="star">Star</option>
+                            <option value="lightning">Lightning Bolt</option>
+                        </select>
+                    </div>
+
+                    <div class="flex items-center justify-between">
+                        <label class="block text-xs text-slate-500 dark:text-ppLight">Data Color</label>
+                        <input type="color" id="qr-color-dots" value="#27cfff" class="pl-input w-8 h-8 cursor-pointer">
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <label class="block text-xs text-slate-500 dark:text-ppLight">Eye Color</label>
+                        <input type="color" id="qr-color-corners" value="#3cff8f" class="pl-input w-8 h-8 cursor-pointer">
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <label class="block text-xs text-slate-500 dark:text-ppLight">Background</label>
+                        <input type="color" id="qr-color-bg" value="#ffffff" class="pl-input w-8 h-8 cursor-pointer">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="md:col-span-5 flex flex-col items-center justify-start">
+            <div class="bg-slate-200 dark:bg-ppBase p-4 rounded-3xl border-4 border-slate-300 dark:border-ppDark shadow-2xl mb-6 relative group flex items-center justify-center min-h-[350px] w-full transition-colors">
+                <div id="canvas-wrapper" class="qr-mask-layer rounded-xl overflow-hidden shadow-inner flex items-center justify-center w-[320px] h-[320px]">
+                    <div id="canvas-container"></div>
+                </div>
+            </div>
+
+            <div class="w-full flex gap-4">
+                <button id="btn-download-png" class="flex-1 bg-blue-600 dark:bg-ppBlue hover:bg-blue-700 dark:hover:bg-[#1bb5e0] text-white dark:text-ppBase font-bold py-3 px-4 rounded-xl transition-transform active:scale-95 flex items-center justify-center gap-2 shadow-lg">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    Save Code
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <div id="infoOverlay" class="ml-info-overlay" hidden></div>
+    <div id="infoModal" class="ml-info-modal" hidden>
+        <div class="ml-info-modal-inner">
+            
+            <div class="ml-info-header">
+                <h2>About this app</h2>
+                <button id="infoCloseBtn" class="ml-info-close" type="button" aria-label="Close info">✕</button>
+            </div>
+            
+            <div class="ml-info-tabs">
+                <button class="ml-info-tab ml-info-tab-active" data-tab="about" type="button">About</button>
+                <button class="ml-info-tab" data-tab="how" type="button">How to Use</button>
+                <button class="ml-info-tab" data-tab="faq" type="button">FAQ</button>
+                <button class="ml-info-tab" data-tab="other" type="button">Other Apps</button>
+                <button class="ml-info-tab" data-tab="credits" type="button">Credits</button>
+            </div>
+            
+            <div class="ml-info-body">
+                
+                <section class="ml-info-panel" data-panel="about">
+                    <p><strong>PixelPing creates simple, fast, offline-first codes.</strong></p>
+                    <ul>
+                        <li>Runs instantly without downloads</li>
+                        <li>No ads, no data tracking</li>
+                        <li>Fully offline after first load</li>
+                    </ul>
+                </section>
+                
+                <section class="ml-info-panel" data-panel="how" hidden>
+                    <h3>How to Use / Instructions</h3>
+                    <ul>
+                        <li><strong>Step 1:</strong> Select your payload type (URL, Wi-Fi, Phone, etc.) from the dropdown.</li>
+                        <li><strong>Step 2:</strong> Fill in the generated form. The app automatically translates it into machine code.</li>
+                        <li><strong>Step 3:</strong> Customize your colors, shapes, and center icons. The matrix uses High Error Correction to survive masking.</li>
+                        <li><strong>Step 4:</strong> Click "Save Code" to download a crisp, scalable image.</li>
+                    </ul>
+                </section>
+                
+                <section class="ml-info-panel" data-panel="faq" hidden>
+                    <h3>Frequently Asked Questions</h3>
+                    <p><strong>Does this app collect data?</strong><br>No. Everything stays completely on your local device.</p>
+                    <p><strong>Can I use this without Wi-Fi?</strong><br>Yes, once the app loads the first time, it works completely offline.</p>
+                </section>
+                
+                <section class="ml-info-panel" data-panel="other" hidden>
+    <div class="ml-other-games">
+        <a href="https://sscf.app/alphabet-match/index.html" target="_blank" class="ml-other-tile">
+            <div class="ml-other-title">Alphabet Memory Match</div>
+            <div class="ml-other-sub">Uppercase ↔ lowercase matching fun.</div>
+        </a>
+        <a href="https://sscf.app/mixed-math-match-game/index.html" target="_blank" class="ml-other-tile">
+            <div class="ml-other-title">Math Match • Brain Teaser</div>
+            <div class="ml-other-sub">Expressions, answers, and visual patterns.</div>
+        </a>
+    </div>
+</section>
+                
+                <section class="ml-info-panel" data-panel="credits" hidden>
+                    <footer class="footer">
+                        <p class="footer-tag">Built with the StupidSimpleCrazyFast™ micro-app framework.</p>
+                        <div class="footer-credits">
+                            Built by <a href="https://machinolabs.com" target="_blank">MachinoLabs</a> • <a href="https://machinolabs.com" target="_blank">machinolabs.com</a> • <a href="https://stupidsimplecrazyfast.com" target="_blank">stupidsimplecrazyfast.com</a>
+                            <br>
+                            Joe • 717.623.2907
+                        </div>
+                    </footer>
+                </section>
+                
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- UI Elements ---
+            const typeSelector = document.getElementById('payload-type');
+            const forms = document.querySelectorAll('.payload-form');
+            const allInputs = document.querySelectorAll('.pl-input');
+            const canvasWrapper = document.getElementById('canvas-wrapper');
+
+            const styleInputs = {
+                dotsType: document.getElementById('qr-dots-type'),
+                cornersType: document.getElementById('qr-corners-type'),
+                colorDots: document.getElementById('qr-color-dots'),
+                colorCorners: document.getElementById('qr-color-corners'),
+                colorBg: document.getElementById('qr-color-bg'), 
+                icon: document.getElementById('qr-icon'),
+                mask: document.getElementById('qr-mask')
+            };
+
+            // --- Form Switcher Logic ---
+            typeSelector.addEventListener('change', (e) => {
+                const targetId = 'form-' + e.target.value;
+                forms.forEach(form => {
+                    if(form.id === targetId) {
+                        form.classList.add('active');
+                    } else {
+                        form.classList.remove('active');
+                    }
+                });
+                updateQR();
+            });
+
+            // --- Payload String Generator ---
+            function generatePayloadString() {
+                const type = typeSelector.value;
+                let payload = " ";
+
+                if (type === 'url') {
+                    payload = document.getElementById('pl-url').value;
+                    if(payload && !payload.startsWith('http')) payload = 'https://' + payload;
+                } 
+                else if (type === 'tel') {
+                    const num = document.getElementById('pl-tel').value;
+                    if(num) payload = `tel:${num}`;
+                } 
+                else if (type === 'sms') {
+                    const num = document.getElementById('pl-sms-to').value;
+                    const msg = document.getElementById('pl-sms-msg').value;
+                    if(num) payload = `smsto:${num}:${msg}`;
+                } 
+                else if (type === 'email') {
+                    const to = document.getElementById('pl-email-to').value;
+                    const sub = document.getElementById('pl-email-sub').value;
+                    if(to) payload = `mailto:${to}?subject=${encodeURIComponent(sub)}`;
+                } 
+                else if (type === 'wifi') {
+                    const ssid = document.getElementById('pl-wifi-ssid').value;
+                    const pass = document.getElementById('pl-wifi-pass').value;
+                    const sec = document.getElementById('pl-wifi-type').value;
+                    if(ssid) payload = `WIFI:T:${sec};S:${ssid};P:${pass};;`;
+                }
+                else if (type === 'vcard') {
+                    const fName = document.getElementById('pl-vc-first').value;
+                    const lName = document.getElementById('pl-vc-last').value;
+                    const phone = document.getElementById('pl-vc-phone').value;
+                    const org = document.getElementById('pl-vc-org').value;
+                    if(fName || lName) {
+                        payload = `BEGIN:VCARD\nVERSION:3.0\nN:${lName};${fName}\nORG:${org}\nTEL:${phone}\nEND:VCARD`;
+                    }
+                }
+                return payload || " ";
+            }
+
+            // --- Assets (Icons & Masks) ---
+            const svgIcons = {
+                heart: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23ff4757' d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E",
+                star: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23eccc68' d='M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z'/%3E%3C/svg%3E",
+                lightning: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fbc531' d='M7 14h3v9l9-13h-4V1z'/%3E%3C/svg%3E"
+            };
+
+            const maskShapes = {
+                none: "none",
+                rounded: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='black'/%3E%3C/svg%3E\")"
+            };
+
+            // --- QR Code Instantiation ---
+            const qrCode = new QRCodeStyling({
+                width: 320, height: 320, type: "svg", margin: 5,
+                data: " ", 
+                qrOptions: { errorCorrectionLevel: 'H' },
+                imageOptions: { crossOrigin: "anonymous", margin: 8, imageSize: 0.35, hideBackgroundDots: true },
+                backgroundOptions: { color: "#ffffff" }
+            });
+
+            qrCode.append(document.getElementById("canvas-container"));
+
+            // --- Main Update Function ---
+            const updateQR = () => {
+                const finalPayloadString = generatePayloadString();
+                const selectedIcon = styleInputs.icon.value;
+                
+                qrCode.update({
+                    data: finalPayloadString,
+                    image: selectedIcon ? svgIcons[selectedIcon] : "",
+                    dotsOptions: { color: styleInputs.colorDots.value, type: styleInputs.dotsType.value },
+                    cornersSquareOptions: { color: styleInputs.colorCorners.value, type: styleInputs.cornersType.value },
+                    cornersDotOptions: { color: styleInputs.colorCorners.value, type: styleInputs.cornersType.value },
+                    backgroundOptions: { color: styleInputs.colorBg.value }
+                });
+
+                const selectedMask = styleInputs.mask.value;
+                canvasWrapper.style.webkitMaskImage = maskShapes[selectedMask];
+                canvasWrapper.style.maskImage = maskShapes[selectedMask];
+            };
+
+            // Bind updateQR to EVERY input element
+            allInputs.forEach(input => {
+                input.addEventListener('input', updateQR);
+            });
+
+            // --- Clear Logic ---
+            document.getElementById('btn-clear').addEventListener('click', () => {
+                allInputs.forEach(input => {
+                    if(input.type === 'color') return;
+                    if(input.tagName === 'SELECT') input.selectedIndex = 0;
+                    else input.value = '';
+                });
+                styleInputs.colorDots.value = '#27cfff';
+                styleInputs.colorCorners.value = '#3cff8f';
+                styleInputs.colorBg.value = '#ffffff'; 
+                updateQR();
+            });
+
+            // --- Exports ---
+            document.getElementById('btn-download-png').addEventListener('click', () => qrCode.download({ name: "PixelPing-Code", extension: "png" }));
+
+            // --- Theme & Background Particles ---
+            const themeToggleBtn = document.getElementById('themeToggle');
+            const iconSun = document.getElementById('icon-sun');
+            const iconMoon = document.getElementById('icon-moon');
+            const htmlTag = document.documentElement;
+
+            if (localStorage.getItem('theme') === 'light') { htmlTag.classList.remove('dark'); iconSun.classList.remove('hidden'); iconMoon.classList.add('hidden'); }
+            themeToggleBtn.addEventListener('click', () => {
+                htmlTag.classList.toggle('dark');
+                if (htmlTag.classList.contains('dark')) { localStorage.setItem('theme', 'dark'); iconSun.classList.add('hidden'); iconMoon.classList.remove('hidden'); } 
+                else { localStorage.setItem('theme', 'light'); iconSun.classList.remove('hidden'); iconMoon.classList.add('hidden'); }
+            });
+
+            const bgContainer = document.getElementById('pixel-bg');
+            const colors = ['#27cfff', '#3cff8f', '#0f3a5a'];
+            for(let i=0; i<20; i++) {
+                let div = document.createElement('div'); div.className = 'floating-pixel';
+                let size = Math.random() * 20 + 10; div.style.width = size + 'px'; div.style.height = size + 'px';
+                div.style.left = Math.random() * 100 + 'vw'; div.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                div.style.animationDelay = (Math.random() * 8) + 's'; div.style.animationDuration = (Math.random() * 6 + 6) + 's';
+                bgContainer.appendChild(div);
+            }
+
+            // --- FULL INFO MODAL LOGIC (Restored) ---
+            const infoBtn = document.getElementById("infoBtn");
+            const infoOverlay = document.getElementById("infoOverlay");
+            const infoModal = document.getElementById("infoModal");
+            const infoCloseBtn = document.getElementById("infoCloseBtn");
+            const tabButtons = Array.from(document.querySelectorAll(".ml-info-tab"));
+            const panels = Array.from(document.querySelectorAll(".ml-info-panel"));
+
+            function openInfo() { 
+                infoOverlay.hidden = false; 
+                infoModal.hidden = false; 
+            }
+            
+            function closeInfo() { 
+                infoOverlay.hidden = true; 
+                infoModal.hidden = true; 
+            }
+
+            function setActiveTab(tabName) {
+                tabButtons.forEach(btn => {
+                    btn.classList.toggle("ml-info-tab-active", btn.dataset.tab === tabName);
+                });
+                panels.forEach(panel => {
+                    panel.hidden = (panel.dataset.panel !== tabName);
+                });
+            }
+
+            infoBtn.addEventListener("click", () => {
+                infoModal.hidden ? openInfo() : closeInfo();
+            });
+            
+            infoOverlay.addEventListener("click", closeInfo);
+            infoCloseBtn.addEventListener("click", closeInfo);
+
+            tabButtons.forEach(btn => {
+                btn.addEventListener("click", () => setActiveTab(btn.dataset.tab));
+            });
+
+            document.addEventListener("keydown", (e) => {
+                if (e.key === "Escape" && !infoModal.hidden) {
+                    closeInfo();
+                }
+            });
+
+            setActiveTab("about");
+
+            // --- PWA Service Worker ---
+            if ('serviceWorker' in navigator) {
+                const swCode = `const CACHE_NAME = 'pixelping-v6'; const ASSETS = [ location.origin + location.pathname, 'https://cdn.tailwindcss.com', 'https://cdn.jsdelivr.net/npm/qr-code-styling@1.5.0/lib/qr-code-styling.js' ]; self.addEventListener('install', event => { event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS))); self.skipWaiting(); }); self.addEventListener('fetch', event => { event.respondWith(caches.match(event.request).then(cachedResponse => cachedResponse || fetch(event.request))); });`;
+                const blob = new Blob([swCode], { type: 'application/javascript' });
+                navigator.serviceWorker.register(URL.createObjectURL(blob))
+                    .then(() => document.getElementById('offline-badge').classList.remove('hidden'))
+                    .catch(err => console.log('SW Registration failed:', err));
+            }
+        });
+    </script>
+</body>
+</html>
