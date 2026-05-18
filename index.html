@@ -553,8 +553,36 @@
                 checkPaywallState();
             };
 
-            allInputs.forEach(input => input.addEventListener('input', updateQR));
+           allInputs.forEach(input => input.addEventListener('input', updateQR));
 
+            // --- Auto-Format Phone Numbers ---
+            document.querySelectorAll('input[type="tel"]').forEach(input => {
+                input.addEventListener('input', function(e) {
+                    let isPlus = e.target.value.startsWith('+') ? '+' : '';
+                    let x = e.target.value.replace(/\D/g, ''); // Strip everything but numbers
+                    
+                    if (x.startsWith('1')) {
+                        // US Format with '1' (Max 11 digits)
+                        x = x.substring(0, 11);
+                        let match = x.match(/^(\d{1})(\d{0,3})(\d{0,3})(\d{0,4})$/);
+                        if (match) {
+                            e.target.value = isPlus + match[1] + (match[2] ? '-' + match[2] : '') + (match[3] ? '-' + match[3] : '') + (match[4] ? '-' + match[4] : '');
+                        }
+                    } else {
+                        // Standard Format (Max 10 digits)
+                        x = x.substring(0, 10);
+                        let match = x.match(/^(\d{0,3})(\d{0,3})(\d{0,4})$/);
+                        if (match) {
+                            e.target.value = isPlus + match[1] + (match[2] ? '-' + match[2] : '') + (match[3] ? '-' + match[3] : '');
+                        }
+                    }
+                    
+                    updateQR(); // Force the QR code to read the new dashes!
+                });
+            });
+
+            let isPreviewingPro = false;
+            const freePayloads = ['url', 'tel', 'text'];
             let isPreviewingPro = false;
             const freePayloads = ['url', 'tel', 'text'];
 
