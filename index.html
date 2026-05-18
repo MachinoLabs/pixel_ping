@@ -341,10 +341,11 @@
         </div>
 
         <div class="md:col-span-5 flex flex-col items-center justify-start h-full">
-            <div class="bg-slate-200 dark:bg-ppBase p-4 rounded-3xl border-4 border-slate-300 dark:border-ppDark shadow-2xl mb-6 relative group flex items-center justify-center min-h-[350px] w-full transition-colors">
+            <div class="bg-slate-200 dark:bg-ppBase p-4 rounded-3xl border-4 border-slate-300 dark:border-ppDark shadow-2xl mb-6 relative group flex flex-col items-center justify-center min-h-[350px] w-full transition-colors">
                 <div id="canvas-wrapper" class="qr-mask-layer rounded-xl overflow-hidden shadow-inner flex items-center justify-center w-[320px] h-[320px] bg-white">
                     <div id="canvas-container"></div>
                 </div>
+                <div id="live-label-preview" class="mt-4 font-bold text-slate-800 dark:text-white text-xl text-center hidden"></div>
             </div>
 
             <div class="w-full flex flex-col gap-4">
@@ -539,21 +540,40 @@
                 const iconVal = styleInputs.icon.value;
                 const maskVal = styleInputs.mask.value;
                 
-                qrCode.update({
+                const qrOptions = {
                     data: generatePayloadString(),
-                    image: iconVal ? svgIcons[iconVal] : "",
                     dotsOptions: { color: styleInputs.colorDots.value, type: styleInputs.dotsType.value },
                     cornersSquareOptions: { color: styleInputs.colorCorners.value, type: styleInputs.cornersType.value },
                     cornersDotOptions: { color: styleInputs.colorCorners.value, type: styleInputs.cornersType.value },
                     backgroundOptions: { color: styleInputs.colorBg.value }
-                });
+                };
+
+                // Safely assign image only if icon is selected to prevent library rendering failure
+                if (iconVal && svgIcons[iconVal]) {
+                    qrOptions.image = svgIcons[iconVal];
+                } else {
+                    qrOptions.image = null; 
+                }
+
+                qrCode.update(qrOptions);
+
                 canvasWrapper.style.webkitMaskImage = maskShapes[maskVal];
                 canvasWrapper.style.maskImage = maskShapes[maskVal];
+
+                // --- Live Label Preview Logic ---
+                const liveLabel = document.getElementById('live-label-preview');
+                const labelText = smartLabelInput.value.trim();
+                if (labelText !== '') {
+                    liveLabel.textContent = labelText;
+                    liveLabel.classList.remove('hidden');
+                } else {
+                    liveLabel.classList.add('hidden');
+                }
 
                 checkPaywallState();
             };
 
-           allInputs.forEach(input => input.addEventListener('input', updateQR));
+            allInputs.forEach(input => input.addEventListener('input', updateQR));
 
             // --- Auto-Format Phone Numbers ---
             document.querySelectorAll('input[type="tel"]').forEach(input => {
@@ -862,6 +882,14 @@
             }
 
             async function processExport(type) {
+                let printWindow = null;
+                
+                // Open window SYNCHRONOUSLY to bypass popup blockers!
+                if (type === 'print') {
+                    printWindow = window.open('', '_blank');
+                    printWindow.document.write('<html><body style="display:flex;justify-content:center;align-items:center;height:100vh;font-family:sans-serif;color:#333;"><h2>Generating Print File...</h2></body></html>');
+                }
+
                 try {
                     const dataUrl = await getFinalGraphicDataUrl();
                     
@@ -875,7 +903,7 @@
                         link.href = dataUrl;
                         link.click();
                     } else if (type === 'print') {
-                        const printWindow = window.open('', '_blank');
+                        printWindow.document.open(); // Clear the "Generating..." text
                         printWindow.document.write(`
                             <html>
                             <head><title>Print Label</title></head>
@@ -888,6 +916,7 @@
                     }
                 } catch (error) {
                     console.error('Export failed', error);
+                    if (printWindow) printWindow.close();
                     qrCode.download({ name: "PixelPing", extension: "png" }); 
                 }
             }
