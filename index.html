@@ -326,23 +326,13 @@
                         </select>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-2">
-                        <div>
-                            <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Data Pixel</label>
-                            <select id="qr-dots-type" class="pl-input w-full bg-slate-50 dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:outline-none">
-                                <option value="square">Square</option>
-                                <option value="dots" selected>Dots</option>
-                                <option value="rounded">Rounded</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Corner Eye</label>
-                            <select id="qr-corners-type" class="pl-input w-full bg-slate-50 dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:outline-none">
-                                <option value="square">Square</option>
-                                <option value="dot" selected>Circular</option>
-                                <option value="extra-rounded">Rounded</option>
-                            </select>
-                        </div>
+                    <div>
+                        <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Corner Eye Style</label>
+                        <select id="qr-corners-type" class="pl-input w-full bg-slate-50 dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:outline-none">
+                            <option value="square">Square</option>
+                            <option value="dot" selected>Circular</option>
+                            <option value="extra-rounded">Rounded</option>
+                        </select>
                     </div>
                 </div>
 
@@ -528,7 +518,7 @@
         document.addEventListener('DOMContentLoaded', () => {
 
             const defaults = {
-                dotsType: 'dots', cornersType: 'dot', mask: 'none', icon: '',
+                cornersType: 'dot', mask: 'none', icon: '',
                 colorDots: '#27cfff', colorCorners: '#3cff8f', colorBg: '#ffffff'
             };
 
@@ -548,7 +538,6 @@
             const smartLabelInput = document.getElementById('pl-smart-label');
 
             const styleInputs = {
-                dotsType: document.getElementById('qr-dots-type'),
                 cornersType: document.getElementById('qr-corners-type'),
                 colorDots: document.getElementById('qr-color-dots'),
                 colorCorners: document.getElementById('qr-color-corners'),
@@ -557,7 +546,6 @@
                 mask: document.getElementById('qr-mask')
             };
 
-            styleInputs.dotsType.value = activeSettings.dotsType;
             styleInputs.cornersType.value = activeSettings.cornersType;
             styleInputs.colorDots.value = activeSettings.colorDots;
             styleInputs.colorCorners.value = activeSettings.colorCorners;
@@ -647,7 +635,7 @@
             };
 
             const qrCode = new QRCodeStyling({
-                width: 320, height: 320, type: "canvas", margin: 5,
+                width: 320, height: 320, type: "svg", margin: 5,
                 data: "https://pixelping.app",
                 qrOptions: { errorCorrectionLevel: 'H' },
                 imageOptions: { crossOrigin: "anonymous", margin: 8, imageSize: 0.35, hideBackgroundDots: true }
@@ -660,31 +648,19 @@
                 
                 const qrOptions = {
                     data: generatePayloadString(),
-                    dotsOptions: { color: styleInputs.colorDots.value, type: styleInputs.dotsType.value },
+                    dotsOptions: { color: styleInputs.colorDots.value, type: 'square' },
                     cornersSquareOptions: { color: styleInputs.colorCorners.value, type: styleInputs.cornersType.value },
                     cornersDotOptions: { color: styleInputs.colorCorners.value, type: styleInputs.cornersType.value },
                     backgroundOptions: { color: styleInputs.colorBg.value }
                 };
 
-                // --- THE MAGIC MASK FIX ---
                 if (iconVal && svgIcons[iconVal]) {
-                    // 1. Grab the chosen background color (default to white)
-                    const bgColor = styleInputs.colorBg.value || '#ffffff';
-                    
-                    // 2. Decode the raw SVG string
-                    let rawSvg = decodeURIComponent(svgIcons[iconVal].replace('data:image/svg+xml,', ''));
-                    
-                    // 3. Inject a solid background shape right behind the icon so dots can't bleed through
-                    const bgRect = `<rect width="100%" height="100%" fill="${bgColor}" rx="2" />`;
-                    rawSvg = rawSvg.replace(/(<svg[^>]*>)/i, `$1${bgRect}`);
-                    
-                    // 4. Send the patched SVG to the QR code and TURN OFF the glitchy math
-                    qrOptions.image = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(rawSvg)}`;
-                    qrOptions.imageOptions = { margin: 4, imageSize: 0.35, hideBackgroundDots: false };
+                    qrOptions.image = svgIcons[iconVal];
                 } else {
                     qrOptions.image = null; 
-                    qrOptions.imageOptions = { margin: 8, imageSize: 0.35, hideBackgroundDots: true };
                 }
+                
+                qrOptions.imageOptions = { margin: 8, imageSize: 0.35, hideBackgroundDots: true };
 
                 qrCode.update(qrOptions);
 
@@ -747,7 +723,6 @@
                 const usingProPayload = !freePayloads.includes(typeSelector.value);
                 const usingProLabel = smartLabelInput.value.trim() !== '';
                 const usingProStyles = 
-                    styleInputs.dotsType.value !== defaults.dotsType ||
                     styleInputs.cornersType.value !== defaults.cornersType ||
                     styleInputs.colorDots.value !== defaults.colorDots ||
                     styleInputs.colorCorners.value !== defaults.colorCorners ||
@@ -829,7 +804,6 @@
                     date: new Date().toLocaleDateString(),
                     inputs: {},
                     styles: {
-                        dotsType: styleInputs.dotsType.value,
                         cornersType: styleInputs.cornersType.value,
                         colorDots: styleInputs.colorDots.value,
                         colorCorners: styleInputs.colorCorners.value,
@@ -864,7 +838,6 @@
                 }
 
                 if (item.styles) {
-                    styleInputs.dotsType.value = item.styles.dotsType;
                     styleInputs.cornersType.value = item.styles.cornersType;
                     styleInputs.colorDots.value = item.styles.colorDots;
                     styleInputs.colorCorners.value = item.styles.colorCorners;
@@ -896,7 +869,6 @@
                     if (localStorage.getItem('pixelping-brand-kit')) {
                         // Remove Kit
                         localStorage.removeItem('pixelping-brand-kit');
-                        styleInputs.dotsType.value = defaults.dotsType;
                         styleInputs.cornersType.value = defaults.cornersType;
                         styleInputs.colorDots.value = defaults.colorDots;
                         styleInputs.colorCorners.value = defaults.colorCorners;
@@ -908,7 +880,6 @@
                     } else {
                         // Save Kit
                         const brandSettings = {
-                            dotsType: styleInputs.dotsType.value,
                             cornersType: styleInputs.cornersType.value,
                             colorDots: styleInputs.colorDots.value,
                             colorCorners: styleInputs.colorCorners.value,
