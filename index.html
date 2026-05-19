@@ -266,14 +266,18 @@
                     </div>
                 </div>
                 <div id="form-geo" class="payload-form space-y-3">
+                    <div>
+                        <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Physical Address</label>
+                        <input type="text" id="pl-geo-address" placeholder="123 Main St, City, State" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
+                    </div>
                     <div class="grid grid-cols-2 gap-3">
                         <div>
-                            <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Latitude</label>
-                            <input type="text" id="pl-geo-lat" placeholder="40.7128" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
+                            <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Latitude (Optional)</label>
+                            <input type="text" id="pl-geo-lat" placeholder="e.g. 40.7128" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
                         </div>
                         <div>
-                            <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Longitude</label>
-                            <input type="text" id="pl-geo-lng" placeholder="-74.0060" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
+                            <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Longitude (Optional)</label>
+                            <input type="text" id="pl-geo-lng" placeholder="e.g. -74.0060" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
                         </div>
                     </div>
                 </div>
@@ -595,9 +599,14 @@
                     const loc = document.getElementById('pl-cal-loc').value;
                     if(t) payload = `BEGIN:VEVENT\nSUMMARY:${t}\nDTSTART:${s}\nLOCATION:${loc}\nEND:VEVENT`;
                 } else if (type === 'geo') {
+                    const addr = document.getElementById('pl-geo-address').value;
                     const lat = document.getElementById('pl-geo-lat').value;
                     const lng = document.getElementById('pl-geo-lng').value;
-                    if(lat && lng) payload = `geo:${lat},${lng}`;
+                    if (addr) {
+                        payload = `geo:0,0?q=${encodeURIComponent(addr)}`;
+                    } else if(lat && lng) {
+                        payload = `geo:${lat},${lng}`;
+                    }
                 } else if (type === 'crypto') {
                     const coin = document.getElementById('pl-crypto-type').value;
                     const addr = document.getElementById('pl-crypto-address').value;
