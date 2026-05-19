@@ -666,10 +666,24 @@
                     backgroundOptions: { color: styleInputs.colorBg.value }
                 };
 
+                // --- THE MAGIC MASK FIX ---
                 if (iconVal && svgIcons[iconVal]) {
-                    qrOptions.image = svgIcons[iconVal];
+                    // 1. Grab the chosen background color (default to white)
+                    const bgColor = styleInputs.colorBg.value || '#ffffff';
+                    
+                    // 2. Decode the raw SVG string
+                    let rawSvg = decodeURIComponent(svgIcons[iconVal].replace('data:image/svg+xml,', ''));
+                    
+                    // 3. Inject a solid background shape right behind the icon so dots can't bleed through
+                    const bgRect = `<rect width="100%" height="100%" fill="${bgColor}" rx="2" />`;
+                    rawSvg = rawSvg.replace(/(<svg[^>]*>)/i, `$1${bgRect}`);
+                    
+                    // 4. Send the patched SVG to the QR code and TURN OFF the glitchy math
+                    qrOptions.image = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(rawSvg)}`;
+                    qrOptions.imageOptions = { margin: 4, imageSize: 0.35, hideBackgroundDots: false };
                 } else {
                     qrOptions.image = null; 
+                    qrOptions.imageOptions = { margin: 8, imageSize: 0.35, hideBackgroundDots: true };
                 }
 
                 qrCode.update(qrOptions);
