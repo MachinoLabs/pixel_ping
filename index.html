@@ -163,6 +163,13 @@
                         <option value="geo">Open Map Location [PRO]</option>
                         <option value="crypto">Crypto Wallet Address [PRO]</option>
                     </optgroup>
+                    <optgroup label="Business Suite [PRO]">
+                        <option value="review">Google Review Link</option>
+                        <option value="social">Social Media Follow</option>
+                        <option value="menu">Digital Menu (PDF/Link)</option>
+                        <option value="booking">Book Appointment</option>
+                        <option value="coupon">Digital Coupon</option>
+                    </optgroup>
                 </select>
             </div>
 
@@ -247,7 +254,7 @@
                         <input type="text" id="pl-email-sub" placeholder="Ticket Request" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
                     </div>
                 </div>
-               <div id="form-calendar" class="payload-form space-y-3">
+                <div id="form-calendar" class="payload-form space-y-3">
                     <div>
                         <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Event Title</label>
                         <input type="text" id="pl-cal-title" placeholder="Site Inspection" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
@@ -292,6 +299,38 @@
                         <input type="text" id="pl-crypto-address" placeholder="1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
                     </div>
                 </div>
+
+                <div id="form-review" class="payload-form space-y-3">
+                    <div>
+                        <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Google Review URL</label>
+                        <input type="url" id="pl-biz-review" placeholder="https://g.page/r/..." class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
+                    </div>
+                </div>
+                <div id="form-social" class="payload-form space-y-3">
+                    <div>
+                        <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Social Profile URL</label>
+                        <input type="url" id="pl-biz-social" placeholder="https://instagram.com/..." class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
+                    </div>
+                </div>
+                <div id="form-menu" class="payload-form space-y-3">
+                    <div>
+                        <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Link to Menu</label>
+                        <input type="url" id="pl-biz-menu" placeholder="https://yoursite.com/menu.pdf" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
+                    </div>
+                </div>
+                <div id="form-booking" class="payload-form space-y-3">
+                    <div>
+                        <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Booking/Calendar Link</label>
+                        <input type="url" id="pl-biz-booking" placeholder="https://calendly.com/..." class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
+                    </div>
+                </div>
+                <div id="form-coupon" class="payload-form space-y-3">
+                    <div>
+                        <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Coupon Text (Shows on Screen when Scanned)</label>
+                        <textarea id="pl-biz-coupon" placeholder="Show this code to cashier for 20% off: PROMO20" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none" rows="3"></textarea>
+                    </div>
+                </div>
+
             </div>
 
             <div class="pt-4 border-t border-slate-200 dark:border-gray-700">
@@ -364,6 +403,14 @@
                                 <option value="call">Missed Call</option>
                             </optgroup>
                         </select>
+
+                        <div class="mt-3 pt-3 border-t border-slate-200 dark:border-gray-700/50">
+                            <label class="block text-xs text-slate-500 dark:text-ppLight mb-1 flex justify-between items-center">
+                                <span>Or Upload Custom Logo [PRO]</span>
+                                <button id="btn-clear-logo" class="hidden text-[10px] text-red-500 hover:text-red-700 font-bold">Clear Logo</button>
+                            </label>
+                            <input type="file" id="qr-custom-logo" accept="image/png, image/jpeg, image/svg+xml" class="block w-full text-xs text-slate-500 dark:text-slate-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-[10px] file:font-bold file:bg-blue-100 file:text-blue-700 hover:file:bg-blue-200 dark:file:bg-slate-700 dark:file:text-slate-300 cursor-pointer transition-colors">
+                        </div>
                     </div>
 
                     <div class="flex items-center justify-between">
@@ -517,6 +564,9 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
+            // 🟢 CLOUDFLARE WORKER CONFIGURATION 
+            const WORKER_URL = "https://machino-licensing.amateuraiguy.workers.dev"; // Paste your worker URL here
+
             const defaults = {
                 cornersType: 'dot', mask: 'none', icon: '',
                 colorDots: '#27cfff', colorCorners: '#3cff8f', colorBg: '#ffffff'
@@ -590,14 +640,11 @@
                     const p = document.getElementById('pl-vc-phone').value;
                     const o = document.getElementById('pl-vc-org').value;
                     if(f || l) payload = `BEGIN:VCARD\nVERSION:3.0\nN:${l};${f}\nORG:${o}\nTEL:${p}\nEND:VCARD`;
-               } else if (type === 'calendar') {
+                } else if (type === 'calendar') {
                     const t = document.getElementById('pl-cal-title').value;
                     const sRaw = document.getElementById('pl-cal-start').value;
                     const loc = document.getElementById('pl-cal-loc').value;
-                    
-                    // Secretly convert user's simple date into the ugly computer code
                     const s = sRaw ? sRaw.replace(/[-:]/g, '') + '00Z' : '';
-                    
                     if(t) payload = `BEGIN:VEVENT\nSUMMARY:${t}\nDTSTART:${s}\nLOCATION:${loc}\nEND:VEVENT`;
                 } else if (type === 'geo') {
                     const addr = document.getElementById('pl-geo-address').value;
@@ -612,6 +659,11 @@
                     const coin = document.getElementById('pl-crypto-type').value;
                     const addr = document.getElementById('pl-crypto-address').value;
                     if(addr) payload = `${coin}:${addr}`;
+                } else if (['review', 'social', 'menu', 'booking'].includes(type)) {
+                    payload = document.getElementById(`pl-biz-${type}`).value;
+                    if(payload && !payload.startsWith('http')) payload = 'https://' + payload;
+                } else if (type === 'coupon') {
+                    payload = document.getElementById('pl-biz-coupon').value;
                 }
                 
                 return payload.trim() !== "" ? payload : "https://pixelping.app";
@@ -646,7 +698,57 @@
             });
             qrCode.append(document.getElementById("canvas-container"));
 
-            const updateQR = () => {
+            // 🟢 CRITICAL FIX: EXPOSE GLOBALS TO THE WORKER'S GHOST SCRIPT
+            window.qrCode = qrCode;
+            window.updateQR = updateQR;
+            window.generatePayloadString = generatePayloadString;
+
+            // --- Custom Logo Uploader & Auto-Shrink ---
+            const logoInput = document.getElementById('qr-custom-logo');
+            const btnClearLogo = document.getElementById('btn-clear-logo');
+            let customLogoBase64 = null;
+
+            logoInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const img = new Image();
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        const MAX_SIZE = 120; // Shrinks to a safe size for the QR center
+                        let width = img.width; let height = img.height;
+
+                        if (width > height) {
+                            if (width > MAX_SIZE) { height *= MAX_SIZE / width; width = MAX_SIZE; }
+                        } else {
+                            if (height > MAX_SIZE) { width *= MAX_SIZE / height; height = MAX_SIZE; }
+                        }
+                        
+                        canvas.width = width; canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+                        
+                        customLogoBase64 = canvas.toDataURL('image/png');
+                        btnClearLogo.classList.remove('hidden');
+                        styleInputs.icon.value = ""; // Clear standard icon if they upload a logo
+                        updateQR();
+                    };
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+
+            btnClearLogo.addEventListener('click', () => {
+                customLogoBase64 = null;
+                logoInput.value = '';
+                btnClearLogo.classList.add('hidden');
+                updateQR();
+            });
+
+            // Note: Changed from arrow function to standard function for hoisting support with the Ghost Script.
+            function updateQR() {
                 const iconVal = styleInputs.icon.value;
                 const maskVal = styleInputs.mask.value;
                 
@@ -658,8 +760,13 @@
                     backgroundOptions: { color: styleInputs.colorBg.value }
                 };
 
-                if (iconVal && svgIcons[iconVal]) {
+                // Priorities: Custom Logo first, then SVG Icons, then Pro Icons, then None
+                if (customLogoBase64) {
+                    qrOptions.image = customLogoBase64;
+                } else if (iconVal && svgIcons[iconVal]) {
                     qrOptions.image = svgIcons[iconVal];
+                } else if (iconVal && window.proIcons && window.proIcons[iconVal]) {
+                    qrOptions.image = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(window.proIcons[iconVal]);
                 } else {
                     qrOptions.image = null; 
                 }
@@ -681,7 +788,7 @@
                 }
 
                 checkPaywallState();
-            };
+            }
 
             allInputs.forEach(input => input.addEventListener('input', updateQR));
 
@@ -732,7 +839,8 @@
                     styleInputs.colorCorners.value !== defaults.colorCorners ||
                     styleInputs.colorBg.value !== defaults.colorBg ||
                     styleInputs.icon.value !== defaults.icon ||
-                    styleInputs.mask.value !== defaults.mask;
+                    styleInputs.mask.value !== defaults.mask ||
+                    customLogoBase64 !== null; // Pro check for uploaded logo
 
                 isPreviewingPro = usingProPayload || usingProLabel || usingProStyles;
 
@@ -774,7 +882,8 @@
                 const typeNames = {
                     url: '🌐 URL', tel: '📞 Phone', text: '📝 Text',
                     wifi: '📶 Wi-Fi', vcard: '📇 Contact', sms: '💬 SMS',
-                    email: '✉️ Email', calendar: '📅 Event', geo: '📍 Location', crypto: '₿ Crypto'
+                    email: '✉️ Email', calendar: '📅 Event', geo: '📍 Location', crypto: '₿ Crypto',
+                    review: '⭐ Google Review', social: '👍 Social Media', menu: '🍽️ Menu', booking: '📅 Booking', coupon: '🎟️ Coupon'
                 };
 
                 history.forEach((item) => {
@@ -813,17 +922,18 @@
                         colorCorners: styleInputs.colorCorners.value,
                         colorBg: styleInputs.colorBg.value,
                         mask: styleInputs.mask.value,
-                        icon: styleInputs.icon.value
+                        icon: styleInputs.icon.value,
+                        customLogo: customLogoBase64 
                     }
                 };
                 
                 document.querySelectorAll('.payload-form input, .payload-form textarea, .payload-form select').forEach(inp => {
-                    state.inputs[inp.id] = inp.value;
+                    if (inp.type !== 'file') state.inputs[inp.id] = inp.value;
                 });
 
                 let history = JSON.parse(localStorage.getItem('pixelping-history')) || [];
                 history.unshift(state);
-                if (history.length > 5) history.pop(); // Keep only last 5
+                if (history.length > 5) history.pop(); 
                 
                 localStorage.setItem('pixelping-history', JSON.stringify(history));
                 renderHistory();
@@ -848,6 +958,15 @@
                     styleInputs.colorBg.value = item.styles.colorBg;
                     styleInputs.mask.value = item.styles.mask;
                     styleInputs.icon.value = item.styles.icon;
+                    
+                    if (item.styles.customLogo) {
+                        customLogoBase64 = item.styles.customLogo;
+                        btnClearLogo.classList.remove('hidden');
+                    } else {
+                        customLogoBase64 = null;
+                        logoInput.value = '';
+                        btnClearLogo.classList.add('hidden');
+                    }
                 }
 
                 updateQR();
@@ -866,7 +985,7 @@
                     btnSaveBrand.className = "text-[10px] bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 px-2 py-1 rounded hover:opacity-90 transition-colors shadow-sm cursor-pointer border border-transparent";
                 }
             };
-            updateBrandKitUI(); // Initial check
+            updateBrandKitUI(); 
 
             btnSaveBrand.addEventListener('click', () => {
                 if (localStorage.getItem('pixelping-pro') === 'true') {
@@ -879,6 +998,9 @@
                         styleInputs.colorBg.value = defaults.colorBg;
                         styleInputs.mask.value = defaults.mask;
                         styleInputs.icon.value = defaults.icon;
+                        customLogoBase64 = null;
+                        logoInput.value = '';
+                        btnClearLogo.classList.add('hidden');
                         updateQR();
                         updateBrandKitUI();
                     } else {
@@ -889,7 +1011,8 @@
                             colorCorners: styleInputs.colorCorners.value,
                             colorBg: styleInputs.colorBg.value,
                             mask: styleInputs.mask.value,
-                            icon: styleInputs.icon.value
+                            icon: styleInputs.icon.value,
+                            customLogo: customLogoBase64
                         };
                         localStorage.setItem('pixelping-brand-kit', JSON.stringify(brandSettings));
                         
@@ -902,7 +1025,7 @@
                 }
             });
 
-            // --- Modal Logics ---
+            // --- Modal Logics & 🟢 REAL CLOUDFLARE FETCH ---
             const unlockModal = document.getElementById('unlockModal');
             const unlockOverlay = document.getElementById('unlockOverlay');
             const licenseInput = document.getElementById('license-key-input');
@@ -913,15 +1036,47 @@
             document.getElementById('unlockCloseBtn').addEventListener('click', closeUnlockModal);
             unlockOverlay.addEventListener('click', closeUnlockModal);
 
-            document.getElementById('btn-verify-key').addEventListener('click', () => {
-                if (licenseInput.value.trim().toUpperCase() === 'MACHINO-PRO-26') {
-                    localStorage.setItem('pixelping-pro', 'true');
-                    closeUnlockModal();
-                    checkPaywallState();
-                    renderHistory(); 
-                    alert('Pro Features Unlocked! Thank you for your support.');
-                } else {
-                    alert('Invalid Master Key. Please check your receipt.');
+            document.getElementById('btn-verify-key').addEventListener('click', async () => {
+                const key = licenseInput.value.trim();
+                if (!key) return alert("Please enter a license key.");
+
+                const verifyBtn = document.getElementById('btn-verify-key');
+                verifyBtn.textContent = "Verifying...";
+                verifyBtn.disabled = true;
+
+                try {
+                    // Send the key to your Cloudflare Worker
+                    const response = await fetch(WORKER_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ licenseKey: key })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        // INJECT THE SECURE GHOST SCRIPT
+                        const scriptEl = document.createElement('script');
+                        scriptEl.innerHTML = data.script;
+                        document.body.appendChild(scriptEl);
+
+                        // SAVE STATE LOCALLY
+                        localStorage.setItem('pixelping-pro', 'true');
+                        localStorage.setItem('pixelping-key', key);
+
+                        closeUnlockModal();
+                        checkPaywallState();
+                        renderHistory(); 
+                        alert('Pro Features Unlocked! Thank you for your support.');
+                    } else {
+                        alert('Verification Failed: ' + data.error);
+                    }
+                } catch (err) {
+                    console.error(err);
+                    alert('Connection Error. Please check your internet and try again.');
+                } finally {
+                    verifyBtn.textContent = "Verify";
+                    verifyBtn.disabled = false;
                 }
             });
 
@@ -937,7 +1092,7 @@
                 processExport('print');
             });
 
-            // --- Updated Canvas Math ---
+            // --- Export / Canvas Printing ---
             async function getFinalGraphicDataUrl() {
                 const smartText = smartLabelInput.value.trim();
                 const blob = await qrCode.getRawData('png');
@@ -951,7 +1106,7 @@
                         const ctx = canvas.getContext('2d');
                         
                         const canvasWidth = img.width;
-                        const maxTextWidth = canvasWidth - 60; // Better horizontal padding
+                        const maxTextWidth = canvasWidth - 60; 
                         const titleFont = 'bold 24px system-ui, -apple-system, sans-serif';
                         const actionFont = '600 16px system-ui, -apple-system, sans-serif';
                         
@@ -960,7 +1115,6 @@
                         const lines = [];
                         let currentLine = words[0];
 
-                        // Wrapping math
                         for (let i = 1; i < words.length; i++) {
                             const word = words[i];
                             const width = ctx.measureText(currentLine + " " + word).width;
@@ -973,7 +1127,6 @@
                         }
                         lines.push(currentLine);
 
-                        // Balance orphaned word on last line if possible
                         if (lines.length > 1) {
                             const lastLine = lines[lines.length - 1];
                             const prevLine = lines[lines.length - 2];
@@ -1021,7 +1174,6 @@
                 });
             }
 
-            // --- Updated Print/Export Logic (No more pop-up blocker issues) ---
             async function processExport(type) {
                 try {
                     const dataUrl = await getFinalGraphicDataUrl();
@@ -1034,7 +1186,6 @@
                         link.href = dataUrl;
                         link.click();
                     } else if (type === 'print') {
-                        // Create a hidden iframe to print securely without triggering blockers
                         const printSize = document.getElementById('pl-print-size').value;
                         const iframe = document.createElement('iframe');
                         iframe.style.position = 'fixed';
@@ -1057,7 +1208,6 @@
                         `);
                         iframeDoc.close();
 
-                        // Cleanup iframe after printing dialog is closed/done
                         setTimeout(() => {
                             if (document.body.contains(iframe)) {
                                 document.body.removeChild(iframe);
@@ -1072,13 +1222,16 @@
 
             document.getElementById('btn-clear').addEventListener('click', () => {
                 allInputs.forEach(input => {
-                    if (input.type === 'color') return;
+                    if (input.type === 'color' || input.type === 'file') return;
                     if (input.tagName === 'SELECT') input.selectedIndex = 0;
                     else input.value = '';
                 });
                 styleInputs.colorDots.value = defaults.colorDots;
                 styleInputs.colorCorners.value = defaults.colorCorners;
                 styleInputs.colorBg.value = defaults.colorBg;
+                customLogoBase64 = null;
+                logoInput.value = '';
+                btnClearLogo.classList.add('hidden');
                 updateQR();
             });
 
@@ -1134,6 +1287,31 @@
                 div.style.left = Math.random() * 100 + 'vw'; div.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
                 div.style.animationDelay = (Math.random() * 8) + 's'; div.style.animationDuration = (Math.random() * 6 + 6) + 's';
                 bgContainer.appendChild(div);
+            }
+
+            // 🟢 CRITICAL FIX: SILENT BOOTLOADER FOR RETURNING PRO USERS
+            if (localStorage.getItem('pixelping-pro') === 'true') {
+                const savedKey = localStorage.getItem('pixelping-key');
+                if (savedKey) {
+                    fetch(WORKER_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ licenseKey: savedKey })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            const scriptEl = document.createElement('script');
+                            scriptEl.innerHTML = data.script;
+                            document.body.appendChild(scriptEl);
+                        } else {
+                            localStorage.removeItem('pixelping-pro');
+                            localStorage.removeItem('pixelping-key');
+                            window.location.reload();
+                        }
+                    })
+                    .catch(err => console.log("Offline mode active."));
+                }
             }
         });
     </script>
