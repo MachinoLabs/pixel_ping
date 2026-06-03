@@ -131,6 +131,7 @@
     </div>
 
     <div class="flex items-center gap-3">
+            <button id="navBuyBtn" onclick="document.getElementById('unlockModal').hidden = false; document.getElementById('unlockOverlay').hidden = false;" class="px-3 py-1.5 bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-yellow-900 text-[10px] md:text-xs font-extrabold rounded-full transition-transform active:scale-95 shadow-sm uppercase tracking-wider border border-yellow-300">Get Master Key</button>
             <div id="offline-badge" class="hidden px-3 py-1 bg-slate-200 dark:bg-ppDark text-slate-700 dark:text-ppBlue text-xs rounded-full border border-slate-300 dark:border-ppBlue font-bold">Offline Ready</div>
             <button id="themeToggle" class="ml-info-btn" aria-label="Toggle Theme">
                 <svg id="icon-sun" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
@@ -835,6 +836,7 @@
             
             if (isUnlocked) {
                 appContainer.classList.add('pro-hidden');
+                document.getElementById('navBuyBtn').style.display = 'none';
                 btnMain.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg> <span>Save Code</span>`;
                 btnMain.className = "w-full bg-blue-600 dark:bg-ppBlue hover:bg-blue-700 dark:hover:bg-[#1bb5e0] text-white dark:text-ppBase font-bold py-3 px-4 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-lg";
                 btnPrint.classList.remove('hidden');
