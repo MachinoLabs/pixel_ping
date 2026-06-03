@@ -845,6 +845,7 @@
             if (isUnlocked) {
                 appContainer.classList.add('pro-hidden');
                 document.getElementById('navBuyBtn').style.display = 'none';
+                document.getElementById('founders-story-box').style.display = 'none';
                 btnMain.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg> <span>Save Code</span>`;
                 btnMain.className = "w-full bg-blue-600 dark:bg-ppBlue hover:bg-blue-700 dark:hover:bg-[#1bb5e0] text-white dark:text-ppBase font-bold py-3 px-4 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-lg";
                 btnPrint.classList.remove('hidden');
