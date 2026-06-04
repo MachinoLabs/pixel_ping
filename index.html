@@ -355,104 +355,117 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-slate-200 dark:border-gray-700">
-                <div class="space-y-4">
-                    <h3 class="text-sm font-medium text-blue-600 dark:text-ppBlue border-b border-slate-200 dark:border-gray-700 pb-2 uppercase tracking-wide">
-                        Structure <span class="pro-badge">Pro</span>
-                    </h3>
-                    
-                    <div>
-                        <label class="block text-xs font-bold text-slate-700 dark:text-white mb-1">Outer Shape Mask</label>
-                        <select id="qr-mask" class="pl-input w-full bg-slate-50 dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:outline-none">
-                            <option value="none">Square (Safe)</option>
-                            <option value="rounded">Rounded Square</option>
-                        </select>
-                    </div>
+            <!-- THE JANK KILLER GRID -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 pt-4 border-t border-slate-200 dark:border-gray-700 items-start w-full">
 
-                    <div>
-                        <label class="block text-sm font-bold text-slate-800 dark:text-white mb-2">Corner Eye Style</label>
-                        <select id="qr-corners-type" class="pl-input w-full bg-slate-50 dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:outline-none">
-                            <option value="square">Square</option>
-                            <option value="dot" selected>Circular</option>
-                            <option value="extra-rounded">Rounded</option>
-                        </select>
-                    </div>
-                    <!-- Pro Icon Teaser (Free Users Only) -->
-<div id="icon-teaser-box" onclick="document.getElementById('YOUR_MASTER_KEY_BUTTON_ID').click()" class="mt-6 p-5 bg-[#0f172a]/90 border border-yellow-500/40 rounded-xl shadow-[0_0_20px_rgba(234,179,8,0.15)] relative overflow-hidden group cursor-pointer hover:-translate-y-1 hover:border-yellow-400 hover:shadow-[0_0_30px_rgba(234,179,8,0.3)] transition-all duration-300">
-    <!-- Animated glowing orb effect in the background -->
-    <div class="absolute -top-10 -right-10 w-32 h-32 bg-yellow-500/10 blur-3xl rounded-full group-hover:bg-yellow-500/20 transition-all duration-700"></div>
+    <!-- /// ROW 0: HEADERS /// -->
+    <h3 class="text-sm font-medium text-blue-600 dark:text-ppBlue border-b border-slate-200 dark:border-gray-700 pb-2 uppercase tracking-wide">
+        Structure <span class="pro-badge">Pro</span>
+    </h3>
     
-    <!-- Neon Gold Edge -->
-    <div class="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-yellow-300 to-yellow-600 shadow-[0_0_12px_rgba(234,179,8,0.9)]"></div>
-    
-    <div class="flex items-center gap-2 mb-3 relative z-10">
-        <span class="bg-gradient-to-r from-yellow-400 to-yellow-600 text-slate-900 font-extrabold px-2 py-0.5 rounded text-[10px] uppercase tracking-widest shadow-sm">Master Key</span>
-        <p class="text-sm font-bold text-transparent bg-clip-text bg-gradient-to-r from-slate-200 to-slate-400 uppercase tracking-widest">Unlock 18 Icons</p>
+    <h3 class="text-sm font-medium text-blue-600 dark:text-ppBlue border-b border-slate-200 dark:border-gray-700 pb-2 uppercase tracking-wide flex justify-between items-center">
+        <span>Aesthetics <span class="pro-badge">Pro</span></span>
+        <button id="btn-save-brand" class="text-[10px] bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 px-2 py-1 rounded hover:opacity-90 transition-colors shadow-sm cursor-pointer border border-transparent">Save Brand Kit</button>
+    </h3>
+
+    <!-- /// ROW 1 /// -->
+    <div>
+        <label class="block text-sm font-bold text-slate-800 dark:text-white mb-2">Outer Shape Mask</label>
+        <select id="qr-mask" class="pl-input w-full bg-slate-50 dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:outline-none">
+            <option value="none">Square (Safe)</option>
+            <option value="rounded">Rounded Square</option>
+        </select>
     </div>
     
-    <p class="text-[11px] leading-[2.4] text-slate-500 dark:text-slate-400 font-medium relative z-10">
-        <span class="text-slate-300 hover:text-white transition-colors">WWW</span> &bull; 
-        <span class="text-slate-300 hover:text-white transition-colors">Email</span> &bull; 
-        <span class="text-slate-300 hover:text-white transition-colors">Phone</span> &bull; 
-        <span class="text-slate-300 hover:text-white transition-colors">SMS</span> &bull; 
-        <span class="text-slate-300 hover:text-white transition-colors">vCard</span> &bull; 
-        <span class="text-slate-300 hover:text-white transition-colors">Wi-Fi</span> &bull; 
-        <span class="text-slate-300 hover:text-white transition-colors">Location</span> &bull; 
-        <span class="text-slate-300 hover:text-white transition-colors">Event</span> &bull; 
-        <span class="text-slate-300 hover:text-white transition-colors">PayPal</span> &bull; 
-        <span class="text-slate-300 hover:text-white transition-colors">YouTube</span> &bull; 
-        <span class="text-slate-300 hover:text-white transition-colors">Instagram</span> &bull; 
-        <span class="text-slate-300 hover:text-white transition-colors">Facebook</span> &bull; 
-        <span class="text-slate-300 hover:text-white transition-colors">X (Twitter)</span> &bull; 
-        <span class="text-slate-300 hover:text-white transition-colors">LinkedIn</span> &bull; 
-        <span class="text-slate-300 hover:text-white transition-colors">TikTok</span> &bull; 
-        <span class="text-slate-300 hover:text-white transition-colors">WhatsApp</span> &bull; 
-        <span class="text-slate-300 hover:text-white transition-colors">PDF</span> &bull; 
-        <span class="text-yellow-400 font-bold drop-shadow-md">Custom Logo Upload</span>
-    </p>
-</div>
-                </div>
+    <div>
+        <label class="block text-sm font-bold text-slate-800 dark:text-white mb-2">Center Icon</label>
+        <select id="qr-icon" class="pl-input w-full bg-slate-50 dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:outline-none">
+            <option value="">None</option>
+            <optgroup label="Free Basics">
+                <option value="heart">Heart</option>
+                <option value="lightning">Lightning Bolt</option>
+                <option value="star">Star Circle</option>
+            </optgroup>
+        </select>
+    </div>
 
-                <div class="space-y-4">
-                    <h3 class="text-sm font-medium text-blue-600 dark:text-ppBlue border-b border-slate-200 dark:border-gray-700 pb-2 uppercase tracking-wide flex justify-between items-center">
-                        <span>Aesthetics <span class="pro-badge">Pro</span></span>
-                        <button id="btn-save-brand" class="text-[10px] bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 px-2 py-1 rounded hover:opacity-90 transition-colors shadow-sm cursor-pointer border border-transparent">Save Brand Kit</button>
-                    </h3>
-                    
-                    <div>
-                        <label class="block text-sm font-bold text-slate-800 dark:text-white mb-2">Center Icon</label>
-                        <select id="qr-icon" class="pl-input w-full bg-slate-50 dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:outline-none">
-                            <option value="">None</option>
-                            <optgroup label="Free Basics">
-                                <option value="heart">Heart</option>
-                                <option value="lightning">Lightning Bolt</option>
-                                <option value="star">Star Circle</option>
-                            </optgroup>
-                        </select>
+    <!-- /// ROW 2 /// -->
+    <div>
+        <label class="block text-sm font-bold text-slate-800 dark:text-white mb-2">Corner Eye Style</label>
+        <select id="qr-corners-type" class="pl-input w-full bg-slate-50 dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:outline-none">
+            <option value="square">Square</option>
+            <option value="dot" selected>Circular</option>
+            <option value="extra-rounded">Rounded</option>
+        </select>
+    </div>
+    
+    <div>
+        <label class="block text-sm font-bold text-slate-800 dark:text-white mb-2 flex justify-between items-center">
+            <span>Or Upload Custom Logo [PRO]</span>
+            <button id="btn-clear-logo" class="hidden text-[10px] text-red-500 hover:text-red-700 font-bold">Clear Logo</button>
+        </label>
+        <input type="file" id="qr-custom-logo" accept="image/png, image/jpeg, image/svg+xml" class="block w-full text-xs text-slate-500 dark:text-slate-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-[10px] file:font-bold file:bg-blue-100 file:text-blue-700 hover:file:bg-blue-200 dark:file:bg-slate-700 dark:file:text-slate-300 cursor-pointer transition-colors">
+    </div>
 
-                        <div class="mt-3 pt-3 border-t border-slate-200 dark:border-gray-700/50">
-                            <label class="block text-xs text-slate-500 dark:text-ppLight mb-1 flex justify-between items-center">
-                                <span>Or Upload Custom Logo [PRO]</span>
-                                <button id="btn-clear-logo" class="hidden text-[10px] text-red-500 hover:text-red-700 font-bold">Clear Logo</button>
-                            </label>
-                            <input type="file" id="qr-custom-logo" accept="image/png, image/jpeg, image/svg+xml" class="block w-full text-xs text-slate-500 dark:text-slate-400 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-[10px] file:font-bold file:bg-blue-100 file:text-blue-700 hover:file:bg-blue-200 dark:file:bg-slate-700 dark:file:text-slate-300 cursor-pointer transition-colors">
-                        </div>
-                    </div>
+    <!-- /// ROW 3 /// -->
+    <div class="hidden md:block"></div> <!-- Invisible block keeping the left column empty -->
+    
+    <div class="flex flex-col gap-3">
+        <div class="flex items-center justify-between">
+            <label class="block text-sm font-bold text-slate-800 dark:text-white">Data Color</label>
+            <input type="color" id="qr-color-dots" class="pl-input w-8 h-8 cursor-pointer">
+        </div>
+        <div class="flex items-center justify-between">
+            <label class="block text-sm font-bold text-slate-800 dark:text-white">Eye Color</label>
+            <input type="color" id="qr-color-corners" class="pl-input w-8 h-8 cursor-pointer">
+        </div>
+        <div class="flex items-center justify-between">
+            <label class="block text-sm font-bold text-slate-800 dark:text-white">Background</label>
+            <input type="color" id="qr-color-bg" class="pl-input w-8 h-8 cursor-pointer">
+        </div>
+    </div>
 
-                    <div class="flex items-center justify-between">
-                        <label class="block text-xs text-slate-500 dark:text-ppLight">Data Color</label>
-                        <input type="color" id="qr-color-dots" class="pl-input w-8 h-8 cursor-pointer">
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <label class="block text-xs text-slate-500 dark:text-ppLight">Eye Color</label>
-                        <input type="color" id="qr-color-corners" class="pl-input w-8 h-8 cursor-pointer">
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <label class="block text-xs text-slate-500 dark:text-ppLight">Background</label>
-                        <input type="color" id="qr-color-bg" class="pl-input w-8 h-8 cursor-pointer">
-                    </div>
-                </div>
+    <!-- /// ROW 4: THE FULL-WIDTH BANNER /// -->
+    <div class="col-span-1 md:col-span-2 mt-4">
+        <div id="icon-teaser-box" onclick="document.getElementById('YOUR_MASTER_KEY_BUTTON_ID').click()" class="w-full p-5 md:p-6 bg-[#0f172a]/90 border border-yellow-500/40 rounded-xl shadow-[0_0_20px_rgba(234,179,8,0.15)] relative overflow-hidden group cursor-pointer hover:-translate-y-1 hover:border-yellow-400 hover:shadow-[0_0_30px_rgba(234,179,8,0.3)] transition-all duration-300 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8">
+            
+            <!-- Animated glowing orb effect -->
+            <div class="absolute -top-10 -right-10 w-32 h-32 bg-yellow-500/10 blur-3xl rounded-full group-hover:bg-yellow-500/20 transition-all duration-700 pointer-events-none"></div>
+            
+            <!-- Neon Gold Edge -->
+            <div class="absolute top-0 left-0 w-full h-1 md:w-1 md:h-full bg-gradient-to-r md:bg-gradient-to-b from-yellow-300 to-yellow-600 shadow-[0_0_12px_rgba(234,179,8,0.9)] pointer-events-none"></div>
+            
+            <!-- Left Side: Badges -->
+            <div class="relative z-10 flex flex-col items-center md:items-start gap-2 min-w-max text-center md:text-left">
+                <span class="bg-gradient-to-r from-yellow-400 to-yellow-600 text-slate-900 font-extrabold px-3 py-1 rounded text-[11px] uppercase tracking-widest shadow-sm">Master Key</span>
+                <p class="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-slate-200 to-slate-400 uppercase tracking-widest">Unlock 18 Icons</p>
             </div>
+            
+            <!-- Right Side: Wide Icon List -->
+            <p class="relative z-10 text-xs leading-[2.2] text-slate-400 font-medium text-center md:text-right max-w-2xl">
+                <span class="text-slate-300 hover:text-white transition-colors">WWW</span> &bull; 
+                <span class="text-slate-300 hover:text-white transition-colors">Email</span> &bull; 
+                <span class="text-slate-300 hover:text-white transition-colors">Phone</span> &bull; 
+                <span class="text-slate-300 hover:text-white transition-colors">SMS</span> &bull; 
+                <span class="text-slate-300 hover:text-white transition-colors">vCard</span> &bull; 
+                <span class="text-slate-300 hover:text-white transition-colors">Wi-Fi</span> &bull; 
+                <span class="text-slate-300 hover:text-white transition-colors">Location</span> &bull; 
+                <span class="text-slate-300 hover:text-white transition-colors">Event</span> &bull; 
+                <span class="text-slate-300 hover:text-white transition-colors">PayPal</span> &bull; 
+                <span class="text-slate-300 hover:text-white transition-colors">YouTube</span> &bull; 
+                <span class="text-slate-300 hover:text-white transition-colors">Instagram</span> &bull; 
+                <span class="text-slate-300 hover:text-white transition-colors">Facebook</span> &bull; 
+                <span class="text-slate-300 hover:text-white transition-colors">X (Twitter)</span> &bull; 
+                <span class="text-slate-300 hover:text-white transition-colors">LinkedIn</span> &bull; 
+                <span class="text-slate-300 hover:text-white transition-colors">TikTok</span> &bull; 
+                <span class="text-slate-300 hover:text-white transition-colors">WhatsApp</span> &bull; 
+                <span class="text-slate-300 hover:text-white transition-colors">PDF</span> &bull; 
+                <span class="text-yellow-500 font-bold hover:text-yellow-400 transition-colors">Custom Logo Upload</span>
+            </p>
+        </div>
+    </div>
+
+</div>
 <!-- Founder's Story (Free Users Only) -->
 <div id="founders-story-box" class="mt-8 p-6 bg-slate-800/5 dark:bg-slate-800/30 border-l-4 border-red-500 dark:border-[#ff416c] rounded-xl shadow-sm">
     <p class="text-base font-bold text-slate-800 dark:text-slate-200 mb-2">Why I built PixelPing: Rebellion.</p>
