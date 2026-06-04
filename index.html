@@ -474,13 +474,14 @@
             </div>
 
             <div class="w-full flex flex-col gap-4">
-                <button id="btn-print" class="hidden w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 px-4 rounded-xl transition-transform active:scale-95 items-center justify-center gap-2 shadow-lg border border-slate-600">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
-                    Print Code & Label
+                <button id="btn-print" onclick="document.getElementById('YOUR_MASTER_KEY_BUTTON_ID')?.click()" class="w-full bg-slate-800 dark:bg-slate-800 border border-yellow-500/40 hover:border-yellow-400 hover:bg-slate-700 text-yellow-500 font-bold py-3 px-4 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-lg group cursor-pointer">
+                    <svg class="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                    <span>Print Code & Label <span class="bg-yellow-500 text-slate-900 text-[10px] px-1.5 py-0.5 rounded ml-1 uppercase tracking-widest font-extrabold">Pro</span></span>
                 </button>
-                <button id="btn-main-action" class="w-full bg-blue-600 dark:bg-ppBlue hover:bg-blue-700 dark:hover:bg-[#1bb5e0] text-white dark:text-ppBase font-bold py-3 px-4 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-lg">
+
+                <button id="btn-main-action" onclick="document.getElementById('YOUR_MASTER_KEY_BUTTON_ID')?.click()" class="w-full bg-gradient-to-r from-yellow-400 to-yellow-600 hover:from-yellow-300 hover:to-yellow-500 text-slate-900 font-extrabold py-3 px-4 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(234,179,8,0.2)] cursor-pointer">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                    <span>Save Code</span>
+                    <span>Save Code <span class="bg-slate-900 text-yellow-400 text-[10px] px-1.5 py-0.5 rounded ml-1 uppercase tracking-widest font-extrabold">Pro</span></span>
                 </button>
             </div>
 
