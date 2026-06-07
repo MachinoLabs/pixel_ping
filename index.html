@@ -1190,17 +1190,22 @@
             }
         });
 
-        btnPrint.addEventListener('click', () => {
-            if (isFormEmpty()) {
-                alert("Whoops! You need to enter your details before you can print this code.");
-                return;
-            }
-            processExport('print');
-        });
+       btnPrint.addEventListener('click', () => {
+        // --- BOUNCER 1: Empty Form Check ---
+        if (isFormEmpty()) {
+            alert("Whoops! You need to enter your details before you can print this code.");
+            return;
+        }
 
-        btnPrint.addEventListener('click', () => {
-            processExport('print');
-        });
+        // --- BOUNCER 2: Master Key Paywall ---
+        if (!isProUser) {
+            window.openMasterKeyModal();
+            return;
+        }
+
+        // --- ALL CLEAR: Execute the Print ---
+        processExport('print');
+    });
 
         // --- Export / Canvas Printing ---
         async function getFinalGraphicDataUrl() {
