@@ -505,10 +505,15 @@
 </div>
 
             <div id="history-container" class="w-full mt-6 bg-slate-100 dark:bg-slate-800/40 rounded-2xl border-4 border-slate-300 dark:border-slate-700 p-5 flex-1 flex flex-col min-h-[300px] shadow-inner transition-colors">
-                <h3 class="text-sm font-medium text-blue-600 dark:text-ppBlue border-b-2 border-slate-200 dark:border-gray-700 pb-2 mb-4 uppercase tracking-wide flex justify-between items-center">
-                    <span>Recent Codes (Last 25)</span>
-                    <span class="pro-badge">Pro</span>
-                </h3>
+                <div class="flex justify-between items-end border-b-2 border-slate-200 dark:border-gray-700 pb-2 mb-4 uppercase tracking-wide">
+    <h3 class="text-sm font-medium text-blue-600 dark:text-ppBlue flex items-center">
+        <span>Recent Codes (Last 25)</span>
+        <span class="pro-badge ml-2">Pro</span>
+    </h3>
+    <button id="btn-clear-history" class="text-[10px] uppercase tracking-wider font-bold text-slate-400 hover:text-red-500 transition-colors">
+        Clear All
+    </button>
+</div>
                 <div id="history-content" class="flex-1 flex flex-col overflow-y-auto max-h-[600px] pr-2">
                 </div>
             </div>
@@ -1524,6 +1529,25 @@
             bgContainer.appendChild(div);
         }
     });
+
+// --- CLEAR HISTORY BUTTON LOGIC ---
+    const btnClearHistory = document.getElementById('btn-clear-history');
+    if (btnClearHistory) {
+        btnClearHistory.addEventListener('click', () => {
+            // Safety Check Bouncer
+            if (confirm("Are you sure you want to permanently delete your entire code history?")) {
+                // 1. Wipe the local storage memory
+                localStorage.removeItem('pixelping-history');
+                
+                // 2. Visually empty the container on the screen
+                const historyContent = document.getElementById('history-content');
+                if (historyContent) {
+                    historyContent.innerHTML = '<div class="text-center text-slate-500 text-xs py-4 mt-2">History cleared.</div>';
+                }
+            }
+        });
+    }
+        
 </script>
 </body>
 </html>
