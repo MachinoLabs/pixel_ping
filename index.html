@@ -631,69 +631,46 @@
             const activeSettings = (isProUser && savedBrandKit) ? savedBrandKit : defaults;
 
 // --- Smart URL Prefixing, Auto-Cleanup & Density Meter ---
-    const urlInput = document.getElementById('pl-url'); 
-    const densityWarning = document.getElementById('density-warning');
+    {
+        const smartUrlBox = document.getElementById('pl-url'); 
+        const densityText = document.getElementById('density-warning');
 
-    if (urlInput) {
-        // 1. Add "https://" when they click in
-        urlInput.addEventListener('focus', function() {
-            if (this.value === '') {
-                this.value = 'https://';
-            }
-        });
+        if (smartUrlBox) {
+            // 1. Add "https://" when they click in
+            smartUrlBox.addEventListener('focus', function() {
+                if (this.value === '') this.value = 'https://';
+            });
 
-        // 2. Remove it if they click away without typing
-        urlInput.addEventListener('blur', function() {
-            if (this.value === 'https://') {
-                this.value = ''; 
-                if (densityWarning) densityWarning.className = 'hidden'; 
-            }
-        });
-
-       // --- Smart URL Prefixing, Auto-Cleanup & Density Meter ---
-    const urlInput = document.getElementById('pl-url'); 
-    const densityWarning = document.getElementById('density-warning');
-
-    if (urlInput) {
-        // 1. Add "https://" when they click in
-        urlInput.addEventListener('focus', function() {
-            if (this.value === '') {
-                this.value = 'https://';
-            }
-        });
-
-        // 2. Remove it if they click away without typing
-        urlInput.addEventListener('blur', function() {
-            if (this.value === 'https://') {
-                this.value = ''; 
-                if (densityWarning) densityWarning.className = 'hidden'; 
-            }
-        });
-
-        // 3. Auto-Cleaner AND Density Meter
-        urlInput.addEventListener('input', function() {
-            // Fix double paste bug
-            if (this.value.startsWith('https://https://')) {
-                this.value = this.value.replace('https://https://', 'https://');
-            } else if (this.value.startsWith('https://http://')) {
-                this.value = this.value.replace('https://http://', 'http://');
-            }
-
-            // Density Radar
-            if (densityWarning) {
-                const urlLength = this.value.length;
-                
-                if (urlLength > 150) {
-                    densityWarning.textContent = "Critical Density: Code may fail to scan at small print sizes.";
-                    densityWarning.className = "text-[10px] font-bold mt-1.5 text-red-500 block animate-pulse"; 
-                } else if (urlLength > 70) {
-                    densityWarning.textContent = "High Density: Code may be hard to scan on older phones.";
-                    densityWarning.className = "text-[10px] font-bold mt-1.5 text-yellow-500 block";
-                } else {
-                    densityWarning.className = 'hidden'; 
+            // 2. Remove it if they click away without typing
+            smartUrlBox.addEventListener('blur', function() {
+                if (this.value === 'https://') {
+                    this.value = ''; 
+                    if (densityText) densityText.className = 'hidden'; 
                 }
-            }
-        });
+            });
+
+            // 3. Auto-Cleaner AND Density Meter
+            smartUrlBox.addEventListener('input', function() {
+                if (this.value.startsWith('https://https://')) {
+                    this.value = this.value.replace('https://https://', 'https://');
+                } else if (this.value.startsWith('https://http://')) {
+                    this.value = this.value.replace('https://http://', 'http://');
+                }
+
+                if (densityText) {
+                    const charCount = this.value.length;
+                    if (charCount > 150) {
+                        densityText.textContent = "Critical Density: Code may fail to scan at small print sizes.";
+                        densityText.className = "text-[10px] font-bold mt-1.5 text-red-500 block animate-pulse"; 
+                    } else if (charCount > 70) {
+                        densityText.textContent = "High Density: Code may be hard to scan on older phones.";
+                        densityText.className = "text-[10px] font-bold mt-1.5 text-yellow-500 block";
+                    } else {
+                        densityText.className = 'hidden'; 
+                    }
+                }
+            });
+        }
     }
             
             // 🟢 INJECT GHOST SCRIPT ON BOOT (OFFLINE-FIRST)
