@@ -487,6 +487,23 @@
                 </button>
             </div>
 
+            <div class="mb-6 pt-4 border-t border-slate-200 dark:border-slate-700/50">
+    <label class="block text-xs text-slate-500 dark:text-ppLight font-bold uppercase tracking-wider mb-2">Export Format</label>
+    
+    <div class="flex gap-3">
+        <select id="export-format" class="flex-1 bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg outline-none border border-slate-300 dark:border-slate-700 focus:border-[#27cfff] transition-colors cursor-pointer text-sm font-medium">
+            <option value="png">Standard Image (PNG)</option>
+            <option value="svg">Infinite Vector (SVG) [PRO]</option>
+            <option value="pdf">Document (PDF) [PRO]</option>
+        </select>
+
+        <button id="btn-download" class="px-5 py-2 bg-slate-800 dark:bg-slate-700 hover:bg-slate-700 dark:hover:bg-slate-600 text-white text-sm font-bold rounded-lg transition-transform active:scale-95 shadow-md flex items-center justify-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+            Download
+        </button>
+    </div>
+</div>
+
             <div id="history-container" class="w-full mt-6 bg-slate-100 dark:bg-slate-800/40 rounded-2xl border-4 border-slate-300 dark:border-slate-700 p-5 flex-1 flex flex-col min-h-[300px] shadow-inner transition-colors">
                 <h3 class="text-sm font-medium text-blue-600 dark:text-ppBlue border-b-2 border-slate-200 dark:border-gray-700 pb-2 mb-4 uppercase tracking-wide flex justify-between items-center">
                     <span>Recent Codes (Last 10)</span>
