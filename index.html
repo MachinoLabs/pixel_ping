@@ -650,6 +650,26 @@
             }
         });
 
+       // --- Smart URL Prefixing, Auto-Cleanup & Density Meter ---
+    const urlInput = document.getElementById('pl-url'); 
+    const densityWarning = document.getElementById('density-warning');
+
+    if (urlInput) {
+        // 1. Add "https://" when they click in
+        urlInput.addEventListener('focus', function() {
+            if (this.value === '') {
+                this.value = 'https://';
+            }
+        });
+
+        // 2. Remove it if they click away without typing
+        urlInput.addEventListener('blur', function() {
+            if (this.value === 'https://') {
+                this.value = ''; 
+                if (densityWarning) densityWarning.className = 'hidden'; 
+            }
+        });
+
         // 3. Auto-Cleaner AND Density Meter
         urlInput.addEventListener('input', function() {
             // Fix double paste bug
