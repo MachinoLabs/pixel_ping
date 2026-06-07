@@ -506,7 +506,7 @@
 
             <div id="history-container" class="w-full mt-6 bg-slate-100 dark:bg-slate-800/40 rounded-2xl border-4 border-slate-300 dark:border-slate-700 p-5 flex-1 flex flex-col min-h-[300px] shadow-inner transition-colors">
                 <h3 class="text-sm font-medium text-blue-600 dark:text-ppBlue border-b-2 border-slate-200 dark:border-gray-700 pb-2 mb-4 uppercase tracking-wide flex justify-between items-center">
-                    <span>Recent Codes (Last 10)</span>
+                    <span>Recent Codes (Last 25)</span>
                     <span class="pro-badge">Pro</span>
                 </h3>
                 <div id="history-content" class="flex-1 flex flex-col overflow-y-auto max-h-[350px] pr-2">
@@ -1074,7 +1074,7 @@
 
             let history = JSON.parse(localStorage.getItem('pixelping-history')) || [];
             history.unshift(state);
-            if (history.length > 10) history.pop(); 
+            if (history.length > 25) history.pop(); 
             
             localStorage.setItem('pixelping-history', JSON.stringify(history));
             renderHistory();
