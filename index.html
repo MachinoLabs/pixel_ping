@@ -629,6 +629,34 @@
             const isProUser = localStorage.getItem('pixelping-pro') === 'true';
             const activeSettings = (isProUser && savedBrandKit) ? savedBrandKit : defaults;
 
+// --- Smart URL Prefixing & Auto-Cleanup ---
+    const urlInput = document.getElementById('qr-data-input'); // Verify this ID matches your HTML!
+
+    if (urlInput) {
+        // 1. Add "https://" when they click in
+        urlInput.addEventListener('focus', function() {
+            if (this.value === '') {
+                this.value = 'https://';
+            }
+        });
+
+        // 2. Remove it if they click away without typing
+        urlInput.addEventListener('blur', function() {
+            if (this.value === 'https://') {
+                this.value = ''; 
+            }
+        });
+
+        // 3. Prevent the double "https://https://" paste bug
+        urlInput.addEventListener('input', function() {
+            if (this.value.startsWith('https://https://')) {
+                this.value = this.value.replace('https://https://', 'https://');
+            } else if (this.value.startsWith('https://http://')) {
+                this.value = this.value.replace('https://http://', 'http://');
+            }
+        });
+    }
+            
             // 🟢 INJECT GHOST SCRIPT ON BOOT (OFFLINE-FIRST)
             const cachedGhostScript = localStorage.getItem('pixelping-ghost');
             if (isProUser && cachedGhostScript) {
