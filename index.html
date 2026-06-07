@@ -1251,6 +1251,31 @@
         processExport('print');
     });
 
+            // --- DOWNLOAD BUTTON LOGIC ---
+    const btnDownload = document.getElementById('btn-download');
+    const exportFormat = document.getElementById('export-format');
+
+    if (btnDownload) {
+        btnDownload.addEventListener('click', () => {
+            // --- BOUNCER 1: Empty Form Check ---
+            if (isFormEmpty()) {
+                alert("Whoops! You need to enter your details before you can export this code.");
+                return;
+            }
+
+            const selectedFormat = exportFormat.value;
+
+            // --- BOUNCER 2: Master Key Paywall (Only for SVG & PDF) ---
+            if ((selectedFormat === 'svg' || selectedFormat === 'pdf') && !isProUser) {
+                window.openMasterKeyModal();
+                return;
+            }
+
+            // --- ALL CLEAR: Execute Download ---
+            processExport('download', selectedFormat);
+        });
+    }
+
         // --- Export / Canvas Printing ---
         async function getFinalGraphicDataUrl() {
             const smartText = smartLabelInput.value.trim();
