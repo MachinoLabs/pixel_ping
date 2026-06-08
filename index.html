@@ -428,7 +428,7 @@
             <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-300 to-yellow-600 shadow-[0_0_12px_rgba(234,179,8,0.9)] pointer-events-none"></div>
             
             <div class="relative z-10 flex flex-col items-center gap-1 text-center mt-1">
-                <span class="bg-gradient-to-r from-yellow-400 to-yellow-600 text-slate-900 font-extrabold px-3 py-0.5 rounded text-[10px] uppercase tracking-widest shadow-sm">Master Key</span>
+            <span id="icons-pro-badge" class="pro-badge bg-gradient-to-r from-yellow-400 to-yellow-600 text-slate-900 font-extrabold px-3 py-0.5 rounded text-[10px] uppercase tracking-widest shadow-sm">Master Key</span>
                 <p class="text-base md:text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-slate-200 to-slate-400 uppercase tracking-widest">Unlock 20 Premium Icons</p>
             </div>
 
@@ -478,7 +478,7 @@
             <div class="w-full flex flex-col gap-4">
                 <button id="btn-print" class="w-full bg-slate-800 dark:bg-slate-800 border border-yellow-500/40 hover:border-yellow-400 hover:bg-slate-700 text-yellow-500 font-bold py-3 px-4 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-lg group cursor-pointer">
                     <svg class="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
-                    <span>Print Code & Label <span class="bg-yellow-500 text-slate-900 text-[10px] px-1.5 py-0.5 rounded ml-1 uppercase tracking-widest font-extrabold">Pro</span></span>
+                    <span>Print Code & Label <span id="print-pro-badge" class="pro-badge bg-yellow-500 text-slate-900 text-[10px] px-1.5 py-0.5 rounded ml-1 uppercase tracking-widest font-extrabold">Pro</span></span>
                 </button>
 
                 <button id="btn-main-action" class="w-full bg-gradient-to-r from-yellow-400 to-yellow-600 hover:from-yellow-300 hover:to-yellow-500 text-slate-900 font-extrabold py-3 px-4 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(234,179,8,0.2)] cursor-pointer">
@@ -1215,6 +1215,9 @@
                     closeUnlockModal();
                     
                     document.querySelectorAll('.pro-badge').forEach(badge => badge.style.display = 'none');
+
+                    document.getElementById('print-pro-badge')?.classList.add('hidden');
+    document.getElementById('icons-pro-badge')?.classList.add('hidden');
                     
                     checkPaywallState();
                     renderHistory(); 
