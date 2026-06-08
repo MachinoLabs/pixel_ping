@@ -1550,6 +1550,23 @@
             }
         });
     }
+
+        // --- PAYWALL INTERCEPT: CUSTOM LOGO UPLOAD ---
+    const logoUploadBtn = document.getElementById('qr-custom-logo');
+    if (logoUploadBtn) {
+        logoUploadBtn.addEventListener('click', (e) => {
+            // Check if the user has the Master Key
+            const isUserPro = localStorage.getItem('pixelping-pro') === 'true';
+            
+            if (!isUserPro) {
+                // 1. Stop the computer from opening the file browser!
+                e.preventDefault(); 
+                
+                // 2. Force the paywall modal to open instead
+                openUnlockModal(); 
+            }
+        });
+    }
         
 </script>
 </body>
