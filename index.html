@@ -634,6 +634,7 @@
 
 // --- Premium Paywall Modal Function ---
     window.openMasterKeyModal = function() {
+        if (localStorage.getItem('pixelping-pro') === 'true') return;
         document.getElementById('unlockModal').hidden = false;
         document.getElementById('unlockOverlay').hidden = false;
     };
