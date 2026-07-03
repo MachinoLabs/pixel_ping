@@ -1590,57 +1590,53 @@
 </script>
 <!-- Rest of your HTML file -->
 
-<!-- THE BOUNCER: STRICT SEQUENCE INJECTION -->
+<!-- THE BOUNCER: OFFICIAL DYNAMIC LOADER -->
 <script>
-    (function bootClerk() {
-        // 1. Force load the Core Brain first
-        const coreScript = document.createElement('script');
-        coreScript.src = "https://novel-ant-14.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js";
-        coreScript.crossOrigin = "anonymous";
-        // THE MISSING PIECE: Hand the Brain its ID card immediately!
-        coreScript.setAttribute('data-clerk-publishable-key', 'pk_test_bm92ZWwtYW50LTE0LmNsZXJrLmFjY291bnRzLmRldiQ');
+    (function() {
+        const pubKey = "pk_test_bm92ZWwtYW50LTE0LmNsZXJrLmFjY291bnRzLmRldiQ";
         
-        coreScript.onload = () => {
-            // 2. Once Brain is confirmed awake, load the UI Face
-            const uiScript = document.createElement('script');
-            uiScript.src = "https://novel-ant-14.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js";
-            uiScript.crossOrigin = "anonymous";
-            
-            uiScript.onload = async () => {
-                // 3. Both are loaded and synced. Wake up the App.
-                try {
-                    await window.Clerk.load({
-                        appearance: {
-                            baseTheme: document.documentElement.classList.contains('dark') ? 'dark' : 'light',
-                            variables: { colorPrimary: '#27cfff' }
-                        }
-                    });
-                    
-                    const btnSignIn = document.getElementById('btn-sign-in');
-                    const userButtonMount = document.getElementById('user-button-mount');
-
-                    if (window.Clerk.user) {
-                        btnSignIn.classList.add('hidden');
-                        userButtonMount.classList.remove('hidden');
-                        window.Clerk.mountUserButton(userButtonMount);
-                    } else {
-                        btnSignIn.classList.remove('hidden');
-                        userButtonMount.classList.add('hidden');
-                        
-                        // We safely attach the click event now that we know the UI exists
-                        btnSignIn.addEventListener('click', () => {
-                            window.Clerk.openSignIn();
-                        });
+        const startClerk = async () => {
+            try {
+                // Clerk handles loading both the logic and the UI internally here
+                await window.Clerk.load({
+                    appearance: {
+                        baseTheme: document.documentElement.classList.contains('dark') ? 'dark' : 'light',
+                        variables: { colorPrimary: '#27cfff' }
                     }
-                } catch (err) {
-                    console.error("Clerk Initialization Failed:", err);
+                });
+                
+                const btnSignIn = document.getElementById('btn-sign-in');
+                const userButtonMount = document.getElementById('user-button-mount');
+
+                if (window.Clerk.user) {
+                    btnSignIn.classList.add('hidden');
+                    userButtonMount.classList.remove('hidden');
+                    window.Clerk.mountUserButton(userButtonMount);
+                } else {
+                    btnSignIn.classList.remove('hidden');
+                    userButtonMount.classList.add('hidden');
+                    
+                    // The button now only listens AFTER Clerk confirms the UI is ready
+                    btnSignIn.addEventListener('click', () => {
+                        window.Clerk.openSignIn();
+                    });
                 }
-            };
-            // Inject UI into document
-            document.head.appendChild(uiScript);
+            } catch (err) {
+                console.error("Clerk Initialization Error:", err);
+            }
         };
-        // Inject Core into document
-        document.head.appendChild(coreScript);
+
+        // Create the official script tag exactly as Clerk expects it
+        const script = document.createElement('script');
+        script.setAttribute('data-clerk-publishable-key', pubKey);
+        script.async = true;
+        // Using @latest ensures we get the fully bundled version
+        script.src = 'https://novel-ant-14.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js';
+        script.crossOrigin = 'anonymous';
+        
+        // Wait for the script to download, then fire our start function
+        script.addEventListener('load', startClerk);
+        document.body.appendChild(script);
     })();
 </script>
 </body>
