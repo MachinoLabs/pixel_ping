@@ -1552,6 +1552,40 @@
         }
     });
 
+        // --- PHASE 3: THE VIP GATEKEEPER (STATIC / DYNAMIC TOGGLE) ---
+const btnStatic = document.getElementById('mode-static');
+const btnDynamic = document.getElementById('mode-dynamic');
+
+if (btnStatic && btnDynamic) {
+    btnDynamic.addEventListener('click', () => {
+        // 1. Intercept! Check if Clerk is ready and if the user is logged in
+        if (window.Clerk && !window.Clerk.user) {
+            // NOT ON THE LIST: Summon the modal and stop
+            window.Clerk.openSignIn();
+            return; 
+        }
+
+        // 2. ON THE LIST: Swap styles to make Dynamic active
+        btnStatic.className = "flex-1 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest py-1.5 rounded-md text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 transition-all";
+        btnDynamic.className = "flex-1 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest py-1.5 rounded-md bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm transition-all flex justify-center items-center gap-1.5";
+        
+        // Optional: Hide the PRO badge since they are authenticated
+        const proBadge = btnDynamic.querySelector('.pro-badge');
+        if (proBadge) proBadge.style.display = 'none';
+        
+        // Trigger your dynamic UI changes here (e.g., showing dynamic shortlink options)
+        console.log("VIP Access Granted: Dynamic Mode Activated");
+    });
+
+    btnStatic.addEventListener('click', () => {
+        // Swap styles back to make Static active
+        btnDynamic.className = "flex-1 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest py-1.5 rounded-md text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 transition-all flex justify-center items-center gap-1.5";
+        btnStatic.className = "flex-1 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest py-1.5 rounded-md bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm transition-all";
+        
+        console.log("Returned to Static Mode");
+    });
+}
+
 // --- CLEAR HISTORY BUTTON LOGIC ---
     const btnClearHistory = document.getElementById('btn-clear-history');
     if (btnClearHistory) {
