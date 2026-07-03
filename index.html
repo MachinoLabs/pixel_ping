@@ -1591,14 +1591,14 @@
 <!-- Rest of your HTML file -->
 
 <script
-  async
+  defer
   crossorigin="anonymous"
   src="https://novel-ant-14.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js"
   type="text/javascript"
 ></script>
 
 <script
-  async
+  defer
   crossorigin="anonymous"
   data-clerk-publishable-key="pk_test_bm92ZWwtYW50LTE0LmNsZXJrLmFjY291bnRzLmRldiQ"
   src="https://novel-ant-14.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js"
@@ -1606,7 +1606,7 @@
 ></script>
 
 <script>
-    const initClerk = async () => {
+    window.addEventListener('load', async function() {
         if (window.Clerk) {
             try {
                 await window.Clerk.load({
@@ -1633,11 +1633,8 @@
             } catch (err) {
                 console.error("Clerk failed to load:", err);
             }
-        } else {
-            setTimeout(initClerk, 50);
         }
-    };
-    initClerk();
+    });
 </script>
 </body>
 </html>
