@@ -1617,7 +1617,64 @@ if (btnCopyLink && shortlinkUrl) {
         }, 2000);
     });
 }
+// --- PHASE 5: DYNAMIC PAYLOAD GENERATION ---
+// NOTE: Verify these IDs match your actual HTML! 
+// Standard IDs: 'btn-save' for the Save button, 'qr-data' for the Website Address input.
+const btnSave = document.getElementById('btn-save'); 
+const destinationInput = document.getElementById('qr-data'); 
 
+if (btnSave && shortlinkUrl) {
+    btnSave.addEventListener('click', (e) => {
+        // 1. Are we in the VIP section? (Is the dynamic panel visible?)
+        const isDynamicMode = !dynamicLinkDisplay.classList.contains('hidden');
+        
+        if (isDynamicMode) {
+            // Stop the default static save behavior from happening
+            e.preventDefault(); 
+            e.stopPropagation();
+
+            // Double check authentication just to be absolutely safe
+            if (!window.Clerk || !window.Clerk.user) {
+                window.Clerk.openSignIn();
+                return;
+            }
+
+            // 2. Generate a random 6-character slug (e.g., 'a9b2x7')
+            const generateSlug = () => Math.random().toString(36).substring(2, 8).toLowerCase();
+            const newSlug = generateSlug();
+            
+            // 3. Update the UI to show the newly generated shortlink
+            shortlinkUrl.value = `https://link.pixelping.app/${newSlug}`;
+            
+            // Give the input box a quick flash effect so the user sees it update
+            shortlinkUrl.classList.add('bg-slate-700', 'transition-colors', 'duration-300');
+            setTimeout(() => shortlinkUrl.classList.remove('bg-slate-700'), 400);
+
+            // 4. Construct the JSON Payload for the Backend
+            const destinationValue = destinationInput ? destinationInput.value : 'https://pixelping.app';
+            const payload = {
+                slug: newSlug,
+                destination: destinationValue || 'https://pixelping.app', // Fallback if empty
+                userId: window.Clerk.user.id,
+                createdAt: new Date().toISOString()
+            };
+
+            // 5. Fire it off! (For now, we log it to the console)
+            console.log("🚀 PHASE 5 SUCCESS: Dynamic Payload Ready for Cloudflare!");
+            console.log(JSON.stringify(payload, null, 2));
+            
+            // Visual feedback on the Save Button
+            const originalBtnHtml = btnSave.innerHTML;
+            btnSave.innerHTML = "Saving to Cloud...";
+            btnSave.classList.add('bg-ppGreen', 'text-slate-900'); // Assuming ppGreen is your accent color
+            
+            setTimeout(() => {
+                btnSave.innerHTML = originalBtnHtml;
+                btnSave.classList.remove('bg-ppGreen', 'text-slate-900');
+            }, 2000);
+        }
+    });
+}
 // --- CLEAR HISTORY BUTTON LOGIC ---
     const btnClearHistory = document.getElementById('btn-clear-history');
     if (btnClearHistory) {
