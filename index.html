@@ -1552,15 +1552,15 @@
         }
     });
 
-        // --- PHASE 3: THE VIP GATEKEEPER (STATIC / DYNAMIC TOGGLE) ---
+// --- PHASE 3 & 4: THE VIP GATEKEEPER & DYNAMIC UI REVEAL ---
 const btnStatic = document.getElementById('mode-static');
 const btnDynamic = document.getElementById('mode-dynamic');
+const dynamicLinkDisplay = document.getElementById('dynamic-link-display'); 
 
 if (btnStatic && btnDynamic) {
     btnDynamic.addEventListener('click', () => {
         // 1. Intercept! Check if Clerk is ready and if the user is logged in
         if (window.Clerk && !window.Clerk.user) {
-            // NOT ON THE LIST: Summon the modal and stop
             window.Clerk.openSignIn();
             return; 
         }
@@ -1569,11 +1569,17 @@ if (btnStatic && btnDynamic) {
         btnStatic.className = "flex-1 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest py-1.5 rounded-md text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 transition-all";
         btnDynamic.className = "flex-1 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest py-1.5 rounded-md bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm transition-all flex justify-center items-center gap-1.5";
         
-        // Optional: Hide the PRO badge since they are authenticated
         const proBadge = btnDynamic.querySelector('.pro-badge');
         if (proBadge) proBadge.style.display = 'none';
         
-        // Trigger your dynamic UI changes here (e.g., showing dynamic shortlink options)
+        // 3. PHASE 4: REVEAL THE DYNAMIC UI
+        if (dynamicLinkDisplay) {
+            dynamicLinkDisplay.classList.remove('hidden');
+            // Give it a quick attention-grabbing pulse when it appears
+            dynamicLinkDisplay.classList.add('animate-pulse');
+            setTimeout(() => dynamicLinkDisplay.classList.remove('animate-pulse'), 400);
+        }
+        
         console.log("VIP Access Granted: Dynamic Mode Activated");
     });
 
@@ -1582,7 +1588,33 @@ if (btnStatic && btnDynamic) {
         btnDynamic.className = "flex-1 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest py-1.5 rounded-md text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 transition-all flex justify-center items-center gap-1.5";
         btnStatic.className = "flex-1 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest py-1.5 rounded-md bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm transition-all";
         
+        // Hide the Dynamic UI again
+        if (dynamicLinkDisplay) {
+            dynamicLinkDisplay.classList.add('hidden');
+        }
+        
         console.log("Returned to Static Mode");
+    });
+}
+
+// --- PHASE 4.5: WIRE UP THE COPY BUTTON ---
+const btnCopyLink = document.getElementById('btn-copy-link');
+const shortlinkUrl = document.getElementById('shortlink-url');
+if (btnCopyLink && shortlinkUrl) {
+    btnCopyLink.addEventListener('click', () => {
+        // Fallback for older browsers (or if iframe restrictions apply)
+        shortlinkUrl.select();
+        document.execCommand('copy');
+        
+        // Visual feedback
+        const originalText = btnCopyLink.innerText;
+        btnCopyLink.innerText = "Copied!";
+        btnCopyLink.classList.add('bg-green-500', 'dark:bg-ppGreen', 'text-slate-900');
+        
+        setTimeout(() => {
+            btnCopyLink.innerText = originalText;
+            btnCopyLink.classList.remove('bg-green-500', 'dark:bg-ppGreen', 'text-slate-900');
+        }, 2000);
     });
 }
 
