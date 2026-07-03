@@ -1590,12 +1590,15 @@
 </script>
 <!-- Rest of your HTML file -->
 
+<!-- THE BOUNCER: STRICT SEQUENCE INJECTION -->
 <script>
     (function bootClerk() {
         // 1. Force load the Core Brain first
         const coreScript = document.createElement('script');
         coreScript.src = "https://novel-ant-14.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js";
         coreScript.crossOrigin = "anonymous";
+        // THE MISSING PIECE: Hand the Brain its ID card immediately!
+        coreScript.setAttribute('data-clerk-publishable-key', 'pk_test_bm92ZWwtYW50LTE0LmNsZXJrLmFjY291bnRzLmRldiQ');
         
         coreScript.onload = () => {
             // 2. Once Brain is confirmed awake, load the UI Face
@@ -1607,8 +1610,6 @@
                 // 3. Both are loaded and synced. Wake up the App.
                 try {
                     await window.Clerk.load({
-                        // Notice we pass the key manually here to prevent auto-init crashes
-                        publishableKey: 'pk_test_bm92ZWwtYW50LTE0LmNsZXJrLmFjY291bnRzLmRldiQ',
                         appearance: {
                             baseTheme: document.documentElement.classList.contains('dark') ? 'dark' : 'light',
                             variables: { colorPrimary: '#27cfff' }
