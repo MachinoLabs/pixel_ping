@@ -133,6 +133,10 @@
     <div class="flex items-center gap-3">
             <button id="navBuyBtn" onclick="openMasterKeyModal()" class="px-3 py-1.5 bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-yellow-900 text-[10px] md:text-xs font-extrabold rounded-full transition-transform active:scale-95 shadow-sm uppercase tracking-wider border border-yellow-300">Get Master Key</button>
             <div id="offline-badge" class="hidden px-3 py-1 bg-slate-200 dark:bg-ppDark text-slate-700 dark:text-ppBlue text-xs rounded-full border border-slate-300 dark:border-ppBlue font-bold">Offline Ready</div>
+            <div id="auth-container" class="flex items-center justify-center min-w-[70px]">
+    <button id="btn-sign-in" class="text-[11px] md:text-xs font-bold text-blue-600 dark:text-ppBlue hover:underline tracking-wider uppercase transition-colors">Sign In</button>
+    <div id="user-button-mount" class="hidden"></div>
+</div>
             <button id="themeToggle" class="ml-info-btn" aria-label="Toggle Theme">
                 <svg id="icon-sun" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                 <svg id="icon-moon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
@@ -151,6 +155,13 @@
             </div>
 
             <div>
+                <div class="flex items-center justify-between bg-slate-100 dark:bg-slate-800/60 p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 mb-5 shadow-inner">
+    <button id="mode-static" class="flex-1 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest py-1.5 rounded-md bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm transition-all">Static (Local)</button>
+    <button id="mode-dynamic" class="flex-1 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest py-1.5 rounded-md text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 transition-all flex justify-center items-center gap-1.5">
+        Dynamic
+        <span class="pro-badge bg-blue-500 text-white dark:bg-ppBlue dark:text-ppBase" style="margin-left: 0;">Pro</span>
+    </button>
+</div>
                 <label class="block text-xs font-bold text-slate-700 dark:text-white mb-1">What should this code do?</label>
                 <select id="payload-type" class="w-full bg-white dark:bg-slate-800 text-slate-900 dark:text-white px-4 py-3 rounded-lg border-2 border-blue-400 dark:border-ppBlue focus:outline-none focus:ring-2 focus:ring-blue-600 font-bold transition-colors shadow-sm">
                     <optgroup label="Free Basics">
@@ -473,6 +484,13 @@
                     <div id="canvas-container"></div>
                 </div>
                 <div id="live-label-preview" class="mt-4 font-bold text-slate-800 dark:text-white text-xl text-center hidden px-4 pb-2"></div>
+                <div id="dynamic-link-display" class="hidden w-full mt-2 bg-white dark:bg-slate-900 border-2 border-blue-400 dark:border-ppBlue rounded-xl p-3 shadow-lg flex flex-col items-center justify-center gap-2">
+    <span class="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest">Your Dynamic Route</span>
+    <div class="flex items-center gap-2 w-full">
+        <input type="text" id="shortlink-url" readonly value="https://link.pixelping.app/xyz" class="flex-1 bg-slate-50 dark:bg-slate-800 text-xs font-mono text-slate-700 dark:text-slate-200 px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none select-all">
+        <button id="btn-copy-link" class="bg-blue-600 dark:bg-ppBlue hover:bg-blue-700 dark:hover:bg-[#1bb5e0] text-white dark:text-ppBase px-4 py-2 rounded-lg font-bold text-xs transition-colors shadow-sm">Copy</button>
+    </div>
+</div>
             </div>
 
             <div class="w-full flex flex-col gap-4">
@@ -1569,6 +1587,51 @@
         });
     }
         
+</script>
+<!-- Rest of your HTML file -->
+
+<script
+  defer
+  crossorigin="anonymous"
+  src="https://novel-ant-14.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js"
+  type="text/javascript"
+></script>
+
+<script
+  defer
+  crossorigin="anonymous"
+  data-clerk-publishable-key="pk_test_bm92ZWwtYW50LTE0LmNsZXJrLmFjY291bnRzLmRldiQ"
+  src="https://novel-ant-14.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js"
+  type="text/javascript"
+  ></script>
+
+<!-- 2. CLERK INITIALIZATION SCRIPT (Waking up the bouncer) -->
+<script>
+    window.addEventListener('load', async function() {
+        if (window.Clerk) {
+            await Clerk.load({
+                appearance: {
+                    baseTheme: document.documentElement.classList.contains('dark') ? 'dark' : 'light',
+                    variables: { colorPrimary: '#27cfff' }
+                }
+            });
+            
+            const btnSignIn = document.getElementById('btn-sign-in');
+            const userButtonMount = document.getElementById('user-button-mount');
+
+            if (Clerk.user) {
+                btnSignIn.classList.add('hidden');
+                userButtonMount.classList.remove('hidden');
+                Clerk.mountUserButton(userButtonMount);
+            } else {
+                btnSignIn.classList.remove('hidden');
+                userButtonMount.classList.add('hidden');
+                btnSignIn.addEventListener('click', () => {
+                    Clerk.openSignIn();
+                });
+            }
+        }
+    });
 </script>
 </body>
 </html>
