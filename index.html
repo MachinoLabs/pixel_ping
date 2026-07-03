@@ -1591,47 +1591,53 @@
 <!-- Rest of your HTML file -->
 
 <script
-  defer
+  async
   crossorigin="anonymous"
   src="https://novel-ant-14.clerk.accounts.dev/npm/@clerk/ui@1/dist/ui.browser.js"
   type="text/javascript"
 ></script>
 
 <script
-  defer
+  async
   crossorigin="anonymous"
   data-clerk-publishable-key="pk_test_bm92ZWwtYW50LTE0LmNsZXJrLmFjY291bnRzLmRldiQ"
   src="https://novel-ant-14.clerk.accounts.dev/npm/@clerk/clerk-js@6/dist/clerk.browser.js"
   type="text/javascript"
-  ></script>
+></script>
 
-<!-- 2. CLERK INITIALIZATION SCRIPT (Waking up the bouncer) -->
 <script>
-    window.addEventListener('load', async function() {
+    const initClerk = async () => {
         if (window.Clerk) {
-            await Clerk.load({
-                appearance: {
-                    baseTheme: document.documentElement.classList.contains('dark') ? 'dark' : 'light',
-                    variables: { colorPrimary: '#27cfff' }
-                }
-            });
-            
-            const btnSignIn = document.getElementById('btn-sign-in');
-            const userButtonMount = document.getElementById('user-button-mount');
-
-            if (Clerk.user) {
-                btnSignIn.classList.add('hidden');
-                userButtonMount.classList.remove('hidden');
-                Clerk.mountUserButton(userButtonMount);
-            } else {
-                btnSignIn.classList.remove('hidden');
-                userButtonMount.classList.add('hidden');
-                btnSignIn.addEventListener('click', () => {
-                    Clerk.openSignIn();
+            try {
+                await window.Clerk.load({
+                    appearance: {
+                        baseTheme: document.documentElement.classList.contains('dark') ? 'dark' : 'light',
+                        variables: { colorPrimary: '#27cfff' }
+                    }
                 });
+                
+                const btnSignIn = document.getElementById('btn-sign-in');
+                const userButtonMount = document.getElementById('user-button-mount');
+
+                if (window.Clerk.user) {
+                    btnSignIn.classList.add('hidden');
+                    userButtonMount.classList.remove('hidden');
+                    window.Clerk.mountUserButton(userButtonMount);
+                } else {
+                    btnSignIn.classList.remove('hidden');
+                    userButtonMount.classList.add('hidden');
+                    btnSignIn.addEventListener('click', () => {
+                        window.Clerk.openSignIn();
+                    });
+                }
+            } catch (err) {
+                console.error("Clerk failed to load:", err);
             }
+        } else {
+            setTimeout(initClerk, 50);
         }
-    });
+    };
+    initClerk();
 </script>
 </body>
 </html>
