@@ -1620,8 +1620,8 @@ if (btnCopyLink && shortlinkUrl) {
 // --- PHASE 5: DYNAMIC PAYLOAD GENERATION ---
 // NOTE: Verify these IDs match your actual HTML! 
 // Standard IDs: 'btn-save' for the Save button, 'qr-data' for the Website Address input.
-const btnSave = document.getElementById('btn-save'); 
-const destinationInput = document.getElementById('qr-data'); 
+const btnSave = document.getElementById('btn-main-action');
+const destinationInput = document.getElementById('pl-url'); 
 
 if (btnSave && shortlinkUrl) {
     btnSave.addEventListener('click', (e) => {
