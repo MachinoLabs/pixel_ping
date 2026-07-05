@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PixelPing | Command Center</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #0f172a; color: #f8fafc; }
+    </style>
+</head>
+<body class="min-h-screen p-8">
+    <div class="max-w-4xl mx-auto">
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="text-3xl font-bold text-blue-400">PixelPing Command Center</h1>
+            <a href="index.html" class="text-sm text-slate-400 hover:text-white transition">← Back to Generator</a>
+        </div>
+
+        <div class="bg-slate-800 rounded-lg shadow-xl overflow-hidden">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-slate-900 text-slate-300 text-sm uppercase tracking-wider">
+                        <th class="p-4 border-b border-slate-700">Short Code</th>
+                        <th class="p-4 border-b border-slate-700">Destination URL</th>
+                        <th class="p-4 border-b border-slate-700 text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="links-table-body">
+                    <!-- Links will be injected here by JavaScript -->
+                    <tr>
+                        <td colspan="3" class="p-4 text-center text-slate-400">Loading your links...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // 1. Setup the connection details
+        const WORKER_URL = "https://pixelping-worker.amateuraiguy.workers.dev";
+        const ADMIN_KEY = "pixelping-secret-2026"; // Must match your worker exactly!
+        const tableBody = document.getElementById("links-table-body");
+
+        // 2. Fetch the links from the database
+        async function loadLinks() {
+            try {
+                const response = await fetch(`${WORKER_URL}/api/admin`, {
+                    method: "GET",
+                    headers: {
+                        "x-admin-key": ADMIN_KEY
+                    }
+                });
+
+                if (!response.ok) throw new Error("Failed to authenticate or fetch");
+                
+                const links = await response.json();
+                renderTable(links);
+            } catch (error) {
+                console.error("Error loading links:", error);
+                tableBody.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-red-400">Error loading data. Check your browser console.</td></tr>`;
+            }
+        }
+
+        // 3. Draw the links into the HTML table
+        function renderTable(links) {
+            if (links.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-400">No links found. Go make some!</td></tr>`;
+                return;
+            }
+
+            tableBody.innerHTML = links.map(link => `
+                <tr class="border-b border-slate-700 hover:bg-slate-700/50 transition" id="row-${link.slug}">
+                    <td class="p-4 font-mono text-blue-300">
+                        <a href="${WORKER_URL}/${link.slug}" target="_blank" class="hover:underline">${link.slug}</a>
+                    </td>
+                    <td class="p-4 truncate max-w-xs text-slate-300">
+                        <a href="${link.destination}" target="_blank" class="hover:text-white">${link.destination}</a>
+                    </td>
+                    <td class="p-4 text-right">
+                        <button onclick="deleteLink('${link.slug}')" class="bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white px-3 py-1 rounded transition text-sm">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            `).join("");
+        }
+
+        // 4. Delete a link
+        async function deleteLink(slug) {
+            if (!confirm(`Are you sure you want to delete /${slug}?`)) return;
+
+            try {
+                const response = await fetch(`${WORKER_URL}/api/admin`, {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "x-admin-key": ADMIN_KEY
+                    },
+                    body: JSON.stringify({ slug })
+                });
+
+                if (response.ok) {
+                    // Remove the row from the screen without refreshing the page
+                    document.getElementById(`row-${slug}`).remove();
+                } else {
+                    alert("Failed to delete link. Check console for errors.");
+                }
+            } catch (error) {
+                console.error("Error deleting link:", error);
+            }
+        }
+
+        // 5. Run the loader when the page opens
+        loadLinks();
+    </script>
+</body>
+</html>
