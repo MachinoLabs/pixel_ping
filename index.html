@@ -1659,60 +1659,22 @@ if (btnSave && shortlinkUrl) {
                 createdAt: new Date().toISOString()
             };
 
-          // 5. Fire it off to Cloudflare!
-            const workerUrl = 'https://pixelping-worker.amateuraiguy.workers.dev'; // <-- PASTE YOUR REAL URL HERE!
+            // 5. Fire it off! (For now, we log it to the console)
+            console.log("🚀 PHASE 5 SUCCESS: Dynamic Payload Ready for Cloudflare!");
+            console.log(JSON.stringify(payload, null, 2));
             
-            // Visual feedback: Start saving state
+            // Visual feedback on the Save Button
             const originalBtnHtml = btnSave.innerHTML;
             btnSave.innerHTML = "Saving to Cloud...";
-            btnSave.classList.add('bg-ppGreen', 'text-slate-900'); 
+            btnSave.classList.add('bg-ppGreen', 'text-slate-900'); // Assuming ppGreen is your accent color
             
-            // The digital mail carrier: sending the payload
-            fetch(workerUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(payload)
-            })
-            .then(response => {
-                if (!response.ok) throw new Error('Network response was not ok');
-                return response.json();
-            })
-            .then(data => {
-                // Success!
-                console.log("🚀 CLOUDFLARE SUCCESS:", data);
-                btnSave.innerHTML = "Saved!";
-                
-                setTimeout(() => {
-                    btnSave.innerHTML = originalBtnHtml;
-                    btnSave.classList.remove('bg-ppGreen', 'text-slate-900');
-                }, 2000);
-            })
-            .catch(error => {
-                // Uh oh, something broke
-                console.error("❌ CLOUDFLARE ERROR:", error);
-                btnSave.innerHTML = "Error!";
-                btnSave.classList.replace('bg-ppGreen', 'bg-red-500'); // Flashes red on error
-                
-                setTimeout(() => {
-                    btnSave.innerHTML = originalBtnHtml;
-                    btnSave.classList.remove('bg-red-500', 'text-slate-900');
-                    btnSave.classList.add('bg-ppGreen'); // Restore original class
-                }, 2000);
-            });
-            .catch(error => {
-                // Uh oh, something broke
-                console.error("❌ CLOUDFLARE ERROR:", error);
-                btnSave.innerHTML = "Error!";
-                btnSave.classList.replace('bg-ppGreen', 'bg-red-500'); // Flashes red on error
-                
-                setTimeout(() => {
-                    btnSave.innerHTML = originalBtnHtml;
-                    btnSave.classList.remove('bg-red-500', 'text-slate-900');
-                    btnSave.classList.add('bg-ppGreen'); // Restore original class
-                }, 2000);
-            });
+            setTimeout(() => {
+                btnSave.innerHTML = originalBtnHtml;
+                btnSave.classList.remove('bg-ppGreen', 'text-slate-900');
+            }, 2000);
+        }
+    });
+}
 // --- CLEAR HISTORY BUTTON LOGIC ---
     const btnClearHistory = document.getElementById('btn-clear-history');
     if (btnClearHistory) {
