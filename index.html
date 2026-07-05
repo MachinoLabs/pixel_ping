@@ -1659,8 +1659,8 @@ if (btnSave && shortlinkUrl) {
                 createdAt: new Date().toISOString()
             };
 
-           // 5. Fire it off to Cloudflare!
-            const workerUrl = 'https://pixelping-worker.amateuraiguy.workers.dev'; // <-- PASTE YOUR REAL URL HERE!
+          // 5. Fire it off to Cloudflare!
+            const workerUrl = 'https://YOUR-WORKER-NAME.YOUR-SUBDOMAIN.workers.dev'; // <-- PASTE YOUR REAL URL HERE!
             
             // Visual feedback: Start saving state
             const originalBtnHtml = btnSave.innerHTML;
@@ -1689,6 +1689,18 @@ if (btnSave && shortlinkUrl) {
                     btnSave.classList.remove('bg-ppGreen', 'text-slate-900');
                 }, 2000);
             })
+            .catch(error => {
+                // Uh oh, something broke
+                console.error("❌ CLOUDFLARE ERROR:", error);
+                btnSave.innerHTML = "Error!";
+                btnSave.classList.replace('bg-ppGreen', 'bg-red-500'); // Flashes red on error
+                
+                setTimeout(() => {
+                    btnSave.innerHTML = originalBtnHtml;
+                    btnSave.classList.remove('bg-red-500', 'text-slate-900');
+                    btnSave.classList.add('bg-ppGreen'); // Restore original class
+                }, 2000);
+            });
             .catch(error => {
                 // Uh oh, something broke
                 console.error("❌ CLOUDFLARE ERROR:", error);
