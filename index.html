@@ -1624,54 +1624,82 @@ const btnSave = document.getElementById('btn-main-action');
 const destinationInput = document.getElementById('pl-url'); 
 
 if (btnSave && shortlinkUrl) {
+    // --- THE UNIFIED SAVE BUTTON LOGIC ---
     btnSave.addEventListener('click', (e) => {
-        // 1. Are we in the VIP section? (Is the dynamic panel visible?)
+        // 1. Check which mode we are in
         const isDynamicMode = !dynamicLinkDisplay.classList.contains('hidden');
         
         if (isDynamicMode) {
-            // Stop the default static save behavior from happening
+            // --- CLOUDFLARE DYNAMIC LAUNCH ---
             e.preventDefault(); 
             e.stopPropagation();
 
-            // Double check authentication just to be absolutely safe
+            // Security check: Must be signed in for dynamic
             if (!window.Clerk || !window.Clerk.user) {
                 window.Clerk.openSignIn();
                 return;
             }
 
-            // 2. Generate a random 6-character slug (e.g., 'a9b2x7')
+            // Generate a 6-character slug and update UI
             const generateSlug = () => Math.random().toString(36).substring(2, 8).toLowerCase();
             const newSlug = generateSlug();
             
-            // 3. Update the UI to show the newly generated shortlink
-            shortlinkUrl.value = `https://link.pixelping.app/${newSlug}`;
-            
-            // Give the input box a quick flash effect so the user sees it update
-            shortlinkUrl.classList.add('bg-slate-700', 'transition-colors', 'duration-300');
-            setTimeout(() => shortlinkUrl.classList.remove('bg-slate-700'), 400);
+            if (shortlinkUrl) {
+                shortlinkUrl.value = `https://link.pixelping.app/${newSlug}`;
+                shortlinkUrl.classList.add('bg-slate-700', 'transition-colors', 'duration-300');
+                setTimeout(() => shortlinkUrl.classList.remove('bg-slate-700'), 400);
+            }
 
-            // 4. Construct the JSON Payload for the Backend
+            // Build the payload
             const destinationValue = destinationInput ? destinationInput.value : 'https://pixelping.app';
             const payload = {
                 slug: newSlug,
-                destination: destinationValue || 'https://pixelping.app', // Fallback if empty
+                destination: destinationValue || 'https://pixelping.app',
                 userId: window.Clerk.user.id,
                 createdAt: new Date().toISOString()
             };
 
-            // 5. Fire it off! (For now, we log it to the console)
-            console.log("🚀 PHASE 5 SUCCESS: Dynamic Payload Ready for Cloudflare!");
-            console.log(JSON.stringify(payload, null, 2));
-            
-            // Visual feedback on the Save Button
+            // Send it to your specific Cloudflare Worker
+            const workerUrl = 'https://pixelping-worker.amateuraiguy.workers.dev'; 
             const originalBtnHtml = btnSave.innerHTML;
-            btnSave.innerHTML = "Saving to Cloud...";
-            btnSave.classList.add('bg-ppGreen', 'text-slate-900'); // Assuming ppGreen is your accent color
             
-            setTimeout(() => {
-                btnSave.innerHTML = originalBtnHtml;
-                btnSave.classList.remove('bg-ppGreen', 'text-slate-900');
-            }, 2000);
+            btnSave.innerHTML = "Saving to Cloud...";
+            btnSave.classList.add('bg-ppGreen', 'text-slate-900'); 
+            
+            fetch(workerUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+            })
+            .then(data => {
+                console.log("🚀 CLOUDFLARE SUCCESS:", data);
+                btnSave.innerHTML = "Saved!";
+                setTimeout(() => {
+                    btnSave.innerHTML = originalBtnHtml;
+                    btnSave.classList.remove('bg-ppGreen', 'text-slate-900');
+                }, 2000);
+            })
+            .catch(error => {
+                console.error("❌ CLOUDFLARE ERROR:", error);
+                btnSave.innerHTML = "Error!";
+                btnSave.classList.replace('bg-ppGreen', 'bg-red-500'); 
+                setTimeout(() => {
+                    btnSave.innerHTML = originalBtnHtml;
+                    btnSave.classList.remove('bg-red-500', 'text-slate-900');
+                    btnSave.classList.add('bg-ppGreen'); 
+                }, 2000);
+            });
+
+        } else {
+            // --- STATIC EXPORT LOGIC ---
+            // If not in dynamic mode, just download the image normally
+            if (typeof processExport === 'function') {
+                processExport('download');
+            }
         }
     });
 }
