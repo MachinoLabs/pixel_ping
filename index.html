@@ -1701,20 +1701,7 @@ if (btnSave && shortlinkUrl) {
                     btnSave.classList.add('bg-ppGreen'); // Restore original class
                 }, 2000);
             });
-            .catch(error => {
-                // Uh oh, something broke
-                console.error("❌ CLOUDFLARE ERROR:", error);
-                btnSave.innerHTML = "Error!";
-                btnSave.classList.replace('bg-ppGreen', 'bg-red-500'); // Flashes red on error
-                
-                setTimeout(() => {
-                    btnSave.innerHTML = originalBtnHtml;
-                    btnSave.classList.remove('bg-red-500', 'text-slate-900');
-                    btnSave.classList.add('bg-ppGreen'); // Restore original class
-                }, 2000);
-            });
-// --- CLEAR HISTORY BUTTON LOGIC ---
-    const btnClearHistory = document.getElementById('btn-clear-history');
+           
     if (btnClearHistory) {
         btnClearHistory.addEventListener('click', () => {
             // Safety Check Bouncer
