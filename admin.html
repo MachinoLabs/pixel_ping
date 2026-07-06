@@ -42,6 +42,7 @@
 
     <div class="pixel-bg" id="pixel-bg"></div>
 
+    <!-- Header -->
     <header class="w-full max-w-6xl mb-8 flex items-center justify-between z-10 relative bg-white/95 dark:bg-ppDark/90 backdrop-blur-md px-6 py-4 rounded-2xl border border-slate-200 dark:border-gray-800 shadow-lg">
         <div class="flex items-center gap-4">
             <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -63,8 +64,10 @@
         </div>
     </header>
 
+    <!-- Main Dashboard -->
     <main class="w-full max-w-6xl z-10 relative flex flex-col gap-6 flex-1 hidden" id="dashboard-main">
         
+        <!-- Utilities Row: Search & Sync & Add Domain -->
         <div class="flex flex-col sm:flex-row gap-4 items-center justify-between">
             <div class="relative w-full sm:w-96">
                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -74,7 +77,8 @@
             </div>
             
             <div class="flex items-center gap-3 w-full sm:w-auto">
-                <button id="btn-refresh-data" class="bg-slate-800 dark:bg-slate-800 border border-slate-700 hover:border-ppBlue hover:bg-slate-700 text-slate-300 hover:text-ppLight font-bold py-3 px-4 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-lg text-sm" title="Sync Data">
+                <!-- Sync Button -->
+                <button id="btn-refresh-data" class="bg-slate-800 border border-slate-700 hover:border-ppBlue hover:bg-slate-700 text-slate-300 hover:text-ppLight font-bold py-3 px-4 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-lg text-sm" title="Sync Data">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="refresh-icon">
                         <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
                         <path d="M3 3v5h5"></path>
@@ -84,23 +88,26 @@
                     <span class="hidden sm:inline">Sync</span>
                 </button>
 
-                <button class="w-full sm:w-auto bg-slate-800 dark:bg-slate-800 border border-yellow-500/40 hover:border-yellow-400 hover:bg-slate-700 text-yellow-500 font-bold py-3 px-6 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-lg text-sm">
-                    <span>🌐 Custom Domain</span>
-                    <span class="bg-yellow-500 text-slate-900 text-[9px] px-1.5 py-0.5 rounded uppercase tracking-widest font-extrabold ml-1">Soon</span>
+                <!-- NEW: Active Custom Domain Button -->
+                <button id="btn-custom-domain" class="w-full sm:w-auto bg-slate-800 border border-ppBlue/40 hover:border-ppBlue hover:bg-slate-700 text-ppBlue font-bold py-3 px-6 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-lg text-sm">
+                    <span>🌐 Add Custom Domain</span>
                 </button>
             </div>
         </div>
 
+        <!-- The Suite Grid -->
         <div id="links-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            </div>
-
+            <!-- Cards will be injected here via JS -->
+        </div>
     </main>
 
+    <!-- Loading State -->
     <div id="loading-state" class="flex-1 flex flex-col items-center justify-center z-10 text-slate-400">
         <svg class="w-10 h-10 animate-spin text-ppBlue mb-4" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
         <p class="text-sm font-bold uppercase tracking-widest animate-pulse">Authenticating...</p>
     </div>
 
+    <!-- Edit Destination Modal -->
     <div id="editOverlay" class="pp-overlay" hidden></div>
     <div id="editModal" class="pp-modal" hidden>
         <div class="pp-modal-inner relative">
@@ -115,6 +122,22 @@
         </div>
     </div>
 
+    <!-- NEW: Custom Domain Modal -->
+    <div id="domainOverlay" class="pp-overlay" hidden></div>
+    <div id="domainModal" class="pp-modal" hidden>
+        <div class="pp-modal-inner relative">
+            <button id="closeDomainBtn" class="absolute top-4 right-4 text-slate-400 hover:text-white">✕</button>
+            <h2 class="text-xl font-bold mb-1">Connect Custom Domain</h2>
+            <p class="text-xs text-slate-400 mb-6">Route your own domain to your PixelPing codes.</p>
+            
+            <label class="block text-xs font-bold text-ppLight mb-2 uppercase tracking-wide">Your Domain</label>
+            <input type="text" id="custom-domain-input" placeholder="e.g., links.mybakery.com" class="w-full bg-slate-900 text-white px-4 py-3 rounded-lg border border-slate-700 focus:border-ppBlue focus:outline-none mb-6 font-mono text-sm">
+            
+            <button id="saveDomainBtn" class="w-full bg-ppBlue hover:bg-[#1bb5e0] text-ppBase font-extrabold py-3 px-4 rounded-xl transition-all shadow-lg">Generate DNS Records</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
     <div class="w-full max-w-5xl text-center pb-8 z-10 relative mt-auto pt-12">
         <footer class="footer">
             <p class="footer-tag text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">Built with the StupidSimpleCrazyFast™ micro-app framework.</p>
@@ -126,6 +149,7 @@
         </footer>
     </div>
 
+    <!-- Dashboard API Engine -->
     <script>
         // DOM Elements
         const mainDash = document.getElementById('dashboard-main');
@@ -313,29 +337,64 @@
         const refreshIcon = document.getElementById('refresh-icon');
 
         refreshBtn.addEventListener('click', async () => {
-            // Spin animation & disable button
             refreshIcon.classList.add('animate-spin');
             refreshBtn.classList.add('opacity-75', 'cursor-not-allowed');
             refreshBtn.disabled = true;
             
-            // Wipe grid visually for instant UI feedback with a neat loading spinner
             grid.innerHTML = `
                 <div class="col-span-full py-12 flex justify-center">
                     <svg class="w-8 h-8 animate-spin text-ppBlue" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
                 </div>
             `;
             
-            // Fetch fresh data
             await window.fetchLiveCards();
             
-            // Stop spin animation & re-enable
             refreshIcon.classList.remove('animate-spin');
             refreshBtn.classList.remove('opacity-75', 'cursor-not-allowed');
             refreshBtn.disabled = false;
         });
 
+        // --- 8. NEW: CUSTOM DOMAIN ENGINE ---
+        const domainModal = document.getElementById('domainModal');
+        const domainOverlay = document.getElementById('domainOverlay');
+        const btnCustomDomain = document.getElementById('btn-custom-domain');
+        const closeDomainBtn = document.getElementById('closeDomainBtn');
+        const saveDomainBtn = document.getElementById('saveDomainBtn');
+        const domainInput = document.getElementById('custom-domain-input');
+
+        const closeDomainModal = () => {
+            domainModal.hidden = true;
+            domainOverlay.hidden = true;
+            domainInput.value = '';
+        };
+
+        btnCustomDomain.addEventListener('click', () => {
+            domainModal.hidden = false;
+            domainOverlay.hidden = false;
+        });
+
+        closeDomainBtn.addEventListener('click', closeDomainModal);
+        domainOverlay.addEventListener('click', closeDomainModal);
+
+        saveDomainBtn.addEventListener('click', async () => {
+            const domain = domainInput.value.trim();
+            if (!domain) return alert("Please enter a valid domain.");
+            
+            saveDomainBtn.innerText = "Connecting to Cloudflare...";
+            saveDomainBtn.disabled = true;
+
+            // TODO: The actual Cloudflare API Handshake will go here next!
+            setTimeout(() => {
+                alert(`API Handshake ready for: ${domain}\n\nThis will send the domain to Cloudflare to generate DNS records.`);
+                saveDomainBtn.innerText = "Generate DNS Records";
+                saveDomainBtn.disabled = false;
+                closeDomainModal();
+            }, 1500);
+        });
+
     </script>
 
+    <!-- Floating Pixels Engine -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const bgContainer = document.getElementById('pixel-bg');
@@ -352,6 +411,7 @@
         });
     </script>
 
+    <!-- Clerk Authentication Engine -->
     <script>
         (function() {
             const pubKey = "pk_test_bm92ZWwtYW50LTE0LmNsZXJrLmFjY291bnRzLmRldiQ";
@@ -371,7 +431,6 @@
                         userButtonMount.classList.remove('animate-pulse');
                         window.Clerk.mountUserButton(userButtonMount);
                         
-                        // 🚨 NOW TRIGGERING THE REAL CLOUDFLARE FETCH 🚨
                         window.fetchLiveCards();
                     } else {
                         loadingState.innerHTML = `<p class="text-sm font-bold uppercase tracking-widest text-red-500">Access Denied. Redirecting...</p>`;
