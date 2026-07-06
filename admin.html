@@ -1,117 +1,234 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>PixelPing | Command Center</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        ppBase: '#061a2b',
+                        ppDark: '#0f3a5a',
+                        ppLight: '#dff4ff',
+                        ppBlue: '#27cfff',
+                        ppGreen: '#3cff8f'
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        body { background-color: #0f172a; color: #f8fafc; }
+        /* Background Eye Candy */
+        .pixel-bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; background-color: #f8fafc; transition: background-color 0.3s; }
+        .dark .pixel-bg { background-color: #061a2b; background-image: radial-gradient(#0f3a5a 1px, transparent 1px); background-size: 30px 30px; }
+        
+        /* Modals & Overlays */
+        .pp-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); z-index: 998; }
+        .pp-modal { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 999; padding: 16px; }
+        .pp-modal[hidden], .pp-overlay[hidden] { display: none; }
+        .pp-modal-inner { background: #0f172a; color: #f1f5f9; border: 1px solid #1e293b; border-radius: 16px; padding: 24px; width: 100%; max-width: 500px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
     </style>
 </head>
-<body class="min-h-screen p-8">
-    <div class="max-w-4xl mx-auto">
-        <div class="flex justify-between items-center mb-8">
-            <h1 class="text-3xl font-bold text-blue-400">PixelPing Command Center</h1>
-            <a href="index.html" class="text-sm text-slate-400 hover:text-white transition">← Back to Generator</a>
+<body class="text-slate-900 dark:text-ppLight min-h-screen font-sans antialiased flex flex-col items-center p-4 md:p-8 relative z-0">
+
+    <div class="pixel-bg" id="pixel-bg"></div>
+
+    <!-- Header -->
+    <header class="w-full max-w-6xl mb-8 flex items-center justify-between z-10 relative bg-white/95 dark:bg-ppDark/90 backdrop-blur-md px-6 py-4 rounded-2xl border border-slate-200 dark:border-gray-800 shadow-lg">
+        <div class="flex items-center gap-4">
+            <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <rect width="512" height="512" rx="96" fill="#061a2b"/>
+                <rect x="28" y="28" width="456" height="456" rx="80" fill="none" stroke="#0f3a5a" stroke-width="4"/>
+                <rect x="96" y="96" width="96" height="96" rx="18" fill="#dff4ff"/>
+                <rect x="320" y="96" width="96" height="96" rx="18" fill="#dff4ff"/>
+                <rect x="96" y="288" width="96" height="96" rx="18" fill="#dff4ff"/>
+                <rect x="140" y="140" width="16" height="16" rx="4" fill="#27cfff"/>
+            </svg>
+            <div>
+                <h1 class="text-xl font-bold tracking-wide text-slate-900 dark:text-white">Command Center</h1>
+                <p class="text-blue-600 dark:text-ppGreen text-[10px] tracking-[0.2em] uppercase">Subscriber Dashboard</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-4">
+            <a href="index.html" class="text-xs font-bold text-slate-500 hover:text-ppBlue transition-colors uppercase tracking-wider hidden sm:block">← Back to Generator</a>
+            <div id="user-button-mount" class="min-w-[32px] min-h-[32px] bg-slate-800 rounded-full animate-pulse"></div>
+        </div>
+    </header>
+
+    <!-- Main Dashboard -->
+    <main class="w-full max-w-6xl z-10 relative flex flex-col gap-6 flex-1 hidden" id="dashboard-main">
+        
+        <!-- Utilities Row: Search & Add Domain -->
+        <div class="flex flex-col sm:flex-row gap-4 items-center justify-between">
+            <div class="relative w-full sm:w-96">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </div>
+                <input type="text" id="search-input" placeholder="Search by name, code, or URL..." class="w-full bg-white dark:bg-ppDark/80 text-slate-900 dark:text-white pl-10 pr-4 py-3 rounded-xl border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none shadow-sm text-sm">
+            </div>
+            
+            <button class="w-full sm:w-auto bg-slate-800 dark:bg-slate-800 border border-yellow-500/40 hover:border-yellow-400 hover:bg-slate-700 text-yellow-500 font-bold py-3 px-6 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-lg text-sm">
+                <span>🌐 Add Custom Domain</span>
+                <span class="bg-yellow-500 text-slate-900 text-[9px] px-1.5 py-0.5 rounded uppercase tracking-widest font-extrabold ml-1">Soon</span>
+            </button>
         </div>
 
-        <div class="bg-slate-800 rounded-lg shadow-xl overflow-hidden">
-            <table class="w-full text-left border-collapse">
-                <thead>
-                    <tr class="bg-slate-900 text-slate-300 text-sm uppercase tracking-wider">
-                        <th class="p-4 border-b border-slate-700">Short Code</th>
-                        <th class="p-4 border-b border-slate-700">Destination URL</th>
-                        <th class="p-4 border-b border-slate-700 text-right">Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="links-table-body">
-                    <!-- Links will be injected here by JavaScript -->
-                    <tr>
-                        <td colspan="3" class="p-4 text-center text-slate-400">Loading your links...</td>
-                    </tr>
-                </tbody>
-            </table>
+        <!-- The Suite Grid -->
+        <div id="links-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Cards will be injected here via JS -->
+        </div>
+
+    </main>
+
+    <!-- Loading State -->
+    <div id="loading-state" class="flex-1 flex flex-col items-center justify-center z-10 text-slate-400">
+        <svg class="w-10 h-10 animate-spin text-ppBlue mb-4" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+        <p class="text-sm font-bold uppercase tracking-widest animate-pulse">Authenticating...</p>
+    </div>
+
+    <!-- Edit Destination Modal -->
+    <div id="editOverlay" class="pp-overlay" hidden></div>
+    <div id="editModal" class="pp-modal" hidden>
+        <div class="pp-modal-inner relative">
+            <button id="closeEditBtn" class="absolute top-4 right-4 text-slate-400 hover:text-white">✕</button>
+            <h2 class="text-xl font-bold mb-1">Reroute Link</h2>
+            <p class="text-xs text-slate-400 mb-6 font-mono" id="edit-slug-display">link.pixelping.app/---</p>
+            
+            <label class="block text-xs font-bold text-ppLight mb-2 uppercase tracking-wide">New Destination URL</label>
+            <input type="url" id="edit-destination-input" class="w-full bg-slate-900 text-white px-4 py-3 rounded-lg border border-slate-700 focus:border-ppBlue focus:outline-none mb-6">
+            
+            <button id="saveEditBtn" class="w-full bg-ppBlue hover:bg-[#1bb5e0] text-ppBase font-extrabold py-3 px-4 rounded-xl transition-all shadow-lg">Save New Route</button>
         </div>
     </div>
 
+    <!-- Exact Footer from your setup -->
+    <div class="w-full max-w-5xl text-center pb-8 z-10 relative mt-auto pt-12">
+        <footer class="footer">
+            <p class="footer-tag text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">Built with the StupidSimpleCrazyFast™ micro-app framework.</p>
+            <div class="footer-credits text-[11px] text-slate-400 dark:text-slate-500 mb-1">
+                Built by <a href="https://machinolabs.com" target="_blank" class="hover:text-ppBlue transition-colors">MachinoLabs</a> • <a href="https://machinolabs.com" target="_blank" class="hover:text-ppBlue transition-colors">machinolabs.com</a> • <a href="https://stupidsimplecrazyfast.com" target="_blank" class="hover:text-ppBlue transition-colors">stupidsimplecrazyfast.com</a>
+                <br>
+                Joe • 717.623.2907
+            </div>
+        </footer>
+    </div>
+
     <script>
-        // 1. Setup the connection details
-        const WORKER_URL = "https://pixelping-worker.amateuraiguy.workers.dev";
-        const ADMIN_KEY = "pixelping-secret-2026"; // Must match your worker exactly!
-        const tableBody = document.getElementById("links-table-body");
+        // DOM Elements
+        const mainDash = document.getElementById('dashboard-main');
+        const loadingState = document.getElementById('loading-state');
+        const grid = document.getElementById('links-grid');
+        const searchInput = document.getElementById('search-input');
+        
+        // Modal Elements
+        const editModal = document.getElementById('editModal');
+        const editOverlay = document.getElementById('editOverlay');
+        const closeEditBtn = document.getElementById('closeEditBtn');
 
-        // 2. Fetch the links from the database
-        async function loadLinks() {
-            try {
-                const response = await fetch(`${WORKER_URL}/api/admin`, {
-                    method: "GET",
-                    headers: {
-                        "x-admin-key": ADMIN_KEY
+        // Close Modal Logic
+        const closeModal = () => { editModal.hidden = true; editOverlay.hidden = true; };
+        closeEditBtn.addEventListener('click', closeModal);
+        editOverlay.addEventListener('click', closeModal);
+
+        // --- Mock Rendering Function (Until Phase 2 Cloudflare Wiring) ---
+        function renderMockCards() {
+            loadingState.classList.add('hidden');
+            mainDash.classList.remove('hidden');
+
+            const mockData = [
+                { title: "Front Desk WiFi", type: "📶 Wi-Fi", dest: "WIFI:T:WPA;S:Guest;P:1234;;", slug: "9tzsav", scans: 142, date: "7/5/2026" },
+                { title: "Yelp Review Page", type: "⭐ Google Review", dest: "https://yelp.com/biz/...", slug: "d1p6mj", scans: 89, date: "7/4/2026" },
+                { title: "Summer Promo Flyer", type: "🌐 URL", dest: "https://machinolabs.com/promo", slug: "mx82lp", scans: 12, date: "7/1/2026" }
+            ];
+
+            grid.innerHTML = mockData.map(link => `
+                <div class="bg-white/5 dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-5 rounded-2xl flex flex-col relative group transition-all hover:border-ppBlue">
+                    <div class="flex justify-between items-start mb-3">
+                        <div>
+                            <h3 class="font-bold text-slate-800 dark:text-white text-lg">${link.title}</h3>
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-ppBlue">${link.type}</span>
+                        </div>
+                        <div class="bg-slate-900/50 border border-slate-700 px-2 py-1 rounded-lg text-center">
+                            <span class="block text-[10px] text-slate-400 uppercase font-bold tracking-widest">Scans</span>
+                            <span class="block text-sm font-extrabold text-ppGreen">${link.scans}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-slate-900/40 p-2 rounded-lg mb-4 border border-slate-800">
+                        <p class="text-xs font-mono text-slate-400 truncate">${link.dest}</p>
+                    </div>
+
+                    <div class="flex items-center gap-2 mb-4 bg-slate-100 dark:bg-slate-900 p-2 rounded-lg border border-slate-200 dark:border-slate-800">
+                        <span class="text-xs font-mono text-slate-500 dark:text-slate-300 flex-1 truncate select-all">link.pixelping.app/${link.slug}</span>
+                        <button class="bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-700 dark:text-white px-3 py-1.5 rounded-md text-[10px] font-bold uppercase tracking-wider transition-colors" onclick="alert('Copied to clipboard!')">Copy</button>
+                    </div>
+
+                    <div class="mt-auto flex gap-2 pt-4 border-t border-slate-200 dark:border-slate-700/50">
+                        <button class="flex-1 text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-ppBlue transition-colors py-1" onclick="openEditModal('${link.slug}', '${link.dest}')">✏️ Edit Route</button>
+                        <div class="w-px bg-slate-700"></div>
+                        <button class="flex-1 text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-red-500 transition-colors py-1">🗑️ Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        window.openEditModal = (slug, currentDest) => {
+            document.getElementById('edit-slug-display').textContent = `link.pixelping.app/${slug}`;
+            document.getElementById('edit-destination-input').value = currentDest;
+            editModal.hidden = false;
+            editOverlay.hidden = false;
+        };
+
+    </script>
+
+    <!-- Clerk Authentication Engine -->
+    <script>
+        (function() {
+            const pubKey = "pk_test_bm92ZWwtYW50LTE0LmNsZXJrLmFjY291bnRzLmRldiQ";
+            
+            const startClerk = async () => {
+                try {
+                    await window.Clerk.load({
+                        appearance: {
+                            baseTheme: document.documentElement.classList.contains('dark') ? 'dark' : 'light',
+                            variables: { colorPrimary: '#27cfff' }
+                        }
+                    });
+                    
+                    const userButtonMount = document.getElementById('user-button-mount');
+
+                    if (window.Clerk.user) {
+                        // User is logged in! Render their profile icon and show the dashboard.
+                        userButtonMount.classList.remove('animate-pulse');
+                        window.Clerk.mountUserButton(userButtonMount);
+                        
+                        // We will replace this with real Cloudflare fetch logic in Phase 2
+                        renderMockCards();
+                    } else {
+                        // Bouncer blocks access and forces login
+                        loadingState.innerHTML = `<p class="text-sm font-bold uppercase tracking-widest text-red-500">Access Denied. Redirecting...</p>`;
+                        setTimeout(() => window.Clerk.openSignIn(), 1000);
                     }
-                });
-
-                if (!response.ok) throw new Error("Failed to authenticate or fetch");
-                
-                const links = await response.json();
-                renderTable(links);
-            } catch (error) {
-                console.error("Error loading links:", error);
-                tableBody.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-red-400">Error loading data. Check your browser console.</td></tr>`;
-            }
-        }
-
-        // 3. Draw the links into the HTML table
-        function renderTable(links) {
-            if (links.length === 0) {
-                tableBody.innerHTML = `<tr><td colspan="3" class="p-4 text-center text-slate-400">No links found. Go make some!</td></tr>`;
-                return;
-            }
-
-            tableBody.innerHTML = links.map(link => `
-                <tr class="border-b border-slate-700 hover:bg-slate-700/50 transition" id="row-${link.slug}">
-                    <td class="p-4 font-mono text-blue-300">
-                        <a href="${WORKER_URL}/${link.slug}" target="_blank" class="hover:underline">${link.slug}</a>
-                    </td>
-                    <td class="p-4 truncate max-w-xs text-slate-300">
-                        <a href="${link.destination}" target="_blank" class="hover:text-white">${link.destination}</a>
-                    </td>
-                    <td class="p-4 text-right">
-                        <button onclick="deleteLink('${link.slug}')" class="bg-red-500/10 text-red-400 hover:bg-red-500 hover:text-white px-3 py-1 rounded transition text-sm">
-                            Delete
-                        </button>
-                    </td>
-                </tr>
-            `).join("");
-        }
-
-        // 4. Delete a link
-        async function deleteLink(slug) {
-            if (!confirm(`Are you sure you want to delete /${slug}?`)) return;
-
-            try {
-                const response = await fetch(`${WORKER_URL}/api/admin`, {
-                    method: "DELETE",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "x-admin-key": ADMIN_KEY
-                    },
-                    body: JSON.stringify({ slug })
-                });
-
-                if (response.ok) {
-                    // Remove the row from the screen without refreshing the page
-                    document.getElementById(`row-${slug}`).remove();
-                } else {
-                    alert("Failed to delete link. Check console for errors.");
+                } catch (err) {
+                    console.error("Clerk Initialization Error:", err);
                 }
-            } catch (error) {
-                console.error("Error deleting link:", error);
-            }
-        }
+            };
 
-        // 5. Run the loader when the page opens
-        loadLinks();
+            const script = document.createElement('script');
+            script.setAttribute('data-clerk-publishable-key', pubKey);
+            script.async = true;
+            script.src = 'https://novel-ant-14.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js';
+            script.crossOrigin = 'anonymous';
+            script.addEventListener('load', startClerk);
+            document.body.appendChild(script);
+        })();
     </script>
 </body>
 </html>
