@@ -28,6 +28,8 @@
         /* Background Eye Candy */
         .pixel-bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; background-color: #f8fafc; transition: background-color 0.3s; }
         .dark .pixel-bg { background-color: #061a2b; background-image: radial-gradient(#0f3a5a 1px, transparent 1px); background-size: 30px 30px; }
+        .floating-pixel { position: absolute; border-radius: 4px; opacity: 0; animation: floatUp infinite linear; }
+        @keyframes floatUp { 0% { transform: translateY(100vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.4; } 90% { opacity: 0.4; } 100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; } }
         
         /* Modals & Overlays */
         .pp-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); z-index: 998; }
@@ -40,7 +42,6 @@
 
     <div class="pixel-bg" id="pixel-bg"></div>
 
-    <!-- Header -->
     <header class="w-full max-w-6xl mb-8 flex items-center justify-between z-10 relative bg-white/95 dark:bg-ppDark/90 backdrop-blur-md px-6 py-4 rounded-2xl border border-slate-200 dark:border-gray-800 shadow-lg">
         <div class="flex items-center gap-4">
             <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -62,10 +63,8 @@
         </div>
     </header>
 
-    <!-- Main Dashboard -->
     <main class="w-full max-w-6xl z-10 relative flex flex-col gap-6 flex-1 hidden" id="dashboard-main">
         
-        <!-- Utilities Row: Search & Add Domain -->
         <div class="flex flex-col sm:flex-row gap-4 items-center justify-between">
             <div class="relative w-full sm:w-96">
                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -80,20 +79,16 @@
             </button>
         </div>
 
-        <!-- The Suite Grid -->
         <div id="links-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Cards will be injected here via JS -->
-        </div>
+            </div>
 
     </main>
 
-    <!-- Loading State -->
     <div id="loading-state" class="flex-1 flex flex-col items-center justify-center z-10 text-slate-400">
         <svg class="w-10 h-10 animate-spin text-ppBlue mb-4" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
         <p class="text-sm font-bold uppercase tracking-widest animate-pulse">Authenticating...</p>
     </div>
 
-    <!-- Edit Destination Modal -->
     <div id="editOverlay" class="pp-overlay" hidden></div>
     <div id="editModal" class="pp-modal" hidden>
         <div class="pp-modal-inner relative">
@@ -108,7 +103,6 @@
         </div>
     </div>
 
-    <!-- Exact Footer from your setup -->
     <div class="w-full max-w-5xl text-center pb-8 z-10 relative mt-auto pt-12">
         <footer class="footer">
             <p class="footer-tag text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">Built with the StupidSimpleCrazyFast™ micro-app framework.</p>
@@ -188,7 +182,22 @@
 
     </script>
 
-    <!-- Clerk Authentication Engine -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const bgContainer = document.getElementById('pixel-bg');
+            if (bgContainer) {
+                const colors = ['#27cfff', '#3cff8f', '#0f3a5a'];
+                for(let i=0; i<20; i++) {
+                    let div = document.createElement('div'); div.className = 'floating-pixel';
+                    let size = Math.random() * 20 + 10; div.style.width = size + 'px'; div.style.height = size + 'px';
+                    div.style.left = Math.random() * 100 + 'vw'; div.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    div.style.animationDelay = (Math.random() * 8) + 's'; div.style.animationDuration = (Math.random() * 6 + 6) + 's';
+                    bgContainer.appendChild(div);
+                }
+            }
+        });
+    </script>
+
     <script>
         (function() {
             const pubKey = "pk_test_bm92ZWwtYW50LTE0LmNsZXJrLmFjY291bnRzLmRldiQ";
@@ -231,5 +240,4 @@
         })();
     </script>
 </body>
-    
 </html>
