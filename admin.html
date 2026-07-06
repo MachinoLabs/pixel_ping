@@ -42,6 +42,7 @@
 
     <div class="pixel-bg" id="pixel-bg"></div>
 
+    <!-- Header -->
     <header class="w-full max-w-6xl mb-8 flex items-center justify-between z-10 relative bg-white/95 dark:bg-ppDark/90 backdrop-blur-md px-6 py-4 rounded-2xl border border-slate-200 dark:border-gray-800 shadow-lg">
         <div class="flex items-center gap-4">
             <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -63,8 +64,10 @@
         </div>
     </header>
 
+    <!-- Main Dashboard -->
     <main class="w-full max-w-6xl z-10 relative flex flex-col gap-6 flex-1 hidden" id="dashboard-main">
         
+        <!-- Utilities Row: Search & Add Domain -->
         <div class="flex flex-col sm:flex-row gap-4 items-center justify-between">
             <div class="relative w-full sm:w-96">
                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -79,16 +82,20 @@
             </button>
         </div>
 
+        <!-- The Suite Grid -->
         <div id="links-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            </div>
+            <!-- Cards will be injected here via JS -->
+        </div>
 
     </main>
 
+    <!-- Loading State -->
     <div id="loading-state" class="flex-1 flex flex-col items-center justify-center z-10 text-slate-400">
         <svg class="w-10 h-10 animate-spin text-ppBlue mb-4" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
         <p class="text-sm font-bold uppercase tracking-widest animate-pulse">Authenticating...</p>
     </div>
 
+    <!-- Edit Destination Modal -->
     <div id="editOverlay" class="pp-overlay" hidden></div>
     <div id="editModal" class="pp-modal" hidden>
         <div class="pp-modal-inner relative">
@@ -103,6 +110,7 @@
         </div>
     </div>
 
+    <!-- Footer -->
     <div class="w-full max-w-5xl text-center pb-8 z-10 relative mt-auto pt-12">
         <footer class="footer">
             <p class="footer-tag text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">Built with the StupidSimpleCrazyFast™ micro-app framework.</p>
@@ -114,6 +122,7 @@
         </footer>
     </div>
 
+    <!-- Dashboard API Engine -->
     <script>
         // DOM Elements
         const mainDash = document.getElementById('dashboard-main');
@@ -125,63 +134,179 @@
         const editModal = document.getElementById('editModal');
         const editOverlay = document.getElementById('editOverlay');
         const closeEditBtn = document.getElementById('closeEditBtn');
+        const saveEditBtn = document.getElementById('saveEditBtn');
+        const editDestInput = document.getElementById('edit-destination-input');
+        
+        let currentEditSlug = null;
+        let globalLinksData = [];
+
+        // LIVE CLOUDFLARE WORKER URL
+        const API_URL = "https://pixelping-worker.amateuraiguy.workers.dev/api/links";
 
         // Close Modal Logic
-        const closeModal = () => { editModal.hidden = true; editOverlay.hidden = true; };
+        const closeModal = () => { 
+            editModal.hidden = true; 
+            editOverlay.hidden = true; 
+            currentEditSlug = null;
+        };
         closeEditBtn.addEventListener('click', closeModal);
         editOverlay.addEventListener('click', closeModal);
 
-        // --- Mock Rendering Function (Until Phase 2 Cloudflare Wiring) ---
-        function renderMockCards() {
-            loadingState.classList.add('hidden');
-            mainDash.classList.remove('hidden');
+        // --- 1. FETCH LIVE DATA ---
+        window.fetchLiveCards = async () => {
+            if (!window.Clerk || !window.Clerk.user) return;
+            
+            try {
+                const response = await fetch(`${API_URL}?userId=${window.Clerk.user.id}`);
+                const data = await response.json();
+                
+                globalLinksData = data.links || [];
+                renderCards(globalLinksData);
+                
+                loadingState.classList.add('hidden');
+                mainDash.classList.remove('hidden');
+            } catch (error) {
+                console.error("Failed to fetch links:", error);
+                loadingState.innerHTML = `<p class="text-sm font-bold uppercase tracking-widest text-red-500">Failed to load data. Please refresh.</p>`;
+            }
+        };
 
-            const mockData = [
-                { title: "Front Desk WiFi", type: "📶 Wi-Fi", dest: "WIFI:T:WPA;S:Guest;P:1234;;", slug: "9tzsav", scans: 142, date: "7/5/2026" },
-                { title: "Yelp Review Page", type: "⭐ Google Review", dest: "https://yelp.com/biz/...", slug: "d1p6mj", scans: 89, date: "7/4/2026" },
-                { title: "Summer Promo Flyer", type: "🌐 URL", dest: "https://machinolabs.com/promo", slug: "mx82lp", scans: 12, date: "7/1/2026" }
-            ];
+        // --- 2. RENDER THE CARDS ---
+        function renderCards(links) {
+            if (links.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full py-12 text-center border-2 border-dashed border-slate-700 rounded-2xl bg-slate-800/20">
+                        <p class="text-slate-400 font-bold tracking-widest uppercase">No codes found in your suite.</p>
+                        <a href="index.html" class="text-ppBlue hover:text-white transition-colors mt-2 inline-block text-sm">Go generate some!</a>
+                    </div>`;
+                return;
+            }
 
-            grid.innerHTML = mockData.map(link => `
+            grid.innerHTML = links.map(link => `
                 <div class="bg-white/5 dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-5 rounded-2xl flex flex-col relative group transition-all hover:border-ppBlue">
                     <div class="flex justify-between items-start mb-3">
-                        <div>
-                            <h3 class="font-bold text-slate-800 dark:text-white text-lg">${link.title}</h3>
-                            <span class="text-[10px] font-bold uppercase tracking-wider text-ppBlue">${link.type}</span>
+                        <div class="max-w-[70%]">
+                            <h3 class="font-bold text-slate-800 dark:text-white text-lg truncate">${link.title || 'Untitled Code'}</h3>
+                            <span class="text-[10px] font-bold uppercase tracking-wider text-ppBlue">${link.type || 'LINK'}</span>
                         </div>
-                        <div class="bg-slate-900/50 border border-slate-700 px-2 py-1 rounded-lg text-center">
+                        <div class="bg-slate-900/50 border border-slate-700 px-2 py-1 rounded-lg text-center min-w-[60px]">
                             <span class="block text-[10px] text-slate-400 uppercase font-bold tracking-widest">Scans</span>
-                            <span class="block text-sm font-extrabold text-ppGreen">${link.scans}</span>
+                            <span class="block text-sm font-extrabold text-ppGreen">${link.scans || 0}</span>
                         </div>
                     </div>
                     
                     <div class="bg-slate-900/40 p-2 rounded-lg mb-4 border border-slate-800">
-                        <p class="text-xs font-mono text-slate-400 truncate">${link.dest}</p>
+                        <p class="text-xs font-mono text-slate-400 truncate" title="${link.destination}">${link.destination}</p>
                     </div>
 
                     <div class="flex items-center gap-2 mb-4 bg-slate-100 dark:bg-slate-900 p-2 rounded-lg border border-slate-200 dark:border-slate-800">
                         <span class="text-xs font-mono text-slate-500 dark:text-slate-300 flex-1 truncate select-all">link.pixelping.app/${link.slug}</span>
-                        <button class="bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-700 dark:text-white px-3 py-1.5 rounded-md text-[10px] font-bold uppercase tracking-wider transition-colors" onclick="alert('Copied to clipboard!')">Copy</button>
+                        <button class="bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-700 dark:text-white px-3 py-1.5 rounded-md text-[10px] font-bold uppercase tracking-wider transition-colors" onclick="copyToClipboard('https://link.pixelping.app/${link.slug}', this)">Copy</button>
                     </div>
 
                     <div class="mt-auto flex gap-2 pt-4 border-t border-slate-200 dark:border-slate-700/50">
-                        <button class="flex-1 text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-ppBlue transition-colors py-1" onclick="openEditModal('${link.slug}', '${link.dest}')">✏️ Edit Route</button>
+                        <button class="flex-1 text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-ppBlue transition-colors py-1" onclick="openEditModal('${link.slug}', '${link.destination}')">✏️ Edit Route</button>
                         <div class="w-px bg-slate-700"></div>
-                        <button class="flex-1 text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-red-500 transition-colors py-1">🗑️ Delete</button>
+                        <button class="flex-1 text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-red-500 transition-colors py-1" onclick="deleteLink('${link.slug}')">🗑️ Delete</button>
                     </div>
                 </div>
             `).join('');
         }
 
+        // --- 3. UTILITIES & ACTIONS ---
+        window.copyToClipboard = (text, btnElement) => {
+            navigator.clipboard.writeText(text);
+            const ogText = btnElement.innerText;
+            btnElement.innerText = "Copied!";
+            btnElement.classList.add("bg-ppGreen", "text-slate-900");
+            setTimeout(() => {
+                btnElement.innerText = ogText;
+                btnElement.classList.remove("bg-ppGreen", "text-slate-900");
+            }, 2000);
+        };
+
         window.openEditModal = (slug, currentDest) => {
+            currentEditSlug = slug;
             document.getElementById('edit-slug-display').textContent = `link.pixelping.app/${slug}`;
-            document.getElementById('edit-destination-input').value = currentDest;
+            editDestInput.value = currentDest;
             editModal.hidden = false;
             editOverlay.hidden = false;
         };
 
+        // --- 4. THE EDITOR ENGINE ---
+        saveEditBtn.addEventListener('click', async () => {
+            const newDest = editDestInput.value.trim();
+            if (!newDest || !currentEditSlug) return alert("Destination cannot be empty.");
+
+            const originalBtnText = saveEditBtn.innerText;
+            saveEditBtn.innerText = "Saving...";
+            saveEditBtn.disabled = true;
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        slug: currentEditSlug,
+                        destination: newDest,
+                        userId: window.Clerk.user.id
+                    })
+                });
+
+                if (response.ok) {
+                    saveEditBtn.innerText = "Saved!";
+                    saveEditBtn.classList.replace("bg-ppBlue", "bg-ppGreen");
+                    setTimeout(() => {
+                        closeModal();
+                        saveEditBtn.innerText = originalBtnText;
+                        saveEditBtn.classList.replace("bg-ppGreen", "bg-ppBlue");
+                        saveEditBtn.disabled = false;
+                        window.fetchLiveCards(); // Refresh the grid
+                    }, 1000);
+                } else {
+                    throw new Error("Update failed.");
+                }
+            } catch (error) {
+                alert("Error updating link. Please try again.");
+                saveEditBtn.innerText = originalBtnText;
+                saveEditBtn.disabled = false;
+            }
+        });
+
+        // --- 5. THE DESTROYER ENGINE ---
+        window.deleteLink = async (slug) => {
+            if (!confirm("Are you sure you want to permanently delete this code? Printed versions will stop working instantly.")) return;
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ slug, userId: window.Clerk.user.id })
+                });
+
+                if (response.ok) {
+                    window.fetchLiveCards(); // Refresh grid on success
+                } else {
+                    alert("Failed to delete link.");
+                }
+            } catch (error) {
+                alert("Error deleting link.");
+            }
+        };
+
+        // --- 6. REAL-TIME SEARCH ---
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const filtered = globalLinksData.filter(link => 
+                (link.title && link.title.toLowerCase().includes(term)) ||
+                (link.slug && link.slug.toLowerCase().includes(term)) ||
+                (link.destination && link.destination.toLowerCase().includes(term))
+            );
+            renderCards(filtered);
+        });
     </script>
 
+    <!-- Floating Pixels Engine -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const bgContainer = document.getElementById('pixel-bg');
@@ -198,6 +323,7 @@
         });
     </script>
 
+    <!-- Clerk Authentication Engine -->
     <script>
         (function() {
             const pubKey = "pk_test_bm92ZWwtYW50LTE0LmNsZXJrLmFjY291bnRzLmRldiQ";
@@ -214,14 +340,12 @@
                     const userButtonMount = document.getElementById('user-button-mount');
 
                     if (window.Clerk.user) {
-                        // User is logged in! Render their profile icon and show the dashboard.
                         userButtonMount.classList.remove('animate-pulse');
                         window.Clerk.mountUserButton(userButtonMount);
                         
-                        // We will replace this with real Cloudflare fetch logic in Phase 2
-                        renderMockCards();
+                        // 🚨 NOW TRIGGERING THE REAL CLOUDFLARE FETCH 🚨
+                        window.fetchLiveCards();
                     } else {
-                        // Bouncer blocks access and forces login
                         loadingState.innerHTML = `<p class="text-sm font-bold uppercase tracking-widest text-red-500">Access Denied. Redirecting...</p>`;
                         setTimeout(() => window.Clerk.openSignIn(), 1000);
                     }
