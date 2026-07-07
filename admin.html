@@ -47,7 +47,6 @@
 
     <div class="pixel-bg" id="pixel-bg"></div>
 
-    <!-- Header -->
     <header class="w-full max-w-6xl mb-8 flex items-center justify-between z-10 relative bg-white/95 dark:bg-ppDark/90 backdrop-blur-md px-6 py-4 rounded-2xl border border-slate-200 dark:border-gray-800 shadow-lg">
         <div class="flex items-center gap-4">
             <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -69,10 +68,8 @@
         </div>
     </header>
 
-    <!-- Main Dashboard -->
     <main class="w-full max-w-6xl z-10 relative flex flex-col gap-6 flex-1 hidden" id="dashboard-main">
         
-        <!-- Utilities Row: Search & Sync & Add Domain -->
         <div class="flex flex-col sm:flex-row gap-4 items-center justify-between">
             <div class="relative w-full sm:w-96">
                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -82,7 +79,6 @@
             </div>
             
             <div class="flex items-center gap-3 w-full sm:w-auto">
-                <!-- Sync Button -->
                 <button id="btn-refresh-data" class="bg-slate-800 border border-slate-700 hover:border-ppBlue hover:bg-slate-700 text-slate-300 hover:text-ppLight font-bold py-3 px-4 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-lg text-sm" title="Sync Data">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="refresh-icon">
                         <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
@@ -93,26 +89,21 @@
                     <span class="hidden sm:inline">Sync</span>
                 </button>
 
-                <!-- NEW: Active Custom Domain Button -->
                 <button id="btn-custom-domain" class="w-full sm:w-auto bg-slate-800 border border-ppBlue/40 hover:border-ppBlue hover:bg-slate-700 text-ppBlue font-bold py-3 px-6 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-lg text-sm">
                     <span>🌐 Add Custom Domain</span>
                 </button>
             </div>
         </div>
 
-        <!-- The Suite Grid -->
         <div id="links-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Cards will be injected here via JS -->
-        </div>
+            </div>
     </main>
 
-    <!-- Loading State -->
     <div id="loading-state" class="flex-1 flex flex-col items-center justify-center z-10 text-slate-400">
         <svg class="w-10 h-10 animate-spin text-ppBlue mb-4" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
         <p class="text-sm font-bold uppercase tracking-widest animate-pulse">Authenticating...</p>
     </div>
 
-    <!-- Edit Destination Modal -->
     <div id="editOverlay" class="pp-overlay" hidden></div>
     <div id="editModal" class="pp-modal" hidden>
         <div class="pp-modal-inner relative">
@@ -127,10 +118,8 @@
         </div>
     </div>
 
-    <!-- NEW: Custom Domain Modal -->
     <div id="domainOverlay" class="pp-overlay" hidden></div>
     <div id="domainModal" class="pp-modal" hidden>
-        <!-- The ID domain-modal-content allows us to replace the inner HTML dynamically upon success -->
         <div class="pp-modal-inner relative" id="domain-modal-content">
             <button id="closeDomainBtn" class="absolute top-4 right-4 text-slate-400 hover:text-white">✕</button>
             <h2 class="text-xl font-bold mb-1">Connect Custom Domain</h2>
@@ -143,7 +132,6 @@
         </div>
     </div>
 
-    <!-- Footer -->
     <div class="w-full max-w-5xl text-center pb-8 z-10 relative mt-auto pt-12">
         <footer class="footer">
             <p class="footer-tag text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">Built with the StupidSimpleCrazyFast™ micro-app framework.</p>
@@ -155,7 +143,6 @@
         </footer>
     </div>
 
-    <!-- Dashboard API Engine -->
     <script>
         // DOM Elements
         const mainDash = document.getElementById('dashboard-main');
@@ -360,7 +347,7 @@
             refreshBtn.disabled = false;
         });
 
-        // --- 8. NEW: CUSTOM DOMAIN ENGINE ---
+        // --- 8. THE CUSTOM DOMAIN PROVISIONING ENGINE ---
         const domainModal = document.getElementById('domainModal');
         const domainOverlay = document.getElementById('domainOverlay');
         const btnCustomDomain = document.getElementById('btn-custom-domain');
@@ -427,31 +414,44 @@
 
                         modalContent.innerHTML = `
                             <button onclick="document.getElementById('domainModal').hidden = true; document.getElementById('domainOverlay').hidden = true;" class="absolute top-4 right-4 text-slate-400 hover:text-white">✕</button>
+                            
                             <div class="text-center mb-6">
                                 <div class="w-12 h-12 bg-green-500/20 text-green-400 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl">✓</div>
                                 <h3 class="text-white font-bold text-xl">Domain Initialized</h3>
-                                <p class="text-sm text-slate-400 mt-2">Log into your registrar for <b class="text-white">${customDomain}</b> and add the following TXT records to verify ownership.</p>
+                                <p class="text-sm text-slate-400 mt-2">To prove you own <b class="text-white">${customDomain}</b>, log into where you bought it (like GoDaddy, Namecheap, or Squarespace) and add this record to your DNS settings.</p>
                             </div>
                             
                             <div class="space-y-4 max-h-[50vh] overflow-y-auto pr-2 dns-scroll">
                                 ${records.map(record => `
                                     <div class="bg-[#0f172a] p-4 rounded-xl border border-slate-700 text-left relative group">
-                                        <div class="flex justify-between items-center mb-2">
-                                            <span class="text-[10px] uppercase text-ppBlue font-bold tracking-widest bg-ppBlue/10 px-2 py-1 rounded">Type: TXT</span>
+                                        <div class="flex justify-between items-center mb-4 border-b border-slate-700/50 pb-2">
+                                            <span class="text-[10px] uppercase text-ppBlue font-bold tracking-widest bg-ppBlue/10 px-2 py-1 rounded">Record Type: TXT</span>
                                         </div>
-                                        <div class="mb-2">
-                                            <span class="text-[10px] text-slate-500 uppercase font-bold tracking-wider block mb-1">Name / Host</span>
-                                            <div class="text-xs text-white font-mono bg-black/40 p-2 rounded border border-slate-800 break-all select-all">${record.name || record.custom_hostname || "Verification Record"}</div>
+                                        
+                                        <div class="mb-4">
+                                            <div class="flex justify-between items-end mb-1">
+                                                <span class="text-[10px] text-slate-500 uppercase font-bold tracking-wider block">Name / Host</span>
+                                                <button type="button" onclick="copyToClipboard('${record.name || record.custom_hostname}', this)" class="text-[10px] text-slate-400 hover:text-white uppercase font-bold tracking-wider transition-colors">📋 Copy</button>
+                                            </div>
+                                            <div class="text-xs text-white font-mono bg-black/40 p-2 rounded border border-slate-800 break-all">${record.name || record.custom_hostname}</div>
                                         </div>
+                                        
                                         <div>
-                                            <span class="text-[10px] text-slate-500 uppercase font-bold tracking-wider block mb-1">Value / Target</span>
-                                            <div class="text-[11px] text-ppGreen font-mono break-all bg-black/40 p-2 rounded border border-slate-800 select-all">${record.value || record.txt_value || "Pending"}</div>
+                                            <div class="flex justify-between items-end mb-1">
+                                                <span class="text-[10px] text-slate-500 uppercase font-bold tracking-wider block">Value / Target</span>
+                                                <button type="button" onclick="copyToClipboard('${record.value || record.txt_value}', this)" class="text-[10px] text-slate-400 hover:text-white uppercase font-bold tracking-wider transition-colors">📋 Copy</button>
+                                            </div>
+                                            <div class="text-[11px] text-ppGreen font-mono break-all bg-black/40 p-2 rounded border border-slate-800">${record.value || record.txt_value}</div>
                                         </div>
                                     </div>
                                 `).join('')}
                             </div>
                             
-                            <button onclick="document.getElementById('domainModal').hidden = true; document.getElementById('domainOverlay').hidden = true;" class="mt-6 w-full bg-slate-700 hover:bg-slate-600 text-white font-bold py-3 rounded-xl transition-colors">I've Added These Records</button>
+                            <div class="mt-4 text-center">
+                                <a href="https://pixelping.app/help/dns" target="_blank" class="text-[11px] text-ppBlue hover:text-white underline transition-colors">I don't know how to do this. Show me a guide.</a>
+                            </div>
+
+                            <button onclick="document.getElementById('domainModal').hidden = true; document.getElementById('domainOverlay').hidden = true;" class="mt-4 w-full bg-slate-700 hover:bg-slate-600 text-white font-bold py-3 rounded-xl transition-colors">I've Added These Records</button>
                         `;
 
                     } catch (error) {
@@ -469,7 +469,6 @@
 
     </script>
 
-    <!-- Floating Pixels Engine -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const bgContainer = document.getElementById('pixel-bg');
@@ -486,7 +485,6 @@
         });
     </script>
 
-    <!-- Clerk Authentication Engine -->
     <script>
         (function() {
             const pubKey = "pk_test_bm92ZWwtYW50LTE0LmNsZXJrLmFjY291bnRzLmRldiQ";
