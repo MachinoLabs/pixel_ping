@@ -155,13 +155,16 @@
             </div>
 
             <div>
-                <div class="flex items-center justify-between bg-slate-100 dark:bg-slate-800/60 p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 mb-5 shadow-inner">
-    <button id="mode-static" class="flex-1 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest py-1.5 rounded-md bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm transition-all">Static (Local)</button>
-    <button id="mode-dynamic" class="flex-1 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest py-1.5 rounded-md text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 transition-all flex justify-center items-center gap-1.5">
-        Dynamic
-        <span class="pro-badge bg-blue-500 text-white dark:bg-ppBlue dark:text-ppBase" style="margin-left: 0;">Pro</span>
-    </button>
-</div>
+                <div class="flex items-center justify-between bg-slate-100 dark:bg-slate-800/60 p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 mb-2 shadow-inner">
+                    <button id="mode-static" class="flex-1 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest py-1.5 rounded-md bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm transition-all">Static (Local)</button>
+                    <button id="mode-dynamic" class="flex-1 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest py-1.5 rounded-md text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 transition-all flex justify-center items-center gap-1.5">
+                        Dynamic
+                        <span class="pro-badge bg-blue-500 text-white dark:bg-ppBlue dark:text-ppBase" style="margin-left: 0;">Pro</span>
+                    </button>
+                </div>
+                
+                <div id="static-warning-message" class="hidden text-[10px] sm:text-[11px] font-bold text-amber-600 dark:text-amber-400 mb-4 mt-2 text-center bg-amber-50 dark:bg-amber-900/30 py-2 rounded-md shadow-inner transition-all border border-amber-200 dark:border-amber-800/50">🔒 Security Note: This specific code type is generated securely on your device and cannot be saved dynamically.</div>
+
                 <label class="block text-xs font-bold text-slate-700 dark:text-white mb-1">What should this code do?</label>
                 <select id="payload-type" class="w-full bg-white dark:bg-slate-800 text-slate-900 dark:text-white px-4 py-3 rounded-lg border-2 border-blue-400 dark:border-ppBlue focus:outline-none focus:ring-2 focus:ring-blue-600 font-bold transition-colors shadow-sm">
                     <optgroup label="Free Basics">
@@ -754,11 +757,93 @@
             styleInputs.mask.value = activeSettings.mask;
             styleInputs.icon.value = activeSettings.icon;
 
+            // 🟢 THE TRAFFIC CONTROLLER & THE BOUNCER LOGIC
+
+            const staticPayloads = ['wifi', 'text', 'vcard', 'calendar', 'crypto'];
+            const warningToast = document.getElementById('static-warning-message');
+            const btnStatic = document.getElementById('mode-static');
+            const btnDynamic = document.getElementById('mode-dynamic');
+            const dynamicLinkDisplay = document.getElementById('dynamic-link-display'); 
+
             typeSelector.addEventListener('change', (e) => {
-                const targetId = 'form-' + e.target.value;
+                const action = e.target.value;
+                const targetId = 'form-' + action;
                 forms.forEach(form => form.classList.toggle('active', form.id === targetId));
+
+                // --- Traffic Controller: Disable Dynamic for Static-only Payloads ---
+                if (staticPayloads.includes(action)) {
+                    if (dynamicLinkDisplay && !dynamicLinkDisplay.classList.contains('hidden')) {
+                        btnStatic.click(); // Auto-switch out of dynamic mode
+                    }
+                    if (btnDynamic) {
+                        btnDynamic.disabled = true;
+                        btnDynamic.style.opacity = '0.5';
+                        btnDynamic.style.cursor = 'not-allowed';
+                    }
+                    if (warningToast) warningToast.classList.remove('hidden');
+                } else {
+                    if (btnDynamic) {
+                        btnDynamic.disabled = false;
+                        btnDynamic.style.opacity = '1';
+                        btnDynamic.style.cursor = 'pointer';
+                    }
+                    if (warningToast) warningToast.classList.add('hidden');
+                }
+
                 updateQR();
             });
+
+            // --- The Bouncer: Validate & Sanitize Inputs before Save/Print ---
+            window.validateAndSanitizeInputs = function() {
+                const type = typeSelector.value;
+                
+                // 1. Basic URL/Business Check
+                if (['url', 'review', 'social', 'menu', 'booking'].includes(type)) {
+                    let inputEl = document.getElementById(type === 'url' ? 'pl-url' : `pl-biz-${type}`);
+                    let rawUrl = inputEl.value.trim();
+                    if (rawUrl === 'https://' || rawUrl === '') return "Please enter a valid link or URL.";
+                    
+                    // Auto-fix if someone deleted the protocol
+                    if (!rawUrl.startsWith('http://') && !rawUrl.startsWith('https://')) {
+                        inputEl.value = 'https://' + rawUrl;
+                    }
+                }
+                
+                // 2. Phone / SMS Check
+                if (['tel', 'sms'].includes(type)) {
+                    let phoneEl = document.getElementById(type === 'tel' ? 'pl-tel' : 'pl-sms-to');
+                    let cleanPhone = phoneEl.value.replace(/[^\d+]/g, '');
+                    if (cleanPhone.length < 7) return "Please enter a valid phone number.";
+                }
+                
+                // 3. Map / Geo Check
+                if (type === 'geo') {
+                    let addr = document.getElementById('pl-geo-address').value.trim();
+                    let lat = document.getElementById('pl-geo-lat').value.trim();
+                    let lng = document.getElementById('pl-geo-lng').value.trim();
+                    if (!addr && (!lat || !lng)) return "Please enter a physical address or exact coordinates.";
+                }
+                
+                // 4. Email Check
+                if (type === 'email') {
+                    let email = document.getElementById('pl-email-to').value.trim();
+                    if (!email || !email.includes('@')) return "Please enter a valid email address.";
+                }
+                
+                // 5. WiFi Check
+                if (type === 'wifi') {
+                    let ssid = document.getElementById('pl-wifi-ssid').value.trim();
+                    if (!ssid) return "Please enter the Wi-Fi Network Name (SSID).";
+                }
+                
+                // 6. Crypto Check
+                if (type === 'crypto') {
+                    let addr = document.getElementById('pl-crypto-address').value.trim();
+                    if (!addr) return "Please enter your Wallet Address.";
+                }
+
+                return null; // Passes all checks!
+            };
 
             function generatePayloadString() {
                 const type = typeSelector.value;
@@ -1254,35 +1339,95 @@
                 }
             });
 
-            // --- GATEKEEPER: PREVENT GHOST SAVES ---
-            function isFormEmpty() {
-                const activeForm = document.querySelector('.payload-form.active');
-                if (!activeForm) return false;
-                const inputs = activeForm.querySelectorAll('input, textarea');
-                let hasData = false;
-                inputs.forEach(inp => {
-                    if (inp.value.trim() !== '') hasData = true;
-                });
-                return !hasData; // Returns true if all input boxes are totally blank
-            }
-
-            btnMain.addEventListener('click', () => {
-                if (isFormEmpty()) {
-                    alert("Whoops! You need to enter your details (like a URL or Phone Number) before you can save this code.");
+            // --- UNIFIED BOUNCER IMPLEMENTATION ---
+            
+            btnMain.addEventListener('click', (e) => {
+                const errorMessage = window.validateAndSanitizeInputs();
+                if (errorMessage) {
+                    alert("Whoops! " + errorMessage);
                     return;
                 }
 
                 if (isPreviewingPro) {
                     openUnlockModal();
                 } else {
-                    processExport('download');
+                    const isDynamicMode = dynamicLinkDisplay && !dynamicLinkDisplay.classList.contains('hidden');
+                    
+                    if (isDynamicMode) {
+                        // --- CLOUDFLARE DYNAMIC LAUNCH ---
+                        e.preventDefault(); 
+                        e.stopPropagation();
+
+                        if (!window.Clerk || !window.Clerk.user) {
+                            window.Clerk.openSignIn();
+                            return;
+                        }
+
+                        const newSlug = window.pendingSlug || Math.random().toString(36).substring(2, 8).toLowerCase();
+                        
+                        if (shortlinkUrl) {
+                            shortlinkUrl.value = `https://link.pixelping.app/${newSlug}`;
+                            shortlinkUrl.classList.add('bg-slate-700', 'transition-colors', 'duration-300');
+                            setTimeout(() => shortlinkUrl.classList.remove('bg-slate-700'), 400);
+                        }
+
+                        // Payload Generation uses the newly sanitized inputs safely
+                        const destinationValue = generatePayloadString();
+                        const payload = {
+                            slug: newSlug,
+                            destination: destinationValue || 'https://pixelping.app',
+                            userId: window.Clerk.user.id,
+                            createdAt: new Date().toISOString()
+                        };
+
+                        const workerUrl = 'https://pixelping-worker.amateuraiguy.workers.dev'; 
+                        const originalBtnHtml = btnMain.innerHTML;
+                        
+                        btnMain.innerHTML = "Saving to Cloud...";
+                        btnMain.classList.add('bg-ppGreen', 'text-slate-900'); 
+                        
+                        fetch(workerUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        })
+                        .then(response => {
+                            if (!response.ok) throw new Error('Network response was not ok');
+                            return response.json();
+                        })
+                        .then(data => {
+                            console.log("🚀 CLOUDFLARE SUCCESS:", data);
+                            btnMain.innerHTML = "Saved!";
+                            setTimeout(() => {
+                                btnMain.innerHTML = originalBtnHtml;
+                                btnMain.classList.remove('bg-ppGreen', 'text-slate-900');
+                            }, 2000);
+                        })
+                        .catch(error => {
+                            console.error("❌ CLOUDFLARE ERROR:", error);
+                            btnMain.innerHTML = "Error!";
+                            btnMain.classList.replace('bg-ppGreen', 'bg-red-500'); 
+                            setTimeout(() => {
+                                btnMain.innerHTML = originalBtnHtml;
+                                btnMain.classList.remove('bg-red-500', 'text-slate-900');
+                                btnMain.classList.add('bg-ppGreen'); 
+                            }, 2000);
+                        });
+
+                    } else {
+                        // --- STATIC EXPORT LOGIC ---
+                        if (typeof processExport === 'function') {
+                            processExport('download');
+                        }
+                    }
                 }
             });
 
            btnPrint.addEventListener('click', () => {
-            // --- BOUNCER 1: Empty Form Check ---
-            if (isFormEmpty()) {
-                alert("Whoops! You need to enter your details before you can print this code.");
+            // --- BOUNCER 1: Clean Inputs ---
+            const errorMessage = window.validateAndSanitizeInputs();
+            if (errorMessage) {
+                alert("Whoops! " + errorMessage);
                 return;
             }
 
@@ -1302,9 +1447,10 @@
 
     if (btnDownload) {
         btnDownload.addEventListener('click', () => {
-            // --- BOUNCER 1: Empty Form Check ---
-            if (isFormEmpty()) {
-                alert("Whoops! You need to enter your details before you can export this code.");
+            // --- BOUNCER 1: Clean Inputs ---
+            const errorMessage = window.validateAndSanitizeInputs();
+            if (errorMessage) {
+                alert("Whoops! " + errorMessage);
                 return;
             }
 
@@ -1554,12 +1700,8 @@
         });
 
     // --- PHASE 3 & 4: THE VIP GATEKEEPER & DYNAMIC UI REVEAL ---
-    const btnStatic = document.getElementById('mode-static');
-    const btnDynamic = document.getElementById('mode-dynamic');
-    const dynamicLinkDisplay = document.getElementById('dynamic-link-display'); 
-
-    if (btnStatic && btnDynamic) {
-        btnDynamic.addEventListener('click', () => {
+    if (document.getElementById('mode-static') && document.getElementById('mode-dynamic')) {
+        document.getElementById('mode-dynamic').addEventListener('click', () => {
             // 1. Intercept! Check if Clerk is ready and if the user is logged in
             if (window.Clerk && !window.Clerk.user) {
                 window.Clerk.openSignIn();
@@ -1567,16 +1709,16 @@
             }
 
             // 2. ON THE LIST: Swap styles to make Dynamic active
-            btnStatic.className = "flex-1 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest py-1.5 rounded-md text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 transition-all";
-            btnDynamic.className = "flex-1 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest py-1.5 rounded-md bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm transition-all flex justify-center items-center gap-1.5";
+            document.getElementById('mode-static').className = "flex-1 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest py-1.5 rounded-md text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 transition-all";
+            document.getElementById('mode-dynamic').className = "flex-1 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest py-1.5 rounded-md bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm transition-all flex justify-center items-center gap-1.5";
             
-            const proBadge = btnDynamic.querySelector('.pro-badge');
+            const proBadge = document.getElementById('mode-dynamic').querySelector('.pro-badge');
             if (proBadge) proBadge.style.display = 'none';
             
             // 3. PHASE 4: REVEAL THE DYNAMIC UI
+            const dynamicLinkDisplay = document.getElementById('dynamic-link-display');
             if (dynamicLinkDisplay) {
                 dynamicLinkDisplay.classList.remove('hidden');
-                // Give it a quick attention-grabbing pulse when it appears
                 dynamicLinkDisplay.classList.add('animate-pulse');
                 setTimeout(() => dynamicLinkDisplay.classList.remove('animate-pulse'), 400);
             }
@@ -1587,21 +1729,18 @@
             if (shortlinkInput) {
                 shortlinkInput.value = `https://link.pixelping.app/${window.pendingSlug}`;
             }
-            
-            console.log("VIP Access Granted: Dynamic Mode Activated");
         });
 
-        btnStatic.addEventListener('click', () => {
+        document.getElementById('mode-static').addEventListener('click', () => {
             // Swap styles back to make Static active
-            btnDynamic.className = "flex-1 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest py-1.5 rounded-md text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 transition-all flex justify-center items-center gap-1.5";
-            btnStatic.className = "flex-1 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest py-1.5 rounded-md bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm transition-all";
+            document.getElementById('mode-dynamic').className = "flex-1 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest py-1.5 rounded-md text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 transition-all flex justify-center items-center gap-1.5";
+            document.getElementById('mode-static').className = "flex-1 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest py-1.5 rounded-md bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm transition-all";
             
             // Hide the Dynamic UI again
+            const dynamicLinkDisplay = document.getElementById('dynamic-link-display');
             if (dynamicLinkDisplay) {
                 dynamicLinkDisplay.classList.add('hidden');
             }
-            
-            console.log("Returned to Static Mode");
         });
     }
 
@@ -1610,11 +1749,9 @@
     const shortlinkUrl = document.getElementById('shortlink-url');
     if (btnCopyLink && shortlinkUrl) {
         btnCopyLink.addEventListener('click', () => {
-            // Fallback for older browsers (or if iframe restrictions apply)
             shortlinkUrl.select();
             document.execCommand('copy');
             
-            // Visual feedback
             const originalText = btnCopyLink.innerText;
             btnCopyLink.innerText = "Copied!";
             btnCopyLink.classList.add('bg-green-500', 'dark:bg-ppGreen', 'text-slate-900');
@@ -1625,99 +1762,13 @@
             }, 2000);
         });
     }
-    // --- PHASE 5: DYNAMIC PAYLOAD GENERATION ---
-    const btnSave = document.getElementById('btn-main-action');
-    const destinationInput = document.getElementById('pl-url'); 
-
-    if (btnSave && shortlinkUrl) {
-        // --- THE UNIFIED SAVE BUTTON LOGIC ---
-        btnSave.addEventListener('click', (e) => {
-            // 1. Check which mode we are in
-            const isDynamicMode = !dynamicLinkDisplay.classList.contains('hidden');
-            
-            if (isDynamicMode) {
-                // --- CLOUDFLARE DYNAMIC LAUNCH ---
-                e.preventDefault(); 
-                e.stopPropagation();
-
-                // Security check: Must be signed in for dynamic
-                if (!window.Clerk || !window.Clerk.user) {
-                    window.Clerk.openSignIn();
-                    return;
-                }
-
-                // Grab the slug we generated when they clicked Dynamic mode
-                const newSlug = window.pendingSlug || Math.random().toString(36).substring(2, 8).toLowerCase();
-                
-                if (shortlinkUrl) {
-                    shortlinkUrl.value = `https://link.pixelping.app/${newSlug}`;
-                    shortlinkUrl.classList.add('bg-slate-700', 'transition-colors', 'duration-300');
-                    setTimeout(() => shortlinkUrl.classList.remove('bg-slate-700'), 400);
-                }
-
-                // Build the payload
-                const destinationValue = destinationInput ? destinationInput.value : 'https://pixelping.app';
-                const payload = {
-                    slug: newSlug,
-                    destination: destinationValue || 'https://pixelping.app',
-                    userId: window.Clerk.user.id,
-                    createdAt: new Date().toISOString()
-                };
-
-                // Send it to your specific Cloudflare Worker
-                const workerUrl = 'https://pixelping-worker.amateuraiguy.workers.dev'; 
-                const originalBtnHtml = btnSave.innerHTML;
-                
-                btnSave.innerHTML = "Saving to Cloud...";
-                btnSave.classList.add('bg-ppGreen', 'text-slate-900'); 
-                
-                fetch(workerUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                })
-                .then(response => {
-                    if (!response.ok) throw new Error('Network response was not ok');
-                    return response.json();
-                })
-                .then(data => {
-                    console.log("🚀 CLOUDFLARE SUCCESS:", data);
-                    btnSave.innerHTML = "Saved!";
-                    setTimeout(() => {
-                        btnSave.innerHTML = originalBtnHtml;
-                        btnSave.classList.remove('bg-ppGreen', 'text-slate-900');
-                    }, 2000);
-                })
-                .catch(error => {
-                    console.error("❌ CLOUDFLARE ERROR:", error);
-                    btnSave.innerHTML = "Error!";
-                    btnSave.classList.replace('bg-ppGreen', 'bg-red-500'); 
-                    setTimeout(() => {
-                        btnSave.innerHTML = originalBtnHtml;
-                        btnSave.classList.remove('bg-red-500', 'text-slate-900');
-                        btnSave.classList.add('bg-ppGreen'); 
-                    }, 2000);
-                });
-
-            } else {
-                // --- STATIC EXPORT LOGIC ---
-                // If not in dynamic mode, just download the image normally
-                if (typeof processExport === 'function') {
-                    processExport('download');
-                }
-            }
-        });
-    }
+    
     // --- CLEAR HISTORY BUTTON LOGIC ---
         const btnClearHistory = document.getElementById('btn-clear-history');
         if (btnClearHistory) {
             btnClearHistory.addEventListener('click', () => {
-                // Safety Check Bouncer
                 if (confirm("Are you sure you want to permanently delete your entire code history?")) {
-                    // 1. Wipe the local storage memory
                     localStorage.removeItem('pixelping-history');
-                    
-                    // 2. Visually empty the container on the screen
                     const historyContent = document.getElementById('history-content');
                     if (historyContent) {
                         historyContent.innerHTML = '<div class="text-center text-slate-500 text-xs py-4 mt-2">History cleared.</div>';
@@ -1730,14 +1781,9 @@
         const logoUploadBtn = document.getElementById('qr-custom-logo');
         if (logoUploadBtn) {
             logoUploadBtn.addEventListener('click', (e) => {
-                // Check if the user has the Master Key
                 const isUserPro = localStorage.getItem('pixelping-pro') === 'true';
-                
                 if (!isUserPro) {
-                    // 1. Stop the computer from opening the file browser!
                     e.preventDefault(); 
-                    
-                    // 2. Force the paywall modal to open instead
                     openMasterKeyModal(); 
                 }
             });
@@ -1780,15 +1826,12 @@
                 }
             };
 
-            // Create the official script tag exactly as Clerk expects it
             const script = document.createElement('script');
             script.setAttribute('data-clerk-publishable-key', pubKey);
             script.async = true;
-            // Using @latest ensures we get the fully bundled version
             script.src = 'https://novel-ant-14.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js';
             script.crossOrigin = 'anonymous';
             
-            // Wait for the script to download, then fire our start function
             script.addEventListener('load', startClerk);
             document.body.appendChild(script);
         })();
