@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PixelPing | Help Center</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        ppBase: '#061a2b',
+                        ppDark: '#0f3a5a',
+                        ppLight: '#dff4ff',
+                        ppBlue: '#27cfff',
+                        ppGreen: '#3cff8f'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Background Eye Candy */
+        .pixel-bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; background-color: #f8fafc; transition: background-color 0.3s; }
+        .dark .pixel-bg { background-color: #061a2b; background-image: radial-gradient(#0f3a5a 1px, transparent 1px); background-size: 30px 30px; }
+        .floating-pixel { position: absolute; border-radius: 4px; opacity: 0; animation: floatUp infinite linear; }
+        @keyframes floatUp { 0% { transform: translateY(100vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.4; } 90% { opacity: 0.4; } 100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; } }
+        
+        /* Smooth Scrolling */
+        html { scroll-behavior: smooth; }
+    </style>
+</head>
+<body class="text-slate-900 dark:text-ppLight min-h-screen font-sans antialiased flex flex-col items-center p-4 md:p-8 relative z-0">
+
+    <div class="pixel-bg" id="pixel-bg"></div>
+
+    <header class="w-full max-w-5xl mb-8 flex items-center justify-between z-10 relative bg-white/95 dark:bg-ppDark/90 backdrop-blur-md px-6 py-4 rounded-2xl border border-slate-200 dark:border-gray-800 shadow-lg">
+        <div class="flex items-center gap-4">
+            <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <rect width="512" height="512" rx="96" fill="#061a2b"/>
+                <rect x="28" y="28" width="456" height="456" rx="80" fill="none" stroke="#0f3a5a" stroke-width="4"/>
+                <rect x="96" y="96" width="96" height="96" rx="18" fill="#dff4ff"/>
+                <rect x="320" y="96" width="96" height="96" rx="18" fill="#dff4ff"/>
+                <rect x="96" y="288" width="96" height="96" rx="18" fill="#dff4ff"/>
+                <rect x="140" y="140" width="16" height="16" rx="4" fill="#27cfff"/>
+                <rect x="364" y="140" width="16" height="16" rx="4" fill="#27cfff"/>
+            </svg>
+            <div>
+                <h1 class="text-xl font-bold tracking-wide text-slate-900 dark:text-white">Help Center</h1>
+                <p class="text-blue-600 dark:text-ppGreen text-[10px] tracking-[0.2em] uppercase">Guides & Support</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-4">
+            <a href="index.html" class="text-xs font-bold text-slate-500 hover:text-ppBlue transition-colors uppercase tracking-wider">← Back to App</a>
+        </div>
+    </header>
+
+    <main class="w-full max-w-5xl z-10 relative grid grid-cols-1 md:grid-cols-12 gap-8 items-start flex-1">
+        
+        <nav class="md:col-span-3 sticky top-6 space-y-2 hidden md:block">
+            <div class="bg-slate-900/50 backdrop-blur-md border border-slate-800 p-4 rounded-xl">
+                <h3 class="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-3">Jump To</h3>
+                <ul class="space-y-3">
+                    <li><a href="#about" class="text-sm text-slate-300 hover:text-ppBlue transition-colors font-medium">What is PixelPing?</a></li>
+                    <li><a href="#dns-guide" class="text-sm text-slate-300 hover:text-ppBlue transition-colors font-medium">Custom Domain Setup</a></li>
+                    <li><a href="#faq" class="text-sm text-slate-300 hover:text-ppBlue transition-colors font-medium">Frequently Asked Questions</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="md:col-span-9 space-y-8 pb-12">
+            
+            <section id="about" class="bg-white/5 dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 sm:p-8 rounded-2xl shadow-xl">
+                <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-3">
+                    <span class="text-ppBlue">⚡</span> What is PixelPing?
+                </h2>
+                <div class="space-y-4 text-slate-300 text-sm leading-relaxed">
+                    <p>PixelPing is a rebellion against the subscription-hostage model of the modern internet. Most QR code generators let you create a "free" code, secretly make it dynamic, and then break your code a week later unless you pay a surprise $20/month subscription.</p>
+                    <p>We do things differently. <b>PixelPing creates fast, offline-first codes tailored for field operations.</b> By default, our codes are generated 100% locally on your device. They don't use tracking servers, they don't redirect, and they will work forever. Build it once, own it forever.</p>
+                </div>
+            </section>
+
+            <section id="dns-guide" class="bg-white/5 dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 sm:p-8 rounded-2xl shadow-xl scroll-mt-6">
+                <h2 class="text-2xl font-bold text-white mb-2 flex items-center gap-3">
+                    <span class="text-ppGreen">🌐</span> Connect Your Custom Domain
+                </h2>
+                <p class="text-sm text-slate-400 mb-8 border-b border-slate-700 pb-6">To make your QR codes and shortlinks look professional (e.g., <code>links.yourwebsite.com/promo</code>), you need to connect your custom domain to PixelPing. This tells the internet that you authorize us to route your traffic securely.</p>
+
+                <div class="space-y-8">
+                    <div>
+                        <h3 class="text-lg font-bold text-ppLight mb-2"><span class="text-ppBlue mr-2">Step 1:</span> Initialize Your Domain</h3>
+                        <ol class="list-decimal list-inside text-sm text-slate-300 space-y-2 ml-2">
+                            <li>Log into your PixelPing <b>Command Center</b>.</li>
+                            <li>Click the <b>🌐 Add Custom Domain</b> button at the top of the dashboard.</li>
+                            <li>Enter the domain you want to use. <br>
+                                <div class="bg-amber-900/20 border-l-4 border-amber-500 p-3 mt-2 rounded text-xs text-amber-200">
+                                    <b>Pro Tip:</b> We highly recommend using a subdomain like <code>links.yourwebsite.com</code> or <code>qr.yourwebsite.com</code>. Most registrars do not allow you to route a root domain (like <code>yourwebsite.com</code>) to a third-party app.
+                                </div>
+                            </li>
+                            <li>Click <b>Generate DNS Records</b>. PixelPing will securely talk to our servers and generate the exact records you need. <b>Leave this window open!</b></li>
+                        </ol>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold text-ppLight mb-2"><span class="text-ppBlue mr-2">Step 2:</span> Log Into Your Registrar</h3>
+                        <ol class="list-decimal list-inside text-sm text-slate-300 space-y-2 ml-2">
+                            <li>Open a new browser tab and log into the company where you bought your domain (GoDaddy, Namecheap, Wix, Squarespace, etc.).</li>
+                            <li>Find your domain and look for a button that says <b>DNS Settings</b>, <b>Manage DNS</b>, or <b>Advanced DNS</b>.</li>
+                            <li>Look for the button to <b>Add New Record</b>.</li>
+                        </ol>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold text-ppLight mb-2"><span class="text-ppBlue mr-2">Step 3:</span> Add the Routing Record (CNAME)</h3>
+                        <p class="text-xs text-slate-400 mb-3 ml-6">This record tells the internet to send people who scan your code directly to PixelPing's servers.</p>
+                        <ol class="list-decimal list-inside text-sm text-slate-300 space-y-2 ml-2">
+                            <li>Click <b>Add New Record</b> in your registrar.</li>
+                            <li>Under <b>Type</b>, select <b>CNAME</b>.</li>
+                            <li>Go back to your PixelPing tab and click <b>Copy</b> next to the <b>Name / Host</b> in Step 1. Paste it into your registrar.</li>
+                            <li>Click <b>Copy</b> next to the <b>Value / Target</b> in Step 1. Paste it into your registrar.</li>
+                            <li>Hit <b>Save</b>.</li>
+                        </ol>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold text-ppLight mb-2"><span class="text-ppBlue mr-2">Step 4:</span> Add the Verification Record (TXT)</h3>
+                        <p class="text-xs text-slate-400 mb-3 ml-6">This record acts as a secret password to prove to our security systems that you actually own this domain.</p>
+                        <ol class="list-decimal list-inside text-sm text-slate-300 space-y-2 ml-2">
+                            <li>Click <b>Add New Record</b> in your registrar again.</li>
+                            <li>Under <b>Type</b>, select <b>TXT</b>.</li>
+                            <li>Go back to your PixelPing tab and click <b>Copy</b> next to the <b>Name / Host</b> in Step 2. Paste it into your registrar.</li>
+                            <li>Click <b>Copy</b> next to the <b>Value / Target</b> in Step 2. Paste it into your registrar.</li>
+                            <li>Hit <b>Save</b>.</li>
+                        </ol>
+                    </div>
+
+                    <div class="bg-slate-900/50 p-6 rounded-xl border border-slate-700">
+                        <h3 class="text-lg font-bold text-ppGreen mb-2">🎉 You're Done!</h3>
+                        <p class="text-sm text-slate-300">Go back to PixelPing and click <b>"I've Added These Records."</b></p>
+                        <p class="text-xs text-slate-400 mt-2"><i>Note: It usually takes about 5 to 15 minutes for your registrar to update the global internet directories. Once those records sync, your custom domain will be live, secure, and ready to scan!</i></p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="faq" class="bg-white/5 dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 sm:p-8 rounded-2xl shadow-xl scroll-mt-6">
+                <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                    <span class="text-ppBlue">❓</span> Frequently Asked Questions
+                </h2>
+                
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="text-base font-bold text-ppLight mb-1">What is the difference between Static and Dynamic?</h4>
+                        <p class="text-sm text-slate-400"><b>Static (Local)</b> codes are built entirely on your device and are never sent to a server. Because they don't redirect, they can never be tracked or broken. <b>Dynamic</b> codes are saved to our cloud engine, allowing you to update where the code points even after you've printed it. Dynamic codes track scans but require an internet connection.</p>
+                    </div>
+
+                    <div>
+                        <h4 class="text-base font-bold text-ppLight mb-1">Does this app collect my data?</h4>
+                        <p class="text-sm text-slate-400">No. If you generate a Static code, your payloads and settings stay strictly on your local device. We only store data when you explicitly choose to create a Dynamic link so we know where to route the traffic.</p>
+                    </div>
+
+                    <div>
+                        <h4 class="text-base font-bold text-ppLight mb-1">Can I use this without Wi-Fi?</h4>
+                        <p class="text-sm text-slate-400">Yes! Once you load the main generator page for the first time, the core tool caches in your browser. You can generate local static codes (like Plain Text or WiFi) entirely offline.</p>
+                    </div>
+
+                    <div>
+                        <h4 class="text-base font-bold text-ppLight mb-1">What do I get with the Pro version?</h4>
+                        <p class="text-sm text-slate-400">The free tier handles basic URLs and phone numbers perfectly. Upgrading to Pro unlocks the Command Center dashboard, dynamic cloud routing, custom domain mapping, advanced payloads (vCards, Crypto, Calendar), and the ability to customize your code's shape, colors, and logos.</p>
+                    </div>
+
+                    <div>
+                        <h4 class="text-base font-bold text-ppLight mb-1">Are there hidden subscription fees?</h4>
+                        <p class="text-sm text-slate-400">Never. We hate subscriptions. The Master Key is a one-time purchase for lifetime access to the Pro tier.</p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <div class="w-full max-w-5xl text-center pb-8 z-10 relative mt-auto pt-6 border-t border-slate-800">
+        <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">Built with the StupidSimpleCrazyFast™ micro-app framework.</p>
+        <div class="text-[11px] text-slate-400 dark:text-slate-500 mb-1">
+            Built by <a href="https://machinolabs.com" target="_blank" class="hover:text-ppBlue transition-colors">MachinoLabs</a> • <a href="https://machinolabs.com" target="_blank" class="hover:text-ppBlue transition-colors">machinolabs.com</a> • <a href="https://stupidsimplecrazyfast.com" target="_blank" class="hover:text-ppBlue transition-colors">stupidsimplecrazyfast.com</a>
+            <br>
+            Joe • 717.623.2907
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const bgContainer = document.getElementById('pixel-bg');
+            if (bgContainer) {
+                const colors = ['#27cfff', '#3cff8f', '#0f3a5a'];
+                for(let i=0; i<20; i++) {
+                    let div = document.createElement('div'); div.className = 'floating-pixel';
+                    let size = Math.random() * 20 + 10; div.style.width = size + 'px'; div.style.height = size + 'px';
+                    div.style.left = Math.random() * 100 + 'vw'; div.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    div.style.animationDelay = (Math.random() * 8) + 's'; div.style.animationDuration = (Math.random() * 6 + 6) + 's';
+                    bgContainer.appendChild(div);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
