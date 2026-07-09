@@ -124,19 +124,25 @@
                 <rect x="364" y="140" width="16" height="16" rx="4" fill="#27cfff"/>
                 <rect x="140" y="332" width="16" height="16" rx="4" fill="#3cff8f"/>
             </svg>
-        <div>
-            <h1 class="text-2xl md:text-3xl font-bold tracking-wide text-slate-900 dark:text-white transition-colors">PixelPing: Rebellion</h1>
-            <p class="text-blue-600 dark:text-ppGreen text-sm tracking-[0.2em] uppercase mt-1">Generate &bull; Scan &bull; Share &bull; Own</p>
+            <div>
+                <h1 class="text-3xl font-extrabold tracking-wide text-slate-900 dark:text-white flex items-center gap-2">
+                    <span id="main-title">PixelPing</span>
+                    <span id="tier-title" class="hidden text-slate-400 text-2xl font-bold"></span>
+                </h1>
+                <!-- The dynamic status message -->
+                <p id="tier-subtitle" class="hidden text-slate-500 text-[11px] tracking-[0.1em] uppercase mt-1">
+                    You are currently at the <span id="tier-name-highlight" class="font-bold">NOMAD</span> level.
+                </p>
+            </div>
         </div>
-    </div>
 
-    <div class="flex items-center gap-3">
+        <div class="flex items-center gap-3">
             <button id="navBuyBtn" onclick="openMasterKeyModal()" class="px-3 py-1.5 bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-yellow-900 text-[10px] md:text-xs font-extrabold rounded-full transition-transform active:scale-95 shadow-sm uppercase tracking-wider border border-yellow-300">Get Master Key</button>
             <div id="offline-badge" class="hidden px-3 py-1 bg-slate-200 dark:bg-ppDark text-slate-700 dark:text-ppBlue text-xs rounded-full border border-slate-300 dark:border-ppBlue font-bold">Offline Ready</div>
             <div id="auth-container" class="flex items-center justify-center min-w-[70px]">
-    <button id="btn-sign-in" class="text-[11px] md:text-xs font-bold text-blue-600 dark:text-ppBlue hover:underline tracking-wider uppercase transition-colors">Sign In</button>
-    <div id="user-button-mount" class="hidden"></div>
-</div>
+                <button id="btn-sign-in" class="text-[11px] md:text-xs font-bold text-blue-600 dark:text-ppBlue hover:underline tracking-wider uppercase transition-colors">Sign In</button>
+                <div id="user-button-mount" class="hidden"></div>
+            </div>
             <button id="themeToggle" class="ml-info-btn" aria-label="Toggle Theme">
                 <svg id="icon-sun" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                 <svg id="icon-moon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
@@ -538,10 +544,13 @@
         </div>
     </main>
 
-    <footer class="w-full max-w-5xl text-center pb-8 z-10 relative">
-        <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">Built with the StupidSimpleCrazyFast™ micro-app framework.</p>
-        <p class="text-[11px] text-slate-400 dark:text-slate-500 mb-1">Built by MachinoLabs - Joe • support@senditin.app</p>
-        <p class="text-[11px] font-medium text-blue-500 dark:text-ppBlue uppercase tracking-wider">Let's Build Something</p>
+    <footer class="w-full max-w-5xl text-center pb-8 z-10 relative footer">
+        <p class="footer-tag text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">Built with the StupidSimpleCrazyFast™ micro-app framework.</p>
+        <div class="footer-credits text-[11px] text-slate-400 dark:text-slate-500 mb-1">
+            Built by <a href="https://machinolabs.com" class="hover:text-blue-400 transition-colors">MachinoLabs</a> • <a href="https://machinolabs.com" class="hover:text-blue-400 transition-colors">machinolabs.com</a> • <a href="https://stupidsimplecrazyfast.com" class="hover:text-blue-400 transition-colors">stupidsimplecrazyfast.com</a>
+            <br>
+            Joe • 717.623.2907
+        </div>
     </footer>
 
     <div id="infoOverlay" class="ml-overlay" hidden></div>
@@ -1795,6 +1804,47 @@
         (function() {
             const pubKey = "pk_test_bm92ZWwtYW50LTE0LmNsZXJrLmFjY291bnRzLmRldiQ";
             
+            // --- DYNAMIC TIER LOGIC ---
+            async function applyUserTier() {
+                if (!window.Clerk || !window.Clerk.user) return; 
+
+                const tierTitle = document.getElementById('tier-title');
+                const tierSubtitle = document.getElementById('tier-subtitle');
+
+                try {
+                    const response = await fetch(`https://pixelping-worker.amateuraiguy.workers.dev/api/links?userId=${window.Clerk.user.id}`);
+                    const data = await response.json();
+                    
+                    const userTier = data.tier || 'nomad'; 
+                    
+                    tierTitle.classList.remove('hidden');
+                    tierSubtitle.classList.remove('hidden');
+
+                    if (userTier === 'evolution') {
+                        tierTitle.innerText = ": Evolution";
+                        tierTitle.className = "text-ppGreen text-2xl font-bold";
+                        tierSubtitle.innerHTML = `You are currently at the <span class="font-bold text-ppGreen">EVOLUTION</span> level.`;
+                    } else if (userTier === 'rebellion') {
+                        tierTitle.innerText = ": Rebellion";
+                        tierTitle.className = "text-ppBlue text-2xl font-bold";
+                        tierSubtitle.innerHTML = `You are currently at the <span class="font-bold text-ppBlue">REBELLION</span> level.`;
+                    } else {
+                        // Default Nomad
+                        tierTitle.innerText = ": Nomad";
+                        tierTitle.className = "text-slate-400 text-2xl font-bold";
+                        tierSubtitle.innerHTML = `You are currently at the <span class="font-bold text-slate-400">NOMAD</span> level. <a href="#upgrade" class="text-ppBlue hover:text-white underline ml-2 transition-colors">Unlock Rebellion →</a>`;
+                    }
+                } catch (error) {
+                    console.error("Failed to load tier data, defaulting to Nomad.");
+                    // Fail-safe UI rendering
+                    tierTitle.classList.remove('hidden');
+                    tierSubtitle.classList.remove('hidden');
+                    tierTitle.innerText = ": Nomad";
+                    tierTitle.className = "text-slate-400 text-2xl font-bold";
+                    tierSubtitle.innerHTML = `You are currently at the <span class="font-bold text-slate-400">NOMAD</span> level. <a href="#upgrade" class="text-ppBlue hover:text-white underline ml-2 transition-colors">Unlock Rebellion →</a>`;
+                }
+            }
+
             const startClerk = async () => {
                 try {
                     // Clerk handles loading both the logic and the UI internally here
@@ -1812,6 +1862,9 @@
                         btnSignIn.classList.add('hidden');
                         userButtonMount.classList.remove('hidden');
                         window.Clerk.mountUserButton(userButtonMount);
+                        
+                        // Trigger the UI Morph only after mount is successful
+                        await applyUserTier();
                     } else {
                         btnSignIn.classList.remove('hidden');
                         userButtonMount.classList.add('hidden');
