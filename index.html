@@ -1008,7 +1008,7 @@
                 
                 // 2. Phone / SMS Check
                 if (['tel', 'sms'].includes(type)) {
-                    let phoneEl = document.getElementById(type === 'tel' ? 'pl-sms-to');
+                    let phoneEl = document.getElementById(type === 'tel' ? 'pl-tel' : 'pl-sms-to');
                     let cleanPhone = phoneEl.value.replace(/[^\d+]/g, '');
                     if (cleanPhone.length < 7) return "Please enter a valid phone number.";
                 }
