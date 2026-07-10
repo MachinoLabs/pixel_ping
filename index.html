@@ -515,11 +515,11 @@
             <div class="grid grid-cols-3 gap-4">
                 <div class="flex flex-col">
                     <span class="text-[10px] text-slate-500 font-mono uppercase">30-Day Pings</span>
-                    <span class="text-lg font-bold text-white font-mono">1,204</span>
+                    <span id="ping-count" class="text-lg font-bold text-white font-mono">0</span>
                 </div>
                 <div class="flex flex-col">
                     <span class="text-[10px] text-slate-500 font-mono uppercase">Active Routes</span>
-                    <span class="text-lg font-bold text-white font-mono">14</span>
+                    <span id="route-count" class="text-lg font-bold text-white font-mono">0</span>
                 </div>
                 <div class="flex flex-col">
                     <span class="text-[10px] text-slate-500 font-mono uppercase">Top Link</span>
@@ -830,6 +830,37 @@
             "%cWe love that you're looking under the hood of PixelPing. But before you go tinkering with local storage or ripping code, please remember:\n\nThis application is the proprietary property of MachinoLabs. Unauthorized copying, reverse engineering, or redistribution is strictly prohibited.\n\nRespect the build, support indie devs, and keep it ethical. \n\n© 2026 MachinoLabs • Built by Joe", 
             "font-size: 14px; color: #0f3a5a; font-weight: bold; line-height: 1.5;"
         );
+
+    // --- Telemetry Animation ---
+    function animateTelemetry(elementId, start, end, duration) {
+        const obj = document.getElementById(elementId);
+        if (!obj) return;
+        
+        let startTimestamp = null;
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            
+            const easeOutQuad = progress * (2 - progress);
+            const currentCount = Math.floor(easeOutQuad * (end - start) + start);
+            obj.innerHTML = currentCount.toLocaleString(); 
+            
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            } else {
+                obj.innerHTML = end.toLocaleString(); 
+            }
+        };
+        window.requestAnimationFrame(step);
+    }
+
+    window.hasAnimatedTelemetry = false;
+    function initTelemetryDashboard() {
+        if (window.hasAnimatedTelemetry) return;
+        window.hasAnimatedTelemetry = true;
+        animateTelemetry("ping-count", 0, 1204, 1500); 
+        animateTelemetry("route-count", 0, 14, 1500);  
+    }
 
 // --- Premium Paywall Modal Function ---
     window.openMasterKeyModal = function() {
@@ -1272,7 +1303,10 @@
                     if (mainTitle) mainTitle.innerHTML = "PixelPing: <span class='text-ppGreen'>Evolution</span>";
                     if (subTitle) subTitle.innerHTML = "TELEMETRY • COMMAND • CONTROL";
                     if (nomadTeaser) nomadTeaser.style.display = 'none';
-                    if (telemetryDash) telemetryDash.classList.remove('hidden');
+                    if (telemetryDash) {
+                        telemetryDash.classList.remove('hidden');
+                        initTelemetryDashboard();
+                    }
                     if (pricingSection) pricingSection.style.display = 'none'; 
                 } else if (isUnlocked) {
                     // MASTER KEY STATE: Hide Founders Box, Hide Tiers 1 & 2, Center Tier 3
