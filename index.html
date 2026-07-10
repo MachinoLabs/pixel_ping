@@ -1437,7 +1437,35 @@
             
             document.getElementById('unlockCloseBtn').addEventListener('click', closeUnlockModal);
             unlockOverlay.addEventListener('click', closeUnlockModal);
+// --- Modal Logics & 🟢 REAL CLOUDFLARE FETCH ---
+            const unlockModal = document.getElementById('unlockModal');
+            const unlockOverlay = document.getElementById('unlockOverlay');
+            const licenseInput = document.getElementById('license-key-input');
+            
+            function openUnlockModal() { unlockModal.hidden = false; unlockOverlay.hidden = false; }
+            function closeUnlockModal() { unlockModal.hidden = true; unlockOverlay.hidden = true; }
+            
+            document.getElementById('unlockCloseBtn').addEventListener('click', closeUnlockModal);
+            unlockOverlay.addEventListener('click', closeUnlockModal);
 
+            // 🟢 NEW EVOLUTION MODAL CONTROLS
+            const evoModal = document.getElementById('evolutionModal');
+            const evoOverlay = document.getElementById('evolutionOverlay');
+            
+            function openEvolutionModal() { evoModal.hidden = false; evoOverlay.hidden = false; }
+            function closeEvolutionModal() { evoModal.hidden = true; evoOverlay.hidden = true; }
+            
+            document.getElementById('evolutionCloseBtn').addEventListener('click', closeEvolutionModal);
+            evoOverlay.addEventListener('click', closeEvolutionModal);
+
+            // Mock verify button for Evolution (You can connect this to Clerk/Stripe later)
+            document.getElementById('btn-verify-evo').addEventListener('click', () => {
+                localStorage.setItem('pixelping-evolution', 'true');
+                closeEvolutionModal();
+                checkPaywallState();
+                alert("Evolution Engine Ignited! Welcome to Tier 3.");
+                location.reload(); // Quick refresh to load the dashboard
+            });
             document.getElementById('btn-verify-key').addEventListener('click', async () => {
                 const key = licenseInput.value.trim();
                 if (!key) return alert("Please enter a license key.");
@@ -1862,7 +1890,7 @@
             // 🛑 CHECKPOINT 2: THE VIP DOOR (Block Tier 2 from Tier 3 features)
             if (!hasEvolution) {
                 e.preventDefault();
-                alert("You have the Master Key. Now ignite the engine.\n\nSubscribe to Evolution to unlock Cloudflare dynamic routing, live analytics, and the Command Center.");
+                openEvolutionModal();
                 return;
             }
 
