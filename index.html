@@ -593,7 +593,73 @@
         </div>
     </main>
 
-    <footer class="w-full max-w-5xl text-center pb-8 z-10 relative">
+<section id="pricing-section" class="w-full bg-[#061a2b] py-20 px-6 font-sans border-t border-slate-800 mt-8">
+    <div class="max-w-6xl mx-auto">
+        
+        <div id="pricing-header" class="text-center mb-16">
+            <h2 class="text-3xl md:text-5xl font-extrabold text-white tracking-wide mb-4">Choose Your Engine.</h2>
+            <p class="text-slate-400 max-w-2xl mx-auto text-sm md:text-base">No hidden redirects. No hostage situations. Build forever on the Zero-Friction Core, or unlock the ultimate routing architecture.</p>
+        </div>
+
+        <div id="pricing-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+            
+            <div id="card-tier-1" class="bg-[#0f3a5a]/40 border border-slate-700 rounded-3xl p-8 flex flex-col hover:border-slate-500 transition-colors relative">
+                <h3 class="text-white text-xl font-bold uppercase tracking-wider mb-2">Zero-Friction Core</h3>
+                <p class="text-slate-400 text-sm mb-6 h-10">Build static codes offline. No tracking. No redirects. No BS.</p>
+                <div class="mb-8">
+                    <span class="text-4xl font-extrabold text-white">$0</span>
+                    <span class="text-slate-500 text-sm font-medium">/ forever</span>
+                </div>
+                <ul class="space-y-4 mb-8 flex-1 text-sm text-slate-300 font-medium">
+                    <li class="flex items-start gap-3"><span class="text-slate-500">✓</span> Standard Payloads (URL, Phone, Text)</li>
+                    <li class="flex items-start gap-3"><span class="text-slate-500">✓</span> 100% Offline Local Generation</li>
+                    <li class="flex items-start gap-3"><span class="text-slate-500">✓</span> Standard PNG Export</li>
+                    <li class="flex items-start gap-3"><span class="text-slate-500">✓</span> Basic Aesthetic Controls</li>
+                    <li class="flex items-start gap-3"><span class="text-slate-500">✓</span> No Expiration Dates</li>
+                </ul>
+                <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="w-full text-center bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 rounded-xl transition-colors border border-slate-600 cursor-pointer">Launch Canvas</button>
+            </div>
+
+            <div id="card-tier-2" class="bg-[#0f172a] border-2 border-yellow-500 rounded-3xl p-8 flex flex-col relative transform md:-translate-y-4 shadow-[0_0_40px_rgba(234,179,8,0.15)]">
+                <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-yellow-500 text-slate-900 font-extrabold px-4 py-1 rounded-full text-[10px] uppercase tracking-widest shadow-md">Most Popular</div>
+                <h3 class="text-yellow-400 text-xl font-bold uppercase tracking-wider mb-2">Master Key</h3>
+                <p class="text-slate-400 text-sm mb-6 h-10">Own the canvas. Unlock business-grade payloads, brand kits, and infinite vector scaling.</p>
+                <div class="mb-8">
+                    <span class="text-4xl font-extrabold text-white">$29</span>
+                    <span class="text-slate-500 text-sm font-medium">/ one-time</span>
+                </div>
+                <ul class="space-y-4 mb-8 flex-1 text-sm text-slate-200 font-medium">
+                    <li class="flex items-start gap-3"><span class="text-yellow-500">✓</span> <span class="font-bold text-white">Everything in Core, plus:</span></li>
+                    <li class="flex items-start gap-3"><span class="text-yellow-500">✓</span> Premium Payloads (Wi-Fi, Crypto, vCard)</li>
+                    <li class="flex items-start gap-3"><span class="text-yellow-500">✓</span> Business Suite (Menus, Reviews, Booking)</li>
+                    <li class="flex items-start gap-3"><span class="text-yellow-500">✓</span> Custom Center Logo Uploads</li>
+                    <li class="flex items-start gap-3"><span class="text-yellow-500">✓</span> Smart Print Labels</li>
+                    <li class="flex items-start gap-3"><span class="text-yellow-500">✓</span> Infinite Vector (SVG) & PDF Exports</li>
+                </ul>
+                <button onclick="openMasterKeyModal()" class="w-full text-center bg-gradient-to-r from-yellow-400 to-yellow-600 hover:from-yellow-300 hover:to-yellow-500 text-slate-900 font-extrabold py-3 rounded-xl transition-all shadow-lg active:scale-95 cursor-pointer">Get Master Key</button>
+            </div>
+
+            <div id="card-tier-3" class="bg-[#0f3a5a]/40 border border-[#3cff8f]/40 rounded-3xl p-8 flex flex-col hover:border-[#3cff8f]/80 transition-colors relative shadow-[0_0_30px_rgba(60,255,143,0.05)] w-full">
+                <h3 class="text-[#3cff8f] text-xl font-bold uppercase tracking-wider mb-2">Evolution</h3>
+                <p class="text-slate-400 text-sm mb-6 h-10">Ignite the engine. Dynamic routing, live analytics, and total command over your field operations.</p>
+                <div class="mb-8 flex items-baseline">
+                    <span class="text-4xl font-extrabold text-white">$9</span>
+                    <span class="text-slate-500 text-sm font-medium ml-1">/ month</span>
+                </div>
+                <ul class="space-y-4 mb-8 flex-1 text-sm text-slate-300 font-medium">
+                    <li class="flex items-start gap-3"><span class="text-[#3cff8f]">✓</span> <span class="font-bold text-white">Everything in Master Key, plus:</span></li>
+                    <li class="flex items-start gap-3"><span class="text-[#3cff8f]">✓</span> Cloudflare Dynamic Routing</li>
+                    <li class="flex items-start gap-3"><span class="text-[#3cff8f]">✓</span> Live Scan Telemetry Dashboard</li>
+                    <li class="flex items-start gap-3"><span class="text-[#3cff8f]">✓</span> Admin Command Center Access</li>
+                    <li class="flex items-start gap-3"><span class="text-[#3cff8f]">✓</span> Cloud-Saved Link History</li>
+                </ul>
+                <button onclick="openEvolutionModal()" class="w-full text-center bg-[#3cff8f] hover:bg-[#2ce07a] text-slate-900 font-extrabold py-3 rounded-xl transition-colors shadow-[0_0_15px_rgba(60,255,143,0.2)] cursor-pointer">Subscribe to Evolution</button>
+            </div>
+
+        </div>
+    </div>
+</section>
+<footer class="w-full max-w-5xl text-center pb-8 z-10 relative mt-8">
         <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">Built with the StupidSimpleCrazyFast™ micro-app framework.</p>
         <p class="text-[11px] text-slate-400 dark:text-slate-500 mb-1">
             Built by <a href="https://machinolabs.com" target="_blank" class="hover:underline text-blue-500 dark:text-ppBlue">MachinoLabs</a> • 
@@ -1167,38 +1233,53 @@
             
             function checkPaywallState() {
                 const isUnlocked = localStorage.getItem('pixelping-pro') === 'true'; // Tier 2 Flag
-                const isEvolution = localStorage.getItem('pixelping-evolution') === 'true'; // Future Tier 3 Flag Setup
+                const isEvolution = localStorage.getItem('pixelping-evolution') === 'true'; // Tier 3 Flag Setup
                 
                 const mainTitle = document.getElementById('main-title');
                 const subTitle = document.getElementById('sub-title');
                 const nomadTeaser = document.getElementById('nomad-teaser-box');
                 const telemetryDash = document.getElementById('telemetry-dashboard');
+                
+                const pricingSection = document.getElementById('pricing-section');
+                const pricingGrid = document.getElementById('pricing-grid');
+                const cardTier1 = document.getElementById('card-tier-1');
+                const cardTier2 = document.getElementById('card-tier-2');
 
                 if (isEvolution) {
-                    // EVOLUTION STATE
+                    // EVOLUTION STATE: Hide Founders Box AND Entire Pricing Matrix
                     if (mainTitle) mainTitle.innerHTML = "PixelPing: <span class='text-ppGreen'>Evolution</span>";
                     if (subTitle) subTitle.innerHTML = "TELEMETRY • COMMAND • CONTROL";
                     if (nomadTeaser) nomadTeaser.style.display = 'none';
                     if (telemetryDash) telemetryDash.classList.remove('hidden');
+                    if (pricingSection) pricingSection.style.display = 'none'; 
                 } else if (isUnlocked) {
-                    // MASTER KEY STATE
+                    // MASTER KEY STATE: Hide Founders Box, Hide Tiers 1 & 2, Center Tier 3
                     if (mainTitle) mainTitle.innerHTML = "PixelPing: Rebellion";
                     if (subTitle) subTitle.innerHTML = "<span class='text-yellow-500'>MASTER KEY AUTHENTICATED</span>";
                     if (nomadTeaser) nomadTeaser.style.display = 'none';
-                    // We can show Telemetry here too if you merge the benefits, but strictly following architecture:
                     if (telemetryDash) telemetryDash.classList.add('hidden'); 
+                    
+                    if (pricingSection) pricingSection.style.display = 'block';
+                    if (cardTier1) cardTier1.style.display = 'none';
+                    if (cardTier2) cardTier2.style.display = 'none';
+                    if (pricingGrid) pricingGrid.className = "flex justify-center max-w-md mx-auto";
                 } else {
-                    // NOMAD STATE
+                    // NOMAD STATE: Show Founders Box, Show Full 3-Column Pricing
                     if (mainTitle) mainTitle.innerHTML = "PixelPing";
                     if (subTitle) subTitle.innerHTML = "Generate &bull; Scan &bull; Share &bull; Own";
                     if (nomadTeaser) nomadTeaser.style.display = 'flex';
                     if (telemetryDash) telemetryDash.classList.add('hidden');
+                    
+                    if (pricingSection) pricingSection.style.display = 'block';
+                    if (cardTier1) cardTier1.style.display = 'flex';
+                    if (cardTier2) cardTier2.style.display = 'flex';
+                    if (pricingGrid) pricingGrid.className = "grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch";
                 }
 
                 if (isUnlocked || isEvolution) {
                     appContainer.classList.add('pro-hidden');
                     document.getElementById('navBuyBtn').style.display = 'none';
-                    document.getElementById('founders-story-box').style.display = 'none';
+                    if (document.getElementById('founders-story-box')) document.getElementById('founders-story-box').style.display = 'none';
                     
                     btnMain.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg> <span>Save Code</span>`;
                     btnMain.className = "w-full bg-blue-600 dark:bg-ppBlue hover:bg-blue-700 dark:hover:bg-[#1bb5e0] text-white dark:text-ppBase font-bold py-3 px-4 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-lg";
