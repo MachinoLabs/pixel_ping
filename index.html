@@ -51,10 +51,6 @@
         .payload-form.active { display: block; animation: fadeIn 0.3s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Pro Badge Styling */
-        .pro-badge { background: #eab308; color: #713f12; font-size: 0.65rem; padding: 2px 6px; border-radius: 4px; margin-left: 8px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; display: inline-block; vertical-align: middle; }
-        .pro-hidden .pro-badge { display: none !important; }
-
         /* Live Network Ticker */
         .ticker-container { display: flex; align-items: center; width: 100%; overflow: hidden; position: relative; }
         .ticker-track { display: inline-block; white-space: nowrap; animation: tickerScroll 40s linear infinite; padding-left: 100%; }
@@ -120,7 +116,7 @@
 </head>
 <body class="text-slate-900 dark:text-ppLight min-h-screen font-sans antialiased flex flex-col items-center p-4 md:p-8 transition-colors duration-300 relative z-0">
 
-    <!-- LIVE NETWORK TICKER (Scaled 1 Notch Up) -->
+    <!-- LIVE NETWORK TICKER -->
     <div id="network-ticker" class="fixed top-2 left-0 w-full z-50 flex items-center h-10 bg-slate-900/95 border-y border-slate-800 backdrop-blur-md shadow-lg transition-all">
         <div class="ticker-container h-full">
             <div class="ticker-track text-xs font-mono text-slate-400 tracking-widest uppercase">
@@ -186,7 +182,7 @@
                     <div class="relative group flex-1">
                         <button id="mode-dynamic" class="w-full text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest py-1.5 rounded-md text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 transition-all flex justify-center items-center gap-1.5">
                             Dynamic
-                            <span class="pro-badge bg-blue-500 text-white dark:bg-ppBlue dark:text-ppBase" style="margin-left: 0;">Pro</span>
+                            <span class="bg-ppGreen text-slate-900 font-extrabold px-1.5 py-0.5 rounded-sm text-[9px] uppercase tracking-widest ml-1.5 shadow-sm">Evolution</span>
                         </button>
                         <div class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 hidden group-hover:block w-[220px] bg-slate-900 text-white text-[11px] p-3 rounded-lg shadow-xl z-50 text-center pointer-events-none border border-slate-700 before:content-[''] before:absolute before:top-full before:left-1/2 before:-translate-x-1/2 before:border-4 before:border-transparent before:border-t-slate-900 font-medium">
                             Want to know exactly how many people scanned this flyer today? Unlock Evolution.
@@ -203,16 +199,16 @@
                         <option value="tel">Make a Phone Call</option>
                         <option value="text">Display Plain Text</option>
                     </optgroup>
-                    <optgroup label="Pro Features">
-                        <option value="wifi">Join a Wi-Fi Network [PRO]</option>
-                        <option value="vcard">Share Contact Info (vCard) [PRO]</option>
-                        <option value="sms">Send a Text Message [PRO]</option>
-                        <option value="email">Send an Email [PRO]</option>
-                        <option value="calendar">Save Calendar Event [PRO]</option>
-                        <option value="geo">Open Map Location [PRO]</option>
-                        <option value="crypto">Crypto Wallet Address [PRO]</option>
+                    <optgroup label="Premium Payloads">
+                        <option value="wifi">Join a Wi-Fi Network [MASTER KEY]</option>
+                        <option value="vcard">Share Contact Info (vCard) [MASTER KEY]</option>
+                        <option value="sms">Send a Text Message [MASTER KEY]</option>
+                        <option value="email">Send an Email [MASTER KEY]</option>
+                        <option value="calendar">Save Calendar Event [MASTER KEY]</option>
+                        <option value="geo">Open Map Location [MASTER KEY]</option>
+                        <option value="crypto">Crypto Wallet Address [MASTER KEY]</option>
                     </optgroup>
-                    <optgroup label="Business Suite [PRO]">
+                    <optgroup label="Business Suite [MASTER KEY]">
                         <option value="review">Google Review Link</option>
                         <option value="social">Social Media Follow</option>
                         <option value="menu">Digital Menu (PDF/Link)</option>
@@ -385,8 +381,8 @@
 
             <!-- EDUCATIONAL TOOLTIP WRAPPER -->
             <div class="pt-4 border-t border-slate-200 dark:border-gray-700 relative group">
-                <h3 class="text-sm font-medium text-blue-600 dark:text-ppBlue pb-2 mb-2 uppercase tracking-wide">
-                    Smart Print Label <span class="pro-badge">Pro</span>
+                <h3 class="text-sm font-medium text-blue-600 dark:text-ppBlue pb-2 mb-2 uppercase tracking-wide flex items-center">
+                    Smart Print Label <span class="bg-gradient-to-r from-yellow-400 to-yellow-600 text-slate-900 font-extrabold px-1.5 py-0.5 rounded-sm text-[9px] uppercase tracking-widest ml-2 shadow-sm">Master Key</span>
                 </h3>
                 <label class="block text-xs font-bold text-slate-700 dark:text-white mb-1">Name this code (Prints beneath QR)</label>
                 <input type="text" id="pl-smart-label" placeholder="e.g. Guest Wi-Fi Network" class="pl-input w-full bg-slate-50 dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none font-medium">
@@ -408,12 +404,12 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 pt-4 border-t border-slate-200 dark:border-gray-700 items-start w-full">
 
-    <h3 class="text-sm font-medium text-blue-600 dark:text-ppBlue border-b border-slate-200 dark:border-gray-700 pb-2 uppercase tracking-wide">
-        Structure <span class="pro-badge">Pro</span>
+    <h3 class="text-sm font-medium text-blue-600 dark:text-ppBlue border-b border-slate-200 dark:border-gray-700 pb-2 uppercase tracking-wide flex items-center">
+        Structure <span class="bg-gradient-to-r from-yellow-400 to-yellow-600 text-slate-900 font-extrabold px-1.5 py-0.5 rounded-sm text-[9px] uppercase tracking-widest ml-2 shadow-sm">Master Key</span>
     </h3>
     
     <h3 class="text-sm font-medium text-blue-600 dark:text-ppBlue border-b border-slate-200 dark:border-gray-700 pb-2 uppercase tracking-wide flex justify-between items-center">
-        <span>Aesthetics <span class="pro-badge">Pro</span></span>
+        <span class="flex items-center">Aesthetics <span class="bg-gradient-to-r from-yellow-400 to-yellow-600 text-slate-900 font-extrabold px-1.5 py-0.5 rounded-sm text-[9px] uppercase tracking-widest ml-2 shadow-sm">Master Key</span></span>
         <button id="btn-save-brand" class="text-[10px] bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 px-2 py-1 rounded hover:opacity-90 transition-colors shadow-sm cursor-pointer border border-transparent">Save Brand Kit</button>
     </h3>
 
@@ -449,7 +445,7 @@
     <!-- EDUCATIONAL TOOLTIP WRAPPER -->
     <div class="relative group">
         <div class="flex justify-between items-center mb-2">
-            <label class="text-sm font-bold text-slate-800 dark:text-white">Or Upload Custom Logo [PRO]</label>
+            <label class="text-sm font-bold text-slate-800 dark:text-white flex items-center">Or Upload Custom Logo <span class="bg-gradient-to-r from-yellow-400 to-yellow-600 text-slate-900 font-extrabold px-1.5 py-0.5 rounded-sm text-[9px] uppercase tracking-widest ml-2 shadow-sm">Master Key</span></label>
             <button id="btn-clear-logo" class="hidden text-[10px] text-red-500 hover:text-red-700 font-bold">Clear Logo</button>
         </div>
         <input type="file" id="qr-custom-logo" accept="image/png, image/jpeg, image/svg+xml" class="pl-input w-full bg-slate-50 dark:bg-ppBase text-slate-500 dark:text-slate-400 px-3 py-[7px] rounded-lg border border-slate-300 dark:border-gray-700 text-xs file:mr-3 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-[10px] file:font-bold file:bg-slate-200 file:text-slate-700 hover:file:bg-slate-300 dark:file:bg-slate-700 dark:file:text-slate-300 cursor-pointer transition-colors focus:outline-none">
@@ -480,7 +476,7 @@
         <!-- NOMAD STATE: The Power Ladder Teaser -->
         <div id="nomad-teaser-box" onclick="openMasterKeyModal()" class="w-full p-5 bg-[#0f172a]/90 border border-yellow-500/40 rounded-xl shadow-[0_0_20px_rgba(234,179,8,0.15)] relative overflow-hidden group cursor-pointer hover:-translate-y-1 hover:border-yellow-400 transition-all duration-300 flex flex-col items-center text-center">
             <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-300 to-yellow-600 shadow-[0_0_12px_rgba(234,179,8,0.9)] pointer-events-none"></div>
-            <span class="pro-badge bg-gradient-to-r from-yellow-400 to-yellow-600 text-slate-900 font-extrabold px-3 py-0.5 rounded text-[10px] uppercase tracking-widest mb-2">Upgrade Engine</span>
+            <span class="bg-gradient-to-r from-yellow-400 to-yellow-600 text-slate-900 font-extrabold px-3 py-0.5 rounded text-[10px] uppercase tracking-widest mb-2 shadow-sm">Upgrade Engine</span>
             <h4 class="text-base font-bold text-white uppercase tracking-widest mb-4">The Platform Architecture</h4>
             <div class="grid grid-cols-3 gap-2 w-full text-left">
                 <div class="bg-slate-800/80 p-2.5 rounded border border-slate-700">
@@ -554,12 +550,12 @@
             <div class="w-full flex flex-col gap-4">
                 <button id="btn-print" class="w-full bg-slate-800 dark:bg-slate-800 border border-yellow-500/40 hover:border-yellow-400 hover:bg-slate-700 text-yellow-500 font-bold py-3 px-4 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-lg group cursor-pointer">
                     <svg class="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
-                    <span>Print Code & Label <span id="print-pro-badge" class="pro-badge bg-yellow-500 text-slate-900 text-[10px] px-1.5 py-0.5 rounded ml-1 uppercase tracking-widest font-extrabold">Pro</span></span>
+                    <span>Print Code & Label <span id="print-pro-badge" class="bg-gradient-to-r from-yellow-400 to-yellow-600 text-slate-900 font-extrabold px-1.5 py-0.5 rounded-sm text-[9px] uppercase tracking-widest ml-2 shadow-sm">Master Key</span></span>
                 </button>
 
                 <button id="btn-main-action" class="w-full bg-gradient-to-r from-yellow-400 to-yellow-600 hover:from-yellow-300 hover:to-yellow-500 text-slate-900 font-extrabold py-3 px-4 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(234,179,8,0.2)] cursor-pointer">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                    <span>Save Code <span class="bg-slate-900 text-yellow-400 text-[10px] px-1.5 py-0.5 rounded ml-1 uppercase tracking-widest font-extrabold">Pro</span></span>
+                    <span>Save Code <span class="bg-slate-900 text-yellow-400 text-[10px] px-1.5 py-0.5 rounded ml-1 uppercase tracking-widest font-extrabold">Master Key</span></span>
                 </button>
             </div>
 
@@ -571,8 +567,8 @@
         <div class="relative group flex-1">
             <select id="export-format" class="w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg outline-none border border-slate-300 dark:border-slate-700 focus:border-[#27cfff] transition-colors cursor-pointer text-sm font-medium">
                 <option value="png">Standard Image (PNG)</option>
-                <option value="svg">Infinite Vector (SVG) [PRO]</option>
-                <option value="pdf">Document (PDF) [PRO]</option>
+                <option value="svg">Infinite Vector (SVG) [MASTER KEY]</option>
+                <option value="pdf">Document (PDF) [MASTER KEY]</option>
             </select>
             <div class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 hidden group-hover:block w-[220px] bg-slate-900 text-white text-[11px] p-3 rounded-lg shadow-xl z-50 text-center pointer-events-none border border-slate-700 before:content-[''] before:absolute before:top-full before:left-1/2 before:-translate-x-1/2 before:border-4 before:border-transparent before:border-t-slate-900 font-medium">
                 Need this for a massive billboard? Get infinite scaling with SVG export on Master Key.
@@ -590,7 +586,7 @@
                 <div class="flex justify-between items-end border-b-2 border-slate-200 dark:border-gray-700 pb-2 mb-4 uppercase tracking-wide">
     <h3 class="text-sm font-medium text-blue-600 dark:text-ppBlue flex items-center">
         <span>Recent Codes (Last 25)</span>
-        <span class="pro-badge ml-2">Pro</span>
+        <span class="bg-gradient-to-r from-yellow-400 to-yellow-600 text-slate-900 font-extrabold px-1.5 py-0.5 rounded-sm text-[9px] uppercase tracking-widest ml-2 shadow-sm">Master Key</span>
     </h3>
     <button id="btn-clear-history" class="text-[10px] uppercase tracking-wider font-bold text-slate-400 hover:text-red-500 transition-colors">
         Clear All
@@ -638,7 +634,7 @@
                         <li>• Runs instantly without downloads</li>
                         <li>• 100% offline-ready and ad-free</li>
                         <li>• High Error Correction ensures codes survive dirt and damage</li>
-                        <li>• Free tier includes standard codes; Master Key unlocks Pro payloads and styling</li>
+                        <li>• Free tier includes standard codes; Master Key unlocks premium payloads and styling</li>
                     </ul>
                 </section>
                 
@@ -656,7 +652,7 @@
                     <h3>Frequently Asked Questions</h3>
                     <p><strong>Does this app collect data?</strong><br>No. PixelPing is completely client-side. Your payloads and settings stay strictly on your local device.</p>
                     <p><strong>Can I use this without Wi-Fi?</strong><br>Yes! Once you load the app for the first time, it is fully functional offline.</p>
-                    <p><strong>What do I get with the Pro version?</strong><br>Pro unlocks advanced payloads (like Wi-Fi, vCards, and Crypto), custom styling, the Smart Print Label feature, and much more.</p>
+                    <p><strong>What do I get with the Master Key?</strong><br>The Master Key unlocks advanced payloads (like Wi-Fi, vCards, and Crypto), custom styling, the Smart Print Label feature, and much more.</p>
                 </section>
                 
                 <section class="ml-info-panel" data-panel="other" hidden>
@@ -692,7 +688,7 @@
     <div id="unlockModal" class="ml-modal" hidden>
         <div class="ml-modal-inner text-center">
             <div class="bg-yellow-100 text-yellow-600 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl">🔒</div>
-            <h2 class="font-bold text-xl mb-2">Unlock PixelPing Pro</h2>
+            <h2 class="font-bold text-xl mb-2">Unlock the Master Key</h2>
             <p class="text-sm text-slate-600 dark:text-slate-400 mb-6">You've previewed a Premium feature. Get the Master Key for lifetime access to custom branding, advanced payloads, and limitless static generation. No monthly hostage fees, ever.</p>
             
             <a href="https://your-gumroad-link.com" target="_blank" class="block w-full bg-slate-900 dark:bg-blue-600 text-white font-bold py-3 rounded-lg mb-6 hover:bg-slate-800 dark:hover:bg-blue-700 transition-colors">Get Master Key on Gumroad</a>
@@ -1163,8 +1159,8 @@
                     if (nomadTeaser) nomadTeaser.style.display = 'none';
                     // We can show Telemetry here too if you merge the benefits, but strictly following architecture:
                     if (telemetryDash) telemetryDash.classList.add('hidden'); 
-               } else {
-                    // NOMAD STATE (Unpaid Tier 1)
+                } else {
+                    // NOMAD STATE
                     if (mainTitle) mainTitle.innerHTML = "PixelPing";
                     if (subTitle) subTitle.innerHTML = "Generate &bull; Scan &bull; Share &bull; Own";
                     if (nomadTeaser) nomadTeaser.style.display = 'flex';
@@ -1200,7 +1196,7 @@
                 isPreviewingPro = usingProPayload || usingProLabel || usingProStyles;
 
                 if (isPreviewingPro) {
-                    btnMain.innerHTML = `<span class="text-lg">🔓</span> <span>Unlock Pro to Save</span>`;
+                    btnMain.innerHTML = `<span class="text-lg">🔓</span> <span>Unlock Master Key to Save</span>`;
                     btnMain.className = "w-full bg-yellow-500 hover:bg-yellow-600 text-yellow-900 font-bold py-3 px-4 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-lg";
                 } else {
                     btnMain.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg> <span>Save Code</span>`;
@@ -1217,7 +1213,7 @@
                     historyContent.innerHTML = `
                         <div class="flex-1 flex flex-col items-center justify-center text-center opacity-60 mt-4">
                             <span class="text-2xl mb-2">📜</span>
-                            <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">History is a Pro feature.<br>Unlock to save and reload your last 10 codes.</p>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">History is a Master Key feature.<br>Unlock to save and reload your last 10 codes.</p>
                         </div>`;
                     return;
                 }
@@ -1442,7 +1438,7 @@
                         
                         checkPaywallState();
                         renderHistory(); 
-                        alert('Pro Features Unlocked! Thank you for your support.');
+                        alert('Master Key Unlocked! Thank you for your support.');
                     } else {
                         alert('Verification Failed: ' + data.error);
                     }
@@ -1653,7 +1649,7 @@
                         }
 
                         const typeOptions = typeSelector.options;
-                        const actionText = typeOptions[typeSelector.selectedIndex].text.replace(' [PRO]', '');
+                        const actionText = typeOptions[typeSelector.selectedIndex].text.replace(' [MASTER KEY]', '');
                         ctx.fillStyle = '#64748b';
                         ctx.font = actionFont;
                         ctx.fillText(`Scan to ${actionText}`, canvas.width / 2, textStartY + 8);
@@ -1828,7 +1824,7 @@
             document.getElementById('mode-static').className = "flex-1 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest py-1.5 rounded-md text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 transition-all";
             document.getElementById('mode-dynamic').className = "w-full text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest py-1.5 rounded-md bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm transition-all flex justify-center items-center gap-1.5";
             
-            const proBadge = document.getElementById('mode-dynamic').querySelector('.pro-badge');
+            const proBadge = document.getElementById('mode-dynamic').querySelector('span');
             if (proBadge) proBadge.style.display = 'none';
             
             // 3. PHASE 4: REVEAL THE DYNAMIC UI
