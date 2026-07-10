@@ -123,7 +123,6 @@
 </head>
 <body class="text-slate-900 dark:text-ppLight min-h-screen font-sans antialiased flex flex-col items-center p-4 md:p-8 transition-colors duration-300 relative z-0">
 
-    <!-- LIVE NETWORK TICKER -->
     <div id="network-ticker" class="fixed top-2 left-0 w-full z-50 flex items-center h-10 bg-slate-900/95 border-y border-slate-800 backdrop-blur-md shadow-lg transition-all">
         <div class="ticker-container h-full">
             <div class="ticker-track text-xs font-mono text-slate-400 tracking-widest uppercase">
@@ -152,7 +151,6 @@
                 <rect x="140" y="332" width="16" height="16" rx="4" fill="#3cff8f"/>
             </svg>
         <div>
-            <!-- DYNAMIC HEADERS HOOKS -->
             <h1 id="main-title" class="text-2xl md:text-3xl font-bold tracking-wide text-slate-900 dark:text-white transition-colors">PixelPing</h1>
             <p id="sub-title" class="text-blue-600 dark:text-ppGreen text-sm tracking-[0.2em] uppercase mt-1">Generate &bull; Scan &bull; Share &bull; Own</p>
         </div>
@@ -185,7 +183,6 @@
             <div>
                 <div class="flex items-center justify-between bg-slate-100 dark:bg-slate-800/60 p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 mb-2 shadow-inner">
                     <button id="mode-static" class="flex-1 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest py-1.5 rounded-md bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm transition-all">Static (Local)</button>
-                    <!-- EDUCATIONAL TOOLTIP WRAPPER -->
                     <div class="relative group flex-1">
                         <button id="mode-dynamic" class="w-full text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest py-1.5 rounded-md text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 transition-all flex justify-center items-center gap-1.5">
                             Dynamic
@@ -226,7 +223,6 @@
             </div>
 
             <div id="dynamic-forms-container" class="p-4 bg-slate-50 dark:bg-ppBase/50 rounded-xl border border-slate-200 dark:border-gray-700/50">
-                <!-- FORM GROUPS START -->
                 <div id="form-url" class="payload-form active space-y-3">
                     <div>
                         <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Website Address</label>
@@ -383,10 +379,8 @@
                         <textarea id="pl-biz-coupon" placeholder="Show this code to cashier for 20% off: PROMO20" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none" rows="3"></textarea>
                     </div>
                 </div>
-                <!-- FORM GROUPS END -->
-            </div>
+                </div>
 
-            <!-- EDUCATIONAL TOOLTIP WRAPPER -->
             <div class="pt-4 border-t border-slate-200 dark:border-gray-700 relative group">
                 <h3 class="text-sm font-medium text-blue-600 dark:text-ppBlue pb-2 mb-2 uppercase tracking-wide flex items-center">
                     Smart Print Label <span class="mk-badge">Master Key</span>
@@ -449,7 +443,6 @@
         </select>
     </div>
     
-    <!-- EDUCATIONAL TOOLTIP WRAPPER -->
     <div class="relative group">
         <div class="flex justify-between items-center mb-2">
             <label class="text-sm font-bold text-slate-800 dark:text-white flex items-center">Or Upload Custom Logo <span class="mk-badge">Master Key</span></label>
@@ -477,10 +470,8 @@
         </div>
     </div>
     
-    <!-- MID-CANVAS: THE ENGINE ROOM -->
     <div class="col-span-1 md:col-span-2 mt-4 flex flex-col gap-4">
         
-        <!-- NOMAD STATE: The Power Ladder Teaser -->
         <div id="nomad-teaser-box" onclick="openMasterKeyModal()" class="w-full p-5 bg-[#0f172a]/90 border border-yellow-500/40 rounded-xl shadow-[0_0_20px_rgba(234,179,8,0.15)] relative overflow-hidden group cursor-pointer hover:-translate-y-1 hover:border-yellow-400 transition-all duration-300 flex flex-col items-center text-center">
             <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-300 to-yellow-600 shadow-[0_0_12px_rgba(234,179,8,0.9)] pointer-events-none"></div>
             <span class="mk-badge mb-2">Upgrade Engine</span>
@@ -501,13 +492,11 @@
             </div>
         </div>
 
-        <!-- EVOLUTION STATE: Telemetry & Admin Portal -->
         <div id="telemetry-dashboard" class="hidden w-full p-5 bg-[#061a2b] border border-ppGreen/40 rounded-xl shadow-[0_0_20px_rgba(60,255,143,0.1)] relative overflow-hidden flex flex-col">
             <div class="absolute top-0 left-0 w-full h-1 bg-ppGreen shadow-[0_0_12px_rgba(60,255,143,0.8)] pointer-events-none"></div>
             <div class="flex justify-between items-center mb-4 border-b border-ppGreen/20 pb-2">
                 <span class="text-xs font-mono text-ppGreen uppercase tracking-widest">● Live Telemetry</span>
                 
-                <!-- THE NEW EMBEDDED ADMIN PORTAL -->
                 <a href="admin.html" target="_blank" class="flex items-center gap-1.5 text-[10px] font-mono text-slate-900 bg-ppGreen hover:bg-[#2ce07a] px-2.5 py-1 rounded transition-colors uppercase font-bold tracking-wider shadow-sm">
                     ⚙️ Command Center
                 </a>
@@ -570,7 +559,6 @@
     <label class="block text-xs text-slate-500 dark:text-ppLight font-bold uppercase tracking-wider mb-2">Export Format</label>
     
     <div class="flex gap-3">
-        <!-- EDUCATIONAL TOOLTIP WRAPPER -->
         <div class="relative group flex-1">
             <select id="export-format" class="w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg outline-none border border-slate-300 dark:border-slate-700 focus:border-[#27cfff] transition-colors cursor-pointer text-sm font-medium">
                 <option value="png">Standard Image (PNG)</option>
@@ -605,7 +593,6 @@
         </div>
     </main>
 
-    <!-- UPDATED FOOTER STRUCTURE -->
     <footer class="w-full max-w-5xl text-center pb-8 z-10 relative">
         <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">Built with the StupidSimpleCrazyFast™ micro-app framework.</p>
         <p class="text-[11px] text-slate-400 dark:text-slate-500 mb-1">
@@ -710,7 +697,8 @@
             <button id="unlockCloseBtn" class="mt-4 text-xs text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 underline">Cancel</button>
         </div>
     </div>
-<div id="evolutionOverlay" class="ml-overlay" hidden></div>
+    
+    <div id="evolutionOverlay" class="ml-overlay" hidden></div>
     <div id="evolutionModal" class="ml-modal" hidden>
         <div class="ml-modal-inner text-center border-2 border-ppGreen/50 shadow-[0_0_30px_rgba(60,255,143,0.15)] relative overflow-hidden">
             <div class="absolute top-0 left-0 w-full h-1 bg-ppGreen shadow-[0_0_12px_rgba(60,255,143,0.8)]"></div>
@@ -743,6 +731,7 @@
             <button id="evolutionCloseBtn" class="mt-4 text-xs text-slate-400 hover:text-white transition-colors underline decoration-slate-600">Return to Canvas</button>
         </div>
     </div>
+
     <script>
         // --- Proprietary Warning ---
         console.log(
@@ -934,7 +923,7 @@
                 
                 // 2. Phone / SMS Check
                 if (['tel', 'sms'].includes(type)) {
-                    let phoneEl = document.getElementById(type === 'tel' ? 'pl-tel' : 'pl-sms-to');
+                    let phoneEl = document.getElementById(type === 'tel' ? 'pl-sms-to');
                     let cleanPhone = phoneEl.value.replace(/[^\d+]/g, '');
                     if (cleanPhone.length < 7) return "Please enter a valid phone number.";
                 }
@@ -1437,16 +1426,6 @@
             
             document.getElementById('unlockCloseBtn').addEventListener('click', closeUnlockModal);
             unlockOverlay.addEventListener('click', closeUnlockModal);
-// --- Modal Logics & 🟢 REAL CLOUDFLARE FETCH ---
-            const unlockModal = document.getElementById('unlockModal');
-            const unlockOverlay = document.getElementById('unlockOverlay');
-            const licenseInput = document.getElementById('license-key-input');
-            
-            function openUnlockModal() { unlockModal.hidden = false; unlockOverlay.hidden = false; }
-            function closeUnlockModal() { unlockModal.hidden = true; unlockOverlay.hidden = true; }
-            
-            document.getElementById('unlockCloseBtn').addEventListener('click', closeUnlockModal);
-            unlockOverlay.addEventListener('click', closeUnlockModal);
 
             // 🟢 NEW EVOLUTION MODAL CONTROLS
             const evoModal = document.getElementById('evolutionModal');
@@ -1466,6 +1445,7 @@
                 alert("Evolution Engine Ignited! Welcome to Tier 3.");
                 location.reload(); // Quick refresh to load the dashboard
             });
+
             document.getElementById('btn-verify-key').addEventListener('click', async () => {
                 const key = licenseInput.value.trim();
                 if (!key) return alert("Please enter a license key.");
