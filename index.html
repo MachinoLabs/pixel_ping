@@ -1310,7 +1310,7 @@
 
                 const usingProPayload = !freePayloads.includes(typeSelector.value);
                 const usingProLabel = smartLabelInput.value.trim() !== '';
-                const usingProIcon = styleInputs.icon.value !== '' && (!window.freeIcons || !freeIcons.includes(styleInputs.icon.value));
+               const usingProIcon = styleInputs.icon.value !== '' && !Object.keys(svgIcons).includes(styleInputs.icon.value);
                 
                 const usingProStyles = 
                     styleInputs.cornersType.value !== defaults.cornersType ||
