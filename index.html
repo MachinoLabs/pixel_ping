@@ -1813,21 +1813,39 @@
 
     // --- PHASE 3 & 4: THE VIP GATEKEEPER & DYNAMIC UI REVEAL ---
     if (document.getElementById('mode-static') && document.getElementById('mode-dynamic')) {
-        document.getElementById('mode-dynamic').addEventListener('click', () => {
-            // 1. Intercept! Check if Clerk is ready and if the user is logged in
+        document.getElementById('mode-dynamic').addEventListener('click', (e) => {
+            
+            const hasMasterKey = localStorage.getItem('pixelping-pro') === 'true';
+            const hasEvolution = localStorage.getItem('pixelping-evolution') === 'true';
+
+            // 🛑 CHECKPOINT 1: THE TOLL BOOTH (Block Tier 1)
+            if (!hasMasterKey) {
+                e.preventDefault();
+                openMasterKeyModal();
+                return;
+            }
+
+            // 🛑 CHECKPOINT 2: THE VIP DOOR (Block Tier 2 from Tier 3 features)
+            if (!hasEvolution) {
+                e.preventDefault();
+                alert("You have the Master Key. Now ignite the engine.\n\nSubscribe to Evolution to unlock Cloudflare dynamic routing, live analytics, and the Command Center.");
+                return;
+            }
+
+            // 🟢 CLEARANCE GRANTED (Tier 3 Authenticated)
             if (window.Clerk && !window.Clerk.user) {
                 window.Clerk.openSignIn();
                 return; 
             }
 
-            // 2. ON THE LIST: Swap styles to make Dynamic active
+            // Swap styles to make Dynamic visually active
             document.getElementById('mode-static').className = "flex-1 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest py-1.5 rounded-md text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 transition-all";
             document.getElementById('mode-dynamic').className = "w-full text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest py-1.5 rounded-md bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm transition-all flex justify-center items-center gap-1.5";
             
-            const proBadge = document.getElementById('mode-dynamic').querySelector('span');
-            if (proBadge) proBadge.style.display = 'none';
+            const badge = document.getElementById('mode-dynamic').querySelector('span');
+            if (badge) badge.style.display = 'none';
             
-            // 3. PHASE 4: REVEAL THE DYNAMIC UI
+            // Reveal the Dynamic Link UI
             const dynamicLinkDisplay = document.getElementById('dynamic-link-display');
             if (dynamicLinkDisplay) {
                 dynamicLinkDisplay.classList.remove('hidden');
@@ -1835,7 +1853,7 @@
                 setTimeout(() => dynamicLinkDisplay.classList.remove('animate-pulse'), 400);
             }
 
-            // Generate the slug instantly for the UI preview
+            // Generate the temporary slug
             window.pendingSlug = Math.random().toString(36).substring(2, 8).toLowerCase();
             const shortlinkInput = document.getElementById('shortlink-url');
             if (shortlinkInput) {
@@ -1843,19 +1861,15 @@
             }
         });
 
+        // The Fallback Switch (Return to Static)
         document.getElementById('mode-static').addEventListener('click', () => {
-            // Swap styles back to make Static active
             document.getElementById('mode-dynamic').className = "w-full text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest py-1.5 rounded-md text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 transition-all flex justify-center items-center gap-1.5";
             document.getElementById('mode-static').className = "flex-1 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest py-1.5 rounded-md bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm transition-all";
             
-            // Hide the Dynamic UI again
             const dynamicLinkDisplay = document.getElementById('dynamic-link-display');
-            if (dynamicLinkDisplay) {
-                dynamicLinkDisplay.classList.add('hidden');
-            }
+            if (dynamicLinkDisplay) dynamicLinkDisplay.classList.add('hidden');
         });
     }
-
     // --- PHASE 4.5: WIRE UP THE COPY BUTTON ---
     const btnCopyLink = document.getElementById('btn-copy-link');
     const shortlinkUrl = document.getElementById('shortlink-url');
