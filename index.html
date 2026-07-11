@@ -523,7 +523,7 @@
                 </div>
                 <div class="flex flex-col">
                     <span class="text-[10px] text-slate-500 font-mono uppercase">Top Link</span>
-                    <span class="text-sm font-bold text-ppBlue font-mono truncate mt-1">/fb-promo</span>
+                    <span id="top-link-display" class="text-sm font-bold text-ppBlue font-mono truncate mt-1">/none</span>
                 </div>
             </div>
         </div>
@@ -681,15 +681,14 @@
 <!-- PRICING SECTION END -->
 
     <!-- UPDATED FOOTER STRUCTURE -->
-    <footer class="w-full max-w-5xl text-center pb-8 z-10 relative mt-8">
-        <p class="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">Built with the StupidSimpleCrazyFast™ micro-app framework.</p>
-        <p class="text-[11px] text-slate-400 dark:text-slate-500 mb-1">
-            Built by <a href="https://machinolabs.com" target="_blank" class="hover:underline text-blue-500 dark:text-ppBlue">MachinoLabs</a> • 
-            <a href="https://machinolabs.com" target="_blank" class="hover:underline text-blue-500 dark:text-ppBlue">machinolabs.com</a> • 
-            <a href="https://stupidsimplecrazyfast.com" target="_blank" class="hover:underline text-blue-500 dark:text-ppBlue">stupidsimplecrazyfast.com</a>
-        </p>
-        <p class="text-[11px] font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider mt-2">Joe • 717.623.2907</p>
-    </footer>
+    <footer class="footer">
+            <p class="footer-tag">Built with the StupidSimpleCrazyFast™ micro-app framework.</p>
+            <div class="footer-credits">
+                Built by <a href="https://machinolabs.com">MachinoLabs</a> • <a href="https://machinolabs.com">machinolabs.com</a> • <a href="https://stupidsimplecrazyfast.com">stupidsimplecrazyfast.com</a>
+                <br>
+                Joe • 717.623.2907
+            </div>
+        </footer>
 
     <div id="infoOverlay" class="ml-overlay" hidden></div>
     <div id="infoModal" class="ml-modal" hidden>
@@ -855,43 +854,49 @@
     }
 
     window.hasAnimatedTelemetry = false;
-   async function initTelemetryDashboard() {
-    // Prevent it from running multiple times if they toggle modes
-    if (window.hasAnimatedTelemetry) return;
-    window.hasAnimatedTelemetry = true;
+    async function initTelemetryDashboard() {
+        // Prevent it from running multiple times if they toggle modes
+        if (window.hasAnimatedTelemetry) return;
+        window.hasAnimatedTelemetry = true;
 
-    const pingEl = document.getElementById("ping-count");
-    const routeEl = document.getElementById("route-count");
+        const pingEl = document.getElementById("ping-count");
+        const routeEl = document.getElementById("route-count");
+        const topLinkEl = document.getElementById("top-link-display");
 
-    // Make sure the user is actually logged in via Clerk
-    if (!window.Clerk || !window.Clerk.user) {
-        console.warn("User not authenticated. Cannot fetch telemetry.");
-        pingEl.innerText = "0";
-        routeEl.innerText = "0";
-        return;
-    }
-
-    try {
-        // Ping the Cloudflare Worker API we just built
-        const workerUrl = 'https://pixelping-worker.amateuraiguy.workers.dev'; 
-        const response = await fetch(`${workerUrl}/api/telemetry?userId=${window.Clerk.user.id}`);
-        
-        if (!response.ok) throw new Error("Telemetry fetch failed");
-        
-        const data = await response.json();
-        
-        if (data.success && data.telemetry) {
-            // Animate the real numbers pulled directly from the edge server!
-            animateTelemetry("ping-count", 0, data.telemetry.pings, 1500); 
-            animateTelemetry("route-count", 0, data.telemetry.activeRoutes, 1500);
+        // Make sure the user is actually logged in via Clerk
+        if (!window.Clerk || !window.Clerk.user) {
+            console.warn("User not authenticated. Cannot fetch telemetry.");
+            pingEl.innerText = "0";
+            routeEl.innerText = "0";
+            if (topLinkEl) topLinkEl.innerText = "/none";
+            return;
         }
-    } catch (err) {
-        console.error("Failed to load live telemetry:", err);
-        // Fallback gracefully if the network drops
-        pingEl.innerText = "---";
-        routeEl.innerText = "---";
+
+        try {
+            // Ping the Cloudflare Worker API we just built
+            const workerUrl = 'https://pixelping-worker.amateuraiguy.workers.dev'; 
+            const response = await fetch(`${workerUrl}/api/telemetry?userId=${window.Clerk.user.id}`);
+            
+            if (!response.ok) throw new Error("Telemetry fetch failed");
+            
+            const data = await response.json();
+            
+            if (data.success && data.telemetry) {
+                // Animate the real numbers pulled directly from the edge server!
+                animateTelemetry("ping-count", 0, data.telemetry.pings, 1500); 
+                animateTelemetry("route-count", 0, data.telemetry.activeRoutes, 1500);
+                
+                // Overwrite the Top Link text
+                if (topLinkEl) topLinkEl.innerText = data.telemetry.topLink;
+            }
+        } catch (err) {
+            console.error("Failed to load live telemetry:", err);
+            // Fallback gracefully if the network drops
+            pingEl.innerText = "---";
+            routeEl.innerText = "---";
+            if (topLinkEl) topLinkEl.innerText = "---";
+        }
     }
-}
 
 // --- Premium Paywall Modal Function ---
     window.openMasterKeyModal = function() {
