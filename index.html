@@ -855,12 +855,43 @@
     }
 
     window.hasAnimatedTelemetry = false;
-    function initTelemetryDashboard() {
-        if (window.hasAnimatedTelemetry) return;
-        window.hasAnimatedTelemetry = true;
-        animateTelemetry("ping-count", 0, 1204, 1500); 
-        animateTelemetry("route-count", 0, 14, 1500);  
+   async function initTelemetryDashboard() {
+    // Prevent it from running multiple times if they toggle modes
+    if (window.hasAnimatedTelemetry) return;
+    window.hasAnimatedTelemetry = true;
+
+    const pingEl = document.getElementById("ping-count");
+    const routeEl = document.getElementById("route-count");
+
+    // Make sure the user is actually logged in via Clerk
+    if (!window.Clerk || !window.Clerk.user) {
+        console.warn("User not authenticated. Cannot fetch telemetry.");
+        pingEl.innerText = "0";
+        routeEl.innerText = "0";
+        return;
     }
+
+    try {
+        // Ping the Cloudflare Worker API we just built
+        const workerUrl = 'https://pixelping-worker.amateuraiguy.workers.dev'; 
+        const response = await fetch(`${workerUrl}/api/telemetry?userId=${window.Clerk.user.id}`);
+        
+        if (!response.ok) throw new Error("Telemetry fetch failed");
+        
+        const data = await response.json();
+        
+        if (data.success && data.telemetry) {
+            // Animate the real numbers pulled directly from the edge server!
+            animateTelemetry("ping-count", 0, data.telemetry.pings, 1500); 
+            animateTelemetry("route-count", 0, data.telemetry.activeRoutes, 1500);
+        }
+    } catch (err) {
+        console.error("Failed to load live telemetry:", err);
+        // Fallback gracefully if the network drops
+        pingEl.innerText = "---";
+        routeEl.innerText = "---";
+    }
+}
 
 // --- Premium Paywall Modal Function ---
     window.openMasterKeyModal = function() {
