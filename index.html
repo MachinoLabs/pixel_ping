@@ -1604,7 +1604,7 @@
             const evoModal = document.getElementById('evolutionModal');
             const evoOverlay = document.getElementById('evolutionOverlay');
             
-            function openEvolutionModal() { evoModal.hidden = false; evoOverlay.hidden = false; }
+            window.openEvolutionModal = function() { evoModal.hidden = false; evoOverlay.hidden = false; };
             function closeEvolutionModal() { evoModal.hidden = true; evoOverlay.hidden = true; }
             
             document.getElementById('evolutionCloseBtn').addEventListener('click', closeEvolutionModal);
