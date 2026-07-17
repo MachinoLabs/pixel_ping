@@ -773,7 +773,7 @@
             <h2 class="font-bold text-xl mb-2">Unlock the Master Key</h2>
             <p class="text-sm text-slate-600 dark:text-slate-400 mb-6">You've previewed a Premium feature. Get the Master Key for lifetime access to custom branding, advanced payloads, and limitless static generation. No monthly hostage fees, ever.</p>
             
-            <a href="https://pixelping.gumroad.com/l/klgeng" target="_blank" class="block w-full bg-slate-900 dark:bg-blue-600 text-white font-bold py-3 rounded-lg mb-6 hover:bg-slate-800 dark:hover:bg-blue-700 transition-colors">Get Master Key on Gumroad</a>
+            <button id="btn-buy-master-key" class="block w-full bg-slate-900 dark:bg-blue-600 text-white font-bold py-3 rounded-lg mb-6 hover:bg-slate-800 dark:hover:bg-blue-700 transition-colors">Get Master Key - $99</button>
             
             <div class="border-t border-slate-200 dark:border-slate-700 pt-4">
                 <label class="block text-xs font-bold text-slate-500 dark:text-slate-400 mb-2 uppercase">Already have a key?</label>
@@ -807,7 +807,7 @@
                 </ul>
             </div>
             
-            <a href="https://your-stripe-link.com" target="_blank" class="block w-full bg-ppGreen text-slate-900 font-extrabold py-3 rounded-lg mb-6 hover:bg-[#2ce07a] transition-colors shadow-lg uppercase tracking-wider text-sm">Subscribe to Evolution</a>
+            <button id="btn-buy-evolution" class="block w-full bg-ppGreen text-slate-900 font-extrabold py-3 rounded-lg mb-6 hover:bg-[#2ce07a] transition-colors shadow-lg uppercase tracking-wider text-sm">Subscribe to Evolution - $39/mo</button>
             
             <div class="border-t border-slate-700 pt-4">
                 <label class="block text-[10px] font-bold text-slate-500 mb-2 uppercase tracking-widest">Already subscribed?</label>
@@ -819,6 +819,9 @@
             <button id="evolutionCloseBtn" class="mt-4 text-xs text-slate-400 hover:text-white transition-colors underline decoration-slate-600">Return to Canvas</button>
         </div>
     </div>
+
+    <!-- 🟢 FOURTH RAIL CORE ENGINE -->
+    <script src="frontend/fourth-rail-core.min.js"></script>
 
     <script>
         // --- Proprietary Warning ---
@@ -929,6 +932,39 @@
 
             // 🟢 CLOUDFLARE WORKER CONFIGURATION 
             const WORKER_URL = "https://machino-licensing.amateuraiguy.workers.dev"; 
+
+            // 🟢 FOURTH RAIL CORE INTIALIZATION
+            const rail = typeof FourthRail !== 'undefined' ? new FourthRail({
+                workerUrl: "https://fourth-rail-core.amateuraiguy.workers.dev",
+                stripePublicKey: "pk_test_t4qxKeliHcNHFWyTiFUO5tht0OsXpAay27", // Replace with your real Stripe Key
+                onUnlock: () => {
+                    // This triggers automatically when the Cloudflare Worker completes the payment handshake
+                    localStorage.setItem('pixelping-pro', 'true');
+                    checkPaywallState();
+                    renderHistory();
+                    closeUnlockModal();
+                    closeEvolutionModal();
+                    // Note: You can add an alert here to thank the user!
+                }
+            }) : null;
+
+            // 🟢 MODAL CHECKOUT TRIGGERS
+            const btnBuyMasterKey = document.getElementById('btn-buy-master-key');
+            if (btnBuyMasterKey && rail) {
+                btnBuyMasterKey.addEventListener('click', () => {
+                    // Replace string below with your $99 Master Key API ID
+                    rail.initCheckout('price_YOUR_MASTER_KEY_ID_HERE', 'payment');
+                });
+            }
+
+            const btnBuyEvolution = document.getElementById('btn-buy-evolution');
+            if (btnBuyEvolution && rail) {
+                btnBuyEvolution.addEventListener('click', () => {
+                    // Replace string below with your $39/mo Evolution API ID
+                    rail.initCheckout('price_YOUR_EVOLUTION_ID_HERE', 'subscription');
+                });
+            }
+
 
             const defaults = {
                 cornersType: 'dot', mask: 'none', icon: '',
