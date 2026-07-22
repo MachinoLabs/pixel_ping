@@ -668,7 +668,7 @@
                     <li class="flex items-start gap-3"><span class="text-[#3cff8f]">✓</span> Admin Command Center Access</li>
                     <li class="flex items-start gap-3"><span class="text-[#3cff8f]">✓</span> Cloud-Saved Link History</li>
                 </ul>
-                <button onclick="openEvolutionModal()" class="w-full text-center bg-[#3cff8f] hover:bg-[#2ce07a] text-slate-900 font-extrabold py-3 rounded-xl transition-colors shadow-[0_0_15px_rgba(60,255,143,0.2)] cursor-pointer">Subscribe to Evolution</button>
+                <button onclick="openMasterKeyModal()" class="w-full text-center bg-slate-800 text-slate-500 font-extrabold py-3 rounded-xl transition-colors cursor-pointer border border-slate-700">Requires Master Key</button>
             </div>
 
         </div>
@@ -756,7 +756,7 @@
                         <div class="opacity-80">
                             Built by <a href="https://machinolabs.com" target="_blank" class="hover:underline text-blue-500">MachinoLabs</a> • <a href="https://machinolabs.com" target="_blank" class="hover:underline text-blue-500">machinolabs.com</a> • <a href="https://stupidsimplecrazyfast.com" target="_blank" class="hover:underline text-blue-500">stupidsimplecrazyfast.com</a>
                             <br>
-                            Joe • 717.623.2907<br>
+                            Joe • support@senditin.app<br>
                             Let's Build Something
                         </div>
                     </footer>
@@ -1370,6 +1370,9 @@
                 const pricingGrid = document.getElementById('pricing-grid');
                 const cardTier1 = document.getElementById('card-tier-1');
                 const cardTier2 = document.getElementById('card-tier-2');
+                
+                // 🎯 Target the Tier 3 Button explicitly
+                const tier3Btn = document.querySelector('#card-tier-3 button');
 
                 if (isEvolution) {
                     // EVOLUTION STATE: Hide Founders Box AND Entire Pricing Matrix
@@ -1392,6 +1395,13 @@
                     if (cardTier1) cardTier1.style.display = 'none';
                     if (cardTier2) cardTier2.style.display = 'none';
                     if (pricingGrid) pricingGrid.className = "flex justify-center max-w-md mx-auto";
+                    
+                    // 🟢 THE STRUCTURAL FIX: Unlock the Evolution Button
+                    if (tier3Btn) {
+                        tier3Btn.innerHTML = "Subscribe to Evolution";
+                        tier3Btn.className = "w-full text-center bg-[#3cff8f] hover:bg-[#2ce07a] text-slate-900 font-extrabold py-3 rounded-xl transition-colors shadow-[0_0_15px_rgba(60,255,143,0.2)] cursor-pointer";
+                        tier3Btn.setAttribute('onclick', 'openEvolutionModal()');
+                    }
                 } else {
                     // NOMAD STATE: Show Founders Box, Show Full 3-Column Pricing
                     if (mainTitle) mainTitle.innerHTML = "PixelPing";
@@ -1403,6 +1413,13 @@
                     if (cardTier1) cardTier1.style.display = 'flex';
                     if (cardTier2) cardTier2.style.display = 'flex';
                     if (pricingGrid) pricingGrid.className = "grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch";
+                    
+                    // 🛑 THE STRUCTURAL FIX: Lock the Evolution Button Down
+                    if (tier3Btn) {
+                        tier3Btn.innerHTML = "Requires Master Key";
+                        tier3Btn.className = "w-full text-center bg-slate-800 text-slate-500 font-extrabold py-3 rounded-xl transition-colors cursor-pointer border border-slate-700";
+                        tier3Btn.setAttribute('onclick', 'openMasterKeyModal()');
+                    }
                 }
 
                 if (isUnlocked || isEvolution) {
@@ -1420,7 +1437,7 @@
 
                 const usingProPayload = !freePayloads.includes(typeSelector.value);
                 const usingProLabel = smartLabelInput.value.trim() !== '';
-               const usingProIcon = styleInputs.icon.value !== '' && !Object.keys(svgIcons).includes(styleInputs.icon.value);
+                const usingProIcon = styleInputs.icon.value !== '' && !Object.keys(svgIcons).includes(styleInputs.icon.value);
                 
                 const usingProStyles = 
                     styleInputs.cornersType.value !== defaults.cornersType ||
