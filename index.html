@@ -1371,8 +1371,9 @@
                 const cardTier1 = document.getElementById('card-tier-1');
                 const cardTier2 = document.getElementById('card-tier-2');
                 
-                // 🎯 Target the Tier 3 Button explicitly
+                // 🎯 Target the buttons and tooltips
                 const tier3Btn = document.querySelector('#card-tier-3 button');
+                const dynamicTooltip = document.querySelector('#mode-dynamic').nextElementSibling;
 
                 if (isEvolution) {
                     // EVOLUTION STATE: Hide Founders Box AND Entire Pricing Matrix
@@ -1384,6 +1385,12 @@
                         initTelemetryDashboard();
                     }
                     if (pricingSection) pricingSection.style.display = 'none'; 
+
+                    // 🟢 THE FIX: Update the tooltip to reflect active status
+                    if (dynamicTooltip) {
+                        dynamicTooltip.innerHTML = "Dynamic routing active. Real-time telemetry is running.";
+                    }
+
                 } else if (isUnlocked) {
                     // MASTER KEY STATE: Hide Founders Box, Hide Tiers 1 & 2, Center Tier 3
                     if (mainTitle) mainTitle.innerHTML = "PixelPing: Rebellion";
@@ -1396,11 +1403,15 @@
                     if (cardTier2) cardTier2.style.display = 'none';
                     if (pricingGrid) pricingGrid.className = "flex justify-center max-w-md mx-auto";
                     
-                    // 🟢 THE STRUCTURAL FIX: Unlock the Evolution Button
                     if (tier3Btn) {
                         tier3Btn.innerHTML = "Subscribe to Evolution";
                         tier3Btn.className = "w-full text-center bg-[#3cff8f] hover:bg-[#2ce07a] text-slate-900 font-extrabold py-3 rounded-xl transition-colors shadow-[0_0_15px_rgba(60,255,143,0.2)] cursor-pointer";
                         tier3Btn.setAttribute('onclick', 'openEvolutionModal()');
+                    }
+
+                    // Revert tooltip for Master Key users
+                    if (dynamicTooltip) {
+                        dynamicTooltip.innerHTML = "Want to know exactly how many people scanned this flyer today? Unlock Evolution.";
                     }
                 } else {
                     // NOMAD STATE: Show Founders Box, Show Full 3-Column Pricing
@@ -1414,11 +1425,15 @@
                     if (cardTier2) cardTier2.style.display = 'flex';
                     if (pricingGrid) pricingGrid.className = "grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch";
                     
-                    // 🛑 THE STRUCTURAL FIX: Lock the Evolution Button Down
                     if (tier3Btn) {
                         tier3Btn.innerHTML = "Requires Master Key";
                         tier3Btn.className = "w-full text-center bg-slate-800 text-slate-500 font-extrabold py-3 rounded-xl transition-colors cursor-pointer border border-slate-700";
                         tier3Btn.setAttribute('onclick', 'openMasterKeyModal()');
+                    }
+
+                    // Revert tooltip for Nomad users
+                    if (dynamicTooltip) {
+                        dynamicTooltip.innerHTML = "Want to know exactly how many people scanned this flyer today? Unlock Evolution.";
                     }
                 }
 
@@ -1458,7 +1473,6 @@
                     btnMain.className = "w-full bg-blue-600 dark:bg-ppBlue hover:bg-blue-700 dark:hover:bg-[#1bb5e0] text-white dark:text-ppBase font-bold py-3 px-4 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-lg";
                 }
             }
-
             // --- History Logic ---
             function renderHistory() {
                 const historyContent = document.getElementById('history-content');
