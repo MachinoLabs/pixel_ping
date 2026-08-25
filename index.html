@@ -230,7 +230,7 @@
                 <div id="form-url" class="payload-form active space-y-3">
                     <div>
                         <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Website Address</label>
-                        <input type="url" id="pl-url" placeholder="https://pixelping.app" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
+                        <input type="url" id="pl-url" value="https://" placeholder="https://pixelping.app" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
                     <p id="density-warning" class="hidden"></p>
                     </div>
                 </div>
@@ -820,132 +820,8 @@
         </div>
     </div>
 
-    <!-- 🟢 FOURTH RAIL CORE ENGINE (INLINED) -->
-<script>
-/**
- * Fourth Rail Core - Embedded Checkout Engine
- * Version 1.1.0 (Unminified & Upgraded)
- * (c) 2026 MachinoLabs | License: Commercial
- */
-
-console.log(
-    "%cHold up! 👋\n\n%cThis application's payment rails are secured by Fourth Rail Core.\nUnauthorized ripping, tampering with local payment tokens, or bypass \nattempts are strictly prohibited.\n\nRespect the build, support indie devs, and keep it ethical.\n\n© 2026 MachinoLabs • Built with StupidSimpleCrazyFast™",
-    "color: #ff3366; font-size: 36px; font-weight: bold; text-shadow: 1px 1px 0px #222, 2px 2px 0px #222;",
-    "color: #64748b; font-size: 13px; font-family: monospace; line-height: 1.5;"
-);
-
-class FourthRail {
-    constructor(config) {
-        if (!config.workerUrl) throw new Error("Fourth Rail Error: workerUrl is required.");
-        if (!config.stripePublicKey) throw new Error("Fourth Rail Error: stripePublicKey is required.");
-
-        this.workerUrl = config.workerUrl.replace(/\/$/, ""); 
-        this.publishableKey = config.stripePublicKey;
-        this.onUnlock = config.onUnlock || function() { console.log("Fourth Rail: Master Key Unlocked!"); };
-    }
-
-    async initCheckout(priceId, mode = 'payment') {
-        try {
-            if (!window.Stripe) {
-                const script = document.createElement("script");
-                script.src = "https://js.stripe.com/v3/";
-                document.head.appendChild(script);
-                await new Promise(resolve => script.onload = resolve);
-            }
-            
-            const stripe = window.Stripe(this.publishableKey);
-            
-            const response = await fetch(`${this.workerUrl}/create-session`, {
-                method: "POST",
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ priceId: priceId, mode: mode })
-            });
-            
-            const data = await response.json();
-            if (data.error) throw new Error(data.error);
-            
-            const clientSecret = data.clientSecret;
-
-            const checkout = await stripe.initEmbeddedCheckout({
-                clientSecret: clientSecret,
-                onComplete: async () => {
-                    checkout.destroy();
-                    overlay.remove();
-                    await this.verifyAndUnlock(clientSecret);
-                }
-            });
-            
-            const overlay = document.createElement("div");
-            overlay.id = "fourth-rail-overlay";
-            overlay.style = "position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.85);backdrop-filter:blur(5px);z-index:9999;display:flex;align-items:center;justify-content:center;";
-            
-            const closeBtn = document.createElement("button");
-            closeBtn.innerHTML = "✕ Cancel & Return";
-            closeBtn.style = "position:absolute;top:20px;right:20px;background:#ff3366;color:#fff;border:none;padding:10px 20px;font-family:sans-serif;font-weight:bold;font-size:14px;border-radius:30px;cursor:pointer;z-index:10000;box-shadow:0 4px 12px rgba(0,0,0,0.3);";
-            closeBtn.onclick = () => {
-                checkout.destroy(); 
-                overlay.remove();  
-            };
-            
-            const checkoutContainer = document.createElement("div");
-            checkoutContainer.id = "fourth-rail-checkout";
-            checkoutContainer.style = "width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto; border-radius: 12px;";
-            
-            overlay.appendChild(closeBtn);
-            overlay.appendChild(checkoutContainer);
-            document.body.appendChild(overlay);
-            
-            checkout.mount("#fourth-rail-checkout");
-
-        } catch (error) {
-            console.error("Fourth Rail Checkout Error:", error);
-            alert("Failed to securely connect to the payment processor. Please try again.");
-        }
-    }
-
-    async verifyAndUnlock(clientSecret) {
-        try {
-            const sessionId = clientSecret.split("_secret_")[0];
-            
-            const response = await fetch(`${this.workerUrl}/verify-session`, {
-                method: "POST",
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ sessionId: sessionId })
-            });
-            
-            const data = await response.json();
-            
-            if (data.valid && data.token) {
-                localStorage.setItem("fr_core_token", data.token);
-                this.onUnlock(data.token);
-                this.injectFooter();
-            } else {
-                console.error("Fourth Rail Verification Failed:", data.message);
-                alert("Payment verification failed. Please contact support.");
-            }
-        } catch (error) {
-            console.error("Fourth Rail Verification Error:", error);
-            alert("Connection error while verifying your purchase.");
-        }
-    }
-
-    injectFooter() {
-        const footer = document.createElement("footer");
-        footer.className = "footer";
-        footer.style = "margin-top: 40px; border-top: 1px solid #eee; padding-top: 20px;";
-        footer.innerHTML = `
-            <p class="footer-tag" style="text-align: center; font-family: monospace; font-size: 12px; color: #666; margin-bottom: 8px;">Built with the StupidSimpleCrazyFast™ micro-app framework.</p>
-            <div class="footer-credits" style="text-align: center; font-family: monospace; font-size: 12px; color: #666;">
-                Built by <a href="https://machinolabs.com" style="color:#666;text-decoration:none;">MachinoLabs</a> • <a href="https://machinolabs.com" style="color:#666;text-decoration:none;">machinolabs.com</a> • <a href="https://stupidsimplecrazyfast.com" style="color:#666;text-decoration:none;">stupidsimplecrazyfast.com</a>
-                <br>
-                Joe • 717.623.2907
-            </div>`;
-        document.body.appendChild(footer);
-    }
-}
-
-window.FourthRail = FourthRail;
-</script>
+    <!-- 🟢 FOURTH RAIL CORE ENGINE -->
+    <script src="frontend/fourth-rail-core.min.js"></script>
 
     <script>
         // --- Proprietary Warning ---
@@ -1032,6 +908,45 @@ window.FourthRail = FourthRail;
         document.getElementById('unlockModal').hidden = false;
         document.getElementById('unlockOverlay').hidden = false;
     };
+
+    // --- FOURTH RAIL CORE: STRIPE RECEIPT VERIFICATION ---
+    document.addEventListener('DOMContentLoaded', async () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const sessionId = urlParams.get('session_id');
+
+        if (sessionId) {
+            console.log("💳 Receipt found! Verifying...");
+            
+            try {
+                const response = await fetch(`https://fourth-rail-checkout.amateuraguy.workers.dev/verify?session_id=${sessionId}`);
+                
+                if (response.ok) {
+                    console.log("✅ Payment verified! Unlocking...");
+                    localStorage.setItem('pixelping-pro', 'true');
+                    
+                    const footerInjection = `
+                        Vibe Coding
+                        <footer class="footer">
+                            <p class="footer-tag">Built with the StupidSimpleCrazyFast™ micro-app framework.</p>
+                            <div class="footer-credits">
+                                Built by <a href="https://machinolabs.com">MachinoLabs</a> • <a href="https://machinolabs.com">machinolabs.com</a> • <a href="https://stupidsimplecrazyfast.com">stupidsimplecrazyfast.com</a>
+                                <br>
+                                Joe • 717.623.2907
+                            </div>
+                        </footer>
+                        </div>
+                    `;
+                    
+                    document.body.insertAdjacentHTML('beforeend', footerInjection);
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                    
+                    setTimeout(() => window.location.reload(), 1500);
+                }
+            } catch (error) {
+                console.error("Error verifying payment:", error);
+            }
+        }
+    });
         
         document.addEventListener('DOMContentLoaded', () => {
 
@@ -1059,8 +974,8 @@ window.FourthRail = FourthRail;
 
             // 🟢 FOURTH RAIL CORE INTIALIZATION
             const rail = typeof FourthRail !== 'undefined' ? new FourthRail({
-                workerUrl: "https://fourth-rail-checkout.amateuraiguy.workers.dev",
-                stripePublicKey: "pk_live_4da9IrIAP8JS8AkaSRPohpDs00tXpFdfdU", // Replace with your real Stripe Key
+                workerUrl: "https://fourth-rail-core.amateuraiguy.workers.dev",
+                stripePublicKey: "pk_test_t4qxKeliHcNHFWyTiFUO5tht0OsXpAay27", // Replace with your real Stripe Key
                 onUnlock: () => {
                     // This triggers automatically when the Cloudflare Worker completes the payment handshake
                     localStorage.setItem('pixelping-pro', 'true');
@@ -1077,7 +992,7 @@ window.FourthRail = FourthRail;
             if (btnBuyMasterKey && rail) {
                 btnBuyMasterKey.addEventListener('click', () => {
                     // Replace string below with your $99 Master Key API ID
-                    rail.initCheckout('price_1U85qDIZcbLigL0N6FImW5v6', 'payment');
+                    rail.initCheckout('price_1Tu0NZIZcbLigL0Nhs4wMhGl', 'payment');
                 });
             }
 
@@ -1085,7 +1000,7 @@ window.FourthRail = FourthRail;
             if (btnBuyEvolution && rail) {
                 btnBuyEvolution.addEventListener('click', () => {
                     // Replace string below with your $39/mo Evolution API ID
-                    rail.initCheckout('price_1U87KcIZcbLigL0Nou9BMy4z', 'subscription');
+                    rail.initCheckout('price_1Tu0asIZcbLigL0N8G4wzoy5', 'subscription');
                 });
             }
 
