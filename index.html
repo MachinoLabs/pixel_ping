@@ -668,7 +668,7 @@
                     <li class="flex items-start gap-3"><span class="text-[#3cff8f]">✓</span> Admin Command Center Access</li>
                     <li class="flex items-start gap-3"><span class="text-[#3cff8f]">✓</span> Cloud-Saved Link History</li>
                 </ul>
-                <button onclick="openMasterKeyModal()" class="w-full text-center bg-slate-800 text-slate-500 font-extrabold py-3 rounded-xl transition-colors cursor-pointer border border-slate-700">Requires Master Key</button>
+                <button onclick="openEvolutionModal()" class="w-full text-center bg-[#3cff8f] hover:bg-[#2ce07a] text-slate-900 font-extrabold py-3 rounded-xl transition-colors shadow-[0_0_15px_rgba(60,255,143,0.2)] cursor-pointer">Subscribe to Evolution</button>
             </div>
 
         </div>
@@ -756,7 +756,7 @@
                         <div class="opacity-80">
                             Built by <a href="https://machinolabs.com" target="_blank" class="hover:underline text-blue-500">MachinoLabs</a> • <a href="https://machinolabs.com" target="_blank" class="hover:underline text-blue-500">machinolabs.com</a> • <a href="https://stupidsimplecrazyfast.com" target="_blank" class="hover:underline text-blue-500">stupidsimplecrazyfast.com</a>
                             <br>
-                            Joe • support@senditin.app<br>
+                            Joe • 717.623.2907<br>
                             Let's Build Something
                         </div>
                     </footer>
@@ -821,7 +821,7 @@
     </div>
 
     <!-- 🟢 FOURTH RAIL CORE ENGINE -->
-    <script src="fourth-rail-core.min.js"></script>
+    <script src="frontend/fourth-rail-core.min.js"></script>
 
     <script>
         // --- Proprietary Warning ---
@@ -936,7 +936,7 @@
             // 🟢 FOURTH RAIL CORE INTIALIZATION
             const rail = typeof FourthRail !== 'undefined' ? new FourthRail({
                 workerUrl: "https://fourth-rail-core.amateuraiguy.workers.dev",
-                stripePublicKey: "pk_test_t4qxKeliHcNHFWyTiFUO5tht0OsXpAay27", // Replace with your real Stripe Key
+                stripePublicKey: "pk_live_4da9IrIAP8JS8AkaSRPohpDs00tXpFdfdU", // Replace with your real Stripe Key
                 onUnlock: () => {
                     // This triggers automatically when the Cloudflare Worker completes the payment handshake
                     localStorage.setItem('pixelping-pro', 'true');
@@ -953,7 +953,7 @@
             if (btnBuyMasterKey && rail) {
                 btnBuyMasterKey.addEventListener('click', () => {
                     // Replace string below with your $99 Master Key API ID
-                    rail.initCheckout('price_1Tu0NZIZcbLigL0Nhs4wMhGl', 'payment');
+                    rail.initCheckout('price_1U85qDIZcbLigL0N6FImW5v6', 'payment');
                 });
             }
 
@@ -961,7 +961,7 @@
             if (btnBuyEvolution && rail) {
                 btnBuyEvolution.addEventListener('click', () => {
                     // Replace string below with your $39/mo Evolution API ID
-                    rail.initCheckout('price_1Tu0asIZcbLigL0N8G4wzoy5', 'subscription');
+                    rail.initCheckout('price_1U87KcIZcbLigL0Nou9BMy4z', 'subscription');
                 });
             }
 
@@ -1370,10 +1370,6 @@
                 const pricingGrid = document.getElementById('pricing-grid');
                 const cardTier1 = document.getElementById('card-tier-1');
                 const cardTier2 = document.getElementById('card-tier-2');
-                
-                // 🎯 Target the buttons and tooltips
-                const tier3Btn = document.querySelector('#card-tier-3 button');
-                const dynamicTooltip = document.querySelector('#mode-dynamic').nextElementSibling;
 
                 if (isEvolution) {
                     // EVOLUTION STATE: Hide Founders Box AND Entire Pricing Matrix
@@ -1385,12 +1381,6 @@
                         initTelemetryDashboard();
                     }
                     if (pricingSection) pricingSection.style.display = 'none'; 
-
-                    // 🟢 THE FIX: Update the tooltip to reflect active status
-                    if (dynamicTooltip) {
-                        dynamicTooltip.innerHTML = "Dynamic routing active. Real-time telemetry is running.";
-                    }
-
                 } else if (isUnlocked) {
                     // MASTER KEY STATE: Hide Founders Box, Hide Tiers 1 & 2, Center Tier 3
                     if (mainTitle) mainTitle.innerHTML = "PixelPing: Rebellion";
@@ -1402,17 +1392,6 @@
                     if (cardTier1) cardTier1.style.display = 'none';
                     if (cardTier2) cardTier2.style.display = 'none';
                     if (pricingGrid) pricingGrid.className = "flex justify-center max-w-md mx-auto";
-                    
-                    if (tier3Btn) {
-                        tier3Btn.innerHTML = "Subscribe to Evolution";
-                        tier3Btn.className = "w-full text-center bg-[#3cff8f] hover:bg-[#2ce07a] text-slate-900 font-extrabold py-3 rounded-xl transition-colors shadow-[0_0_15px_rgba(60,255,143,0.2)] cursor-pointer";
-                        tier3Btn.setAttribute('onclick', 'openEvolutionModal()');
-                    }
-
-                    // Revert tooltip for Master Key users
-                    if (dynamicTooltip) {
-                        dynamicTooltip.innerHTML = "Want to know exactly how many people scanned this flyer today? Unlock Evolution.";
-                    }
                 } else {
                     // NOMAD STATE: Show Founders Box, Show Full 3-Column Pricing
                     if (mainTitle) mainTitle.innerHTML = "PixelPing";
@@ -1424,17 +1403,6 @@
                     if (cardTier1) cardTier1.style.display = 'flex';
                     if (cardTier2) cardTier2.style.display = 'flex';
                     if (pricingGrid) pricingGrid.className = "grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch";
-                    
-                    if (tier3Btn) {
-                        tier3Btn.innerHTML = "Requires Master Key";
-                        tier3Btn.className = "w-full text-center bg-slate-800 text-slate-500 font-extrabold py-3 rounded-xl transition-colors cursor-pointer border border-slate-700";
-                        tier3Btn.setAttribute('onclick', 'openMasterKeyModal()');
-                    }
-
-                    // Revert tooltip for Nomad users
-                    if (dynamicTooltip) {
-                        dynamicTooltip.innerHTML = "Want to know exactly how many people scanned this flyer today? Unlock Evolution.";
-                    }
                 }
 
                 if (isUnlocked || isEvolution) {
@@ -1452,7 +1420,7 @@
 
                 const usingProPayload = !freePayloads.includes(typeSelector.value);
                 const usingProLabel = smartLabelInput.value.trim() !== '';
-                const usingProIcon = styleInputs.icon.value !== '' && !Object.keys(svgIcons).includes(styleInputs.icon.value);
+               const usingProIcon = styleInputs.icon.value !== '' && !Object.keys(svgIcons).includes(styleInputs.icon.value);
                 
                 const usingProStyles = 
                     styleInputs.cornersType.value !== defaults.cornersType ||
@@ -1473,6 +1441,7 @@
                     btnMain.className = "w-full bg-blue-600 dark:bg-ppBlue hover:bg-blue-700 dark:hover:bg-[#1bb5e0] text-white dark:text-ppBase font-bold py-3 px-4 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-lg";
                 }
             }
+
             // --- History Logic ---
             function renderHistory() {
                 const historyContent = document.getElementById('history-content');
