@@ -1076,11 +1076,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                     window.history.replaceState({}, document.title, window.location.pathname);
                     
                     setTimeout(() => window.location.reload(), 1500);
-               }
-        } catch (error) {
-            console.error("Error verifying payment:", error);
-        }
+              
+                } // Closes if (data.valid)
+        } // Closes if (response.ok)
+    } catch (error) {
+        console.error("Error verifying payment:", error);
     }
+}
 });
         
         document.addEventListener('DOMContentLoaded', () => {
