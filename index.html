@@ -2439,5 +2439,96 @@ document.addEventListener('DOMContentLoaded', async () => {
             document.body.appendChild(script);
         })();
     </script>
+
+<script>
+    // 1. CONFIGURATION (Replace these with your actual live URLs/Keys)
+    const STRIPE_PUBLISHABLE_KEY = "pk_live_4da9IrIAP8JS8AkaSRPohpDs00tXpFdfdU";
+    const WORKER_URL = "https://fourth-rail-checkout.amateuraiguy.workers.dev";
+
+    // 2. THE CHECKOUT ENGINE
+    async function initCheckout(priceId, mode = 'payment', userId = null) {
+        try {
+            if (!window.Stripe) {
+                const script = document.createElement("script");
+                script.src = "https://js.stripe.com/v3/";
+                document.head.appendChild(script);
+                await new Promise(resolve => script.onload = resolve);
+            }
+
+            const stripe = window.Stripe(STRIPE_PUBLISHABLE_KEY); 
+
+            const response = await fetch(`${WORKER_URL}/create-session`, {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ priceId: priceId, mode: mode, userId: userId })
+            });
+
+            const data = await response.json();
+            if (data.error) throw new Error(data.error);
+
+            const clientSecret = data.clientSecret;
+
+            const checkout = await stripe.initEmbeddedCheckout({
+                clientSecret: clientSecret,
+                onComplete: async () => {
+                    checkout.destroy();
+                    document.getElementById("fourth-rail-overlay").remove();
+                    // Optional: trigger your success animation or unlock function here
+                    console.log("Payment Successful!");
+                }
+            });
+
+            const overlay = document.createElement("div");
+            overlay.id = "fourth-rail-overlay";
+            overlay.style = "position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.85);backdrop-filter:blur(5px);z-index:9999;display:flex;align-items:center;justify-content:center;";
+
+            const closeBtn = document.createElement("button");
+            closeBtn.innerHTML = "✕ Cancel & Return";
+            closeBtn.style = "position:absolute;top:20px;right:20px;background:#ff3366;color:#fff;border:none;padding:10px 20px;font-family:sans-serif;font-weight:bold;font-size:14px;border-radius:30px;cursor:pointer;z-index:10000;box-shadow:0 4px 12px rgba(0,0,0,0.3);";
+            closeBtn.onclick = () => {
+                checkout.destroy(); 
+                overlay.remove();  
+            };
+
+            const checkoutContainer = document.createElement("div");
+            checkoutContainer.id = "fourth-rail-checkout";
+            checkoutContainer.style = "width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto; border-radius: 12px;";
+
+            overlay.appendChild(closeBtn);
+            overlay.appendChild(checkoutContainer);
+            document.body.appendChild(overlay);
+
+            checkout.mount("#fourth-rail-checkout");
+
+        } catch (error) {
+            console.error("Fourth Rail Checkout Error:", error);
+            alert("Failed to securely connect to the payment processor. Please try again.");
+        }
+    }
+
+    // 3. THE GATEKEEPER TRIGGERS
+    const btnBuyMasterKey = document.getElementById('btn-buy-master-key');
+    if (btnBuyMasterKey) {
+        btnBuyMasterKey.addEventListener('click', () => {
+            if (!window.Clerk || !window.Clerk.user) {
+                window.Clerk.openSignIn();
+                return;
+            }
+            initCheckout('price_1U85qDIZcbLigL0N6FImW5v6', 'payment', window.Clerk.user.id);
+        });
+    }
+
+    const btnBuyEvolution = document.getElementById('btn-buy-evolution');
+    if (btnBuyEvolution) {
+        btnBuyEvolution.addEventListener('click', () => {
+            if (!window.Clerk || !window.Clerk.user) {
+                window.Clerk.openSignIn();
+                return;
+            }
+            initCheckout('price_1U87KcIZcbLigL0Nou9BMy4z', 'subscription', window.Clerk.user.id);
+        });
+    }
+</script>
+    
 </body>
 </html>
