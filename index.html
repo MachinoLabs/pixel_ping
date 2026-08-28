@@ -1609,6 +1609,8 @@ if (isProUser && watermark) {
                     if (mainTitle) mainTitle.innerHTML = "PixelPing: <span class='text-ppGreen'>Evolution</span>";
                     if (subTitle) subTitle.innerHTML = "TELEMETRY • COMMAND • CONTROL";
                     if (nomadTeaser) nomadTeaser.style.display = 'none';
+                    const topNavBtn = document.getElementById('btn-buy-master-key');
+                    if (topNavBtn) topNavBtn.style.display = 'none';
                     if (telemetryDash) {
                         telemetryDash.classList.remove('hidden');
                         initTelemetryDashboard();
