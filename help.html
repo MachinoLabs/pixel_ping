@@ -66,15 +66,15 @@
         </div>
     </header>
 
-    <main class="w-full max-w-5xl z-10 relative grid grid-cols-1 md:grid-cols-12 gap-8 items-start flex-1">
+   <main class="w-full max-w-5xl z-10 relative grid grid-cols-1 md:grid-cols-12 gap-8 items-start flex-1">
         
         <nav class="md:col-span-3 sticky top-6 space-y-2 hidden md:block">
-            <div class="bg-slate-900/50 backdrop-blur-md border border-slate-800 p-4 rounded-xl">
+            <div class="bg-slate-100/80 dark:bg-slate-900/50 backdrop-blur-md border border-slate-200 dark:border-slate-800 p-4 rounded-xl">
                 <h3 class="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-3">Jump To</h3>
                 <ul class="space-y-3">
-                    <li><a href="#about" class="text-sm text-slate-300 hover:text-ppBlue transition-colors font-medium">What is PixelPing?</a></li>
-                    <li><a href="#dns-guide" class="text-sm text-slate-300 hover:text-ppBlue transition-colors font-medium">Custom Domain Setup</a></li>
-                    <li><a href="#faq" class="text-sm text-slate-300 hover:text-ppBlue transition-colors font-medium">Frequently Asked Questions</a></li>
+                    <li><a href="#about" class="text-sm text-slate-600 dark:text-slate-300 hover:text-ppBlue transition-colors font-medium">What is PixelPing?</a></li>
+                    <li><a href="#dns-guide" class="text-sm text-slate-600 dark:text-slate-300 hover:text-ppBlue transition-colors font-medium">Custom Domain Setup</a></li>
+                    <li><a href="#faq" class="text-sm text-slate-600 dark:text-slate-300 hover:text-ppBlue transition-colors font-medium">Frequently Asked Questions</a></li>
                 </ul>
             </div>
         </nav>
@@ -82,29 +82,29 @@
         <div class="md:col-span-9 space-y-8 pb-12">
             
             <section id="about" class="bg-white/5 dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 sm:p-8 rounded-2xl shadow-xl">
-                <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-3">
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-3">
                     <span class="text-ppBlue">⚡</span> What is PixelPing?
                 </h2>
-                <div class="space-y-4 text-slate-300 text-sm leading-relaxed">
+                <div class="space-y-4 text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
                     <p>PixelPing is a rebellion against the subscription-hostage model of the modern internet. Most QR code generators let you create a "free" code, secretly make it dynamic, and then break your code a week later unless you pay a surprise $20/month subscription.</p>
                     <p>We do things differently. <b>PixelPing creates fast, offline-first codes tailored for field operations.</b> By default, our codes are generated 100% locally on your device. They don't use tracking servers, they don't redirect, and they will work forever. Build it once, own it forever.</p>
                 </div>
             </section>
 
             <section id="dns-guide" class="bg-white/5 dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 sm:p-8 rounded-2xl shadow-xl scroll-mt-6">
-                <h2 class="text-2xl font-bold text-white mb-2 flex items-center gap-3">
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-2 flex items-center gap-3">
                     <span class="text-ppGreen">🌐</span> Connect Your Custom Domain
                 </h2>
-                <p class="text-sm text-slate-400 mb-8 border-b border-slate-700 pb-6">To make your QR codes and shortlinks look professional (e.g., <code>links.yourwebsite.com/promo</code>), you need to connect your custom domain to PixelPing. This tells the internet that you authorize us to route your traffic securely.</p>
+                <p class="text-sm text-slate-600 dark:text-slate-400 mb-8 border-b border-slate-200 dark:border-slate-700 pb-6">To make your QR codes and shortlinks look professional (e.g., <code>links.yourwebsite.com/promo</code>), you need to connect your custom domain to PixelPing. This tells the internet that you authorize us to route your traffic securely.</p>
 
                 <div class="space-y-8">
                     <div>
-                        <h3 class="text-lg font-bold text-ppLight mb-2"><span class="text-ppBlue mr-2">Step 1:</span> Initialize Your Domain</h3>
-                        <ol class="list-decimal list-inside text-sm text-slate-300 space-y-2 ml-2">
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-ppLight mb-2"><span class="text-ppBlue mr-2">Step 1:</span> Initialize Your Domain</h3>
+                        <ol class="list-decimal list-inside text-sm text-slate-600 dark:text-slate-300 space-y-2 ml-2">
                             <li>Log into your PixelPing <b>Command Center</b>.</li>
                             <li>Click the <b>🌐 Add Custom Domain</b> button at the top of the dashboard.</li>
                             <li>Enter the domain you want to use. <br>
-                                <div class="bg-amber-900/20 border-l-4 border-amber-500 p-3 mt-2 rounded text-xs text-amber-200">
+                                <div class="bg-amber-100 dark:bg-amber-900/20 border-l-4 border-amber-500 p-3 mt-2 rounded text-xs text-amber-800 dark:text-amber-200">
                                     <b>Pro Tip:</b> We highly recommend using a subdomain like <code>links.yourwebsite.com</code> or <code>qr.yourwebsite.com</code>. Most registrars do not allow you to route a root domain (like <code>yourwebsite.com</code>) to a third-party app.
                                 </div>
                             </li>
@@ -113,8 +113,8 @@
                     </div>
 
                     <div>
-                        <h3 class="text-lg font-bold text-ppLight mb-2"><span class="text-ppBlue mr-2">Step 2:</span> Log Into Your Registrar</h3>
-                        <ol class="list-decimal list-inside text-sm text-slate-300 space-y-2 ml-2">
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-ppLight mb-2"><span class="text-ppBlue mr-2">Step 2:</span> Log Into Your Registrar</h3>
+                        <ol class="list-decimal list-inside text-sm text-slate-600 dark:text-slate-300 space-y-2 ml-2">
                             <li>Open a new browser tab and log into the company where you bought your domain (GoDaddy, Namecheap, Wix, Squarespace, etc.).</li>
                             <li>Find your domain and look for a button that says <b>DNS Settings</b>, <b>Manage DNS</b>, or <b>Advanced DNS</b>.</li>
                             <li>Look for the button to <b>Add New Record</b>.</li>
@@ -122,9 +122,9 @@
                     </div>
 
                     <div>
-                        <h3 class="text-lg font-bold text-ppLight mb-2"><span class="text-ppBlue mr-2">Step 3:</span> Add the Routing Record (CNAME)</h3>
-                        <p class="text-xs text-slate-400 mb-3 ml-6">This record tells the internet to send people who scan your code directly to PixelPing's servers.</p>
-                        <ol class="list-decimal list-inside text-sm text-slate-300 space-y-2 ml-2">
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-ppLight mb-2"><span class="text-ppBlue mr-2">Step 3:</span> Add the Routing Record (CNAME)</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mb-3 ml-6">This record tells the internet to send people who scan your code directly to PixelPing's servers.</p>
+                        <ol class="list-decimal list-inside text-sm text-slate-600 dark:text-slate-300 space-y-2 ml-2">
                             <li>Click <b>Add New Record</b> in your registrar.</li>
                             <li>Under <b>Type</b>, select <b>CNAME</b>.</li>
                             <li>Go back to your PixelPing tab and click <b>Copy</b> next to the <b>Name / Host</b> in Step 1. Paste it into your registrar.</li>
@@ -134,9 +134,9 @@
                     </div>
 
                     <div>
-                        <h3 class="text-lg font-bold text-ppLight mb-2"><span class="text-ppBlue mr-2">Step 4:</span> Add the Verification Record (TXT)</h3>
-                        <p class="text-xs text-slate-400 mb-3 ml-6">This record acts as a secret password to prove to our security systems that you actually own this domain.</p>
-                        <ol class="list-decimal list-inside text-sm text-slate-300 space-y-2 ml-2">
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-ppLight mb-2"><span class="text-ppBlue mr-2">Step 4:</span> Add the Verification Record (TXT)</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mb-3 ml-6">This record acts as a secret password to prove to our security systems that you actually own this domain.</p>
+                        <ol class="list-decimal list-inside text-sm text-slate-600 dark:text-slate-300 space-y-2 ml-2">
                             <li>Click <b>Add New Record</b> in your registrar again.</li>
                             <li>Under <b>Type</b>, select <b>TXT</b>.</li>
                             <li>Go back to your PixelPing tab and click <b>Copy</b> next to the <b>Name / Host</b> in Step 2. Paste it into your registrar.</li>
@@ -145,43 +145,43 @@
                         </ol>
                     </div>
 
-                    <div class="bg-slate-900/50 p-6 rounded-xl border border-slate-700">
-                        <h3 class="text-lg font-bold text-ppGreen mb-2">🎉 You're Done!</h3>
-                        <p class="text-sm text-slate-300">Go back to PixelPing and click <b>"I've Added These Records."</b></p>
-                        <p class="text-xs text-slate-400 mt-2"><i>Note: It usually takes about 5 to 15 minutes for your registrar to update the global internet directories. Once those records sync, your custom domain will be live, secure, and ready to scan!</i></p>
+                    <div class="bg-slate-100 dark:bg-slate-900/50 p-6 rounded-xl border border-slate-200 dark:border-slate-700">
+                        <h3 class="text-lg font-bold text-green-700 dark:text-ppGreen mb-2">🎉 You're Done!</h3>
+                        <p class="text-sm text-slate-700 dark:text-slate-300">Go back to PixelPing and click <b>"I've Added These Records."</b></p>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-2"><i>Note: It usually takes about 5 to 15 minutes for your registrar to update the global internet directories. Once those records sync, your custom domain will be live, secure, and ready to scan!</i></p>
                     </div>
                 </div>
             </section>
 
             <section id="faq" class="bg-white/5 dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 sm:p-8 rounded-2xl shadow-xl scroll-mt-6">
-                <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-3">
                     <span class="text-ppBlue">❓</span> Frequently Asked Questions
                 </h2>
                 
                 <div class="space-y-6">
                     <div>
-                        <h4 class="text-base font-bold text-ppLight mb-1">What is the difference between Static and Dynamic?</h4>
-                        <p class="text-sm text-slate-400"><b>Static (Local)</b> codes are built entirely on your device and are never sent to a server. Because they don't redirect, they can never be tracked or broken. <b>Dynamic</b> codes are saved to our cloud engine, allowing you to update where the code points even after you've printed it. Dynamic codes track scans but require an internet connection.</p>
+                        <h4 class="text-base font-bold text-slate-900 dark:text-ppLight mb-1">What is the difference between Static and Dynamic?</h4>
+                        <p class="text-sm text-slate-600 dark:text-slate-400"><b>Static (Local)</b> codes are built entirely on your device and are never sent to a server. Because they don't redirect, they can never be tracked or broken. <b>Dynamic</b> codes are saved to our cloud engine, allowing you to update where the code points even after you've printed it. Dynamic codes track scans but require an internet connection.</p>
                     </div>
 
                     <div>
-                        <h4 class="text-base font-bold text-ppLight mb-1">Does this app collect my data?</h4>
-                        <p class="text-sm text-slate-400">No. If you generate a Static code, your payloads and settings stay strictly on your local device. We only store data when you explicitly choose to create a Dynamic link so we know where to route the traffic.</p>
+                        <h4 class="text-base font-bold text-slate-900 dark:text-ppLight mb-1">Does this app collect my data?</h4>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">No. If you generate a Static code, your payloads and settings stay strictly on your local device. We only store data when you explicitly choose to create a Dynamic link so we know where to route the traffic.</p>
                     </div>
 
                     <div>
-                        <h4 class="text-base font-bold text-ppLight mb-1">Can I use this without Wi-Fi?</h4>
-                        <p class="text-sm text-slate-400">Yes! Once you load the main generator page for the first time, the core tool caches in your browser. You can generate local static codes (like Plain Text or WiFi) entirely offline.</p>
+                        <h4 class="text-base font-bold text-slate-900 dark:text-ppLight mb-1">Can I use this without Wi-Fi?</h4>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">Yes! Once you load the main generator page for the first time, the core tool caches in your browser. You can generate local static codes (like Plain Text or WiFi) entirely offline.</p>
                     </div>
 
                     <div>
-                        <h4 class="text-base font-bold text-ppLight mb-1">What do I get with the Pro version?</h4>
-                        <p class="text-sm text-slate-400">The free tier handles basic URLs and phone numbers perfectly. Upgrading to Pro unlocks the Command Center dashboard, dynamic cloud routing, custom domain mapping, advanced payloads (vCards, Crypto, Calendar), and the ability to customize your code's shape, colors, and logos.</p>
+                        <h4 class="text-base font-bold text-slate-900 dark:text-ppLight mb-1">What do I get with the Pro version?</h4>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">The free tier handles basic URLs and phone numbers perfectly. Upgrading to Pro unlocks the Command Center dashboard, dynamic cloud routing, custom domain mapping, advanced payloads (vCards, Crypto, Calendar), and the ability to customize your code's shape, colors, and logos.</p>
                     </div>
 
                     <div>
-                        <h4 class="text-base font-bold text-ppLight mb-1">Are there hidden subscription fees?</h4>
-                        <p class="text-sm text-slate-400">Never. We hate subscriptions. The Master Key is a one-time purchase for lifetime access to the Pro tier.</p>
+                        <h4 class="text-base font-bold text-slate-900 dark:text-ppLight mb-1">Are there hidden subscription fees?</h4>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">Never. We hate subscriptions. The Master Key is a one-time purchase for lifetime access to the Pro tier.</p>
                     </div>
                 </div>
             </section>
