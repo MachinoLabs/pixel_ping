@@ -207,5 +207,27 @@
             }
         });
     </script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const htmlElement = document.documentElement;
+        
+        // Check for saved preference
+        if (localStorage.getItem('theme') === 'light') {
+            htmlElement.classList.remove('dark');
+        }
+
+        if (themeToggleBtn) {
+            themeToggleBtn.addEventListener('click', () => {
+                htmlElement.classList.toggle('dark');
+                if (htmlElement.classList.contains('dark')) {
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+        }
+    });
+</script>+
 </body>
 </html>
