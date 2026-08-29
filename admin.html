@@ -59,14 +59,14 @@
             <div>
                 <!-- DYNAMIC HEADER -->
                 <h1 class="text-xl font-bold tracking-wide text-slate-900 dark:text-white flex items-center gap-2">
-                    PixelPing: <span id="tier-title" class="text-slate-400">Evolution</span> 
+                    PixelPing: <span id="tier-title" class="text-slate-500 dark:text-slate-400">Evolution</span> 
                     <span id="active-domain-badge" class="hidden px-2 py-0.5 rounded bg-green-500/10 text-green-400 border border-green-500/20 text-[10px] font-bold tracking-widest uppercase">🟢 Branded</span>
                 </h1>
                 <p id="tier-subtitle" class="text-slate-500 text-[10px] tracking-[0.2em] uppercase">Free Core Tool • Hijack-Proof Static Generation</p>
             </div>
         </div>
         <div class="flex items-center gap-4">
-<button id="themeToggle" class="w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors" aria-label="Toggle Dark Mode">
+<button id="themeToggle" class="w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors" aria-label="Toggle Dark Mode">
     <svg class="w-4 h-4 dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
     <svg class="w-5 h-5 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
 </button>
@@ -86,7 +86,7 @@
             </div>
             
             <div class="flex items-center gap-3 w-full sm:w-auto">
-                <button id="btn-refresh-data" class="bg-slate-800 border border-slate-700 hover:border-ppBlue hover:bg-slate-700 text-slate-300 hover:text-ppLight font-bold py-3 px-4 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-lg text-sm" title="Sync Data">
+                <button id="btn-refresh-data" class="bg-slate-800 border border-slate-700 hover:border-ppBlue hover:bg-slate-700 text-slate-600 dark:text-slate-300 hover:text-ppLight font-bold py-3 px-4 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-lg text-sm" title="Sync Data">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="refresh-icon">
                         <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
                         <path d="M3 3v5h5"></path>
@@ -104,7 +104,7 @@
         <div id="links-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
     </main>
 
-    <div id="loading-state" class="flex-1 flex flex-col items-center justify-center z-10 text-slate-400">
+    <div id="loading-state" class="flex-1 flex flex-col items-center justify-center z-10 text-slate-500 dark:text-slate-400">
         <svg class="w-10 h-10 animate-spin text-ppBlue mb-4" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
         <p class="text-sm font-bold uppercase tracking-widest animate-pulse">Authenticating...</p>
     </div>
@@ -112,9 +112,9 @@
     <div id="editOverlay" class="pp-overlay" hidden></div>
     <div id="editModal" class="pp-modal" hidden>
         <div class="pp-modal-inner relative">
-            <button id="closeEditBtn" class="absolute top-4 right-4 text-slate-400 hover:text-white">✕</button>
+            <button id="closeEditBtn" class="absolute top-4 right-4 text-slate-500 dark:text-slate-400 hover:text-white">✕</button>
             <h2 class="text-xl font-bold mb-1">Reroute Link</h2>
-            <p class="text-xs text-slate-400 mb-6 font-mono" id="edit-slug-display">link.pixelping.app/---</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mb-6 font-mono" id="edit-slug-display">link.pixelping.app/---</p>
             <label class="block text-xs font-bold text-ppLight mb-2 uppercase tracking-wide">New Destination URL</label>
             <input type="url" id="edit-destination-input" class="w-full bg-slate-900 text-white px-4 py-3 rounded-lg border border-slate-700 focus:border-ppBlue focus:outline-none mb-6">
             <button id="saveEditBtn" class="w-full bg-ppBlue hover:bg-[#1bb5e0] text-ppBase font-extrabold py-3 px-4 rounded-xl transition-all shadow-lg">Save New Route</button>
@@ -124,9 +124,9 @@
     <div id="domainOverlay" class="pp-overlay" hidden></div>
     <div id="domainModal" class="pp-modal" hidden>
         <div class="pp-modal-inner relative" id="domain-modal-content">
-            <button id="closeDomainBtn" class="absolute top-4 right-4 text-slate-400 hover:text-white">✕</button>
+            <button id="closeDomainBtn" class="absolute top-4 right-4 text-slate-500 dark:text-slate-400 hover:text-white">✕</button>
             <h2 class="text-xl font-bold mb-1">Connect Custom Domain</h2>
-            <p class="text-xs text-slate-400 mb-6">Route your own domain to your PixelPing codes.</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mb-6">Route your own domain to your PixelPing codes.</p>
             <label class="block text-xs font-bold text-ppLight mb-2 uppercase tracking-wide">Your Domain</label>
             <input type="text" id="custom-domain-input" placeholder="e.g., links.mybakery.com" class="w-full bg-slate-900 text-white px-4 py-3 rounded-lg border border-slate-700 focus:border-ppBlue focus:outline-none mb-6 font-mono text-sm">
             <button id="saveDomainBtn" class="w-full bg-ppBlue hover:bg-[#1bb5e0] text-ppBase font-extrabold py-3 px-4 rounded-xl transition-all shadow-lg">Generate DNS Records</button>
@@ -136,8 +136,8 @@
     <!-- Footer -->
     <div class="w-full max-w-5xl text-center pb-8 z-10 relative mt-auto pt-12">
         <footer class="footer">
-            <p class="footer-tag text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">Built with the StupidSimpleCrazyFast™ micro-app framework.</p>
-            <div class="footer-credits text-[11px] text-slate-400 dark:text-slate-500 mb-1">
+            <p class="footer-tag text-xs font-semibold text-slate-500 dark:text-slate-500 dark:text-slate-400 mb-1">Built with the StupidSimpleCrazyFast™ micro-app framework.</p>
+            <div class="footer-credits text-[11px] text-slate-500 dark:text-slate-400 dark:text-slate-500 mb-1">
                 Built by <a href="https://machinolabs.com" target="_blank" class="hover:text-ppBlue transition-colors">MachinoLabs</a> • <a href="https://machinolabs.com" target="_blank" class="hover:text-ppBlue transition-colors">machinolabs.com</a> • <a href="https://stupidsimplecrazyfast.com" target="_blank" class="hover:text-ppBlue transition-colors">stupidsimplecrazyfast.com</a>
                 <br>
                 Joe • 717.623.2907
@@ -192,10 +192,10 @@
                     tierSubtitle.innerText = "One-Time Pro Access • Unrestricted Visual Control";
                     tierSubtitle.className = "text-ppBlue text-[10px] tracking-[0.2em] uppercase";
                 } else {
-                    tierTitle.innerText = "Nomad";
-                    tierTitle.className = "text-slate-400";
-                    tierSubtitle.innerText = "Free Core Tool • Hijack-Proof Static Generation";
-                    tierSubtitle.className = "text-slate-500 text-[10px] tracking-[0.2em] uppercase";
+                    tierTitle.innerText = "Evolution";
+                      tierTitle.className = "text-slate-500 dark:text-slate-500 dark:text-slate-400 font-extrabold";
+                    tierSubtitle.innerText = "Command Center • Dynamic Edge Routing";
+                    tierSubtitle.className = "text-slate-500 dark:text-slate-500 dark:text-slate-400 text-[10px] tracking-[0.2em] uppercase";
                 }
 
                 // --- DOMAIN CHECK ---
@@ -224,7 +224,7 @@
             if (links.length === 0) {
                 grid.innerHTML = `
                     <div class="col-span-full py-12 text-center border-2 border-dashed border-slate-700 rounded-2xl bg-slate-800/20">
-                        <p class="text-slate-400 font-bold tracking-widest uppercase">No codes found in your suite.</p>
+                        <p class="text-slate-500 dark:text-slate-400 font-bold tracking-widest uppercase">No codes found in your suite.</p>
                         <a href="index.html" class="text-ppBlue hover:text-white transition-colors mt-2 inline-block text-sm">Go generate some!</a>
                     </div>`;
                 return;
@@ -238,24 +238,24 @@
                             <span class="text-[10px] font-bold uppercase tracking-wider text-ppBlue">${link.type || 'LINK'}</span>
                         </div>
                         <div class="bg-slate-900/50 border border-slate-700 px-2 py-1 rounded-lg text-center min-w-[60px]">
-                            <span class="block text-[10px] text-slate-400 uppercase font-bold tracking-widest">Scans</span>
+                            <span class="block text-[10px] text-slate-500 dark:text-slate-400 uppercase font-bold tracking-widest">Scans</span>
                             <span class="block text-sm font-extrabold text-ppGreen">${link.scans || 0}</span>
                         </div>
                     </div>
                     
                     <div class="bg-slate-900/40 p-2 rounded-lg mb-4 border border-slate-800">
-                        <p class="text-xs font-mono text-slate-400 truncate" title="${link.destination}">${link.destination}</p>
+                        <p class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate" title="${link.destination}">${link.destination}</p>
                     </div>
 
                     <div class="flex items-center gap-2 mb-4 bg-slate-100 dark:bg-slate-900 p-2 rounded-lg border border-slate-200 dark:border-slate-800">
-                        <span class="text-xs font-mono text-slate-500 dark:text-slate-300 flex-1 truncate select-all">${userBaseDomain}/${link.slug}</span>
+                        <span class="text-xs font-mono text-slate-500 dark:text-slate-600 dark:text-slate-300 flex-1 truncate select-all">${userBaseDomain}/${link.slug}</span>
                         <button class="bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-700 dark:text-white px-3 py-1.5 rounded-md text-[10px] font-bold uppercase tracking-wider transition-colors" onclick="copyToClipboard('https://${userBaseDomain}/${link.slug}', this)">Copy</button>
                     </div>
 
                     <div class="mt-auto flex gap-2 pt-4 border-t border-slate-200 dark:border-slate-700/50">
-                        <button class="flex-1 text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-ppBlue transition-colors py-1" onclick="openEditModal('${link.slug}', '${link.destination}')">✏️ Edit Route</button>
+                        <button class="flex-1 text-xs font-bold text-slate-600 dark:text-slate-500 dark:text-slate-400 hover:text-ppBlue transition-colors py-1" onclick="openEditModal('${link.slug}', '${link.destination}')">✏️ Edit Route</button>
                         <div class="w-px bg-slate-700"></div>
-                        <button class="flex-1 text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-red-500 transition-colors py-1" onclick="deleteLink('${link.slug}')">🗑️ Delete</button>
+                        <button class="flex-1 text-xs font-bold text-slate-600 dark:text-slate-500 dark:text-slate-400 hover:text-red-500 transition-colors py-1" onclick="deleteLink('${link.slug}')">🗑️ Delete</button>
                     </div>
                 </div>
             `).join('');
@@ -333,7 +333,7 @@
                         const safeTxtHost = records[0] ? (records[0].name || records[0].custom_hostname).replace('.' + (isRootDomain ? customDomain : domainParts.slice(-2).join('.')), '') : '_cf-custom-hostname';
 
                         modalContent.innerHTML = `
-                            <button onclick="document.getElementById('domainModal').hidden = true; document.getElementById('domainOverlay').hidden = true; window.fetchLiveCards();" class="absolute top-4 right-4 text-slate-400 hover:text-white">✕</button>
+                            <button onclick="document.getElementById('domainModal').hidden = true; document.getElementById('domainOverlay').hidden = true; window.fetchLiveCards();" class="absolute top-4 right-4 text-slate-500 dark:text-slate-400 hover:text-white">✕</button>
                             
                             <div class="text-center mb-4">
                                 <div class="w-12 h-12 bg-green-500/20 text-green-400 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl">✓</div>
@@ -348,14 +348,14 @@
                                     <div class="mb-4">
                                         <div class="flex justify-between items-end mb-1">
                                             <span class="text-[10px] text-slate-500 uppercase font-bold tracking-wider block">Name / Host</span>
-                                            <button type="button" onclick="copyToClipboard('${safeCnameHost}', this)" class="text-[10px] text-slate-400 hover:text-white uppercase font-bold tracking-wider transition-colors">📋 Copy</button>
+                                            <button type="button" onclick="copyToClipboard('${safeCnameHost}', this)" class="text-[10px] text-slate-500 dark:text-slate-400 hover:text-white uppercase font-bold tracking-wider transition-colors">📋 Copy</button>
                                         </div>
                                         <div class="text-xs text-white font-mono bg-black/40 p-2 rounded border border-slate-800 break-all">${safeCnameHost}</div>
                                     </div>
                                     <div>
                                         <div class="flex justify-between items-end mb-1">
                                             <span class="text-[10px] text-slate-500 uppercase font-bold tracking-wider block">Value / Target</span>
-                                            <button type="button" onclick="copyToClipboard('proxy.pixelping.app', this)" class="text-[10px] text-slate-400 hover:text-white uppercase font-bold tracking-wider transition-colors">📋 Copy</button>
+                                            <button type="button" onclick="copyToClipboard('proxy.pixelping.app', this)" class="text-[10px] text-slate-500 dark:text-slate-400 hover:text-white uppercase font-bold tracking-wider transition-colors">📋 Copy</button>
                                         </div>
                                         <div class="text-[11px] text-ppBlue font-mono break-all bg-black/40 p-2 rounded border border-slate-800">proxy.pixelping.app</div>
                                     </div>
@@ -369,14 +369,14 @@
                                         <div class="mb-4">
                                             <div class="flex justify-between items-end mb-1">
                                                 <span class="text-[10px] text-slate-500 uppercase font-bold tracking-wider block">Name / Host</span>
-                                                <button type="button" onclick="copyToClipboard('${safeTxtHost}', this)" class="text-[10px] text-slate-400 hover:text-white uppercase font-bold tracking-wider transition-colors">📋 Copy</button>
+                                                <button type="button" onclick="copyToClipboard('${safeTxtHost}', this)" class="text-[10px] text-slate-500 dark:text-slate-400 hover:text-white uppercase font-bold tracking-wider transition-colors">📋 Copy</button>
                                             </div>
                                             <div class="text-xs text-white font-mono bg-black/40 p-2 rounded border border-slate-800 break-all">${safeTxtHost}</div>
                                         </div>
                                         <div>
                                             <div class="flex justify-between items-end mb-1">
                                                 <span class="text-[10px] text-slate-500 uppercase font-bold tracking-wider block">Value / Target</span>
-                                                <button type="button" onclick="copyToClipboard('${record.value || record.txt_value}', this)" class="text-[10px] text-slate-400 hover:text-white uppercase font-bold tracking-wider transition-colors">📋 Copy</button>
+                                                <button type="button" onclick="copyToClipboard('${record.value || record.txt_value}', this)" class="text-[10px] text-slate-500 dark:text-slate-400 hover:text-white uppercase font-bold tracking-wider transition-colors">📋 Copy</button>
                                             </div>
                                             <div class="text-[11px] text-ppGreen font-mono break-all bg-black/40 p-2 rounded border border-slate-800">${record.value || record.txt_value}</div>
                                         </div>
