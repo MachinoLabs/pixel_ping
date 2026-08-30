@@ -40,7 +40,7 @@
         /* Background Eye Candy */
         .pixel-bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; background-color: #f8fafc; transition: background-color 0.3s; }
         .dark .pixel-bg { background-color: #061a2b; background-image: radial-gradient(#0f3a5a 1px, transparent 1px); background-size: 30px 30px; }
-        .floating-pixel { position: absolute; border-radius: 4px; opacity: 0; animation: floatUp infinite linear; }
+        .floating-pixel {display: none; position: absolute; border-radius: 4px; opacity: 0; animation: floatUp infinite linear; }
         @keyframes floatUp { 0% { transform: translateY(100vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.4; } 90% { opacity: 0.4; } 100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; } }
 
         /* CSS Masking */
