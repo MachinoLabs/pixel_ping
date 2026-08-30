@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rebellion Manual | PixelPing</title>
+    <!-- Add your Tailwind CSS link/script here -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        ppBlue: '#3b82f6',
+                        ppGreen: '#10b981'
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Add your custom CSS file link here if you have one for the footer -->
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 font-sans text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+
+    <!-- Top Navigation Bar -->
+    <header class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-8 pb-4">
+        <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-4 flex items-center justify-between shadow-sm">
+            <div class="flex items-center gap-3">
+                <!-- Replace with your actual logo SVG -->
+                <div class="w-8 h-8 bg-slate-900 dark:bg-white rounded-md flex items-center justify-center">
+                    <span class="text-white dark:text-slate-900 font-bold text-xs">PP</span>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold leading-tight">Rebellion <span class="text-ppGreen">Manual</span></h1>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">GUIDES & TACTICS</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <button id="themeToggle" class="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors bg-slate-100 dark:bg-slate-700 rounded-full">
+                    <svg id="icon-moon" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                    <svg id="icon-sun" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                </button>
+                <a href="index.html" class="text-sm font-medium text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors">&larr; BACK TO APP</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Two-Column Layout -->
+    <div class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row gap-8 flex-1">
+        
+        <!-- Sticky Sidebar (Left) -->
+        <aside class="w-full md:w-64 shrink-0 relative">
+            <div class="md:sticky md:top-8 bg-slate-100/50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700 rounded-xl p-6">
+                <h4 class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-4">Jump To</h4>
+                <nav class="space-y-3 text-sm">
+                    <a href="#saas-trap" class="block text-slate-600 dark:text-slate-300 hover:text-ppBlue transition-colors font-medium">The SaaS Trap</a>
+                    <a href="#the-core" class="block text-slate-600 dark:text-slate-300 hover:text-ppBlue transition-colors font-medium">The Core Mechanics</a>
+                    <a href="#monetization" class="block text-slate-600 dark:text-slate-300 hover:text-ppBlue transition-colors font-medium">Agency Blueprint</a>
+                    <a href="#guerrilla-plays" class="block text-slate-600 dark:text-slate-300 hover:text-ppBlue transition-colors font-medium">Guerrilla Arsenal</a>
+                    <a href="#graveyard" class="block text-slate-600 dark:text-slate-300 hover:text-ppBlue transition-colors font-medium">Troubleshooting Graveyard</a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Content Canvas (Right) -->
+        <main class="flex-1 space-y-8 pb-20">
+            
+            <!-- Section: The SaaS Trap -->
+            <section id="saas-trap" class="bg-white dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 sm:p-8 rounded-2xl shadow-xl scroll-mt-8">
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-3">
+                    <span class="text-amber-500">⚡</span> The Anatomy of a Hostage Situation
+                </h2>
+                <div class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed space-y-4">
+                    <p>Paste the "Fine Print Horror Show" and Vehicle Wrap disaster content here to immediately set the hook and prove the value of their purchase.</p>
+                </div>
+            </section>
+
+            <!-- Section: The Core Mechanics -->
+            <section id="the-core" class="bg-white dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 sm:p-8 rounded-2xl shadow-xl scroll-mt-8">
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-3">
+                    <span class="text-ppBlue">⚙️</span> The Core Mechanics
+                </h2>
+                <div class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed space-y-4">
+                    <p>Paste the 4 Phases (Payloads, Smart Print, Aesthetics, Exports) and the Design Protocol (Contrast, Quiet Zones) here.</p>
+                </div>
+            </section>
+
+            <!-- Section: Agency Blueprint -->
+            <section id="monetization" class="bg-white dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 sm:p-8 rounded-2xl shadow-xl scroll-mt-8 border-t-4 border-t-ppGreen">
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-3">
+                    <span class="text-ppGreen">💰</span> The Agency Blueprint
+                </h2>
+                <div class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed space-y-4">
+                    <p>Break down the 3 monetization models (Setup Fee, Evolution Retainer, Foot-in-the-Door Audit) into elevated bullet points or sub-cards here.</p>
+                </div>
+            </section>
+
+            <!-- Section: Guerrilla Arsenal -->
+            <section id="guerrilla-plays" class="bg-white dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 sm:p-8 rounded-2xl shadow-xl scroll-mt-8">
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-3">
+                    <span>🎯</span> The 50-Play Guerrilla Arsenal
+                </h2>
+                
+                <!-- Grid for the Plays to make them browsable -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <!-- Example Play Card -->
+                    <div class="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5">
+                        <h4 class="font-bold text-slate-900 dark:text-white mb-2">The Frictionless Tip Jar</h4>
+                        <p class="text-xs text-slate-600 dark:text-slate-400 mb-3"><span class="font-semibold text-ppBlue">Niche:</span> Hospitality, Buskers</p>
+                        <p class="text-sm text-slate-600 dark:text-slate-300">Use a Crypto or URL Payload linking to Venmo. Upload the worker's headshot to the center of the code and print on a lanyard badge.</p>
+                    </div>
+                    
+                    <!-- Example Play Card 2 -->
+                    <div class="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5">
+                        <h4 class="font-bold text-slate-900 dark:text-white mb-2">The Offline Survival Cache</h4>
+                        <p class="text-xs text-slate-600 dark:text-slate-400 mb-3"><span class="font-semibold text-ppBlue">Niche:</span> Outdoors, Industrial</p>
+                        <p class="text-sm text-slate-600 dark:text-slate-300">Use the Zero-Friction Core to generate a Text Payload containing offline rendezvous coordinates or emergency info for dead zones.</p>
+                    </div>
+                    
+                    <!-- Add more cards as you copy them over -->
+                </div>
+            </section>
+
+            <!-- Section: Troubleshooting Graveyard -->
+            <section id="graveyard" class="bg-white dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 sm:p-8 rounded-2xl shadow-xl scroll-mt-8">
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-3">
+                    <span>🪦</span> The Troubleshooting Graveyard
+                </h2>
+                <div class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed space-y-4">
+                    <p>Paste the Vector Violation, URL Rot, and Error Correction Trade-Off technical specs here.</p>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Your Standard Footer -->
+    <footer class="footer">
+        <p class="footer-tag">Built with the StupidSimpleCrazyFast™ micro-app framework.</p>
+        <div class="footer-credits">
+            Built by <a href="https://machinolabs.com">MachinoLabs</a> • <a href="https://machinolabs.com">machinolabs.com</a> • <a href="https://stupidsimplecrazyfast.com">stupidsimplecrazyfast.com</a>
+            <br>
+            Joe • 717.623.2907
+        </div>
+    </footer>
+
+    <!-- Theme Toggle Script (Identical to your other pages) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggleBtn = document.getElementById('themeToggle');
+            const iconSun = document.getElementById('icon-sun');
+            const iconMoon = document.getElementById('icon-moon');
+            const htmlElement = document.documentElement;
+
+            if (localStorage.getItem('theme') === 'dark') {
+                htmlElement.classList.add('dark');
+                if(iconSun) iconSun.classList.add('hidden');
+                if(iconMoon) iconMoon.classList.remove('hidden');
+            }
+
+            if (themeToggleBtn) {
+                themeToggleBtn.addEventListener('click', () => {
+                    htmlElement.classList.toggle('dark');
+                    if (htmlElement.classList.contains('dark')) {
+                        localStorage.setItem('theme', 'dark');
+                        if(iconSun) iconSun.classList.add('hidden');
+                        if(iconMoon) iconMoon.classList.remove('hidden');
+                    } else {
+                        localStorage.setItem('theme', 'light');
+                        if(iconMoon) iconMoon.classList.add('hidden');
+                        if(iconSun) iconSun.classList.remove('hidden');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
