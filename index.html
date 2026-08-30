@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -2270,11 +2270,11 @@ if (isProUser && watermark) {
             const iconMoon = document.getElementById('icon-moon');
             const htmlTag = document.documentElement;
 
-            if (localStorage.getItem('theme') === 'light') { 
-                htmlTag.classList.remove('dark'); 
-                iconSun.classList.remove('hidden'); 
-                iconMoon.classList.add('hidden'); 
-            }
+            if (localStorage.getItem('theme') === 'dark') {
+    htmlTag.classList.add('dark');
+    iconSun.classList.add('hidden');
+    iconMoon.classList.remove('hidden');
+}
             
             themeToggleBtn.addEventListener('click', () => {
                 htmlTag.classList.toggle('dark');

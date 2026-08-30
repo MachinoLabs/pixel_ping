@@ -219,9 +219,10 @@
         const htmlElement = document.documentElement;
         
         // Check for saved preference
-        if (localStorage.getItem('theme') === 'light') {
-            htmlElement.classList.remove('dark');
-        }
+       // Check for saved preference
+if (localStorage.getItem('theme') === 'dark') {
+    htmlElement.classList.add('dark');
+}
 
         if (themeToggleBtn) {
             themeToggleBtn.addEventListener('click', () => {
@@ -234,6 +235,6 @@
             });
         }
     });
-</script>+
+</script>
 </body>
 </html>
