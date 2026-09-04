@@ -1887,7 +1887,24 @@ if (isProUser && watermark) {
             const evoModal = document.getElementById('evolutionModal');
             const evoOverlay = document.getElementById('evolutionOverlay');
             
-            window.openEvolutionModal = function() { evoModal.hidden = false; evoOverlay.hidden = false; };
+            window.openEvolutionModal = function() { 
+            // 1. Check current tier
+            let userTier = 'free';
+            if (window.Clerk && window.Clerk.user && window.Clerk.user.publicMetadata) {
+                userTier = window.Clerk.user.publicMetadata.tier || 'free';
+            }
+            
+            // 2. The Gatekeeper: Must have Master Key to even view the Evolution checkout
+            if (userTier === 'free') {
+                openMasterKeyModal();
+                return;
+            }
+            
+            // 3. If they have the Master Key, open the Evolution upgrade modal
+            evoModal.hidden = false; 
+            evoOverlay.hidden = false; 
+    
+            };
             function closeEvolutionModal() { evoModal.hidden = true; evoOverlay.hidden = true; }
             
             document.getElementById('evolutionCloseBtn').addEventListener('click', closeEvolutionModal);
