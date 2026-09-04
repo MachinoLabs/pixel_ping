@@ -1591,8 +1591,17 @@ if (isProUser && watermark) {
             const freePayloads = ['url', 'tel', 'text'];
             
             function checkPaywallState() {
-                const isUnlocked = localStorage.getItem('pixelping-pro') === 'true'; 
-                const isEvolution = localStorage.getItem('pixelping-evolution') === 'true'; 
+            // 1. Default to free tier
+                let userTier = 'free';
+
+             // 2. Extract the tier from Clerk if the user exists
+                if (window.Clerk && window.Clerk.user && window.Clerk.user.publicMetadata) {
+                userTier = window.Clerk.user.publicMetadata.tier || 'free';
+             }
+
+            // 3. Map the Clerk metadata to your UI logic
+                const isUnlocked = (userTier === 'master-key' || userTier === 'evolution'); 
+                const isEvolution = (userTier === 'evolution'); 
                 
                 const mainTitle = document.getElementById('main-title');
                 const subTitle = document.getElementById('sub-title');
