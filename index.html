@@ -2513,14 +2513,24 @@ if (isProUser && watermark) {
             const clientSecret = data.clientSecret;
 
             const checkout = await stripe.initEmbeddedCheckout({
-                clientSecret: clientSecret,
-                onComplete: async () => {
-                    checkout.destroy();
-                    document.getElementById("fourth-rail-overlay").remove();
-                    // Optional: trigger your success animation or unlock function here
-                    console.log("Payment Successful!");
-                }
-            });
+    clientSecret: clientSecret,
+    onComplete: async () => {
+        checkout.destroy();
+        document.getElementById("fourth-rail-overlay").remove();
+        
+        // Unlock the app
+        localStorage.setItem('pixelping-pro', 'true');
+        if (mode === 'subscription') {
+            localStorage.setItem('pixelping-evolution', 'true');
+        }
+        
+        // Refresh the UI to remove the locks
+        if (typeof window.checkPaywallState === 'function') {
+            window.checkPaywallState();
+        }
+        console.log("Payment Successful! App Unlocked.");
+    }
+});
 
             const overlay = document.createElement("div");
             overlay.id = "fourth-rail-overlay";
