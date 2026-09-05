@@ -1599,9 +1599,13 @@ if (isProUser && watermark) {
                 userTier = window.Clerk.user.publicMetadata.tier || 'free';
              }
 
-            // 3. Map the Clerk metadata to your UI logic
-                const isUnlocked = (userTier === 'master-key' || userTier === 'evolution'); 
-                const isEvolution = (userTier === 'evolution'); 
+            // 3. Map the Clerk metadata AND local storage to your UI logic
+const isUnlocked = (userTier === 'master-key' || userTier === 'evolution') || localStorage.getItem('pixelping-pro') === 'true'; 
+const isEvolution = (userTier === 'evolution') || localStorage.getItem('pixelping-evolution') === 'true';
+
+// Dynamically kill the watermark here too
+const watermark = document.getElementById('pixelping-watermark');
+if (isUnlocked && watermark) watermark.style.display = 'none'; 
                 
                 const mainTitle = document.getElementById('main-title');
                 const subTitle = document.getElementById('sub-title');
