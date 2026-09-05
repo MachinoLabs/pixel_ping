@@ -1630,6 +1630,13 @@ if (isProUser && watermark) {
                     if (mainTitle) mainTitle.innerHTML = "PixelPing: Rebellion";
                     if (subTitle) subTitle.innerHTML = "<span class='text-yellow-500'>MASTER KEY AUTHENTICATED</span>";
                     const topNavBtn = document.getElementById('btn-buy-master-key');
+
+                    // --- NEW UPSELL COPY ---
+                    const pricingH2 = document.querySelector('#pricing-header h2');
+                    const pricingP = document.querySelector('#pricing-header p');
+                    if (pricingH2) pricingH2.innerHTML = "Ignite the Engine.";
+                    if (pricingP) pricingP.innerHTML = "Your Master Key unlocked the design suite. Evolution unlocks the telemetry. Track every scan and swap destinations without ever reprinting a code.";
+    // -----------------------
                 if (topNavBtn) topNavBtn.style.display = 'none';
                     if (nomadTeaser) nomadTeaser.style.display = 'none';
                     if (telemetryDash) telemetryDash.classList.add('hidden'); 
