@@ -406,7 +406,7 @@
     </script>
     <script>
         (function() {
-            const pubKey = "pk_test_bm92ZWwtYW50LTE0LmNsZXJrLmFjY291bnRzLmRldiQ";
+            const pubKey = "pk_live_Y2xlcmsucGl4ZWxwaW5nLmFwcCQ";
             const startClerk = async () => {
                 try {
                     await window.Clerk.load({ appearance: { baseTheme: 'dark', variables: { colorPrimary: '#27cfff' } }});
@@ -423,7 +423,7 @@
             const script = document.createElement('script');
             script.setAttribute('data-clerk-publishable-key', pubKey);
             script.async = true;
-            script.src = 'https://novel-ant-14.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js';
+            script.src = 'https://cdn.jsdelivr.net/npm/@clerk/clerk-js@latest/dist/clerk.browser.js';
             script.crossOrigin = 'anonymous';
             script.addEventListener('load', startClerk);
             document.body.appendChild(script);
