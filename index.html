@@ -1687,7 +1687,7 @@ if (isProUser && watermark) {
                     btnMain.className = "w-full bg-blue-600 dark:bg-ppBlue hover:bg-blue-700 dark:hover:bg-[#1bb5e0] text-white dark:text-ppBase font-bold py-3 px-4 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-lg";
                 }
             }
-
+                    window.checkPaywallState = checkPaywallState;
             // --- History Logic ---
             function renderHistory() {
                 const historyContent = document.getElementById('history-content');
@@ -2433,13 +2433,12 @@ if (isProUser && watermark) {
             
     </script>
 
-    <script>
+   <script>
         (function() {
-            const pubKey = "pk_test_bm92ZWwtYW50LTE0LmNsZXJrLmFjY291bnRzLmRldiQ";
+            const pubKey = "pk_live_Y2xlcmsucGl4ZWxwaW5nLmFwcCQ";
             
             const startClerk = async () => {
                 try {
-                    // Clerk handles loading both the logic and the UI internally here
                     await window.Clerk.load({
                         appearance: {
                             baseTheme: document.documentElement.classList.contains('dark') ? 'dark' : 'light',
@@ -2450,29 +2449,32 @@ if (isProUser && watermark) {
                     const btnSignIn = document.getElementById('btn-sign-in');
                     const userButtonMount = document.getElementById('user-button-mount');
 
-                   if (window.Clerk.user) {
-            btnSignIn.classList.add('hidden');
-            userButtonMount.classList.remove('hidden');
-            window.Clerk.mountUserButton(userButtonMount);
-            
-            checkPaywallState();
-            
-        } else {
-            btnSignIn.classList.remove('hidden');
-            userButtonMount.classList.add('hidden');
-            
-            // The button now only listens AFTER Clerk confirms the UI is ready
-            btnSignIn.addEventListener('click', () => {
-                window.Clerk.openSignIn();
-            });
-        }
-    } catch (err) {
-        console.error("Clerk Initialization Error:", err);
-    }
-};
+                    if (window.Clerk.user) {
+                        if (btnSignIn) btnSignIn.classList.add('hidden');
+                        if (userButtonMount) {
+                            userButtonMount.classList.remove('hidden');
+                            window.Clerk.mountUserButton(userButtonMount);
+                        }
+                        
+                        // Safely call the newly exposed global function
+                        if (typeof window.checkPaywallState === 'function') {
+                            window.checkPaywallState();
+                        }
+                    } else {
+                        if (btnSignIn) {
+                            btnSignIn.classList.remove('hidden');
+                            btnSignIn.addEventListener('click', () => {
+                                window.Clerk.openSignIn();
+                            });
+                        }
+                    }
+                } catch (err) {
+                    console.error("Clerk Initialization Error:", err);
+                }
+            };
 
             const script = document.createElement('script');
-           script.setAttribute('data-clerk-publishable-key', 'pk_live_Y2xlcmsucGl4ZWxwaW5nLmFwcCQ');
+            script.setAttribute('data-clerk-publishable-key', pubKey);
             script.async = true;
             script.src = 'https://cdn.jsdelivr.net/npm/@clerk/clerk-js@latest/dist/clerk.browser.js';
             script.crossOrigin = 'anonymous';
