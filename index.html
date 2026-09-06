@@ -1150,38 +1150,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     // Note: You can add an alert here to thank the user!
                 }
             }) : null;
-
-           // 🟢 MODAL CHECKOUT TRIGGERS
-            const btnBuyMasterKey = document.getElementById('btn-buy-master-key');
-            if (btnBuyMasterKey && rail) {
-                btnBuyMasterKey.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    e.stopImmediatePropagation(); // Blocks any background scripts from opening a 2nd modal
-                    
-                    // Check if Clerk is loaded but the user is NOT logged in
-                    if (window.Clerk && !window.Clerk.user) {
-                        window.Clerk.openSignUp(); // Force account creation first
-                    } else {
-                        rail.initCheckout('price_1U85qDIZcbLigL0NGFImW5v6', 'payment');
-                    }
-                });
-            }
-
-            const btnBuyEvolution = document.getElementById('btn-buy-evolution');
-            if (btnBuyEvolution && rail) {
-                btnBuyEvolution.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopImmediatePropagation(); // Blocks any background scripts from opening a 2nd modal
-        
-        // Check if Clerk is loaded but the user is NOT logged in
-        if (window.Clerk && !window.Clerk.user) {
-            window.Clerk.openSignUp(); // Force account creation first
-        } else {
-            rail.initCheckout('price_1U87KcIZcbLigL0Nou9BMy4z', 'subscription');
-        }
-    });
-}
-            
+ 
 
             const defaults = {
                 cornersType: 'dot', mask: 'none', icon: '',
@@ -2586,27 +2555,35 @@ if (isUnlocked && watermark) watermark.style.display = 'none';
     }
 
     // 3. THE GATEKEEPER TRIGGERS
-    const btnBuyMasterKey = document.getElementById('btn-buy-master-key');
-    if (btnBuyMasterKey) {
-        btnBuyMasterKey.addEventListener('click', () => {
-            if (!window.Clerk || !window.Clerk.user) {
-                window.Clerk.openSignIn();
-                return;
-            }
-            initCheckout('price_1U85qDIZcbLigL0N6FImW5v6', 'payment', window.Clerk.user.id);
-        });
-    }
+const btnBuyMasterKey = document.getElementById('btn-buy-master-key');
+if (btnBuyMasterKey) {
+    btnBuyMasterKey.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopImmediatePropagation(); // Kill the double modal
+        
+        if (!window.Clerk || !window.Clerk.user) {
+            window.Clerk.openSignUp(); // Pop account creation
+            return;
+        }
+        // Launch Stripe AND pass the Clerk User ID
+        initCheckout('price_1U85qDIZcbLigL0N6FImW5v6', 'payment', window.Clerk.user.id);
+    });
+}
 
-    const btnBuyEvolution = document.getElementById('btn-buy-evolution');
-    if (btnBuyEvolution) {
-        btnBuyEvolution.addEventListener('click', () => {
-            if (!window.Clerk || !window.Clerk.user) {
-                window.Clerk.openSignIn();
-                return;
-            }
-            initCheckout('price_1U87KcIZcbLigL0Nou9BMy4z', 'subscription', window.Clerk.user.id);
-        });
-    }
+const btnBuyEvolution = document.getElementById('btn-buy-evolution');
+if (btnBuyEvolution) {
+    btnBuyEvolution.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopImmediatePropagation(); // Kill the double modal
+        
+        if (!window.Clerk || !window.Clerk.user) {
+            window.Clerk.openSignUp(); // Pop account creation
+            return;
+        }
+        // Launch Stripe AND pass the Clerk User ID
+        initCheckout('price_1U87KcIZcbLigL0Nou9BMy4z', 'subscription', window.Clerk.user.id);
+    });
+}
 </script>
     
 <!-- 🟢 ARSENAL DEEP-LINK ENGINE -->
