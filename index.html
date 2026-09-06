@@ -1151,10 +1151,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
             }) : null;
 
-              // 🟢 MODAL CHECKOUT TRIGGERS
+           // 🟢 MODAL CHECKOUT TRIGGERS
             const btnBuyMasterKey = document.getElementById('btn-buy-master-key');
             if (btnBuyMasterKey && rail) {
-                btnBuyMasterKey.addEventListener('click', () => {
+                btnBuyMasterKey.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopImmediatePropagation(); // Blocks any background scripts from opening a 2nd modal
+                    
                     // Check if Clerk is loaded but the user is NOT logged in
                     if (window.Clerk && !window.Clerk.user) {
                         window.Clerk.openSignUp(); // Force account creation first
@@ -1166,7 +1169,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             const btnBuyEvolution = document.getElementById('btn-buy-evolution');
             if (btnBuyEvolution && rail) {
-                btnBuyEvolution.addEventListener('click', () => {
+                btnBuyEvolution.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopImmediatePropagation(); // Blocks any background scripts from opening a 2nd modal
+        
         // Check if Clerk is loaded but the user is NOT logged in
         if (window.Clerk && !window.Clerk.user) {
             window.Clerk.openSignUp(); // Force account creation first
@@ -1174,6 +1180,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             rail.initCheckout('price_1U87KcIZcbLigL0Nou9BMy4z', 'subscription');
         }
     });
+}
 }
             
 
