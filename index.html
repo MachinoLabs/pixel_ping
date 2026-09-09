@@ -1076,7 +1076,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 
                 if (data.valid) {
                     console.log(`✅ Payment verified! Mode: ${data.mode}. Unlocking...`);
-                    
+                    console.log("Worker Response:", data);
                     // Route the unlock based on Stripe's session mode
                     if (data.mode === 'subscription') {
                         // Evolution gets everything
