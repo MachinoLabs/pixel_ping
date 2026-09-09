@@ -1102,7 +1102,26 @@ document.addEventListener('DOMContentLoaded', async () => {
                     document.body.insertAdjacentHTML('beforeend', footerInjection);
                     window.history.replaceState({}, document.title, window.location.pathname);
                     
-                    setTimeout(() => window.location.reload(), 1500);
+                    // Inject the Success Reveal UI
+                    const successHTML = `
+                        <div id="key-reveal-overlay" style="position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;">
+                            <div style="background:#0f172a;border:2px solid #3cff8f;border-radius:16px;padding:32px;max-width:420px;width:100%;text-align:center;box-shadow:0 20px 40px rgba(60,255,143,0.15);">
+                                <div style="font-size:48px;margin-bottom:16px;">🎉</div>
+                                <h2 style="color:white;font-size:24px;font-weight:bold;margin-bottom:12px;">Payment Successful!</h2>
+                                <p style="color:#94a3b8;font-size:14px;margin-bottom:24px;line-height:1.5;">Your account has been upgraded. Below is your permanent offline license key—save it somewhere safe!</p>
+                                
+                                <div style="background:#1e293b;border:1px solid #334155;padding:16px;border-radius:12px;margin-bottom:24px;">
+                                    <code style="color:#3cff8f;font-size:20px;font-weight:bold;letter-spacing:2px;">${data.licenseKey}</code>
+                                </div>
+                                
+                                <button onclick="navigator.clipboard.writeText('${data.licenseKey}'); this.innerText='✓ Copied to Clipboard'; this.style.background='#22c55e';" style="background:#3b82f6;color:white;border:none;padding:14px 24px;border-radius:10px;font-weight:bold;cursor:pointer;width:100%;margin-bottom:16px;transition:all 0.2s;">Copy License Key</button>
+                                
+                                <button onclick="window.location.href=window.location.pathname" style="background:transparent;color:#94a3b8;border:none;font-size:13px;cursor:pointer;text-decoration:underline;">Close & Launch App</button>
+                            </div>
+                        </div>
+                    `;
+                    
+                    document.body.insertAdjacentHTML('beforeend', successHTML);
               
                 } // Closes if (data.valid)
         } // Closes if (response.ok)
@@ -2429,7 +2448,7 @@ if (isUnlocked && watermark) watermark.style.display = 'none';
 
    <script>
         (function() {
-            const pubKey = "pk_live_Y2xlcmsucGl4ZWxwaW5nLmFwcCQ";
+            const pubKey = "pk_test_bm92ZWwtYW50LTE0LmNsZXJrLmFjY291bnRzLmRldiQ";
             
             const startClerk = async () => {
                 try {
