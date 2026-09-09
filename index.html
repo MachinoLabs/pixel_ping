@@ -2500,7 +2500,7 @@ if (isUnlocked && watermark) watermark.style.display = 'none';
 <script>
     // 1. CONFIGURATION (Replace these with your actual live URLs/Keys)
     const STRIPE_PUBLISHABLE_KEY = "pk_test_t4qxKeliHcNHFwYTiFUO5tht00sXpAay27";
-    const WORKER_URL = "https://fourth-rail-checkout.amateuraiguy.workers.dev";
+    const WORKER_URL = "http://127.0.0.1:8787";
 
     // 2. THE CHECKOUT ENGINE
     async function initCheckout(priceId, mode = 'payment', userId = null) {
