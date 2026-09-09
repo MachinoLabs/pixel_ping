@@ -1158,7 +1158,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             // 🟢 FOURTH RAIL CORE INTIALIZATION
             const rail = typeof FourthRail !== 'undefined' ? new FourthRail({
                 workerUrl: "https://fourth-rail-checkout.amateuraiguy.workers.dev",
-                stripePublicKey: "pk_live_4da9IrIAP8JS8AkaSRPohpDs00tXpFdfdU", // Replace with your real Stripe Key
+                stripePublicKey: "pk_test_t4qxKeliHcNHFwYTiFUO5tht00sXpAay27", // Replace with your real Stripe Key
                 onUnlock: () => {
                     // This triggers automatically when the Cloudflare Worker completes the payment handshake
                     localStorage.setItem('pixelping-pro', 'true');
@@ -2499,7 +2499,7 @@ if (isUnlocked && watermark) watermark.style.display = 'none';
 
 <script>
     // 1. CONFIGURATION (Replace these with your actual live URLs/Keys)
-    const STRIPE_PUBLISHABLE_KEY = "pk_live_4da9IrIAP8JS8AkaSRPohpDs00tXpFdfdU";
+    const STRIPE_PUBLISHABLE_KEY = "pk_test_t4qxKeliHcNHFwYTiFUO5tht00sXpAay27";
     const WORKER_URL = "https://fourth-rail-checkout.amateuraiguy.workers.dev";
 
     // 2. THE CHECKOUT ENGINE
@@ -2585,7 +2585,7 @@ if (btnBuyMasterKey) {
             return;
         }
         // Launch Stripe AND pass the Clerk User ID
-        initCheckout('price_1U85qDIZcbLigL0N6FImW5v6', 'payment', window.Clerk.user.id);
+        initCheckout('price_1Tu0NZIZcbLigL0Nhs4wMhGl', 'payment', window.Clerk.user.id);
     });
 }
 
@@ -2600,7 +2600,7 @@ if (btnBuyEvolution) {
             return;
         }
         // Launch Stripe AND pass the Clerk User ID
-        initCheckout('price_1U87KcIZcbLigL0Nou9BMy4z', 'subscription', window.Clerk.user.id);
+        initCheckout('price_1Tu0asIZcbLigL0N8G4wzoy5', 'subscription', window.Clerk.user.id);
     });
 }
 </script>
