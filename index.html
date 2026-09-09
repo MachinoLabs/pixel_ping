@@ -1153,11 +1153,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
 
             // 🟢 CLOUDFLARE WORKER CONFIGURATION 
-            const WORKER_URL = "https://machino-licensing.amateuraiguy.workers.dev"; 
+            const WORKER_URL = "http://127.0.0.1:8787"; 
 
             // 🟢 FOURTH RAIL CORE INTIALIZATION
             const rail = typeof FourthRail !== 'undefined' ? new FourthRail({
-                workerUrl: "https://fourth-rail-checkout.amateuraiguy.workers.dev",
+                workerUrl: "http://127.0.0.1:8787",
                 stripePublicKey: "pk_test_t4qxKeliHcNHFwYTiFUO5tht00sXpAay27", // Replace with your real Stripe Key
                 onUnlock: () => {
                     // This triggers automatically when the Cloudflare Worker completes the payment handshake
