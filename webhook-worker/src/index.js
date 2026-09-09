@@ -133,5 +133,5 @@ export default {
       console.error(`⚠️ Webhook error:`, err.message);
       return new Response(`Webhook Error: ${err.message}`, { status: 400 });
     }
-  },
-};
+  }
+  }
