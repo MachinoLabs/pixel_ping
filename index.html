@@ -1069,8 +1069,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.log("💳 Receipt found! Verifying...");
         
        try {
-           const response = await fetch(`http://127.0.0.1:8788/verify?session_id=${sessionId}`);
-            
+                const response = await fetch(`https://pixelping-worker.amateuraiguy.workers.dev/verify?session_id=${sessionId}`);            
             if (response.ok) {
                 const data = await response.json();
                 
