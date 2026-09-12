@@ -52,6 +52,7 @@ export default {
                         quantity: 1,
                     }],
                     mode: body.mode || 'payment',
+                    allow_promotion_codes: true,
                     return_url: 'https://pixelping.app/?session_id={CHECKOUT_SESSION_ID}',
                     client_reference_id: body.userId,
                 });
