@@ -46,7 +46,7 @@ export default {
                 
                 const session = await stripe.checkout.sessions.create({
                     ui_mode: 'embedded', // Forces the on-page modal
-                    automatic_payment_methods: { enabled: true },
+                    payment_method_types: ['card'],
                     line_items: [{
                         price: body.priceId,
                         quantity: 1,
