@@ -1,0 +1,7 @@
+name = "pixelping-worker"
+main = "src/index.js"
+compatibility_date = "2024-03-20"
+
+[[kv_namespaces]]
+binding = "PIXELPING_KV"
+id = "38f63eb3650649b28b683f47d02622b8"
