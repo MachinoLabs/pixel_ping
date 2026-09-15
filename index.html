@@ -2568,6 +2568,7 @@ const btnBuyMasterKey = document.getElementById('btn-buy-master-key');
 if (btnBuyMasterKey) {
     btnBuyMasterKey.addEventListener('click', (e) => {
         e.preventDefault();
+        console.log("👉 BUTTON WAS CLICKED!");
         e.stopImmediatePropagation(); // Kill the double modal
         
         if (!window.Clerk || !window.Clerk.user) {
