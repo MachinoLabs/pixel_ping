@@ -2564,6 +2564,16 @@ if (isUnlocked && watermark) watermark.style.display = 'none';
     }
 
     // 3. THE GATEKEEPER TRIGGERS
+
+    // HEADER BUTTON TRIGGER
+const headerYellowBtn = document.getElementById('header-yellow-btn');
+if (headerYellowBtn) {
+    headerYellowBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.getElementById('unlockOverlay').hidden = false;
+        document.getElementById('unlockModal').hidden = false;
+    });
+}
 const btnBuyMasterKey = document.getElementById('btn-buy-master-key');
 if (btnBuyMasterKey) {
     btnBuyMasterKey.addEventListener('click', (e) => {
