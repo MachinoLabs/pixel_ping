@@ -1921,14 +1921,6 @@ if (isUnlocked && watermark) watermark.style.display = 'none';
             document.getElementById('evolutionCloseBtn').addEventListener('click', closeEvolutionModal);
             evoOverlay.addEventListener('click', closeEvolutionModal);
 
-            // Mock verify button for Evolution (You can connect this to Clerk/Stripe later)
-            document.getElementById('btn-verify-evo').addEventListener('click', () => {
-                localStorage.setItem('pixelping-evolution', 'true');
-                closeEvolutionModal();
-                checkPaywallState();
-                alert("Evolution Engine Ignited! Welcome to Tier 3.");
-                location.reload(); // Quick refresh to load the dashboard
-            });
 
             document.getElementById('btn-verify-key').addEventListener('click', async () => {
                 const key = licenseInput.value.trim();
