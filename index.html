@@ -2714,33 +2714,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 500); 
     }
 });
-
-// SMART INTERCEPT: EVOLUTION CHECKOUT
-document.addEventListener("DOMContentLoaded", () => {
-    const buyEvoBtn = document.getElementById('btn-buy-evolution');
-    
-    if (buyEvoBtn) {
-        buyEvoBtn.addEventListener('click', (event) => {
-            // Prevent the button from doing anything else by default
-            event.preventDefault(); 
-            
-            if (window.Clerk && window.Clerk.user) {
-                // User is signed in! Send to Stripe.
-                window.location.href = 'YOUR_STRIPE_EVOLUTION_LINK_HERE';
-            } else {
-                // Anonymous user! Force Clerk login.
-                if (window.Clerk) {
-                    window.Clerk.openSignUp({
-                        afterSignUpUrl: window.location.href,
-                        afterSignInUrl: window.location.href
-                    });
-                } else {
-                    console.error("Clerk is not initialized.");
-                }
-            }
-        });
-    }
-});
 </script>
 </body>
 </html>
