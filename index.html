@@ -1178,10 +1178,16 @@ document.addEventListener('DOMContentLoaded', async () => {
             const isProUser = localStorage.getItem('pixelping-pro') === 'true';
             const activeSettings = (isProUser && savedBrandKit) ? savedBrandKit : defaults;
 
-            // ⚡ Watermark Gatekeeper
-const watermark = document.getElementById('pixelping-watermark');
-if (isProUser && watermark) {
-    watermark.style.display = 'none';
+            // ⚡ Master Key UI Gatekeeper
+            if (isProUser) {
+                const goldBtn = document.getElementById('header-yellow-btn');
+                if (goldBtn) goldBtn.classList.add('hidden');
+            }
+
+                        // ⚡ Watermark Gatekeeper
+            const watermark = document.getElementById('pixelping-watermark');
+            if (isProUser && watermark) {
+                watermark.style.display = 'none';
 }
 
 // --- Smart URL Prefixing, Auto-Cleanup & Density Meter ---
