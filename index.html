@@ -159,7 +159,7 @@
     </div>
 
     <div class="flex items-center gap-3">
-            <button id="header-yellow-btn" class="px-3 py-1.5 bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-yellow-900 text-[10px] md:text-xs font-extrabold rounded-full transition-transform active:scale-95 shadow-sm uppercase tracking-wider border border-yellow-300">Get Master Key</button>
+            <button id="btn-buy-master-key" class="px-3 py-1.5 bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-yellow-900 text-[10px] md:text-xs font-extrabold rounded-full transition-transform active:scale-95 shadow-sm uppercase tracking-wider border border-yellow-300">Get Master Key</button>
             <div id="offline-badge" class="hidden px-3 py-1 bg-slate-200 dark:bg-ppDark text-slate-700 dark:text-ppBlue text-xs rounded-full border border-slate-300 dark:border-ppBlue font-bold">Offline Ready</div>
             <div id="auth-container" class="flex items-center justify-center min-w-[70px]">
     <button id="btn-sign-in" class="text-[11px] md:text-xs font-bold text-blue-600 dark:text-ppBlue hover:underline tracking-wider uppercase transition-colors">Sign In</button>
@@ -1178,16 +1178,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             const isProUser = localStorage.getItem('pixelping-pro') === 'true';
             const activeSettings = (isProUser && savedBrandKit) ? savedBrandKit : defaults;
 
-            // ⚡ Master Key UI Gatekeeper
-            if (isProUser) {
-                const goldBtn = document.getElementById('header-yellow-btn');
-                if (goldBtn) goldBtn.classList.add('hidden');
-            }
-
-                        // ⚡ Watermark Gatekeeper
-            const watermark = document.getElementById('pixelping-watermark');
-            if (isProUser && watermark) {
-                watermark.style.display = 'none';
+            // ⚡ Watermark Gatekeeper
+const watermark = document.getElementById('pixelping-watermark');
+if (isProUser && watermark) {
+    watermark.style.display = 'none';
 }
 
 // --- Smart URL Prefixing, Auto-Cleanup & Density Meter ---
@@ -1927,6 +1921,14 @@ if (isUnlocked && watermark) watermark.style.display = 'none';
             document.getElementById('evolutionCloseBtn').addEventListener('click', closeEvolutionModal);
             evoOverlay.addEventListener('click', closeEvolutionModal);
 
+            // Mock verify button for Evolution (You can connect this to Clerk/Stripe later)
+            document.getElementById('btn-verify-evo').addEventListener('click', () => {
+                localStorage.setItem('pixelping-evolution', 'true');
+                closeEvolutionModal();
+                checkPaywallState();
+                alert("Evolution Engine Ignited! Welcome to Tier 3.");
+                location.reload(); // Quick refresh to load the dashboard
+            });
 
             document.getElementById('btn-verify-key').addEventListener('click', async () => {
                 const key = licenseInput.value.trim();
@@ -2570,21 +2572,10 @@ if (isUnlocked && watermark) watermark.style.display = 'none';
     }
 
     // 3. THE GATEKEEPER TRIGGERS
-
-    // HEADER BUTTON TRIGGER
-const headerYellowBtn = document.getElementById('header-yellow-btn');
-if (headerYellowBtn) {
-    headerYellowBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        document.getElementById('unlockOverlay').hidden = false;
-        document.getElementById('unlockModal').hidden = false;
-    });
-}
 const btnBuyMasterKey = document.getElementById('btn-buy-master-key');
 if (btnBuyMasterKey) {
     btnBuyMasterKey.addEventListener('click', (e) => {
         e.preventDefault();
-        console.log("👉 BUTTON WAS CLICKED!");
         e.stopImmediatePropagation(); // Kill the double modal
         
         if (!window.Clerk || !window.Clerk.user) {
@@ -2726,4 +2717,3 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
-
