@@ -1,2 +1,3 @@
 node_modules/
 webhook-worker/
+webhook-worker/**/*
