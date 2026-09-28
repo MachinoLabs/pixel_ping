@@ -786,7 +786,7 @@
                         <div class="opacity-80">
                             Built by <a href="https://machinolabs.com" target="_blank" class="hover:underline text-blue-500">MachinoLabs</a> • <a href="https://machinolabs.com" target="_blank" class="hover:underline text-blue-500">machinolabs.com</a> • <a href="https://stupidsimplecrazyfast.com" target="_blank" class="hover:underline text-blue-500">stupidsimplecrazyfast.com</a>
                             <br>
-                            Joe • 717.623.2907<br>
+                            Joe • support@senditin.app<br>
                             Let's Build Something
                         </div>
                     </footer>
@@ -1087,21 +1087,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         // Standard payment is just the Master Key
                         localStorage.setItem('pixelping-pro', 'true');
                     }
-                    
-                    const footerInjection = `
-                        <div style="width: 100%; text-align: center;">
-                            <footer class="footer" style="padding: 20px; font-size: 12px; color: #94a3b8; border-top: 1px solid #1e293b; margin-top: 40px;">
-                                <p style="font-weight: bold; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em;">Built with the StupidSimpleCrazyFast™ micro-app framework.</p>
-                                <div>
-                                    Built by <a href="https://machinolabs.com" style="color: #38bdf8; text-decoration: none;">MachinoLabs</a> • <a href="https://machinolabs.com" style="color: #38bdf8; text-decoration: none;">machinolabs.com</a> • <a href="https://stupidsimplecrazyfast.com" style="color: #38bdf8; text-decoration: none;">stupidsimplecrazyfast.com</a>
-                                    <br>Joe • support@senditin.app
-                                </div>
-                            </footer>
-                        </div>
-                    `;
-                    
-                    document.body.insertAdjacentHTML('beforeend', footerInjection);
-                    window.history.replaceState({}, document.title, window.location.pathname);
+                   
                     
                     // Inject the Success Reveal UI
                     const successHTML = `
