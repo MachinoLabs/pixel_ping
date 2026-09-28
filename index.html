@@ -2179,15 +2179,15 @@ document.addEventListener('DOMContentLoaded', async () => {
                 } 
             });
 
-            const bgContainer = document.getElementById('pixel-bg');
-            const colors = ['#27cfff', '#3cff8f', '#0f3a5a'];
-            for(let i=0; i<20; i++) {
-                let div = document.createElement('div'); div.className = 'floating-pixel';
-                let size = Math.random() * 20 + 10; div.style.width = size + 'px'; div.style.height = size + 'px';
-                div.style.left = Math.random() * 100 + 'vw'; div.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                div.style.animationDelay = (Math.random() * 8) + 's'; div.style.animationDuration = (Math.random() * 6 + 6) + 's';
-                bgContainer.appendChild(div);
-            }
+            // const bgContainer = document.getElementById('pixel-bg');
+            // const colors = ['#27cfff', '#3cff8f', '#0f3a5a'];
+            // for(let i=0; i<20; i++) {
+            //     let div = document.createElement('div'); div.className = 'floating-pixel';
+            //     let size = Math.random() * 20 + 10; div.style.width = size + 'px'; div.style.height = size + 'px';
+            //     div.style.left = Math.random() * 100 + 'vw'; div.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            //     div.style.animationDelay = (Math.random() * 8) + 's'; div.style.animationDuration = (Math.random() * 6 + 6) + 's';
+            //     bgContainer.appendChild(div);
+           // }
         });
 
     if (document.getElementById('mode-static') && document.getElementById('mode-dynamic')) {
