@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -29,8 +29,9 @@
     <style>
         .pixel-bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; background-color: #f8fafc; transition: background-color 0.3s; }
         .dark .pixel-bg { background-color: #061a2b; background-image: radial-gradient(#0f3a5a 1px, transparent 1px); background-size: 30px 30px; }
-        .floating-pixel { position: absolute; border-radius: 4px; opacity: 0; animation: floatUp infinite linear; }
-        @keyframes floatUp { 0% { transform: translateY(100vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.4; } 90% { opacity: 0.4; } 100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; } }
+        /* Floating pixels disabled for clean blueprint vibe */
+        /* .floating-pixel { position: absolute; border-radius: 4px; opacity: 0; animation: floatUp infinite linear; }
+        @keyframes floatUp { 0% { transform: translateY(100vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.4; } 90% { opacity: 0.4; } 100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; } } */
         
         .pp-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); z-index: 998; }
         .pp-modal { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 999; padding: 16px; }
@@ -66,10 +67,10 @@
             </div>
         </div>
         <div class="flex items-center gap-4">
-<button id="themeToggle" class="w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors" aria-label="Toggle Dark Mode">
-    <svg class="w-4 h-4 dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-    <svg class="w-5 h-5 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-</button>
+            <button id="themeToggle" class="w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors" aria-label="Toggle Dark Mode">
+                <svg class="w-4 h-4 dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                <svg class="w-5 h-5 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+            </button>
             <a href="index.html" class="text-xs font-bold text-slate-500 dark:text-slate-300 hover:text-ppBlue transition-colors uppercase tracking-wider">← BACK TO GENERATOR</a>
             <div id="user-button-mount" class="min-w-[32px] min-h-[32px] bg-slate-800 rounded-full animate-pulse"></div>
         </div>
@@ -135,14 +136,14 @@
 
     <!-- Footer -->
     <div class="w-full max-w-5xl text-center pb-8 z-10 relative mt-auto pt-12">
-       <footer class="footer">
-    <p class="footer-tag text-xs text-slate-500 dark:text-slate-400">Built with the StupidSimpleCrazyFast™ micro-app framework.</p>
-<div class="footer-credits text-[10px] text-slate-500 dark:text-slate-400">
-    Built by <a href="https://machinolabs.com" class="hover:text-ppBlue">MachinoLabs</a> • <a href="https://machinolabs.com" class="hover:text-ppBlue">machinolabs.com</a> • <a href="https://stupidsimplecrazyfast.com" class="hover:text-ppBlue">stupidsimplecrazyfast.com</a>
-    <br>
-    Joe • support@senditin.app
-</div>
-</footer>
+        <footer class="footer">
+            <p class="footer-tag" style="text-align: center; font-family: monospace; font-size: 12px; color: #666; margin-bottom: 8px;">Built with the StupidSimpleCrazyFast™ micro-app framework.</p>
+            <div class="footer-credits" style="text-align: center; font-family: monospace; font-size: 12px; color: #666;">
+                Built by <a href="https://machinolabs.com" style="color:#666;text-decoration:none;">MachinoLabs</a> • <a href="https://machinolabs.com" style="color:#666;text-decoration:none;">machinolabs.com</a> • <a href="https://stupidsimplecrazyfast.com" style="color:#666;text-decoration:none;">stupidsimplecrazyfast.com</a>
+                <br>
+                Joe • 717.623.2907
+            </div>
+        </footer>
     </div>
 
     <script>
@@ -168,7 +169,7 @@
         closeEditBtn.addEventListener('click', closeModal);
         editOverlay.addEventListener('click', closeModal);
 
-        // --- FETCH LIVE DATA (WITH CUSTOM DOMAIN & THE NEW TIER AWARENESS) ---
+        // --- FETCH LIVE DATA (WITH HARD GATEKEEPER) ---
         window.fetchLiveCards = async () => {
             if (!window.Clerk || !window.Clerk.user) return;
             
@@ -176,27 +177,22 @@
                 const response = await fetch(`${API_URL}?userId=${window.Clerk.user.id}`);
                 const data = await response.json();
                 
-                // --- TIER CHECK & RAW TECH HEADER UPDATE ---
-                const userTier = data.tier || 'nomad'; // Default to free if undefined
-                const tierTitle = document.getElementById('tier-title');
-                const tierSubtitle = document.getElementById('tier-subtitle');
+                // --- THE HARD GATEKEEPER ---
+                const userTier = window.Clerk.user.publicMetadata.tier || 'free';
+                const isEvolution = (userTier === 'evolution') || localStorage.getItem('pixelping-evolution') === 'true';
 
-                if (userTier === 'evolution') {
-                    tierTitle.innerText = "Evolution";
-                    tierTitle.className = "text-ppGreen font-extrabold";
-                    tierSubtitle.innerText = "Dynamic SaaS Platform • White-Label Domain Mastery";
-                    tierSubtitle.className = "text-ppGreen text-[10px] tracking-[0.2em] uppercase";
-                } else if (userTier === 'rebellion') {
-                    tierTitle.innerText = "Rebellion";
-                    tierTitle.className = "text-ppBlue font-extrabold";
-                    tierSubtitle.innerText = "One-Time Pro Access • Unrestricted Visual Control";
-                    tierSubtitle.className = "text-ppBlue text-[10px] tracking-[0.2em] uppercase";
-                } else {
-                    tierTitle.innerText = "Evolution";
-                     tierTitle.className = "text-ppGreen font-extrabold"; 
-                   
-                    tierSubtitle.innerText = "Command Center • Dynamic Edge Routing";
-                    tierSubtitle.className = "text-slate-500 dark:text-slate-300 text-[12px] tracking-[0.2em] uppercase";
+                if (!isEvolution) {
+                    mainDash.innerHTML = `
+                        <div class="flex flex-col items-center justify-center py-20 text-center w-full">
+                            <div class="bg-yellow-500/10 text-yellow-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl border border-yellow-500/30">🔒</div>
+                            <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-2">Evolution Engine Required</h2>
+                            <p class="text-slate-500 max-w-md mx-auto mb-6">The Command Center is highly restricted. Upgrade your payload architecture to track live telemetry and manage active edge routes.</p>
+                            <a href="index.html" class="bg-ppGreen text-slate-900 font-extrabold py-3 px-8 rounded-xl hover:bg-[#2ce07a] transition-colors shadow-lg">Return to Generator</a>
+                        </div>
+                    `;
+                    loadingState.classList.add('hidden');
+                    mainDash.classList.remove('hidden');
+                    return; 
                 }
 
                 // --- DOMAIN CHECK ---
@@ -278,14 +274,77 @@
             editOverlay.hidden = false;
         };
 
-        saveEditBtn.addEventListener('click', async () => { /* Server Update Logic */ });
-        window.deleteLink = async (slug) => { /* Server Delete Logic */ };
-        searchInput.addEventListener('input', (e) => { /* Search Filter Logic */ });
+        // --- CLOUDFLARE WORKER API HOOKS ---
+        saveEditBtn.addEventListener('click', async () => {
+            const newDest = editDestInput.value.trim();
+            if (!newDest) return alert("Please enter a valid destination.");
+            
+            saveEditBtn.innerText = "Saving...";
+            saveEditBtn.disabled = true;
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ slug: currentEditSlug, destination: newDest, userId: window.Clerk.user.id })
+                });
+
+                if (response.ok) {
+                    closeModal();
+                    window.fetchLiveCards(); 
+                } else {
+                    alert("Failed to update route.");
+                }
+            } catch (error) {
+                console.error("Update Error:", error);
+                alert("Connection error while updating route.");
+            } finally {
+                saveEditBtn.innerText = "Save New Route";
+                saveEditBtn.disabled = false;
+            }
+        });
+
+        window.deleteLink = async (slug) => { 
+            if (!confirm("Are you sure you want to permanently delete this route?")) return;
+            
+            try {
+                const response = await fetch(`${API_URL}?slug=${slug}&userId=${window.Clerk.user.id}`, {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    window.fetchLiveCards();
+                } else {
+                    alert("Failed to delete route.");
+                }
+            } catch (error) {
+                console.error("Delete Error:", error);
+                alert("Connection error while deleting route.");
+            }
+        };
+
+        // Search Filter
+        searchInput.addEventListener('input', (e) => { 
+            const searchTerm = e.target.value.toLowerCase();
+            const filteredLinks = globalLinksData.filter(link => {
+                const title = (link.title || '').toLowerCase();
+                const slug = (link.slug || '').toLowerCase();
+                const dest = (link.destination || '').toLowerCase();
+                return title.includes(searchTerm) || slug.includes(searchTerm) || dest.includes(searchTerm);
+            });
+            renderCards(filteredLinks);
+        });
         
+        // Sync Data
         const refreshBtn = document.getElementById('btn-refresh-data');
         const refreshIcon = document.getElementById('refresh-icon');
-        refreshBtn.addEventListener('click', async () => { /* Sync Logic */ });
+        refreshBtn.addEventListener('click', async () => { 
+            refreshIcon.classList.add('animate-spin');
+            await window.fetchLiveCards();
+            setTimeout(() => refreshIcon.classList.remove('animate-spin'), 500);
+        });
 
+        // --- CUSTOM DOMAIN LOGIC ---
         const domainModal = document.getElementById('domainModal');
         const domainOverlay = document.getElementById('domainOverlay');
         const btnCustomDomain = document.getElementById('btn-custom-domain');
@@ -317,10 +376,13 @@
                     saveDomainBtn.classList.add('opacity-75', 'cursor-wait');
 
                     try {
+                        // Prevents anon abuse on your worker
+                        if (!window.Clerk || !window.Clerk.user) throw new Error("Authentication required.");
+
                         const response = await fetch('https://pixelping-worker.amateuraiguy.workers.dev/api/domains', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ domain: customDomain, userId: window.Clerk?.user?.id || 'anonymous_user' })
+                            body: JSON.stringify({ domain: customDomain, userId: window.Clerk.user.id })
                         });
                         const data = await response.json();
                         if (!response.ok) throw new Error(data.error || "Cloudflare rejected the request.");
@@ -402,9 +464,6 @@
         attachDomainListeners();
     </script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => { /* ... floating pixels ... */ });
-    </script>
-    <script>
         (function() {
             const pubKey = "pk_live_Y2xlcmsucGl4ZWxwaW5nLmFwcCQ";
             const startClerk = async () => {
@@ -416,9 +475,12 @@
                         window.Clerk.mountUserButton(userBtn);
                         window.fetchLiveCards();
                     } else {
+                        // Open sign in if no session found
                         setTimeout(() => window.Clerk.openSignIn(), 1000);
                     }
-                } catch (err) {}
+                } catch (err) {
+                    console.error("Clerk Error:", err);
+                }
             };
             const script = document.createElement('script');
             script.setAttribute('data-clerk-publishable-key', pubKey);
@@ -435,8 +497,8 @@
         const htmlElement = document.documentElement;
         
         // Check for saved preference
-         if (localStorage.getItem('theme') === 'dark') {
-            htmlElement.classList.add('dark');
+         if (localStorage.getItem('theme') === 'light') {
+            htmlElement.classList.remove('dark');
           }
 
         if (themeToggleBtn) {
