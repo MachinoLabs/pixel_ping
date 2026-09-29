@@ -279,7 +279,106 @@ document.addEventListener('DOMContentLoaded', () => {
             tierRequired: "evolution"
         },
 
-        
+        "mortgage-fast-track": {
+            payload: "url",
+            ctaText: "Scan to Jump the Line",
+            printSize: "3.5in",
+            dataColor: "#d4af37",
+            eyeColor: "#996515",
+            bgColor: "#000000",
+            eyeStyle: "dot",
+            centerIcon: "",
+            tierRequired: "master-key"
+        },
+        "living-benefits": {
+            payload: "url",
+            ctaText: "Live Benefits Dashboard",
+            printSize: "3.5in",
+            dataColor: "#2563eb",
+            eyeColor: "#1e3a8a",
+            bgColor: "#ffffff",
+            eyeStyle: "square",
+            centerIcon: "",
+            tierRequired: "evolution"
+        },
+        "guardian-angel": {
+            payload: "sms",
+            ctaText: "I Found Your Child",
+            printSize: "2in",
+            dataColor: "#dc2626",
+            eyeColor: "#991b1b",
+            bgColor: "#ffffff",
+            eyeStyle: "square",
+            centerIcon: "",
+            tierRequired: "free"
+        },
+        "guerrilla-pothole": {
+            payload: "email",
+            ctaText: "Report Pothole to City",
+            printSize: "3.5in",
+            dataColor: "#ea580c",
+            eyeColor: "#9a3412",
+            bgColor: "#facc15",
+            eyeStyle: "square",
+            centerIcon: "",
+            tierRequired: "free"
+        },
+        "vip-fast-pass": {
+            payload: "sms",
+            ctaText: "Order Bottle Service",
+            printSize: "2in",
+            dataColor: "#ffffff",
+            eyeColor: "#ffffff",
+            bgColor: "#000000",
+            eyeStyle: "dot",
+            centerIcon: "",
+            tierRequired: "master-key"
+        },
+
+        "drive-by-capture": {
+            payload: "sms",
+            ctaText: "Get Price & Tour",
+            printSize: "3.5in",
+            dataColor: "#1e40af",
+            eyeColor: "#1e3a8a",
+            bgColor: "#ffffff",
+            eyeStyle: "square",
+            centerIcon: "",
+            tierRequired: "master-key"
+        },
+        "podcast-hijack": {
+            payload: "url",
+            ctaText: "Hear the True Story",
+            printSize: "3.5in",
+            dataColor: "#1db954",
+            eyeColor: "#191414",
+            bgColor: "#ffffff",
+            eyeStyle: "dot",
+            centerIcon: "",
+            tierRequired: "evolution"
+        },
+        "digital-tip-sheet": {
+            payload: "crypto",
+            ctaText: "Loved the Tour? Tip Here",
+            printSize: "2in",
+            dataColor: "#047857",
+            eyeColor: "#064e3b",
+            bgColor: "#ffffff",
+            eyeStyle: "dot",
+            centerIcon: "",
+            tierRequired: "master-key"
+        },
+        "infinite-tombstone": {
+            payload: "url",
+            ctaText: "Living Digital Memorial",
+            printSize: "2in",
+            dataColor: "#334155",
+            eyeColor: "#0f172a",
+            bgColor: "#f8fafc",
+            eyeStyle: "square",
+            centerIcon: "",
+            tierRequired: "evolution"
+        }
 
     };
 
