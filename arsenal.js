@@ -54,7 +54,233 @@ document.addEventListener('DOMContentLoaded', () => {
             eyeStyle: "dot",
             centerIcon: "",
             tierRequired: "evolution"
-        }
+        },
+"contractor-sticky": {
+            payload: "sms",
+            ctaText: "Scan for Emergency Service",
+            printSize: "2in",
+            dataColor: "#e11d48", 
+            eyeColor: "#9f1239",
+            bgColor: "#ffffff",
+            eyeStyle: "square",
+            centerIcon: "",
+            tierRequired: "master-key"
+        },
+        "golden-ticket": {
+            payload: "url",
+            ctaText: "Unlock VIP Unboxing",
+            printSize: "3.5in",
+            dataColor: "#000000",
+            eyeColor: "#d4af37", 
+            bgColor: "#ffffff",
+            eyeStyle: "dot",
+            centerIcon: "",
+            tierRequired: "evolution"
+        },
+        "wifi-trojan": {
+            payload: "wifi",
+            ctaText: "Connect to Cafe Wi-Fi",
+            printSize: "3.5in",
+            dataColor: "#0ea5e9", 
+            eyeColor: "#0369a1",
+            bgColor: "#f8fafc",
+            eyeStyle: "square",
+            centerIcon: "",
+            tierRequired: "master-key"
+        },
+        "silent-salesman": {
+            payload: "url",
+            ctaText: "Scan for Audio Tour",
+            printSize: "2in",
+            dataColor: "#334155",
+            eyeColor: "#0f172a",
+            bgColor: "#ffffff",
+            eyeStyle: "dot",
+            centerIcon: "",
+            tierRequired: "free"
+        },
+        "hacker-card": {
+            payload: "wifi",
+            ctaText: "Scan to Connect",
+            printSize: "3.5in",
+            dataColor: "#10b981", 
+            eyeColor: "#10b981",
+            bgColor: "#000000",
+            eyeStyle: "square",
+            centerIcon: "",
+            tierRequired: "free"
+        },
+
+        "silent-hall-pass": {
+            payload: "url",
+            ctaText: "The Fridge Syllabus",
+            printSize: "3.5in",
+            dataColor: "#0f766e", 
+            eyeColor: "#115e59",
+            bgColor: "#ffffff",
+            eyeStyle: "square",
+            centerIcon: "",
+            tierRequired: "free"
+        },
+        "waiting-room": {
+            payload: "url",
+            ctaText: "Scan to Check In",
+            printSize: "3.5in",
+            dataColor: "#0369a1",
+            eyeColor: "#075985",
+            bgColor: "#ffffff",
+            eyeStyle: "dot",
+            centerIcon: "",
+            tierRequired: "master-key"
+        },
+        "superhost-concierge": {
+            payload: "url",
+            ctaText: "Scan for Local Eats",
+            printSize: "2in",
+            dataColor: "#be123c",
+            eyeColor: "#9f1239",
+            bgColor: "#ffffff",
+            eyeStyle: "square",
+            centerIcon: "",
+            tierRequired: "evolution"
+        },
+        "kennel-breakout": {
+            payload: "url",
+            ctaText: "See Me in the Yard",
+            printSize: "3.5in",
+            dataColor: "#ea580c",
+            eyeColor: "#c2410c",
+            bgColor: "#ffffff",
+            eyeStyle: "dot",
+            centerIcon: "",
+            tierRequired: "free"
+        },
+        "seed-to-table": {
+            payload: "url",
+            ctaText: "Meet the Farmer",
+            printSize: "2in",
+            dataColor: "#4d7c0f",
+            eyeColor: "#3f6212",
+            bgColor: "#ffffff",
+            eyeStyle: "square",
+            centerIcon: "",
+            tierRequired: "master-key"
+        },
+
+        "digital-tip-in": {
+            payload: "url",
+            ctaText: "Tonight's Secret Setlist",
+            printSize: "3.5in",
+            dataColor: "#000000",
+            eyeColor: "#000000",
+            bgColor: "#ffffff",
+            eyeStyle: "square",
+            centerIcon: "",
+            tierRequired: "evolution"
+        },
+        "line-buster": {
+            payload: "url",
+            ctaText: "Skip Line: Scan to Order",
+            printSize: "3.5in",
+            dataColor: "#ea580c",
+            eyeColor: "#c2410c",
+            bgColor: "#ffffff",
+            eyeStyle: "square",
+            centerIcon: "",
+            tierRequired: "master-key"
+        },
+        "instant-rma": {
+            payload: "sms",
+            ctaText: "Text Founder Directly",
+            printSize: "2in",
+            dataColor: "#2563eb",
+            eyeColor: "#1d4ed8",
+            bgColor: "#ffffff",
+            eyeStyle: "dot",
+            centerIcon: "",
+            tierRequired: "master-key"
+        },
+        "ghost-tour": {
+            payload: "text",
+            ctaText: "Self-Guided Ghost Tour",
+            printSize: "3.5in",
+            dataColor: "#475569",
+            eyeColor: "#0f172a",
+            bgColor: "#f8fafc",
+            eyeStyle: "square",
+            centerIcon: "",
+            tierRequired: "free"
+        },
+        "test-drive": {
+            payload: "url",
+            ctaText: "Virtual Test Drive",
+            printSize: "3.5in",
+            dataColor: "#dc2626",
+            eyeColor: "#991b1b",
+            bgColor: "#ffffff",
+            eyeStyle: "square",
+            centerIcon: "",
+            tierRequired: "evolution"
+        },
+
+        "wreck-report": {
+            payload: "sms",
+            ctaText: "Scan if in Accident",
+            printSize: "3.5in",
+            dataColor: "#b91c1c",
+            eyeColor: "#7f1d1d",
+            bgColor: "#ffffff",
+            eyeStyle: "square",
+            centerIcon: "",
+            tierRequired: "master-key"
+        },
+        "trojan-mailer": {
+            payload: "url",
+            ctaText: "Scan to Unlock",
+            printSize: "2in",
+            dataColor: "#000000",
+            eyeColor: "#000000",
+            bgColor: "#ffffff",
+            eyeStyle: "dot",
+            centerIcon: "",
+            tierRequired: "evolution"
+        },
+        "zero-day": {
+            payload: "text",
+            ctaText: "Emergency IT Protocol",
+            printSize: "3.5in",
+            dataColor: "#000000",
+            eyeColor: "#000000",
+            bgColor: "#fef08a",
+            eyeStyle: "square",
+            centerIcon: "",
+            tierRequired: "free"
+        },
+        "frictionless-reorder": {
+            payload: "email",
+            ctaText: "Scan to Reorder",
+            printSize: "3.5in",
+            dataColor: "#0369a1",
+            eyeColor: "#075985",
+            bgColor: "#f0f9ff",
+            eyeStyle: "square",
+            centerIcon: "",
+            tierRequired: "master-key"
+        },
+        "ceramic-passport": {
+            payload: "url",
+            ctaText: "Wash Instructions & Warranty",
+            printSize: "2in",
+            dataColor: "#94a3b8",
+            eyeColor: "#475569",
+            bgColor: "#0f172a",
+            eyeStyle: "dot",
+            centerIcon: "",
+            tierRequired: "evolution"
+        },
+
+        
+
     };
 
     const recipeParams = new URLSearchParams(window.location.search);
