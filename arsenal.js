@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
             centerIcon: "",
             tierRequired: "evolution"
         },
-"contractor-sticky": {
+        "contractor-sticky": {
             payload: "sms",
             ctaText: "Scan for Emergency Service",
             printSize: "2in",
@@ -110,7 +110,6 @@ document.addEventListener('DOMContentLoaded', () => {
             centerIcon: "",
             tierRequired: "free"
         },
-
         "silent-hall-pass": {
             payload: "url",
             ctaText: "The Fridge Syllabus",
@@ -166,7 +165,6 @@ document.addEventListener('DOMContentLoaded', () => {
             centerIcon: "",
             tierRequired: "master-key"
         },
-
         "digital-tip-in": {
             payload: "url",
             ctaText: "Tonight's Secret Setlist",
@@ -222,7 +220,6 @@ document.addEventListener('DOMContentLoaded', () => {
             centerIcon: "",
             tierRequired: "evolution"
         },
-
         "wreck-report": {
             payload: "sms",
             ctaText: "Scan if in Accident",
@@ -278,7 +275,6 @@ document.addEventListener('DOMContentLoaded', () => {
             centerIcon: "",
             tierRequired: "evolution"
         },
-
         "mortgage-fast-track": {
             payload: "url",
             ctaText: "Scan to Jump the Line",
@@ -334,7 +330,6 @@ document.addEventListener('DOMContentLoaded', () => {
             centerIcon: "",
             tierRequired: "master-key"
         },
-
         "drive-by-capture": {
             payload: "sms",
             ctaText: "Get Price & Tour",
@@ -378,8 +373,183 @@ document.addEventListener('DOMContentLoaded', () => {
             eyeStyle: "square",
             centerIcon: "",
             tierRequired: "evolution"
+        },
+        "ghost-card": {
+            payload: "vcard",
+            ctaText: "",
+            printSize: "3.5in",
+            dataColor: "#000000",
+            eyeColor: "#000000",
+            bgColor: "#ffffff",
+            eyeStyle: "square",
+            centerIcon: "",
+            tierRequired: "master-key"
+        },
+        "living-wallet": {
+            payload: "url",
+            ctaText: "Scan to see what's new",
+            printSize: "3.5in",
+            dataColor: "#000000",
+            eyeColor: "#000000",
+            bgColor: "#ffffff",
+            eyeStyle: "dot",
+            centerIcon: "",
+            tierRequired: "evolution"
+        },
+        "etsy-boomerang": {
+            payload: "sms",
+            ctaText: "I found your item",
+            printSize: "2in",
+            dataColor: "#000000",
+            eyeColor: "#000000",
+            bgColor: "#ffffff",
+            eyeStyle: "square",
+            centerIcon: "",
+            tierRequired: "master-key"
+        },
+        "wedding-invite": {
+            payload: "url",
+            ctaText: "Scan for Wedding Details",
+            printSize: "3.5in",
+            dataColor: "#333333",
+            eyeColor: "#333333",
+            bgColor: "#ffffff",
+            eyeStyle: "dot",
+            centerIcon: "",
+            tierRequired: "evolution"
+        },
+        "infinite-billboard": {
+            payload: "url",
+            ctaText: "Scan for this week's Local Deal",
+            printSize: "Flyer/Poster",
+            dataColor: "#000000",
+            eyeColor: "#000000",
+            bgColor: "#ffffff",
+            eyeStyle: "square",
+            centerIcon: "",
+            tierRequired: "evolution"
+        },
+        "apparel-egg": {
+            payload: "url",
+            ctaText: "Unlock Exclusive Drop",
+            printSize: "2in",
+            dataColor: "#000000",
+            eyeColor: "#000000",
+            bgColor: "#ffffff",
+            eyeStyle: "square",
+            centerIcon: "",
+            tierRequired: "evolution"
+        },
+        "offline-survival-cache": {
+            payload: "text",
+            ctaText: "Emergency Medical Info",
+            printSize: "3.5in",
+            dataColor: "#b91c1c",
+            eyeColor: "#7f1d1d",
+            bgColor: "#ffffff",
+            eyeStyle: "square",
+            centerIcon: "",
+            tierRequired: "free"
+        },
+        "time-capsule": {
+            payload: "url",
+            ctaText: "Scan this on our anniversary",
+            printSize: "2in",
+            dataColor: "#d4af37",
+            eyeColor: "#996515",
+            bgColor: "#ffffff",
+            eyeStyle: "dot",
+            centerIcon: "",
+            tierRequired: "master-key"
+        },
+        "resume-bypass": {
+            payload: "url",
+            ctaText: "Scan to see me in action",
+            printSize: "3.5in",
+            dataColor: "#1e3a8a",
+            eyeColor: "#1e40af",
+            bgColor: "#ffffff",
+            eyeStyle: "square",
+            centerIcon: "",
+            tierRequired: "master-key"
+        },
+        "conference-hitman": {
+            payload: "sms",
+            ctaText: "Scan my badge",
+            printSize: "3.5in",
+            dataColor: "#000000",
+            eyeColor: "#000000",
+            bgColor: "#ffffff",
+            eyeStyle: "dot",
+            centerIcon: "",
+            tierRequired: "master-key"
+        },
+        "industrial-manual": {
+            payload: "text",
+            ctaText: "Scan for Operating Manual",
+            printSize: "3.5in",
+            dataColor: "#0f172a",
+            eyeColor: "#000000",
+            bgColor: "#f8fafc",
+            eyeStyle: "square",
+            centerIcon: "",
+            tierRequired: "free"
+        },
+        "willy-wonka": {
+            payload: "url",
+            ctaText: "Find the Golden Ticket",
+            printSize: "Flyer/Poster",
+            dataColor: "#d4af37",
+            eyeColor: "#b45309",
+            bgColor: "#1a1a1a",
+            eyeStyle: "dot",
+            centerIcon: "",
+            tierRequired: "evolution"
+        },
+        "equipment-tag": {
+            payload: "text",
+            ctaText: "Reward if found",
+            printSize: "2in",
+            dataColor: "#000000",
+            eyeColor: "#000000",
+            bgColor: "#ffffff",
+            eyeStyle: "square",
+            centerIcon: "",
+            tierRequired: "master-key"
+        },
+        "glovebox-ledger": {
+            payload: "url",
+            ctaText: "Maintenance History",
+            printSize: "2in",
+            dataColor: "#1e40af",
+            eyeColor: "#1e3a8a",
+            bgColor: "#ffffff",
+            eyeStyle: "square",
+            centerIcon: "",
+            tierRequired: "evolution"
+        },
+        "curb-appeal": {
+            payload: "sms",
+            ctaText: "I want a quote",
+            printSize: "Flyer/Poster",
+            dataColor: "#166534",
+            eyeColor: "#14532d",
+            bgColor: "#ffffff",
+            eyeStyle: "square",
+            centerIcon: "",
+            tierRequired: "master-key"
+        },
+        "epilogue-egg": {
+            payload: "url",
+            ctaText: "Secret Bonus Chapter",
+            printSize: "3.5in",
+            dataColor: "#000000",
+            eyeColor: "#000000",
+            bgColor: "#ffffff",
+            eyeStyle: "dot",
+            centerIcon: "",
+            tierRequired: "master-key"
         }
-
     };
 
     const recipeParams = new URLSearchParams(window.location.search);
@@ -388,6 +558,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (requestedPlay && arsenalPlays[requestedPlay]) {
         const recipe = arsenalPlays[requestedPlay];
 
+        // Populate Canvas Forms
         document.getElementById('payload-type').value = recipe.payload;
         document.getElementById('pl-smart-label').value = recipe.ctaText;
         document.getElementById('pl-print-size').value = recipe.printSize;
@@ -406,21 +577,30 @@ document.addEventListener('DOMContentLoaded', () => {
             window.updateQR();
         }
 
+        // Frontend Authentication Logic with Proper Hierarchy
         setTimeout(() => {
+            // Retrieve session tokens from local storage
             const isMasterKey = localStorage.getItem('pixelping-pro') === 'true';
             const isEvolution = localStorage.getItem('pixelping-evolution') === 'true';
 
-            if (recipe.tierRequired === "master-key" && !isMasterKey) {
-                if (typeof window.openMasterKeyModal === 'function') {
-                    window.openMasterKeyModal();
-                }
-            } 
-            else if (recipe.tierRequired === "evolution") {
+            // Establish Hierarchy: Evolution grants Master Key access automatically
+            const hasEvolutionAccess = isEvolution;
+            const hasMasterKeyAccess = isMasterKey || isEvolution;
+
+            if (recipe.tierRequired === "evolution") {
+                // Ensure UI reflects the dynamic tier
                 const btnDynamic = document.getElementById('mode-dynamic');
                 if (btnDynamic) btnDynamic.click();
 
-                if (!isEvolution && typeof window.openEvolutionModal === 'function') {
+                // Throw modal only if they lack Evolution access
+                if (!hasEvolutionAccess && typeof window.openEvolutionModal === 'function') {
                     window.openEvolutionModal();
+                }
+            } 
+            else if (recipe.tierRequired === "master-key") {
+                // Throw modal only if they lack Master Key (and Evolution) access
+                if (!hasMasterKeyAccess && typeof window.openMasterKeyModal === 'function') {
+                    window.openMasterKeyModal();
                 }
             }
         }, 500); 
