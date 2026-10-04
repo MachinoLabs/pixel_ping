@@ -199,29 +199,31 @@
                 <div id="static-warning-message" class="hidden text-[10px] sm:text-[11px] font-bold text-amber-600 dark:text-amber-400 mb-4 mt-2 text-center bg-amber-50 dark:bg-amber-900/30 py-2 rounded-md shadow-inner transition-all border border-amber-200 dark:border-amber-800/50">🔒 Security Note: This specific code type is generated securely on your device and cannot be saved dynamically.</div>
 
                 <label class="block text-xs font-bold text-slate-700 dark:text-white mb-1">What should this code do?</label>
-                <select id="payload-type" class="w-full bg-white dark:bg-slate-800 text-slate-900 dark:text-white px-4 py-3 rounded-lg border-2 border-blue-400 dark:border-ppBlue focus:outline-none focus:ring-2 focus:ring-blue-600 font-bold transition-colors shadow-sm">
-                    <optgroup label="Free Basics">
-                        <option value="url">Open a Website (URL)</option>
-                        <option value="tel">Make a Phone Call</option>
-                        <option value="text">Display Plain Text</option>
-                    </optgroup>
-                    <optgroup label="Premium Payloads">
-                        <option value="wifi">Join a Wi-Fi Network [MASTER KEY]</option>
-                        <option value="vcard">Share Contact Info (vCard) [MASTER KEY]</option>
-                        <option value="sms">Send a Text Message [MASTER KEY]</option>
-                        <option value="email">Send an Email [MASTER KEY]</option>
-                        <option value="calendar">Save Calendar Event [MASTER KEY]</option>
-                        <option value="geo">Open Map Location [MASTER KEY]</option>
-                        <option value="crypto">Crypto Wallet Address [MASTER KEY]</option>
-                    </optgroup>
-                    <optgroup label="Business Suite [MASTER KEY]">
-                        <option value="review">Google Review Link</option>
-                        <option value="social">Social Media Follow</option>
-                        <option value="menu">Digital Menu (PDF/Link)</option>
-                        <option value="booking">Book Appointment</option>
-                        <option value="coupon">Digital Coupon</option>
-                    </optgroup>
-                </select>
+ <!-- TABBED PAYLOAD NAVIGATION -->
+<div class="mb-6 mt-2">
+    <!-- Tabs -->
+    <div class="flex border-b border-slate-200 dark:border-white/5 mb-4">
+        <button class="w-1/3 py-2 text-[11px] font-bold tracking-[0.12em] uppercase border-b-2 border-blue-600 text-slate-900 dark:text-white" id="tab-free">
+            Free Basics
+        </button>
+        <button class="w-1/3 py-2 text-[11px] font-bold tracking-[0.12em] uppercase border-b-2 border-transparent text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors" id="tab-premium">
+            Premium
+        </button>
+        <button class="w-1/3 py-2 text-[11px] font-bold tracking-[0.12em] uppercase border-b-2 border-transparent text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors" id="tab-business">
+            Business
+        </button>
+    </div>
+
+    <!-- Empty Grids for Phase 3 Icons -->
+    <div id="grid-free" class="grid grid-cols-3 gap-3"></div>
+    
+    <div id="grid-premium" class="grid grid-cols-3 gap-3 hidden"></div>
+    
+    <div id="grid-business" class="grid grid-cols-3 gap-3 hidden"></div>
+    
+    <!-- Hidden input to store the selected payload value since we deleted the select menu -->
+    <input type="hidden" id="payload-type" value="url">
+</div>
             </div>
 
             <div id="dynamic-forms-container" class="p-4 bg-slate-50 dark:bg-ppBase/50 rounded-xl border border-slate-200 dark:border-gray-700/50">
