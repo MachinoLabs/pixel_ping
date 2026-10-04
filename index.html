@@ -31,44 +31,32 @@
     </script>
 
     <style>
-        /* Base & Inputs */
         input[type=range] { accent-color: #27cfff; }
         input[type=color] { border: none; padding: 0; background: none; }
         input[type=color]::-webkit-color-swatch-wrapper { padding: 0; }
         input[type=color]::-webkit-color-swatch { border: 2px solid #0f3a5a; border-radius: 0.5rem; }
 
-        /* Background Eye Candy */
         .pixel-bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; background-color: #f8fafc; transition: background-color 0.3s; }
         .dark .pixel-bg { background-color: #061a2b; background-image: radial-gradient(#0f3a5a 1px, transparent 1px); background-size: 30px 30px; }
         .floating-pixel { position: absolute; border-radius: 4px; opacity: 0; animation: floatUp infinite linear; }
         @keyframes floatUp { 0% { transform: translateY(100vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.4; } 90% { opacity: 0.4; } 100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; } }
 
-        /* CSS Masking */
         .qr-mask-layer { -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; mask-size: contain; mask-repeat: no-repeat; mask-position: center; transition: -webkit-mask-image 0.3s ease; }
 
-        /* Form Hiding */
         .payload-form { display: none; }
         .payload-form.active { display: block; animation: fadeIn 0.3s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Tier Badges (Master Key & Evolution) */
         .mk-badge { background: linear-gradient(to right, #facc15, #ca8a04); color: #0f172a; font-size: 9px; padding: 3px 6px; border-radius: 4px; margin-left: 8px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; display: inline-block; vertical-align: middle; white-space: nowrap; box-shadow: 0 1px 2px rgba(0,0,0,0.15); }
         .evo-badge { background: #3cff8f; color: #061a2b; font-size: 9px; padding: 3px 6px; border-radius: 4px; margin-left: 8px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; display: inline-block; vertical-align: middle; white-space: nowrap; box-shadow: 0 1px 2px rgba(0,0,0,0.15); }
-        
-        /* The Gatekeeper Hide Rule */
         .pro-hidden .mk-badge { display: none !important; }
 
-        /* Live Network Ticker */
         .ticker-container { display: flex; align-items: center; width: 100%; overflow: hidden; position: relative; }
         .ticker-track { display: inline-block; white-space: nowrap; animation: tickerScroll 40s linear infinite; padding-left: 100%; }
         .ticker-track:hover { animation-play-state: paused; }
         .ticker-frozen .ticker-track { animation-play-state: paused !important; }
-        @keyframes tickerScroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-100%); }
-        }
+        @keyframes tickerScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-        /* Modals & Overlays */
         .ml-info-btn { min-width: 38px; height: 38px; border-radius: 999px; border: 1px solid rgba(15, 23, 42, 0.3); background: rgba(15, 23, 42, 0.06); color: inherit; font-size: 1.1rem; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; padding: 0; transition: background 0.2s; }
         .dark .ml-info-btn { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); }
         .ml-info-btn:hover { background: rgba(15, 23, 42, 0.12); }
@@ -77,7 +65,6 @@
         .ml-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); z-index: 998; }
         .ml-modal { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 999; padding: 16px; }
         .ml-modal[hidden], .ml-overlay[hidden] { display: none; }
-        
         .ml-modal-inner { background: #f7f6f2; color: #111827; border-radius: 16px; padding: 24px; width: 100%; max-width: 420px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); font-family: system-ui, -apple-system, sans-serif; transition: background 0.3s, color 0.3s; }
         .dark .ml-modal-inner { background: #0f172a; color: #f1f5f9; border: 1px solid #1e293b; }
         
@@ -94,7 +81,6 @@
         
         .ml-info-tab { border-radius: 999px; border: 1px solid rgba(15, 23, 42, 0.18); background: rgba(15, 23, 42, 0.02); padding: 6px 12px; font-size: 12px; font-weight: 500; cursor: pointer; color: inherit; transition: all 0.2s; }
         .dark .ml-info-tab { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); }
-        
         .ml-info-tab-active { background: #0b1220; color: #f9fafb; border-color: #0b1220; }
         .dark .ml-info-tab-active { background: #3b82f6; color: #ffffff; border-color: #3b82f6; }
 
@@ -119,18 +105,19 @@
         .dark .ml-info-body::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
         .ml-info-body::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 10px; }
         .dark .ml-info-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); }
+        
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
 <body class="text-slate-900 dark:text-ppLight min-h-screen font-sans antialiased flex flex-col items-center p-4 md:p-8 transition-colors duration-300 relative z-0">
 
-    <!-- LIVE NETWORK TICKER -->
     <div id="network-ticker" class="fixed top-2 left-0 w-full z-50 flex items-center h-10 bg-slate-900/95 border-y border-slate-800 backdrop-blur-md shadow-lg transition-all">
         <div class="ticker-container h-full">
             <div class="ticker-track text-xs font-mono text-slate-400 tracking-widest uppercase">
                 <span class="mx-4 text-green-400">● ALL GENERATION ARRAYS ONLINE</span> | 
                 <span class="mx-4">Zero-redirect static mode active.</span> | 
                 <span class="mx-4">Need to encrypt local data? <a href="https://sscf.app/privacy-vault.html" target="_blank" class="text-ppBlue hover:text-white transition-colors underline decoration-ppBlue/50 cursor-pointer">Secure your files offline with Privacy_Vault ↗</a></span> | 
-                <span class="mx-4">Brain fried? <a href="https://sscf.app/stackfive/index.html" target="_blank" class="text-ppBlue hover:text-white transition-colors underline decoration-ppBlue/50 cursor-pointer">Reset your focus with StackFive ↗</a></span> | 
                 <span class="mx-4 text-yellow-500">Evolution Tier routing active for 42 new businesses today.</span>
             </div>
         </div>
@@ -139,8 +126,7 @@
 
     <div class="pixel-bg" id="pixel-bg"></div>
 
-    <!-- HEADER: WIDENED TO MATCH 3-COLUMN DASHBOARD -->
-    <header class="w-full max-w-[1400px] mb-8 mt-14 flex items-center justify-between z-10 relative">
+    <header class="w-full max-w-6xl mb-6 mt-14 flex items-center justify-between z-10 relative">
         <div class="flex items-center gap-4">
             <svg class="w-10 h-10 md:w-12 md:h-12" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                 <rect width="512" height="512" rx="96" fill="#061a2b"/>
@@ -162,9 +148,9 @@
             <button id="btn-buy-master-key" class="px-3 py-1.5 bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-yellow-900 text-[10px] md:text-xs font-extrabold rounded-full transition-transform active:scale-95 shadow-sm uppercase tracking-wider border border-yellow-300">Get Master Key</button>
             <div id="offline-badge" class="hidden px-3 py-1 bg-slate-200 dark:bg-ppDark text-slate-700 dark:text-ppBlue text-xs rounded-full border border-slate-300 dark:border-ppBlue font-bold">Offline Ready</div>
             <div id="auth-container" class="flex items-center justify-center min-w-[70px]">
-    <button id="btn-sign-in" class="text-[11px] md:text-xs font-bold text-blue-600 dark:text-ppBlue hover:underline tracking-wider uppercase transition-colors">Sign In</button>
-    <div id="user-button-mount" class="hidden"></div>
-</div>
+                <button id="btn-sign-in" class="text-[11px] md:text-xs font-bold text-blue-600 dark:text-ppBlue hover:underline tracking-wider uppercase transition-colors">Sign In</button>
+                <div id="user-button-mount" class="hidden"></div>
+            </div>
             <button id="themeToggle" class="ml-info-btn" aria-label="Toggle Theme">
                 <svg id="icon-sun" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                 <svg id="icon-moon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
@@ -173,452 +159,313 @@
         </div>
     </header>
 
-    <!-- NEW 3-COLUMN HORIZONTAL GRID ARCHITECTURE -->
-    <main id="app-container" class="w-full max-w-[1400px] grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 z-10 relative mb-8">
+    <!-- THE STUDIO: SINGLE CONTAINER ARCHITECTURE -->
+    <main id="app-container" class="w-full max-w-6xl z-10 relative mb-8 flex flex-col md:flex-row bg-white dark:bg-ppDark/95 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] dark:shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden">
         
-        <!-- COLUMN 1: THE ENGINE (PAYLOAD & DATA) -->
-        <div class="col-span-1 space-y-6 bg-white/95 dark:bg-ppDark/95 backdrop-blur-md p-6 rounded-2xl border border-slate-200 dark:border-gray-800 shadow-2xl transition-colors h-max">
+        <!-- LEFT PANEL (Content & Design) -->
+        <div class="flex-1 p-6 md:p-10 border-b md:border-b-0 md:border-r border-slate-200 dark:border-slate-800 flex flex-col">
             
-            <div class="flex justify-between items-center border-b border-slate-200 dark:border-gray-700 pb-2">
-                <h3 class="text-sm font-medium text-blue-600 dark:text-ppBlue uppercase tracking-wide">Data & Content</h3>
-                <button id="btn-clear" class="text-xs text-red-500 hover:text-red-700 font-semibold px-2 py-1 rounded bg-red-50 dark:bg-red-900/20 transition-colors">Clear Canvas</button>
-            </div>
-
-            <div>
-                <div class="flex items-center justify-between bg-slate-100 dark:bg-slate-800/60 p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 mb-2 shadow-inner">
-                    <button id="mode-static" class="flex-1 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest py-1.5 rounded-md bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm transition-all">Static (Local)</button>
-                    <!-- EDUCATIONAL TOOLTIP WRAPPER -->
-                    <div class="relative group flex-1">
-                        <button id="mode-dynamic" class="w-full text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest py-1.5 rounded-md text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 transition-all flex justify-center items-center gap-1.5">
-                            Dynamic
-                            <span class="evo-badge">Evolution</span>
-                        </button>
-                        <div class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 hidden group-hover:block w-[220px] bg-slate-900 text-white text-[11px] p-3 rounded-lg shadow-xl z-50 text-center pointer-events-none border border-slate-700 before:content-[''] before:absolute before:top-full before:left-1/2 before:-translate-x-1/2 before:border-4 before:border-transparent before:border-t-slate-900 font-medium">
-                            Want to know exactly how many people scanned this flyer today? Unlock Evolution.
-                        </div>
-                    </div>
-                </div>
-                
-                <div id="static-warning-message" class="hidden text-[10px] sm:text-[11px] font-bold text-amber-600 dark:text-amber-400 mb-4 mt-2 text-center bg-amber-50 dark:bg-amber-900/30 py-2 rounded-md shadow-inner transition-all border border-amber-200 dark:border-amber-800/50">🔒 Security Note: This specific code type is generated securely on your device and cannot be saved dynamically.</div>
-
-                <label class="block text-xs font-bold text-slate-700 dark:text-white mb-1">What should this code do?</label>
-                <select id="payload-type" class="w-full bg-white dark:bg-slate-800 text-slate-900 dark:text-white px-4 py-3 rounded-lg border-2 border-blue-400 dark:border-ppBlue focus:outline-none focus:ring-2 focus:ring-blue-600 font-bold transition-colors shadow-sm">
-                    <optgroup label="Free Basics">
-                        <option value="url">Open a Website (URL)</option>
-                        <option value="tel">Make a Phone Call</option>
-                        <option value="text">Display Plain Text</option>
-                    </optgroup>
-                    <optgroup label="Premium Payloads">
-                        <option value="wifi">Join a Wi-Fi Network [MASTER KEY]</option>
-                        <option value="vcard">Share Contact Info (vCard) [MASTER KEY]</option>
-                        <option value="sms">Send a Text Message [MASTER KEY]</option>
-                        <option value="email">Send an Email [MASTER KEY]</option>
-                        <option value="calendar">Save Calendar Event [MASTER KEY]</option>
-                        <option value="geo">Open Map Location [MASTER KEY]</option>
-                        <option value="crypto">Crypto Wallet Address [MASTER KEY]</option>
-                    </optgroup>
-                    <optgroup label="Business Suite [MASTER KEY]">
-                        <option value="review">Google Review Link</option>
-                        <option value="social">Social Media Follow</option>
-                        <option value="menu">Digital Menu (PDF/Link)</option>
-                        <option value="booking">Book Appointment</option>
-                        <option value="coupon">Digital Coupon</option>
-                    </optgroup>
-                </select>
-            </div>
-
-            <div id="dynamic-forms-container" class="p-4 bg-slate-50 dark:bg-ppBase/50 rounded-xl border border-slate-200 dark:border-gray-700/50">
-                <!-- FORM GROUPS START -->
-                <div id="form-url" class="payload-form active space-y-3">
-                    <div>
-                        <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Website Address</label>
-                        <input type="url" id="pl-url" value="https://" placeholder="https://pixelping.app" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
-                    <p id="density-warning" class="hidden"></p>
-                    </div>
-                </div>
-                <div id="form-tel" class="payload-form space-y-3">
-                    <div>
-                        <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Phone Number</label>
-                        <input type="tel" id="pl-tel" placeholder="e.g. +1 555-0199" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
-                    </div>
-                </div>
-                <div id="form-text" class="payload-form space-y-3">
-                    <div>
-                        <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Message or Serial Number</label>
-                        <textarea id="pl-text" placeholder="Enter offline text here..." class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none" rows="6"></textarea>
-                    </div>
-                </div>
-
-                <div id="form-wifi" class="payload-form space-y-3">
-                    <div>
-                        <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Network Name (SSID)</label>
-                        <input type="text" id="pl-wifi-ssid" placeholder="GuestNetwork" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Password</label>
-                        <input type="text" id="pl-wifi-pass" placeholder="Network Password" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Security Type</label>
-                        <select id="pl-wifi-type" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:outline-none">
-                            <option value="WPA">WPA/WPA2</option>
-                            <option value="WEP">WEP</option>
-                            <option value="nopass">None (Open Network)</option>
-                        </select>
-                    </div>
-                </div>
-                <div id="form-vcard" class="payload-form space-y-3">
-                    <div class="grid grid-cols-2 gap-3">
-                        <div>
-                            <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">First Name</label>
-                            <input type="text" id="pl-vc-first" placeholder="Jane" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Last Name</label>
-                            <input type="text" id="pl-vc-last" placeholder="Doe" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-2 gap-3">
-                        <div>
-                            <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Phone</label>
-                            <input type="tel" id="pl-vc-phone" placeholder="555-0199" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Company</label>
-                            <input type="text" id="pl-vc-org" placeholder="PixelPing Inc." class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
-                        </div>
-                    </div>
-                </div>
-                <div id="form-sms" class="payload-form space-y-3">
-                    <div>
-                        <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Recipient Number</label>
-                        <input type="tel" id="pl-sms-to" placeholder="e.g. 555-0199" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Pre-filled Message</label>
-                        <textarea id="pl-sms-msg" placeholder="I am at the job site..." class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none" rows="2"></textarea>
-                    </div>
-                </div>
-                <div id="form-email" class="payload-form space-y-3">
-                    <div>
-                        <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">To Address</label>
-                        <input type="email" id="pl-email-to" placeholder="support@pixelping.app" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Subject</label>
-                        <input type="text" id="pl-email-sub" placeholder="Ticket Request" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
-                    </div>
-                </div>
-                <div id="form-calendar" class="payload-form space-y-3">
-                    <div>
-                        <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Event Title</label>
-                        <input type="text" id="pl-cal-title" placeholder="Site Inspection" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
-                    </div>
-                    <div class="grid grid-cols-2 gap-3">
-                        <div>
-                            <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Start Date & Time</label>
-                            <input type="datetime-local" id="pl-cal-start" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Location</label>
-                            <input type="text" id="pl-cal-loc" placeholder="123 Main St" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
-                        </div>
-                    </div>
-                </div>
-                <div id="form-geo" class="payload-form space-y-3">
-                    <div>
-                        <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Physical Address</label>
-                        <input type="text" id="pl-geo-address" placeholder="123 Main St, City, State" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
-                    </div>
-                    <div class="grid grid-cols-2 gap-3">
-                        <div>
-                            <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Latitude (Optional)</label>
-                            <input type="text" id="pl-geo-lat" placeholder="e.g. 40.7128" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Longitude (Optional)</label>
-                            <input type="text" id="pl-geo-lng" placeholder="e.g. -74.0060" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
-                        </div>
-                    </div>
-                </div>
-                <div id="form-crypto" class="payload-form space-y-3">
-                    <div>
-                        <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Coin Type</label>
-                        <select id="pl-crypto-type" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:outline-none">
-                            <option value="bitcoin">Bitcoin (BTC)</option>
-                            <option value="ethereum">Ethereum (ETH)</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Wallet Address</label>
-                        <input type="text" id="pl-crypto-address" placeholder="1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
-                    </div>
-                </div>
-
-                <div id="form-review" class="payload-form space-y-3">
-                    <div>
-                        <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Google Review URL</label>
-                        <input type="url" id="pl-biz-review" placeholder="https://g.page/r/..." class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
-                    </div>
-                </div>
-                <div id="form-social" class="payload-form space-y-3">
-                    <div>
-                        <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Social Profile URL</label>
-                        <input type="url" id="pl-biz-social" placeholder="https://instagram.com/..." class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
-                    </div>
-                </div>
-                <div id="form-menu" class="payload-form space-y-3">
-                    <div>
-                        <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Link to Menu</label>
-                        <input type="url" id="pl-biz-menu" placeholder="https://yoursite.com/menu.pdf" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
-                    </div>
-                </div>
-                <div id="form-booking" class="payload-form space-y-3">
-                    <div>
-                        <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Booking/Calendar Link</label>
-                        <input type="url" id="pl-biz-booking" placeholder="https://calendly.com/..." class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none">
-                    </div>
-                </div>
-                <div id="form-coupon" class="payload-form space-y-3">
-                    <div>
-                        <label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Coupon Text (Shows on Screen when Scanned)</label>
-                        <textarea id="pl-biz-coupon" placeholder="Show this code to cashier for 20% off: PROMO20" class="pl-input w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none" rows="3"></textarea>
-                    </div>
-                </div>
-                <!-- FORM GROUPS END -->
-            </div>
-        </div>
-
-        <!-- COLUMN 2: THE STUDIO (LABELS, AESTHETICS & BRANDING) -->
-        <div class="col-span-1 space-y-6 bg-white/95 dark:bg-ppDark/95 backdrop-blur-md p-6 rounded-2xl border border-slate-200 dark:border-gray-800 shadow-2xl transition-colors h-max">
-            
-            <!-- EDUCATIONAL TOOLTIP WRAPPER -->
-            <div class="relative group">
-                <h3 class="text-sm font-medium text-blue-600 dark:text-ppBlue pb-2 mb-2 uppercase tracking-wide flex items-center border-b border-slate-200 dark:border-gray-700">
-                    Smart Print Label <span class="mk-badge">Master Key</span>
-                </h3>
-                <label class="block text-xs font-bold text-slate-700 dark:text-white mb-1">Name this code (Prints beneath QR)</label>
-                <input type="text" id="pl-smart-label" placeholder="e.g. Guest Wi-Fi Network" class="pl-input w-full bg-slate-50 dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none font-medium">
-                
-                <div class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 hidden group-hover:block w-[220px] bg-slate-900 text-white text-[11px] p-3 rounded-lg shadow-xl z-50 text-center pointer-events-none border border-slate-700 before:content-[''] before:absolute before:top-full before:left-1/2 before:-translate-x-1/2 before:border-4 before:border-transparent before:border-t-slate-900 font-medium">
-                    Stop guessing what your codes do. Print clean labels directly on the canvas with Master Key.
-                </div>
-
-                <div class="mt-4">
-                    <label class="block text-xs font-bold text-slate-700 dark:text-white mb-1">Physical Print Size</label>
-                    <select id="pl-print-size" class="pl-input w-full bg-slate-50 dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:outline-none font-medium">
-                        <option value="2in">Small (2" - Stickers/Tags)</option>
-                        <option value="3.5in" selected>Medium (3.5" - Standard/Cards)</option>
-                        <option value="5in">Large (5" - Yard Signs/Menus)</option>
-                        <option value="8in">Full Page (8" - Window Posters)</option>
-                    </select>
+            <!-- HORIZONTAL PROXY PILLS FOR PAYLOAD TYPE -->
+            <div class="w-full overflow-x-auto pb-4 hide-scrollbar mb-6 border-b border-slate-100 dark:border-slate-800/50">
+                <div class="flex gap-3 w-max">
+                    <button type="button" class="proxy-payload active bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800 px-4 py-2 rounded-lg font-bold text-sm flex items-center gap-2 transition-colors" data-target="url">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg> Website
+                    </button>
+                    <button type="button" class="proxy-payload bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-4 py-2 rounded-lg font-medium text-sm transition-colors" data-target="tel">Phone</button>
+                    <button type="button" class="proxy-payload bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-4 py-2 rounded-lg font-medium text-sm transition-colors" data-target="text">Text</button>
+                    <button type="button" class="proxy-payload bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-4 py-2 rounded-lg font-medium text-sm flex items-center gap-1 transition-colors" data-target="wifi">Wi-Fi <span class="text-amber-500 text-xs ml-1">🔒</span></button>
+                    <button type="button" class="proxy-payload bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-4 py-2 rounded-lg font-medium text-sm flex items-center gap-1 transition-colors" data-target="vcard">vCard <span class="text-amber-500 text-xs ml-1">🔒</span></button>
+                    <button type="button" class="proxy-payload bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-4 py-2 rounded-lg font-medium text-sm flex items-center gap-1 transition-colors" data-target="crypto">Crypto <span class="text-amber-500 text-xs ml-1">🔒</span></button>
                 </div>
             </div>
 
-            <!-- COLLAPSIBLE DESIGN ENGINE -->
-            <details class="group border border-slate-200 dark:border-white/10 shadow-sm rounded-xl mb-6 bg-white dark:bg-slate-800/40" open>
-                <summary class="cursor-pointer font-bold text-[11px] tracking-[0.12em] uppercase text-slate-600 dark:text-slate-300 p-4 bg-slate-50 dark:bg-slate-800/60 rounded-xl group-open:rounded-b-none transition-colors flex justify-between items-center border-b border-transparent group-open:border-slate-200 dark:group-open:border-gray-700">
+            <!-- HIDDEN ORIGINAL SELECT MENU (Protects JS) -->
+            <select id="payload-type" class="hidden">
+                <option value="url">URL</option>
+                <option value="tel">Phone</option>
+                <option value="text">Text</option>
+                <option value="wifi">Wi-Fi</option>
+                <option value="vcard">vCard</option>
+                <option value="sms">SMS</option>
+                <option value="email">Email</option>
+                <option value="calendar">Calendar</option>
+                <option value="geo">Geo</option>
+                <option value="crypto">Crypto</option>
+                <option value="review">Review</option>
+                <option value="social">Social</option>
+                <option value="menu">Menu</option>
+                <option value="booking">Booking</option>
+                <option value="coupon">Coupon</option>
+            </select>
+
+            <!-- SECTION 1: CONTENT -->
+            <div class="mb-10">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-lg font-bold flex items-center gap-3 text-slate-900 dark:text-white">
+                        <span class="bg-slate-900 dark:bg-white text-white dark:text-slate-900 w-6 h-6 rounded flex items-center justify-center text-sm">1</span> 
+                        Complete the content
+                    </h2>
                     <div class="flex items-center gap-2">
-                        Advanced Aesthetics
+                        <button id="mode-static" class="text-[10px] font-extrabold uppercase tracking-widest px-2 py-1 rounded bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm">Static</button>
+                        <button id="mode-dynamic" class="text-[10px] font-extrabold uppercase tracking-widest px-2 py-1 rounded text-slate-400 hover:text-slate-600 flex items-center gap-1">Dynamic <span class="evo-badge">Evolution</span></button>
+                        <button id="btn-clear" class="ml-2 text-xs text-red-500 hover:text-red-700 font-semibold px-2 py-1 rounded bg-red-50 dark:bg-red-900/20 transition-colors hidden md:block">Clear</button>
                     </div>
-                    <span class="group-open:rotate-180 transition-transform text-lg leading-none">▾</span>
-                </summary>
-                
-                <div class="p-4 space-y-5">
-                    <h3 class="text-xs font-medium text-blue-600 dark:text-ppBlue uppercase tracking-wide flex justify-between items-center">
-                        <span class="flex items-center">Structure <span class="mk-badge">Master Key</span></span>
-                        <button id="btn-save-brand" class="text-[10px] bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 px-2 py-1 rounded hover:opacity-90 transition-colors shadow-sm cursor-pointer border border-transparent">Save Brand Kit</button>
-                    </h3>
+                </div>
 
-                    <div>
-                        <label class="block text-xs font-bold text-slate-800 dark:text-white mb-2">Outer Shape Mask</label>
-                        <select id="qr-mask" class="pl-input w-full bg-slate-50 dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:outline-none">
-                            <option value="none">Square (Safe)</option>
-                            <option value="rounded">Rounded Square</option>
-                        </select>
-                    </div>
-                    
-                    <div>
-                        <label class="block text-xs font-bold text-slate-800 dark:text-white mb-2">Center Icon</label>
-                        <select id="qr-icon" class="pl-input w-full bg-slate-50 dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:outline-none">
-                            <option value="">None</option>
-                            <optgroup label="Free Basics">
-                                <option value="heart">Heart</option>
-                                <option value="lightning">Lightning Bolt</option>
-                                <option value="star">Star Circle</option>
-                            </optgroup>
-                            <!-- Premium Icons dynamically loaded by Ghost Script post-purchase -->
-                        </select>
-                    </div>
+                <div id="static-warning-message" class="hidden text-[11px] font-bold text-amber-600 dark:text-amber-400 mb-4 bg-amber-50 dark:bg-amber-900/30 py-2 px-3 rounded-md border border-amber-200 dark:border-amber-800/50">🔒 Security Note: This specific code type is generated securely on your device and cannot be saved dynamically.</div>
 
-                    <div>
-                        <label class="block text-xs font-bold text-slate-800 dark:text-white mb-2">Corner Eye Style</label>
-                        <select id="qr-corners-type" class="pl-input w-full bg-slate-50 dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:outline-none">
-                            <option value="square">Square</option>
-                            <option value="dot" selected>Circular</option>
-                            <option value="extra-rounded">Rounded</option>
-                        </select>
+                <div id="dynamic-forms-container" class="w-full">
+                    <!-- Form URL -->
+                    <div id="form-url" class="payload-form active space-y-3">
+                        <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-1">Website Address</label>
+                        <input type="url" id="pl-url" value="https://" placeholder="https://pixelping.app" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:outline-none placeholder-slate-400 dark:placeholder-slate-500 shadow-sm">
+                        <p id="density-warning" class="hidden"></p>
                     </div>
-                    
-                    <!-- EDUCATIONAL TOOLTIP WRAPPER -->
-                    <div class="relative group">
-                        <div class="flex justify-between items-center mb-2">
-                            <label class="text-xs font-bold text-slate-800 dark:text-white flex items-center">Or Upload Custom Logo <span class="mk-badge">Master Key</span></label>
-                            <button id="btn-clear-logo" class="hidden text-[10px] text-red-500 hover:text-red-700 font-bold">Clear Logo</button>
+                    <!-- Form Tel -->
+                    <div id="form-tel" class="payload-form space-y-3">
+                        <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-1">Phone Number</label>
+                        <input type="tel" id="pl-tel" placeholder="e.g. +1 555-0199" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:outline-none placeholder-slate-400 dark:placeholder-slate-500 shadow-sm">
+                    </div>
+                    <!-- Form Text -->
+                    <div id="form-text" class="payload-form space-y-3">
+                        <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-1">Message or Serial Number</label>
+                        <textarea id="pl-text" placeholder="Enter offline text here..." class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:outline-none placeholder-slate-400 dark:placeholder-slate-500 shadow-sm" rows="4"></textarea>
+                    </div>
+                    <!-- Form WiFi -->
+                    <div id="form-wifi" class="payload-form space-y-3">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-1">Network Name (SSID)</label>
+                                <input type="text" id="pl-wifi-ssid" placeholder="GuestNetwork" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:outline-none placeholder-slate-400 dark:placeholder-slate-500 shadow-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-1">Password</label>
+                                <input type="text" id="pl-wifi-pass" placeholder="Network Password" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:outline-none placeholder-slate-400 dark:placeholder-slate-500 shadow-sm">
+                            </div>
                         </div>
-                        <input type="file" id="qr-custom-logo" accept="image/png, image/jpeg, image/svg+xml" class="pl-input w-full bg-slate-50 dark:bg-ppBase text-slate-500 dark:text-slate-400 px-3 py-[7px] rounded-lg border border-slate-300 dark:border-gray-700 text-xs file:mr-3 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-[10px] file:font-bold file:bg-slate-200 file:text-slate-700 hover:file:bg-slate-300 dark:file:bg-slate-700 dark:file:text-slate-300 cursor-pointer transition-colors focus:outline-none">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-1">Security Type</label>
+                            <!-- Proxy Buttons for WiFi Type to avoid native select -->
+                            <div class="flex gap-2 w-full">
+                                <button type="button" class="proxy-wifi active flex-1 bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 text-blue-600 dark:text-blue-400 py-2 rounded-lg text-sm font-medium" data-val="WPA">WPA/WPA2</button>
+                                <button type="button" class="proxy-wifi flex-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300" data-val="WEP">WEP</button>
+                                <button type="button" class="proxy-wifi flex-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 py-2 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300" data-val="nopass">None</button>
+                            </div>
+                            <select id="pl-wifi-type" class="pl-input hidden"><option value="WPA">WPA/WPA2</option><option value="WEP">WEP</option><option value="nopass">None</option></select>
+                        </div>
+                    </div>
+                    <!-- Form vCard -->
+                    <div id="form-vcard" class="payload-form space-y-3">
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-1">First Name</label>
+                                <input type="text" id="pl-vc-first" placeholder="Jane" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:outline-none placeholder-slate-400 shadow-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-1">Last Name</label>
+                                <input type="text" id="pl-vc-last" placeholder="Doe" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:outline-none placeholder-slate-400 shadow-sm">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-1">Phone</label>
+                                <input type="tel" id="pl-vc-phone" placeholder="555-0199" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:outline-none placeholder-slate-400 shadow-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-1">Company</label>
+                                <input type="text" id="pl-vc-org" placeholder="PixelPing Inc." class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:outline-none placeholder-slate-400 shadow-sm">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Form Crypto -->
+                    <div id="form-crypto" class="payload-form space-y-3">
+                        <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-1">Coin Type</label>
+                        <div class="flex gap-2 w-full mb-3">
+                            <button type="button" class="proxy-crypto active flex-1 bg-blue-50 border border-blue-200 text-blue-600 dark:bg-blue-900/30 dark:border-blue-800 dark:text-blue-400 py-2 rounded-lg text-sm font-medium" data-val="bitcoin">Bitcoin (BTC)</button>
+                            <button type="button" class="proxy-crypto flex-1 bg-white border border-slate-200 text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 py-2 rounded-lg text-sm font-medium" data-val="ethereum">Ethereum (ETH)</button>
+                        </div>
+                        <select id="pl-crypto-type" class="pl-input hidden"><option value="bitcoin">BTC</option><option value="ethereum">ETH</option></select>
                         
-                        <div class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 hidden group-hover:block w-[220px] bg-slate-900 text-white text-[11px] p-3 rounded-lg shadow-xl z-50 text-center pointer-events-none border border-slate-700 before:content-[''] before:absolute before:top-full before:left-1/2 before:-translate-x-1/2 before:border-4 before:border-transparent before:border-t-slate-900 font-medium">
-                            Brand your codes instantly. Drop your company logo right in the center with Master Key.
+                        <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-1">Wallet Address</label>
+                        <input type="text" id="pl-crypto-address" placeholder="1A1zP1eP..." class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:outline-none placeholder-slate-400 shadow-sm">
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 2: DESIGN -->
+            <div class="mb-4">
+                <h2 class="text-lg font-bold flex items-center gap-3 mb-6 text-slate-900 dark:text-white border-t border-slate-100 dark:border-slate-800 pt-8">
+                    <span class="bg-slate-900 dark:bg-white text-white dark:text-slate-900 w-6 h-6 rounded flex items-center justify-center text-sm">2</span> 
+                    Design your QR
+                </h2>
+
+                <div class="space-y-6">
+                    
+                    <!-- Smart Label -->
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-1 flex justify-between">Smart Print Label <span class="mk-badge">Master Key</span></label>
+                        <input type="text" id="pl-smart-label" placeholder="e.g. Guest Wi-Fi Network" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:outline-none placeholder-slate-400 dark:placeholder-slate-500 shadow-sm">
+                        <select id="pl-print-size" class="pl-input hidden"><option value="3.5in" selected>Medium</option></select>
+                    </div>
+
+                    <!-- Shape & Icons (Proxy Pills) -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-2">Outer Shape</label>
+                            <div class="flex gap-2">
+                                <button type="button" class="proxy-mask active flex-1 py-3 border border-blue-200 bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:border-blue-800 dark:text-blue-400 rounded-xl" data-val="none">Square</button>
+                                <button type="button" class="proxy-mask flex-1 py-3 border border-slate-200 bg-white text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 rounded-xl" data-val="rounded">Rounded</button>
+                            </div>
+                            <select id="qr-mask" class="pl-input hidden"><option value="none">Square</option><option value="rounded">Rounded</option></select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-2">Center Icon</label>
+                            <div class="flex gap-2">
+                                <button type="button" class="proxy-icon active flex-1 py-3 border border-blue-200 bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:border-blue-800 dark:text-blue-400 rounded-xl text-sm" data-val="">None</button>
+                                <button type="button" class="proxy-icon flex-1 py-3 border border-slate-200 bg-white text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 rounded-xl text-lg flex items-center justify-center" data-val="heart">❤️</button>
+                                <button type="button" class="proxy-icon flex-1 py-3 border border-slate-200 bg-white text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 rounded-xl text-lg flex items-center justify-center" data-val="lightning">⚡</button>
+                            </div>
+                            <select id="qr-icon" class="pl-input hidden"><option value=""></option><option value="heart">Heart</option><option value="lightning">Lightning</option></select>
                         </div>
                     </div>
 
-                    <div class="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-slate-200 dark:border-gray-700">
+                    <!-- Custom Logo Upload -->
+                    <div>
+                        <div class="flex justify-between items-center mb-1">
+                            <label class="text-xs font-bold text-slate-600 dark:text-slate-400">Custom Logo Upload <span class="mk-badge">Master Key</span></label>
+                            <button id="btn-clear-logo" class="hidden text-[10px] text-red-500 hover:text-red-700 font-bold">Clear</button>
+                        </div>
+                        <input type="file" id="qr-custom-logo" accept="image/png, image/jpeg, image/svg+xml" class="pl-input w-full bg-slate-50 dark:bg-slate-800/30 text-slate-500 dark:text-slate-400 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs file:mr-3 file:py-1.5 file:px-4 file:rounded-md file:border-0 file:text-[10px] file:font-bold file:bg-slate-200 file:text-slate-700 cursor-pointer focus:outline-none">
+                    </div>
+
+                    <!-- Colors -->
+                    <div class="flex flex-wrap items-center justify-between gap-4 p-4 bg-slate-50 dark:bg-slate-800/30 rounded-xl border border-slate-100 dark:border-slate-700/50">
                         <div class="flex flex-col gap-1 items-center">
-                            <label class="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase">Data</label>
-                            <input type="color" id="qr-color-dots" class="pl-input w-8 h-8 cursor-pointer rounded-full overflow-hidden">
+                            <label class="text-[10px] font-bold text-slate-500 uppercase">Data Color</label>
+                            <input type="color" id="qr-color-dots" class="pl-input w-10 h-10 cursor-pointer rounded-full overflow-hidden shadow-sm">
                         </div>
                         <div class="flex flex-col gap-1 items-center">
-                            <label class="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase">Eyes</label>
-                            <input type="color" id="qr-color-corners" class="pl-input w-8 h-8 cursor-pointer rounded-full overflow-hidden">
+                            <label class="text-[10px] font-bold text-slate-500 uppercase">Eye Color</label>
+                            <input type="color" id="qr-color-corners" class="pl-input w-10 h-10 cursor-pointer rounded-full overflow-hidden shadow-sm">
+                            <select id="qr-corners-type" class="pl-input hidden"><option value="dot">Circular</option></select>
                         </div>
                         <div class="flex flex-col gap-1 items-center">
-                            <label class="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase">Background</label>
-                            <input type="color" id="qr-color-bg" class="pl-input w-8 h-8 cursor-pointer rounded-full overflow-hidden">
+                            <label class="text-[10px] font-bold text-slate-500 uppercase">Background</label>
+                            <input type="color" id="qr-color-bg" class="pl-input w-10 h-10 cursor-pointer rounded-full overflow-hidden shadow-sm">
+                        </div>
+                        <div class="ml-auto">
+                            <button id="btn-save-brand" class="text-xs bg-white border border-slate-200 dark:bg-slate-700 dark:border-slate-600 text-slate-700 dark:text-slate-200 px-3 py-2 rounded-lg hover:bg-slate-50 transition-colors shadow-sm font-bold">Save Brand Kit</button>
                         </div>
                     </div>
                 </div>
-            </details>
-
-            <div id="founders-story-box" class="p-5 bg-slate-800/5 dark:bg-slate-800/30 border-l-4 border-red-500 dark:border-[#ff416c] rounded-xl shadow-sm">
-                <p class="text-sm font-bold text-slate-800 dark:text-slate-200 mb-2">Why I built PixelPing: Rebellion.</p>
-                <p class="text-xs text-slate-700 dark:text-slate-400 mb-2">Not long ago, I created a "free" QR code on one of the most popular generator websites. A week later, the code mysteriously stopped working. I went back to the site and realized they had secretly made it a Dynamic QR code, meaning there are servers, redirects and other fallible processes involved. My link was now a hostage until I paid a surprise monthly subscription (I did not). I wanted to know if it was just me that got fooled, so I searched for QR generator reviews on sites like Reddit, Quora, and Facebook and found that this bologna is happening to a lot of marketers and small business owners. That yanked my chain. So I said F-it and built my own.</p>
-                <p class="text-xs text-slate-700 dark:text-slate-400 mb-3">PixelPing is different. Your codes are generated 100% locally with no redirects... ever. I intentionally made them static, which means you build it once, and it works forever. No hidden subscriptions, no hostage situations, no BS. I built the tool I wished existed, and now I'm sharing it with you to offer an alternative.</p>
-                <p class="text-[10px] font-bold text-slate-500 dark:text-slate-500 uppercase tracking-widest">— Joe, MachinoLabs</p>
             </div>
         </div>
 
-        <!-- COLUMN 3: THE COMMAND CENTER (VIEWFINDER, TELEMETRY & OUTPUT) -->
-        <div class="col-span-1 flex flex-col items-center justify-start sticky top-6 self-start space-y-6 w-full">
+        <!-- RIGHT PANEL (Preview & Action) -->
+        <div class="w-full md:w-[400px] lg:w-[460px] bg-slate-50 dark:bg-slate-900/50 p-6 md:p-10 flex flex-col items-center border-l border-slate-200 dark:border-slate-800 relative z-20 shadow-[-10px_0_20px_rgba(0,0,0,0.02)]">
             
-            <div class="bg-slate-200 dark:bg-ppBase p-4 rounded-3xl border-4 border-slate-300 dark:border-ppDark shadow-2xl relative group flex flex-col items-center justify-center min-h-[350px] w-full transition-colors">
-                <div id="canvas-wrapper" class="qr-mask-layer rounded-xl overflow-hidden shadow-inner flex items-center justify-center w-full max-w-[320px] aspect-square bg-white relative pb-8">
-                    <div id="canvas-container" class="mt-4"></div>
-                    <div id="pixelping-watermark" style="position: absolute; bottom: 8px; font-size: 11px; font-weight: 700; color: #333; display: flex; align-items: center; justify-content: center; gap: 5px; font-family: monospace;">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='96' fill='%23061a2b'/%3E%3Crect x='28' y='28' width='456' height='456' rx='80' fill='none' stroke='%230f3a5a' stroke-width='4'/%3E%3Crect x='96' y='96' width='96' height='96' rx='18' fill='%23dff4ff'/%3E%3Crect x='320' y='96' width='96' height='96' rx='18' fill='%23dff4ff'/%3E%3Crect x='96' y='288' width='96' height='96' rx='18' fill='%23dff4ff'/%3E%3Crect x='140' y='140' width='16' height='16' rx='4' fill='%2327cfff'/%3E%3C/svg%3E" style="width: 12px; height: 12px; border-radius: 3px;" alt="Logo"> Powered by PixelPing.app
-                    </div>
-                </div>
-                <div id="live-label-preview" class="mt-4 font-bold text-slate-800 dark:text-white text-lg text-center hidden px-4 pb-2"></div>
-                <div id="dynamic-link-display" class="hidden w-full mt-3 bg-white dark:bg-slate-900 border-2 border-blue-400 dark:border-ppBlue rounded-xl p-3 shadow-lg flex flex-col items-center justify-center gap-2">
-                    <span class="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest">Your Dynamic Route</span>
-                    <div class="flex items-center gap-2 w-full">
-                        <input type="text" id="shortlink-url" readonly value="https://link.pixelping.app/xyz" class="flex-1 bg-slate-50 dark:bg-slate-800 text-[10px] font-mono text-slate-700 dark:text-slate-200 px-2 py-2 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none select-all">
-                        <button id="btn-copy-link" class="bg-blue-600 dark:bg-ppBlue hover:bg-blue-700 dark:hover:bg-[#1bb5e0] text-white dark:text-ppBase px-3 py-2 rounded-lg font-bold text-[10px] transition-colors shadow-sm">Copy</button>
-                    </div>
+            <h2 class="text-lg font-bold flex items-center gap-3 mb-6 w-full text-slate-900 dark:text-white">
+                <span class="bg-slate-900 dark:bg-white text-white dark:text-slate-900 w-6 h-6 rounded flex items-center justify-center text-sm">3</span> 
+                Download your QR
+            </h2>
+            
+            <!-- THE CANVAS -->
+            <div class="bg-white p-2 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-xl relative flex flex-col items-center justify-center w-full max-w-[340px] aspect-square transition-all hover:shadow-2xl mb-8 group">
+                <div id="canvas-wrapper" class="qr-mask-layer rounded-2xl overflow-hidden flex items-center justify-center w-full h-full relative z-10">
+                    <div id="canvas-container"></div>
                 </div>
             </div>
 
-            <!-- MID-CANVAS: THE ENGINE ROOM (Moved from old Col 1) -->
-            <div class="w-full flex flex-col gap-4">
+            <!-- WATERMARK (Pulled out of Canvas) -->
+            <div id="pixelping-watermark" class="text-[11px] font-bold text-slate-400 dark:text-slate-500 flex items-center justify-center gap-1.5 font-mono mb-8">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='96' fill='%2394a3b8'/%3E%3Crect x='96' y='96' width='96' height='96' rx='18' fill='%23ffffff'/%3E%3Crect x='320' y='96' width='96' height='96' rx='18' fill='%23ffffff'/%3E%3Crect x='96' y='288' width='96' height='96' rx='18' fill='%23ffffff'/%3E%3Crect x='140' y='140' width='16' height='16' rx='4' fill='%230f172a'/%3E%3C/svg%3E" class="w-3.5 h-3.5 rounded-sm opacity-60" alt="Logo"> Powered by PixelPing
+            </div>
+            
+            <div id="live-label-preview" class="font-bold text-slate-800 dark:text-white text-lg text-center hidden px-4 mb-6"></div>
+
+            <div id="dynamic-link-display" class="hidden w-full mb-6 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-3 shadow-sm flex flex-col items-center justify-center gap-2">
+                <span class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Dynamic Route</span>
+                <div class="flex items-center gap-2 w-full">
+                    <input type="text" id="shortlink-url" readonly value="https://link.pixelping.app/xyz" class="flex-1 bg-slate-50 dark:bg-slate-900 text-xs font-mono text-slate-700 dark:text-slate-300 px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none select-all">
+                    <button id="btn-copy-link" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg font-bold text-xs shadow-sm">Copy</button>
+                </div>
+            </div>
+
+            <!-- EXPORT ACTIONS -->
+            <div class="w-full flex flex-col gap-3 mt-auto">
                 
-                <!-- NOMAD STATE: The Power Ladder Teaser -->
-                <div id="nomad-teaser-box" onclick="openMasterKeyModal()" class="w-full p-4 bg-[#0f172a]/90 border border-yellow-500/40 rounded-xl shadow-[0_0_20px_rgba(234,179,8,0.15)] relative overflow-hidden group cursor-pointer hover:-translate-y-1 hover:border-yellow-400 transition-all duration-300 flex flex-col items-center text-center">
-                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-300 to-yellow-600 shadow-[0_0_12px_rgba(234,179,8,0.9)] pointer-events-none"></div>
-                    <span class="mk-badge mb-2">Upgrade Engine</span>
-                    <h4 class="text-sm font-bold text-white uppercase tracking-widest mb-3">The Platform Architecture</h4>
-                    <div class="grid grid-cols-3 gap-2 w-full text-left">
-                        <div class="bg-slate-800/80 p-2 rounded border border-slate-700">
-                            <div class="text-[8px] text-slate-400 font-bold uppercase tracking-wider mb-1">Tier 1</div>
-                            <div class="text-[10px] font-bold text-white leading-tight">Zero-Friction Core</div>
-                        </div>
-                        <div class="bg-yellow-500/10 p-2 rounded border border-yellow-500/30">
-                            <div class="text-[8px] text-yellow-500 font-bold uppercase tracking-wider mb-1">Tier 2</div>
-                            <div class="text-[10px] font-bold text-yellow-400 leading-tight">Master Key</div>
-                        </div>
-                        <div class="bg-ppGreen/10 p-2 rounded border border-ppGreen/30">
-                            <div class="text-[8px] text-ppGreen font-bold uppercase tracking-wider mb-1">Tier 3</div>
-                            <div class="text-[10px] font-bold text-ppGreen leading-tight">Evolution</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- EVOLUTION STATE: Telemetry & Admin Portal -->
-                <div id="telemetry-dashboard" class="hidden w-full p-4 bg-[#061a2b] border border-ppGreen/40 rounded-xl shadow-[0_0_20px_rgba(60,255,143,0.1)] relative overflow-hidden flex flex-col">
-                    <div class="absolute top-0 left-0 w-full h-1 bg-ppGreen shadow-[0_0_12px_rgba(60,255,143,0.8)] pointer-events-none"></div>
-                    <div class="flex justify-between items-center mb-3 border-b border-ppGreen/20 pb-2">
-                        <span class="text-[10px] font-mono text-ppGreen uppercase tracking-widest">● Live Telemetry</span>
-                        
-                        <!-- THE NEW EMBEDDED ADMIN PORTAL -->
-                        <a href="admin.html" target="_blank" class="flex items-center gap-1.5 text-[9px] font-mono text-slate-900 bg-ppGreen hover:bg-[#2ce07a] px-2 py-1 rounded transition-colors uppercase font-bold tracking-wider shadow-sm">
-                            ⚙️ Command Center
-                        </a>
-                    </div>
-                    <div class="grid grid-cols-3 gap-3">
-                        <div class="flex flex-col">
-                            <span class="text-[9px] text-slate-500 font-mono uppercase">30-Day Pings</span>
-                            <span id="ping-count" class="text-base font-bold text-white font-mono">0</span>
-                        </div>
-                        <div class="flex flex-col">
-                            <span class="text-[9px] text-slate-500 font-mono uppercase">Active Routes</span>
-                            <span id="route-count" class="text-base font-bold text-white font-mono">0</span>
-                        </div>
-                        <div class="flex flex-col">
-                            <span class="text-[9px] text-slate-500 font-mono uppercase">Top Link</span>
-                            <span id="top-link-display" class="text-xs font-bold text-ppBlue font-mono truncate mt-1">/none</span>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="w-full flex flex-col gap-3">
-                <button id="btn-print" class="w-full bg-slate-800 dark:bg-slate-800 border border-yellow-500/40 hover:border-yellow-400 hover:bg-slate-700 text-yellow-500 font-bold py-3 px-4 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-lg group cursor-pointer text-sm">
-                    <svg class="w-4 h-4 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
-                    <span>Print Code & Label <span id="print-pro-badge" class="mk-badge">Master Key</span></span>
-                </button>
-
-                <button id="btn-main-action" class="w-full bg-gradient-to-r from-yellow-400 to-yellow-600 hover:from-yellow-300 hover:to-yellow-500 text-slate-900 font-extrabold py-3 px-4 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(234,179,8,0.2)] cursor-pointer text-sm">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                    <span>Save Code <span class="bg-slate-900 text-yellow-400 text-[9px] px-1.5 py-0.5 rounded ml-1 uppercase tracking-widest font-extrabold">Master Key</span></span>
-                </button>
-            </div>
-
-            <div class="w-full bg-white/50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-200 dark:border-slate-700/50">
-                <label class="block text-[10px] text-slate-500 dark:text-ppLight font-bold uppercase tracking-wider mb-2">Export Format</label>
-                <div class="flex flex-col sm:flex-row gap-3">
-                    <div class="relative group flex-1">
-                        <select id="export-format" class="w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg outline-none border border-slate-300 dark:border-slate-700 focus:border-[#27cfff] transition-colors cursor-pointer text-xs font-medium">
-                            <option value="png">Standard Image (PNG)</option>
-                            <option value="svg">Infinite Vector (SVG) [MASTER KEY]</option>
-                            <option value="pdf">Document (PDF) [MASTER KEY]</option>
-                        </select>
-                        <div class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 hidden group-hover:block w-[220px] bg-slate-900 text-white text-[11px] p-3 rounded-lg shadow-xl z-50 text-center pointer-events-none border border-slate-700 before:content-[''] before:absolute before:top-full before:left-1/2 before:-translate-x-1/2 before:border-4 before:border-transparent before:border-t-slate-900 font-medium">
-                            Need this for a massive billboard? Get infinite scaling with SVG export on Master Key.
-                        </div>
-                    </div>
-
-                    <button id="btn-download" class="px-4 py-2 bg-slate-800 dark:bg-slate-700 hover:bg-slate-700 dark:hover:bg-slate-600 text-white text-xs font-bold rounded-lg transition-transform active:scale-95 shadow-md flex items-center justify-center gap-2">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                        Download
+                <div class="flex gap-2">
+                    <select id="export-format" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 px-3 py-3 rounded-xl outline-none focus:border-blue-500 text-sm font-bold shadow-sm w-1/3">
+                        <option value="png">PNG</option>
+                        <option value="svg">SVG [MK]</option>
+                        <option value="pdf">PDF [MK]</option>
+                    </select>
+                    
+                    <button id="btn-download" class="flex-1 bg-slate-800 hover:bg-slate-900 dark:bg-slate-700 dark:hover:bg-slate-600 text-white font-bold py-3 rounded-xl transition-transform active:scale-95 shadow-lg flex items-center justify-center gap-2 text-sm">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        Download QR
                     </button>
                 </div>
+
+                <button id="btn-main-action" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-lg text-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg>
+                    <span>Save to Cloud <span class="bg-white text-blue-600 text-[9px] px-1.5 py-0.5 rounded ml-1 uppercase tracking-widest font-extrabold">Master Key</span></span>
+                </button>
+                
+                <button id="btn-print" class="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/50 text-slate-700 dark:text-slate-300 font-bold py-3 px-4 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-sm text-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                    <span>Print Code & Label</span>
+                </button>
+            </div>
+            
+            <!-- TELEMETRY BLOCK -->
+            <div id="telemetry-dashboard" class="hidden w-full mt-6 p-4 bg-slate-900 rounded-xl shadow-inner relative overflow-hidden border border-slate-800">
+                <div class="absolute top-0 left-0 w-full h-1 bg-ppGreen shadow-[0_0_12px_rgba(60,255,143,0.8)]"></div>
+                <div class="flex justify-between items-center mb-3">
+                    <span class="text-[9px] font-mono text-ppGreen uppercase tracking-widest">● Live Telemetry</span>
+                    <a href="admin.html" target="_blank" class="text-[9px] font-mono text-slate-900 bg-ppGreen px-2 py-1 rounded font-bold uppercase tracking-wider">⚙️ Command</a>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="flex flex-col"><span class="text-[9px] text-slate-500 font-mono">30-DAY</span><span id="ping-count" class="text-sm font-bold text-white font-mono">0</span></div>
+                    <div class="flex flex-col"><span class="text-[9px] text-slate-500 font-mono">ROUTES</span><span id="route-count" class="text-sm font-bold text-white font-mono">0</span></div>
+                </div>
             </div>
 
-            <div id="history-container" class="w-full bg-slate-100 dark:bg-slate-800/40 rounded-xl border-2 border-slate-300 dark:border-slate-700 p-4 flex flex-col min-h-[200px] shadow-inner transition-colors">
-                <div class="flex justify-between items-end border-b border-slate-200 dark:border-gray-700 pb-2 mb-3 uppercase tracking-wide">
-                    <h3 class="text-xs font-medium text-blue-600 dark:text-ppBlue flex items-center">
-                        <span>Recent Codes (10)</span>
-                        <span class="mk-badge">Master Key</span>
-                    </h3>
-                    <button id="btn-clear-history" class="text-[9px] uppercase tracking-wider font-bold text-slate-400 hover:text-red-500 transition-colors">
-                        Clear All
-                    </button>
-                </div>
-                <div id="history-content" class="flex-1 flex flex-col overflow-y-auto max-h-[300px] pr-1 space-y-2">
-                </div>
-            </div>
         </div>
     </main>
+
+    <!-- PROXY BUTTON JAVASCRIPT (Translates Pill Clicks to Native Select Menus) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            function setupProxy(btnClass, selectId) {
+                const buttons = document.querySelectorAll(`.${btnClass}`);
+                const select = document.getElementById(selectId);
+                if(!buttons.length || !select) return;
+
+                buttons.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        buttons.forEach(b => {
+                            b.classList.remove('active', 'bg-blue-50', 'text-blue-600', 'border-blue-200', 'dark:bg-blue-900/30', 'dark:text-blue-400', 'dark:border-blue-800');
+                            b.classList.add('bg-white', 'text-slate-600', 'border-slate-200', 'dark:bg-slate-800', 'dark:text-slate-300', 'dark:border-slate-700');
+                        });
+                        btn.classList.remove('bg-white', 'text-slate-600', 'border-slate-200', 'dark:bg-slate-800', 'dark:text-slate-300', 'dark:border-slate-700');
+                        btn.classList.add('active', 'bg-blue-50', 'text-blue-600', 'border-blue-200', 'dark:bg-blue-900/30', 'dark:text-blue-400', 'dark:border-blue-800');
+                        
+                        select.value = btn.dataset.target || btn.dataset.val;
+                        select.dispatchEvent(new Event('change'));
+                        if(window.updateQR) window.updateQR();
+                    });
+                });
+            }
+
+            setupProxy('proxy-payload', 'payload-type');
+            setupProxy('proxy-wifi', 'pl-wifi-type');
+            setupProxy('proxy-crypto', 'pl-crypto-type');
+            setupProxy('proxy-mask', 'qr-mask');
+            setupProxy('proxy-icon', 'qr-icon');
+        });
+    </script>
 
 <!-- PRICING SECTION START -->
 <section id="pricing-section" class="w-full bg-[#061a2b] py-20 px-6 font-sans border-t border-slate-800 mt-8">
@@ -694,19 +541,6 @@
     </div>
 </section>
 <!-- PRICING SECTION END -->
-
-   <!-- UPDATED FOOTER STRUCTURE -->
-    <footer class="w-full text-center py-8 mt-12 border-t border-slate-200 dark:border-slate-800 z-10 relative">
-        <a href="help.html" target="_blank" class="block text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-ppBlue dark:hover:text-ppBlue transition-colors mb-4 uppercase tracking-widest text-center">Help Center & DNS Guides</a>
-        <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Built with the StupidSimpleCrazyFast™ micro-app framework.</p>
-        <div class="text-[11px] text-slate-400 dark:text-slate-500 leading-relaxed">
-            Built by <a href="https://machinolabs.com" target="_blank" class="hover:text-blue-500 dark:hover:text-ppBlue transition-colors">MachinoLabs</a> • 
-            <a href="https://machinolabs.com" target="_blank" class="hover:text-blue-500 dark:hover:text-ppBlue transition-colors">machinolabs.com</a> • 
-            <a href="https://stupidsimplecrazyfast.com" target="_blank" class="hover:text-blue-500 dark:hover:text-ppBlue transition-colors">stupidsimplecrazyfast.com</a>
-            <br>
-            Joe • 717.623.2907
-        </div>
-    </footer>
 
     <div id="infoOverlay" class="ml-overlay" hidden></div>
     <div id="infoModal" class="ml-modal" hidden>
@@ -1251,7 +1085,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 if (staticPayloads.includes(action)) {
                     if (dynamicLinkDisplay && !dynamicLinkDisplay.classList.contains('hidden')) {
-                        btnStatic.click();
+                        if(btnStatic) btnStatic.click();
                     }
                     if (btnDynamic) {
                         btnDynamic.disabled = true;
@@ -1274,6 +1108,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const type = typeSelector.value;
                 if (['url', 'review', 'social', 'menu', 'booking'].includes(type)) {
                     let inputEl = document.getElementById(type === 'url' ? 'pl-url' : `pl-biz-${type}`);
+                    if(!inputEl) return null;
                     let rawUrl = inputEl.value.trim();
                     if (rawUrl === 'https://' || rawUrl === '') return "Please enter a valid link or URL.";
                     if (!rawUrl.startsWith('http://') && !rawUrl.startsWith('https://')) {
@@ -1282,6 +1117,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
                 if (['tel', 'sms'].includes(type)) {
                     let phoneEl = document.getElementById(type === 'tel' ? 'pl-tel' : 'pl-sms-to');
+                    if(!phoneEl) return null;
                     let cleanPhone = phoneEl.value.replace(/[^\d+]/g, '');
                     if (cleanPhone.length < 7) return "Please enter a valid phone number.";
                 }
@@ -1357,13 +1193,15 @@ document.addEventListener('DOMContentLoaded', async () => {
                     const addr = document.getElementById('pl-crypto-address').value;
                     if(addr) payload = `${coin}:${addr}`;
                 } else if (['review', 'social', 'menu', 'booking'].includes(type)) {
-                    payload = document.getElementById(`pl-biz-${type}`).value;
+                    let inputEl = document.getElementById(`pl-biz-${type}`);
+                    if(inputEl) payload = inputEl.value;
                     if(payload && !payload.startsWith('http')) payload = 'https://' + payload;
                 } else if (type === 'coupon') {
-                    payload = document.getElementById('pl-biz-coupon').value;
+                    let inputEl = document.getElementById('pl-biz-coupon');
+                    if(inputEl) payload = inputEl.value;
                 }
                 
-                return payload.trim() !== "" ? payload : "https://pixelping.app";
+                return payload && payload.trim() !== "" ? payload : "https://pixelping.app";
             }
 
             const svgIcons = {
@@ -1417,6 +1255,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                         
                         customLogoBase64 = canvas.toDataURL('image/png');
                         btnClearLogo.classList.remove('hidden');
+                        
+                        document.querySelectorAll('.proxy-icon').forEach(b => {
+                            b.classList.remove('active', 'bg-blue-50', 'text-blue-600', 'border-blue-200');
+                            b.classList.add('bg-white', 'text-slate-600', 'border-slate-200');
+                        });
+
                         styleInputs.icon.value = ""; 
                         updateQR();
                     };
@@ -1514,7 +1358,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const isEvolution = (userTier === 'evolution') || localStorage.getItem('pixelping-evolution') === 'true';
 
                 const watermark = document.getElementById('pixelping-watermark');
-                if (isUnlocked && watermark) watermark.style.display = 'none'; 
+                if (isUnlocked && watermark) watermark.style.visibility = 'hidden'; 
                 
                 const mainTitle = document.getElementById('main-title');
                 const subTitle = document.getElementById('sub-title');
@@ -1571,8 +1415,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                     appContainer.classList.add('pro-hidden');
                     if (document.getElementById('founders-story-box')) document.getElementById('founders-story-box').style.display = 'none';
                     
-                    btnMain.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg> <span>Save Code</span>`;
-                    btnMain.className = "w-full bg-blue-600 dark:bg-ppBlue hover:bg-blue-700 dark:hover:bg-[#1bb5e0] text-white dark:text-ppBase font-bold py-3 px-4 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-lg";
+                    btnMain.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg> <span>Save to Cloud</span>`;
+                    btnMain.className = "w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-lg text-sm";
                     btnPrint.classList.remove('hidden');
                     btnPrint.classList.add('flex');
                     isPreviewingPro = false;
@@ -1595,11 +1439,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                 isPreviewingPro = usingProPayload || usingProLabel || usingProStyles;
 
                 if (isPreviewingPro) {
-                    btnMain.innerHTML = `<span class="text-lg">🔓</span> <span>Unlock Master Key to Save</span>`;
-                    btnMain.className = "w-full bg-yellow-500 hover:bg-yellow-600 text-yellow-900 font-bold py-3 px-4 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-lg";
+                    btnMain.innerHTML = `<span class="text-sm">🔓</span> <span>Unlock Master Key to Save</span>`;
+                    btnMain.className = "w-full bg-yellow-500 hover:bg-yellow-600 text-yellow-900 font-bold py-3 px-4 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-lg text-sm";
                 } else {
-                    btnMain.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg> <span>Save Code</span>`;
-                    btnMain.className = "w-full bg-blue-600 dark:bg-ppBlue hover:bg-blue-700 dark:hover:bg-[#1bb5e0] text-white dark:text-ppBase font-bold py-3 px-4 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-lg";
+                    btnMain.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg> <span>Save to Cloud</span>`;
+                    btnMain.className = "w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-lg text-sm";
                 }
             }
             window.checkPaywallState = checkPaywallState;
@@ -1612,7 +1456,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     historyContent.innerHTML = `
                         <div class="flex-1 flex flex-col items-center justify-center text-center opacity-60 mt-4">
                             <span class="text-2xl mb-2">📜</span>
-                            <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">History is a Master Key feature.<br>Unlock to save and reload your last 10 codes.</p>
+                            <p class="text-xs text-slate-500 font-medium">History is a Master Key feature.<br>Unlock to save and reload your last 10 codes.</p>
                         </div>`;
                     return;
                 }
@@ -1621,7 +1465,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 if (history.length === 0) {
                     historyContent.innerHTML = `
                         <div class="flex-1 flex flex-col items-center justify-center text-center opacity-60 mt-4">
-                            <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">No recent codes yet.<br>Save or print a code to see it here!</p>
+                            <p class="text-xs text-slate-500 font-medium">No recent codes yet.<br>Save or print a code to see it here!</p>
                         </div>`;
                     return;
                 }
@@ -1638,7 +1482,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 history.forEach((item) => {
                     const li = document.createElement('li');
-                    li.className = "bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-2 rounded-lg cursor-pointer hover:border-blue-400 dark:hover:border-ppBlue transition-colors shadow-sm flex items-center justify-between group";
+                    li.className = "bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-2 rounded-lg cursor-pointer hover:border-blue-400 transition-colors shadow-sm flex items-center justify-between group";
                     
                     const title = item.label || 'Unnamed Code';
                     const subTitle = typeNames[item.type] || item.type;
@@ -1651,7 +1495,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     titleSpan.textContent = title;
 
                     const subSpan = document.createElement('span');
-                    subSpan.className = "text-[10px] text-slate-500 dark:text-slate-400";
+                    subSpan.className = "text-[10px] text-slate-500";
                     subSpan.textContent = `${subTitle} • ${item.date}`;
 
                     textContainer.appendChild(titleSpan);
@@ -1689,7 +1533,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 };
                 
                 document.querySelectorAll('.payload-form input, .payload-form textarea, .payload-form select').forEach(inp => {
-                    if (inp.type !== 'file') state.inputs[inp.id] = inp.value;
+                    if (inp.type !== 'file' && !inp.classList.contains('hidden')) state.inputs[inp.id] = inp.value;
                 });
 
                 let history = JSON.parse(localStorage.getItem('pixelping-history')) || [];
@@ -1702,7 +1546,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             function loadHistoryItem(item) {
                 typeSelector.value = item.type;
-                forms.forEach(form => form.classList.toggle('active', form.id === 'form-' + item.type));
+                typeSelector.dispatchEvent(new Event('change'));
+                
+                // Update proxy pills to match history state
+                document.querySelectorAll('.proxy-payload').forEach(b => {
+                    b.classList.remove('active', 'bg-blue-50', 'text-blue-600', 'border-blue-200');
+                    b.classList.add('bg-white', 'text-slate-600', 'border-slate-200');
+                    if(b.dataset.target === item.type) b.classList.add('active', 'bg-blue-50', 'text-blue-600', 'border-blue-200');
+                });
+
                 smartLabelInput.value = item.label || '';
 
                 if (item.inputs) {
@@ -1720,6 +1572,18 @@ document.addEventListener('DOMContentLoaded', async () => {
                     styleInputs.mask.value = item.styles.mask;
                     styleInputs.icon.value = item.styles.icon;
                     
+                    document.querySelectorAll('.proxy-mask').forEach(b => {
+                        b.classList.remove('active', 'bg-blue-50', 'text-blue-600', 'border-blue-200');
+                        b.classList.add('bg-white', 'text-slate-600', 'border-slate-200');
+                        if(b.dataset.val === item.styles.mask) b.classList.add('active', 'bg-blue-50', 'text-blue-600', 'border-blue-200');
+                    });
+                    
+                    document.querySelectorAll('.proxy-icon').forEach(b => {
+                        b.classList.remove('active', 'bg-blue-50', 'text-blue-600', 'border-blue-200');
+                        b.classList.add('bg-white', 'text-slate-600', 'border-slate-200');
+                        if(b.dataset.val === item.styles.icon) b.classList.add('active', 'bg-blue-50', 'text-blue-600', 'border-blue-200');
+                    });
+
                     if (item.styles.customLogo) {
                         customLogoBase64 = item.styles.customLogo;
                         btnClearLogo.classList.remove('hidden');
@@ -1739,10 +1603,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             const updateBrandKitUI = () => {
                 if (localStorage.getItem('pixelping-brand-kit')) {
                     btnSaveBrand.textContent = "Remove Brand Kit";
-                    btnSaveBrand.className = "text-[10px] bg-red-100 text-red-700 border border-red-300 dark:bg-red-900/40 dark:text-red-400 dark:border-red-800 px-2 py-1 rounded hover:opacity-90 transition-colors shadow-sm cursor-pointer";
+                    btnSaveBrand.className = "text-[10px] bg-red-100 text-red-700 border border-red-300 dark:bg-red-900/40 dark:text-red-400 px-2 py-1 rounded hover:opacity-90 transition-colors shadow-sm cursor-pointer";
                 } else {
                     btnSaveBrand.textContent = "Save Brand Kit";
-                    btnSaveBrand.className = "text-[10px] bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 px-2 py-1 rounded hover:opacity-90 transition-colors shadow-sm cursor-pointer border border-transparent";
+                    btnSaveBrand.className = "text-[10px] bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-200 px-2 py-1 rounded border border-slate-200 dark:border-slate-600 hover:opacity-90 transition-colors shadow-sm cursor-pointer font-bold";
                 }
             };
             updateBrandKitUI(); 
@@ -1760,6 +1624,18 @@ document.addEventListener('DOMContentLoaded', async () => {
                         customLogoBase64 = null;
                         logoInput.value = '';
                         btnClearLogo.classList.add('hidden');
+                        
+                        document.querySelectorAll('.proxy-mask').forEach(b => {
+                            b.classList.remove('active', 'bg-blue-50', 'text-blue-600', 'border-blue-200');
+                            b.classList.add('bg-white', 'text-slate-600', 'border-slate-200');
+                            if(b.dataset.val === defaults.mask) b.classList.add('active', 'bg-blue-50', 'text-blue-600', 'border-blue-200');
+                        });
+                        document.querySelectorAll('.proxy-icon').forEach(b => {
+                            b.classList.remove('active', 'bg-blue-50', 'text-blue-600', 'border-blue-200');
+                            b.classList.add('bg-white', 'text-slate-600', 'border-slate-200');
+                            if(b.dataset.val === defaults.icon) b.classList.add('active', 'bg-blue-50', 'text-blue-600', 'border-blue-200');
+                        });
+                        
                         updateQR();
                         updateBrandKitUI();
                     } else {
@@ -1775,7 +1651,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         localStorage.setItem('pixelping-brand-kit', JSON.stringify(brandSettings));
                         
                         btnSaveBrand.textContent = "✓ Saved!";
-                        btnSaveBrand.className = "text-[10px] bg-green-100 text-green-700 border border-green-300 dark:bg-green-900/40 dark:text-green-400 dark:border-green-800 px-2 py-1 rounded transition-colors shadow-sm cursor-pointer";
+                        btnSaveBrand.className = "text-[10px] bg-green-100 text-green-700 border border-green-300 dark:bg-green-900/40 dark:text-green-400 px-2 py-1 rounded transition-colors shadow-sm cursor-pointer";
                         setTimeout(() => updateBrandKitUI(), 2000);
                     }
                 } else {
@@ -1876,7 +1752,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 if (isPreviewingPro) {
                     openUnlockModal();
                 } else {
-                    const isDynamicMode = dynamicLinkDisplay && !dynamicLinkDisplay.classList.contains('hidden');
+                    const isDynamicMode = document.getElementById('dynamic-link-display') && !document.getElementById('dynamic-link-display').classList.contains('hidden');
                     
                     if (isDynamicMode) {
                         e.preventDefault(); 
@@ -1889,6 +1765,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                         const newSlug = window.pendingSlug || Math.random().toString(36).substring(2, 8).toLowerCase();
                         
+                        const shortlinkUrl = document.getElementById('shortlink-url');
                         if (shortlinkUrl) {
                             shortlinkUrl.value = `https://link.pixelping.app/${newSlug}`;
                             shortlinkUrl.classList.add('bg-slate-700', 'transition-colors', 'duration-300');
@@ -2132,6 +2009,18 @@ document.addEventListener('DOMContentLoaded', async () => {
                 customLogoBase64 = null;
                 logoInput.value = '';
                 btnClearLogo.classList.add('hidden');
+                
+                document.querySelectorAll('.proxy-mask').forEach(b => {
+                    b.classList.remove('active', 'bg-blue-50', 'text-blue-600', 'border-blue-200');
+                    b.classList.add('bg-white', 'text-slate-600', 'border-slate-200');
+                    if(b.dataset.val === defaults.mask) b.classList.add('active', 'bg-blue-50', 'text-blue-600', 'border-blue-200');
+                });
+                document.querySelectorAll('.proxy-icon').forEach(b => {
+                    b.classList.remove('active', 'bg-blue-50', 'text-blue-600', 'border-blue-200');
+                    b.classList.add('bg-white', 'text-slate-600', 'border-slate-200');
+                    if(b.dataset.val === defaults.icon) b.classList.add('active', 'bg-blue-50', 'text-blue-600', 'border-blue-200');
+                });
+
                 document.getElementById('density-warning').className = 'hidden';
                 updateQR();
             });
@@ -2215,8 +2104,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 return; 
             }
 
-            document.getElementById('mode-static').className = "flex-1 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest py-1.5 rounded-md text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 transition-all";
-            document.getElementById('mode-dynamic').className = "w-full text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest py-1.5 rounded-md bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm transition-all flex justify-center items-center gap-1.5";
+            document.getElementById('mode-static').className = "text-[10px] font-extrabold uppercase tracking-widest px-2 py-1 rounded text-slate-400 hover:text-slate-600 transition-all";
+            document.getElementById('mode-dynamic').className = "text-[10px] font-extrabold uppercase tracking-widest px-2 py-1 rounded bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm flex items-center gap-1 transition-all";
             
             const badge = document.getElementById('mode-dynamic').querySelector('.evo-badge');
             if (badge) badge.style.display = 'none';
@@ -2236,8 +2125,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         document.getElementById('mode-static').addEventListener('click', () => {
-            document.getElementById('mode-dynamic').className = "w-full text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest py-1.5 rounded-md text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 transition-all flex justify-center items-center gap-1.5";
-            document.getElementById('mode-static').className = "flex-1 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest py-1.5 rounded-md bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm transition-all";
+            document.getElementById('mode-dynamic').className = "text-[10px] font-extrabold uppercase tracking-widest px-2 py-1 rounded text-slate-400 hover:text-slate-600 flex items-center gap-1 transition-all";
+            document.getElementById('mode-static').className = "text-[10px] font-extrabold uppercase tracking-widest px-2 py-1 rounded bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm transition-all";
             
             const dynamicLinkDisplay = document.getElementById('dynamic-link-display');
             if (dynamicLinkDisplay) dynamicLinkDisplay.classList.add('hidden');
@@ -2253,11 +2142,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             
             const originalText = btnCopyLink.innerText;
             btnCopyLink.innerText = "Copied!";
-            btnCopyLink.classList.add('bg-green-500', 'dark:bg-ppGreen', 'text-slate-900');
+            btnCopyLink.classList.add('bg-green-500', 'text-white');
             
             setTimeout(() => {
                 btnCopyLink.innerText = originalText;
-                btnCopyLink.classList.remove('bg-green-500', 'dark:bg-ppGreen', 'text-slate-900');
+                btnCopyLink.classList.remove('bg-green-500', 'text-white');
             }, 2000);
         });
     }
