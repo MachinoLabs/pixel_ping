@@ -19,11 +19,11 @@
             theme: {
                 extend: {
                     colors: {
-                        ppBase: '#090d16',
+                        ppBase: '#061a2b',
                         ppDark: '#0f3a5a',
                         ppLight: '#dff4ff',
-                        ppBlue: '#2563eb',
-                        ppGreen: ''
+                        ppBlue: '#27cfff',
+                        ppGreen: '#3cff8f'
                     }
                 }
             }
@@ -32,14 +32,14 @@
 
     <style>
         /* Base & Inputs */
-        input[type=range] { accent-color: #2563eb; }
+        input[type=range] { accent-color: #27cfff; }
         input[type=color] { border: none; padding: 0; background: none; }
         input[type=color]::-webkit-color-swatch-wrapper { padding: 0; }
         input[type=color]::-webkit-color-swatch { border: 2px solid #0f3a5a; border-radius: 0.5rem; }
 
         /* Background Eye Candy */
         .pixel-bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; background-color: #f8fafc; transition: background-color 0.3s; }
-        .dark .pixel-bg { background-color: #090d16; background-image: radial-gradient(#0f3a5a 1px, transparent 1px); background-size: 30px 30px; }
+        .dark .pixel-bg { background-color: #061a2b; background-image: radial-gradient(#0f3a5a 1px, transparent 1px); background-size: 30px 30px; }
         .floating-pixel { position: absolute; border-radius: 4px; opacity: 0; animation: floatUp infinite linear; }
         @keyframes floatUp { 0% { transform: translateY(100vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.4; } 90% { opacity: 0.4; } 100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; } }
 
@@ -53,7 +53,7 @@
 
         /* Tier Badges (Master Key & Evolution) */
         .mk-badge { background: linear-gradient(to right, #facc15, #ca8a04); color: #0f172a; font-size: 9px; padding: 3px 6px; border-radius: 4px; margin-left: 8px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; display: inline-block; vertical-align: middle; white-space: nowrap; box-shadow: 0 1px 2px rgba(0,0,0,0.15); }
-        .evo-badge { background: ; color: #090d16; font-size: 9px; padding: 3px 6px; border-radius: 4px; margin-left: 8px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; display: inline-block; vertical-align: middle; white-space: nowrap; box-shadow: 0 1px 2px rgba(0,0,0,0.15); }
+        .evo-badge { background: #3cff8f; color: #061a2b; font-size: 9px; padding: 3px 6px; border-radius: 4px; margin-left: 8px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; display: inline-block; vertical-align: middle; white-space: nowrap; box-shadow: 0 1px 2px rgba(0,0,0,0.15); }
         
         /* The Gatekeeper Hide Rule */
         .pro-hidden .mk-badge { display: none !important; }
@@ -139,17 +139,18 @@
 
     <div class="pixel-bg" id="pixel-bg"></div>
 
-    <header class="w-full max-w-5xl mb-8 mt-14 flex items-center justify-between z-10 relative">
+    <!-- HEADER: WIDENED TO MATCH 3-COLUMN DASHBOARD -->
+    <header class="w-full max-w-[1400px] mb-8 mt-14 flex items-center justify-between z-10 relative">
         <div class="flex items-center gap-4">
             <svg class="w-10 h-10 md:w-12 md:h-12" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                <rect width="512" height="512" rx="96" fill="#090d16"/>
+                <rect width="512" height="512" rx="96" fill="#061a2b"/>
                 <rect x="28" y="28" width="456" height="456" rx="80" fill="none" stroke="#0f3a5a" stroke-width="4"/>
                 <rect x="96" y="96" width="96" height="96" rx="18" fill="#dff4ff"/>
                 <rect x="320" y="96" width="96" height="96" rx="18" fill="#dff4ff"/>
                 <rect x="96" y="288" width="96" height="96" rx="18" fill="#dff4ff"/>
-                <rect x="140" y="140" width="16" height="16" rx="4" fill="#2563eb"/>
-                <rect x="364" y="140" width="16" height="16" rx="4" fill="#2563eb"/>
-                <rect x="140" y="332" width="16" height="16" rx="4" fill=""/>
+                <rect x="140" y="140" width="16" height="16" rx="4" fill="#27cfff"/>
+                <rect x="364" y="140" width="16" height="16" rx="4" fill="#27cfff"/>
+                <rect x="140" y="332" width="16" height="16" rx="4" fill="#3cff8f"/>
             </svg>
         <div>
             <h1 id="main-title" class="text-2xl md:text-3xl font-bold tracking-wide text-slate-900 dark:text-white transition-colors">PixelPing</h1>
@@ -172,15 +173,14 @@
         </div>
     </header>
 
-    <main id="app-container" class="w-full max-w-5xl grid grid-cols-1 md:grid-cols-12 gap-8 z-10 relative mb-8">
+    <!-- NEW 3-COLUMN HORIZONTAL GRID ARCHITECTURE -->
+    <main id="app-container" class="w-full max-w-[1400px] grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 z-10 relative mb-8">
         
-        <div class="md:col-span-7 space-y-6 bg-white/95 dark:bg-ppDark/95 backdrop-blur-md p-6 rounded-2xl border border-slate-200 dark:border-gray-800 shadow-2xl transition-colors">
+        <!-- COLUMN 1: THE ENGINE (PAYLOAD & DATA) -->
+        <div class="col-span-1 space-y-6 bg-white/95 dark:bg-ppDark/95 backdrop-blur-md p-6 rounded-2xl border border-slate-200 dark:border-gray-800 shadow-2xl transition-colors h-max">
             
             <div class="flex justify-between items-center border-b border-slate-200 dark:border-gray-700 pb-2">
-               <h3 class="text-[11px] font-bold tracking-[0.12em] uppercase text-slate-500 flex items-center gap-2">
-    <span class="bg-ppBlue text-white w-5 h-5 rounded flex items-center justify-center text-[10px]">1</span> 
-    Configure Payload
-</h3>
+                <h3 class="text-sm font-medium text-blue-600 dark:text-ppBlue uppercase tracking-wide">Data & Content</h3>
                 <button id="btn-clear" class="text-xs text-red-500 hover:text-red-700 font-semibold px-2 py-1 rounded bg-red-50 dark:bg-red-900/20 transition-colors">Clear Canvas</button>
             </div>
 
@@ -201,43 +201,30 @@
                 
                 <div id="static-warning-message" class="hidden text-[10px] sm:text-[11px] font-bold text-amber-600 dark:text-amber-400 mb-4 mt-2 text-center bg-amber-50 dark:bg-amber-900/30 py-2 rounded-md shadow-inner transition-all border border-amber-200 dark:border-amber-800/50">🔒 Security Note: This specific code type is generated securely on your device and cannot be saved dynamically.</div>
 
-                <!-- HORIZONTAL PAYLOAD CAROUSEL -->
-<div class="mb-6 -mx-2 px-2 mt-4">
-    <div class="flex overflow-x-auto gap-3 pb-4 snap-x snap-mandatory hide-scrollbar">
-        
-        <!-- URL Pill -->
-        <button class="snap-start shrink-0 flex items-center gap-2 bg-blue-50/50 dark:bg-blue-900/20 border-2 border-ppBlue rounded-full px-5 py-2.5 transition-all">
-            <i data-lucide="link" class="w-4 h-4 text-ppBlue"></i>
-            <span class="text-[11px] font-bold uppercase tracking-wider text-slate-700 dark:text-white">URL</span>
-        </button>
-
-        <!-- Phone Pill -->
-        <button class="snap-start shrink-0 flex items-center gap-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-slate-300 rounded-full px-5 py-2.5 transition-all">
-            <i data-lucide="phone" class="w-4 h-4 text-slate-500"></i>
-            <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Phone</span>
-        </button>
-
-        <!-- Text Pill -->
-        <button class="snap-start shrink-0 flex items-center gap-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-slate-300 rounded-full px-5 py-2.5 transition-all">
-            <i data-lucide="align-left" class="w-4 h-4 text-slate-500"></i>
-            <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Text</span>
-        </button>
-
-        <!-- Wi-Fi Pill (Premium) -->
-        <button class="snap-start shrink-0 flex items-center gap-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-amber-300 rounded-full px-5 py-2.5 transition-all">
-            <i data-lucide="wifi" class="w-4 h-4 text-amber-500"></i>
-            <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Wi-Fi <span class="text-amber-500 ml-1">🔒</span></span>
-        </button>
-        
-        <!-- vCard Pill (Premium) -->
-        <button class="snap-start shrink-0 flex items-center gap-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-amber-300 rounded-full px-5 py-2.5 transition-all">
-            <i data-lucide="user" class="w-4 h-4 text-amber-500"></i>
-            <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500">vCard <span class="text-amber-500 ml-1">🔒</span></span>
-        </button>
-
-    </div>
-    <input type="hidden" id="payload-type" value="url">
-</div>
+                <label class="block text-xs font-bold text-slate-700 dark:text-white mb-1">What should this code do?</label>
+                <select id="payload-type" class="w-full bg-white dark:bg-slate-800 text-slate-900 dark:text-white px-4 py-3 rounded-lg border-2 border-blue-400 dark:border-ppBlue focus:outline-none focus:ring-2 focus:ring-blue-600 font-bold transition-colors shadow-sm">
+                    <optgroup label="Free Basics">
+                        <option value="url">Open a Website (URL)</option>
+                        <option value="tel">Make a Phone Call</option>
+                        <option value="text">Display Plain Text</option>
+                    </optgroup>
+                    <optgroup label="Premium Payloads">
+                        <option value="wifi">Join a Wi-Fi Network [MASTER KEY]</option>
+                        <option value="vcard">Share Contact Info (vCard) [MASTER KEY]</option>
+                        <option value="sms">Send a Text Message [MASTER KEY]</option>
+                        <option value="email">Send an Email [MASTER KEY]</option>
+                        <option value="calendar">Save Calendar Event [MASTER KEY]</option>
+                        <option value="geo">Open Map Location [MASTER KEY]</option>
+                        <option value="crypto">Crypto Wallet Address [MASTER KEY]</option>
+                    </optgroup>
+                    <optgroup label="Business Suite [MASTER KEY]">
+                        <option value="review">Google Review Link</option>
+                        <option value="social">Social Media Follow</option>
+                        <option value="menu">Digital Menu (PDF/Link)</option>
+                        <option value="booking">Book Appointment</option>
+                        <option value="coupon">Digital Coupon</option>
+                    </optgroup>
+                </select>
             </div>
 
             <div id="dynamic-forms-container" class="p-4 bg-slate-50 dark:bg-ppBase/50 rounded-xl border border-slate-200 dark:border-gray-700/50">
@@ -400,13 +387,16 @@
                 </div>
                 <!-- FORM GROUPS END -->
             </div>
+        </div>
 
+        <!-- COLUMN 2: THE STUDIO (LABELS, AESTHETICS & BRANDING) -->
+        <div class="col-span-1 space-y-6 bg-white/95 dark:bg-ppDark/95 backdrop-blur-md p-6 rounded-2xl border border-slate-200 dark:border-gray-800 shadow-2xl transition-colors h-max">
+            
             <!-- EDUCATIONAL TOOLTIP WRAPPER -->
-            <div class="pt-4 border-t border-slate-200 dark:border-gray-700 relative group">
-               <h3 class="text-[11px] font-bold tracking-[0.12em] uppercase text-slate-500 mb-4 flex items-center gap-2 mt-4">
-                <span class="bg-ppBlue text-white w-5 h-5 rounded flex items-center justify-center text-[10px]">2</span> 
-                Smart Print Label <span class="mk-badge">Master Key</span>
-            </h3>
+            <div class="relative group">
+                <h3 class="text-sm font-medium text-blue-600 dark:text-ppBlue pb-2 mb-2 uppercase tracking-wide flex items-center border-b border-slate-200 dark:border-gray-700">
+                    Smart Print Label <span class="mk-badge">Master Key</span>
+                </h3>
                 <label class="block text-xs font-bold text-slate-700 dark:text-white mb-1">Name this code (Prints beneath QR)</label>
                 <input type="text" id="pl-smart-label" placeholder="e.g. Guest Wi-Fi Network" class="pl-input w-full bg-slate-50 dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none font-medium">
                 
@@ -424,219 +414,214 @@
                     </select>
                 </div>
             </div>
-            <!-- COLLAPSIBLE DESIGN ENGINE (STEP 3) -->
-            <details class="group border border-slate-100/80 dark:border-white/5 shadow-sm rounded-xl mb-6">
-                <summary class="cursor-pointer font-bold text-[11px] tracking-[0.12em] uppercase text-slate-600 dark:text-slate-400 p-4 bg-slate-50 dark:bg-slate-800/30 rounded-xl group-open:rounded-b-none transition-colors flex justify-between items-center">
+
+            <!-- COLLAPSIBLE DESIGN ENGINE -->
+            <details class="group border border-slate-200 dark:border-white/10 shadow-sm rounded-xl mb-6 bg-white dark:bg-slate-800/40" open>
+                <summary class="cursor-pointer font-bold text-[11px] tracking-[0.12em] uppercase text-slate-600 dark:text-slate-300 p-4 bg-slate-50 dark:bg-slate-800/60 rounded-xl group-open:rounded-b-none transition-colors flex justify-between items-center border-b border-transparent group-open:border-slate-200 dark:group-open:border-gray-700">
                     <div class="flex items-center gap-2">
-                        <span class="bg-ppBlue text-white w-5 h-5 rounded flex items-center justify-center text-[10px]">3</span>
                         Advanced Aesthetics
                     </div>
                     <span class="group-open:rotate-180 transition-transform text-lg leading-none">▾</span>
                 </summary>
-                <div class="p-4 border-t border-slate-100/80 dark:border-white/5 space-y-4">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 pt-4 border-t border-slate-200 dark:border-gray-700 items-start w-full">
-
-                <h3 class="text-sm font-medium text-blue-600 dark:text-ppBlue border-b border-slate-200 dark:border-gray-700 pb-2 uppercase tracking-wide flex items-center">
-                    Structure <span class="mk-badge">Master Key</span>
-                </h3>
                 
-                <h3 class="text-sm font-medium text-blue-600 dark:text-ppBlue border-b border-slate-200 dark:border-gray-700 pb-2 uppercase tracking-wide flex justify-between items-center">
-                    <span class="flex items-center">Aesthetics <span class="mk-badge">Master Key</span></span>
-                    <button id="btn-save-brand" class="text-[10px] bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 px-2 py-1 rounded hover:opacity-90 transition-colors shadow-sm cursor-pointer border border-transparent">Save Brand Kit</button>
-                </h3>
+                <div class="p-4 space-y-5">
+                    <h3 class="text-xs font-medium text-blue-600 dark:text-ppBlue uppercase tracking-wide flex justify-between items-center">
+                        <span class="flex items-center">Structure <span class="mk-badge">Master Key</span></span>
+                        <button id="btn-save-brand" class="text-[10px] bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 px-2 py-1 rounded hover:opacity-90 transition-colors shadow-sm cursor-pointer border border-transparent">Save Brand Kit</button>
+                    </h3>
 
-                <div>
-                    <label class="block text-sm font-bold text-slate-800 dark:text-white mb-2">Outer Shape Mask</label>
-                    <select id="qr-mask" class="pl-input w-full bg-slate-50 dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:outline-none">
-                        <option value="none">Square (Safe)</option>
-                        <option value="rounded">Rounded Square</option>
-                    </select>
-                </div>
-                
-                <div>
-        <label class="block text-sm font-bold text-slate-800 dark:text-white mb-2">Center Icon</label>
-        <select id="qr-icon" class="pl-input w-full bg-slate-50 dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:outline-none">
-            <option value="">None</option>
-            <optgroup label="Free Basics">
-                <option value="heart">Heart</option>
-                <option value="lightning">Lightning Bolt</option>
-                <option value="star">Star Circle</option>
-            </optgroup>
-            <!-- Premium Icons dynamically loaded by Ghost Script post-purchase -->
-        </select>
-    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-800 dark:text-white mb-2">Outer Shape Mask</label>
+                        <select id="qr-mask" class="pl-input w-full bg-slate-50 dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:outline-none">
+                            <option value="none">Square (Safe)</option>
+                            <option value="rounded">Rounded Square</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-xs font-bold text-slate-800 dark:text-white mb-2">Center Icon</label>
+                        <select id="qr-icon" class="pl-input w-full bg-slate-50 dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:outline-none">
+                            <option value="">None</option>
+                            <optgroup label="Free Basics">
+                                <option value="heart">Heart</option>
+                                <option value="lightning">Lightning Bolt</option>
+                                <option value="star">Star Circle</option>
+                            </optgroup>
+                            <!-- Premium Icons dynamically loaded by Ghost Script post-purchase -->
+                        </select>
+                    </div>
 
-    <div>
-        <label class="block text-sm font-bold text-slate-800 dark:text-white mb-2">Corner Eye Style</label>
-        <select id="qr-corners-type" class="pl-input w-full bg-slate-50 dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:outline-none">
-            <option value="square">Square</option>
-            <option value="dot" selected>Circular</option>
-            <option value="extra-rounded">Rounded</option>
-        </select>
-    </div>
-    
-    <!-- EDUCATIONAL TOOLTIP WRAPPER -->
-    <div class="relative group">
-        <div class="flex justify-between items-center mb-2">
-            <label class="text-sm font-bold text-slate-800 dark:text-white flex items-center">Or Upload Custom Logo <span class="mk-badge">Master Key</span></label>
-            <button id="btn-clear-logo" class="hidden text-[10px] text-red-500 hover:text-red-700 font-bold">Clear Logo</button>
-        </div>
-        <input type="file" id="qr-custom-logo" accept="image/png, image/jpeg, image/svg+xml" class="pl-input w-full bg-slate-50 dark:bg-ppBase text-slate-500 dark:text-slate-400 px-3 py-[7px] rounded-lg border border-slate-300 dark:border-gray-700 text-xs file:mr-3 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-[10px] file:font-bold file:bg-slate-200 file:text-slate-700 hover:file:bg-slate-300 dark:file:bg-slate-700 dark:file:text-slate-300 cursor-pointer transition-colors focus:outline-none">
-        
-        <div class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 hidden group-hover:block w-[220px] bg-slate-900 text-white text-[11px] p-3 rounded-lg shadow-xl z-50 text-center pointer-events-none border border-slate-700 before:content-[''] before:absolute before:top-full before:left-1/2 before:-translate-x-1/2 before:border-4 before:border-transparent before:border-t-slate-900 font-medium">
-            Brand your codes instantly. Drop your company logo right in the center with Master Key.
-        </div>
-    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-800 dark:text-white mb-2">Corner Eye Style</label>
+                        <select id="qr-corners-type" class="pl-input w-full bg-slate-50 dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg border border-slate-300 dark:border-gray-700 focus:outline-none">
+                            <option value="square">Square</option>
+                            <option value="dot" selected>Circular</option>
+                            <option value="extra-rounded">Rounded</option>
+                        </select>
+                    </div>
+                    
+                    <!-- EDUCATIONAL TOOLTIP WRAPPER -->
+                    <div class="relative group">
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="text-xs font-bold text-slate-800 dark:text-white flex items-center">Or Upload Custom Logo <span class="mk-badge">Master Key</span></label>
+                            <button id="btn-clear-logo" class="hidden text-[10px] text-red-500 hover:text-red-700 font-bold">Clear Logo</button>
+                        </div>
+                        <input type="file" id="qr-custom-logo" accept="image/png, image/jpeg, image/svg+xml" class="pl-input w-full bg-slate-50 dark:bg-ppBase text-slate-500 dark:text-slate-400 px-3 py-[7px] rounded-lg border border-slate-300 dark:border-gray-700 text-xs file:mr-3 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-[10px] file:font-bold file:bg-slate-200 file:text-slate-700 hover:file:bg-slate-300 dark:file:bg-slate-700 dark:file:text-slate-300 cursor-pointer transition-colors focus:outline-none">
+                        
+                        <div class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 hidden group-hover:block w-[220px] bg-slate-900 text-white text-[11px] p-3 rounded-lg shadow-xl z-50 text-center pointer-events-none border border-slate-700 before:content-[''] before:absolute before:top-full before:left-1/2 before:-translate-x-1/2 before:border-4 before:border-transparent before:border-t-slate-900 font-medium">
+                            Brand your codes instantly. Drop your company logo right in the center with Master Key.
+                        </div>
+                    </div>
 
- <div class="col-span-1 md:col-span-2 flex flex-col sm:flex-row flex-wrap items-center justify-center gap-5 md:gap-12 w-full pt-4 pb-2">
-        <div class="flex items-center gap-3">
-            <label class="text-sm font-bold text-slate-800 dark:text-white">Data Color</label>
-            <input type="color" id="qr-color-dots" class="pl-input w-8 h-8 cursor-pointer">
-        </div>
-        <div class="flex items-center gap-3">
-            <label class="text-sm font-bold text-slate-800 dark:text-white">Eye Color</label>
-            <input type="color" id="qr-color-corners" class="pl-input w-8 h-8 cursor-pointer">
-        </div>
-        <div class="flex items-center gap-3">
-            <label class="text-sm font-bold text-slate-800 dark:text-white">BG Color</label>
-            <input type="color" id="qr-color-bg" class="pl-input w-8 h-8 cursor-pointer">
-        </div>
-    </div>
-    </div>
-</details>
-    <!-- MID-CANVAS: THE ENGINE ROOM -->
-    <div class="col-span-1 md:col-span-2 mt-4 flex flex-col gap-4">
-        
-        <!-- NOMAD STATE: The Power Ladder Teaser -->
-        <div id="nomad-teaser-box" onclick="openMasterKeyModal()" class="w-full p-5 bg-[#0f172a]/90 border border-yellow-500/40 rounded-xl shadow-[0_0_20px_rgba(234,179,8,0.15)] relative overflow-hidden group cursor-pointer hover:-translate-y-1 hover:border-yellow-400 transition-all duration-300 flex flex-col items-center text-center">
-            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-300 to-yellow-600 shadow-[0_0_12px_rgba(234,179,8,0.9)] pointer-events-none"></div>
-            <span class="mk-badge mb-2">Upgrade Engine</span>
-            <h4 class="text-base font-bold text-white uppercase tracking-widest mb-4">The Platform Architecture</h4>
-            <div class="grid grid-cols-3 gap-2 w-full text-left">
-                <div class="bg-slate-800/80 p-2.5 rounded border border-slate-700">
-                    <div class="text-[9px] text-slate-400 font-bold uppercase tracking-wider mb-1">Tier 1</div>
-                    <div class="text-xs font-bold text-white leading-tight">Zero-Friction Core</div>
+                    <div class="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-slate-200 dark:border-gray-700">
+                        <div class="flex flex-col gap-1 items-center">
+                            <label class="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase">Data</label>
+                            <input type="color" id="qr-color-dots" class="pl-input w-8 h-8 cursor-pointer rounded-full overflow-hidden">
+                        </div>
+                        <div class="flex flex-col gap-1 items-center">
+                            <label class="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase">Eyes</label>
+                            <input type="color" id="qr-color-corners" class="pl-input w-8 h-8 cursor-pointer rounded-full overflow-hidden">
+                        </div>
+                        <div class="flex flex-col gap-1 items-center">
+                            <label class="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase">Background</label>
+                            <input type="color" id="qr-color-bg" class="pl-input w-8 h-8 cursor-pointer rounded-full overflow-hidden">
+                        </div>
+                    </div>
                 </div>
-                <div class="bg-yellow-500/10 p-2.5 rounded border border-yellow-500/30">
-                    <div class="text-[9px] text-yellow-500 font-bold uppercase tracking-wider mb-1">Tier 2</div>
-                    <div class="text-xs font-bold text-yellow-400 leading-tight">Master Key</div>
-                </div>
-                <div class="bg-ppGreen/10 p-2.5 rounded border border-ppGreen/30">
-                    <div class="text-[9px] text-ppGreen font-bold uppercase tracking-wider mb-1">Tier 3</div>
-                    <div class="text-xs font-bold text-ppGreen leading-tight">Evolution</div>
-                </div>
+            </details>
+
+            <div id="founders-story-box" class="p-5 bg-slate-800/5 dark:bg-slate-800/30 border-l-4 border-red-500 dark:border-[#ff416c] rounded-xl shadow-sm">
+                <p class="text-sm font-bold text-slate-800 dark:text-slate-200 mb-2">Why I built PixelPing: Rebellion.</p>
+                <p class="text-xs text-slate-700 dark:text-slate-400 mb-2">Not long ago, I created a "free" QR code on one of the most popular generator websites. A week later, the code mysteriously stopped working. I went back to the site and realized they had secretly made it a Dynamic QR code, meaning there are servers, redirects and other fallible processes involved. My link was now a hostage until I paid a surprise monthly subscription (I did not). I wanted to know if it was just me that got fooled, so I searched for QR generator reviews on sites like Reddit, Quora, and Facebook and found that this bologna is happening to a lot of marketers and small business owners. That yanked my chain. So I said F-it and built my own.</p>
+                <p class="text-xs text-slate-700 dark:text-slate-400 mb-3">PixelPing is different. Your codes are generated 100% locally with no redirects... ever. I intentionally made them static, which means you build it once, and it works forever. No hidden subscriptions, no hostage situations, no BS. I built the tool I wished existed, and now I'm sharing it with you to offer an alternative.</p>
+                <p class="text-[10px] font-bold text-slate-500 dark:text-slate-500 uppercase tracking-widest">— Joe, MachinoLabs</p>
             </div>
         </div>
 
-        <!-- EVOLUTION STATE: Telemetry & Admin Portal -->
-        <div id="telemetry-dashboard" class="hidden w-full p-5 bg-[#090d16] border border-ppGreen/40 rounded-xl shadow-[0_0_20px_rgba(60,255,143,0.1)] relative overflow-hidden flex flex-col">
-            <div class="absolute top-0 left-0 w-full h-1 bg-ppGreen shadow-[0_0_12px_rgba(60,255,143,0.8)] pointer-events-none"></div>
-            <div class="flex justify-between items-center mb-4 border-b border-ppGreen/20 pb-2">
-                <span class="text-xs font-mono text-ppGreen uppercase tracking-widest">● Live Telemetry</span>
-                
-                <!-- THE NEW EMBEDDED ADMIN PORTAL -->
-                <a href="admin.html" target="_blank" class="flex items-center gap-1.5 text-[10px] font-mono text-slate-900 bg-ppGreen hover:bg-[#2ce07a] px-2.5 py-1 rounded transition-colors uppercase font-bold tracking-wider shadow-sm">
-                    ⚙️ Command Center
-                </a>
-            </div>
-            <div class="grid grid-cols-3 gap-4">
-                <div class="flex flex-col">
-                    <span class="text-[10px] text-slate-500 font-mono uppercase">30-Day Pings</span>
-                    <span id="ping-count" class="text-lg font-bold text-white font-mono">0</span>
+        <!-- COLUMN 3: THE COMMAND CENTER (VIEWFINDER, TELEMETRY & OUTPUT) -->
+        <div class="col-span-1 flex flex-col items-center justify-start sticky top-6 self-start space-y-6 w-full">
+            
+            <div class="bg-slate-200 dark:bg-ppBase p-4 rounded-3xl border-4 border-slate-300 dark:border-ppDark shadow-2xl relative group flex flex-col items-center justify-center min-h-[350px] w-full transition-colors">
+                <div id="canvas-wrapper" class="qr-mask-layer rounded-xl overflow-hidden shadow-inner flex items-center justify-center w-full max-w-[320px] aspect-square bg-white relative pb-8">
+                    <div id="canvas-container" class="mt-4"></div>
+                    <div id="pixelping-watermark" style="position: absolute; bottom: 8px; font-size: 11px; font-weight: 700; color: #333; display: flex; align-items: center; justify-content: center; gap: 5px; font-family: monospace;">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='96' fill='%23061a2b'/%3E%3Crect x='28' y='28' width='456' height='456' rx='80' fill='none' stroke='%230f3a5a' stroke-width='4'/%3E%3Crect x='96' y='96' width='96' height='96' rx='18' fill='%23dff4ff'/%3E%3Crect x='320' y='96' width='96' height='96' rx='18' fill='%23dff4ff'/%3E%3Crect x='96' y='288' width='96' height='96' rx='18' fill='%23dff4ff'/%3E%3Crect x='140' y='140' width='16' height='16' rx='4' fill='%2327cfff'/%3E%3C/svg%3E" style="width: 12px; height: 12px; border-radius: 3px;" alt="Logo"> Powered by PixelPing.app
+                    </div>
                 </div>
-                <div class="flex flex-col">
-                    <span class="text-[10px] text-slate-500 font-mono uppercase">Active Routes</span>
-                    <span id="route-count" class="text-lg font-bold text-white font-mono">0</span>
-                </div>
-                <div class="flex flex-col">
-                    <span class="text-[10px] text-slate-500 font-mono uppercase">Top Link</span>
-                    <span id="top-link-display" class="text-sm font-bold text-ppBlue font-mono truncate mt-1">/none</span>
+                <div id="live-label-preview" class="mt-4 font-bold text-slate-800 dark:text-white text-lg text-center hidden px-4 pb-2"></div>
+                <div id="dynamic-link-display" class="hidden w-full mt-3 bg-white dark:bg-slate-900 border-2 border-blue-400 dark:border-ppBlue rounded-xl p-3 shadow-lg flex flex-col items-center justify-center gap-2">
+                    <span class="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest">Your Dynamic Route</span>
+                    <div class="flex items-center gap-2 w-full">
+                        <input type="text" id="shortlink-url" readonly value="https://link.pixelping.app/xyz" class="flex-1 bg-slate-50 dark:bg-slate-800 text-[10px] font-mono text-slate-700 dark:text-slate-200 px-2 py-2 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none select-all">
+                        <button id="btn-copy-link" class="bg-blue-600 dark:bg-ppBlue hover:bg-blue-700 dark:hover:bg-[#1bb5e0] text-white dark:text-ppBase px-3 py-2 rounded-lg font-bold text-[10px] transition-colors shadow-sm">Copy</button>
+                    </div>
                 </div>
             </div>
-        </div>
 
-    </div>
-    </div>
-<div id="founders-story-box" class="mt-8 p-6 bg-slate-800/5 dark:bg-slate-800/30 border-l-4 border-red-500 dark:border-[#ff416c] rounded-xl shadow-sm">
-    <p class="text-base font-bold text-slate-800 dark:text-slate-200 mb-2">Why I built PixelPing: Rebellion.</p>
-    <p class="text-sm text-slate-700 dark:text-slate-400 mb-2">Not long ago, I created a "free" QR code on one of the most popular generator websites. A week later, the code mysteriously stopped working. I went back to the site and realized they had secretly made it a Dynamic QR code, meaning there are servers, redirects and other fallible processes involved. My link was now a hostage until I paid a surprise monthly subscription (I did not). I wanted to know if it was just me that got fooled, so I searched for QR generator reviews on sites like Reddit, Quora, and Facebook and found that this bologna is happening to a lot of marketers and small business owners. That yanked my chain. So I said F-it and built my own.</p>
-    <p class="text-sm text-slate-700 dark:text-slate-400 mb-4">PixelPing is different. Your codes are generated 100% locally with no redirects... ever. I intentionally made them static, which means you build it once, and it works forever. No hidden subscriptions, no hostage situations, no BS. I built the tool I wished existed, and now I'm sharing it with you to offer an alternative.</p>
-    <p class="text-sm font-bold text-slate-500 dark:text-slate-400">— Joe, MachinoLabs</p>
-</div>
-        </div>
-
-
-        <div class="md:col-span-5 flex flex-col items-center justify-start sticky top-6 self-start">
-            <div class="bg-slate-200 dark:bg-ppBase p-4 rounded-3xl border-4 border-slate-300 dark:border-ppDark shadow-2xl mb-6 relative group flex flex-col items-center justify-center min-h-[350px] w-full transition-colors">
-              <div id="canvas-wrapper" class="qr-mask-layer rounded-xl overflow-hidden shadow-inner flex items-center justify-center w-[320px] h-[360px] bg-white relative">
-    <div id="canvas-container"></div>
-    <div id="pixelping-watermark" style="position: absolute; bottom: 8px; font-size: 12px; font-weight: 700; color: #333; display: flex; align-items: center; justify-content: center; gap: 5px; font-family: monospace;">
-        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='96' fill='%23061a2b'/%3E%3Crect x='28' y='28' width='456' height='456' rx='80' fill='none' stroke='%230f3a5a' stroke-width='4'/%3E%3Crect x='96' y='96' width='96' height='96' rx='18' fill='%23dff4ff'/%3E%3Crect x='320' y='96' width='96' height='96' rx='18' fill='%23dff4ff'/%3E%3Crect x='96' y='288' width='96' height='96' rx='18' fill='%23dff4ff'/%3E%3Crect x='140' y='140' width='16' height='16' rx='4' fill='%2327cfff'/%3E%3C/svg%3E" style="width: 14px; height: 14px; border-radius: 3px;" alt="Logo"> Powered by PixelPing.app
-    </div>
-</div>
-<div id="live-label-preview" class="mt-4 font-bold text-slate-800 dark:text-white text-xl text-center hidden px-4 pb-2"></div>
-                <div id="dynamic-link-display" class="hidden w-full mt-2 bg-white dark:bg-slate-900 border-2 border-blue-400 dark:border-ppBlue rounded-xl p-3 shadow-lg flex flex-col items-center justify-center gap-2">
-    <span class="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest">Your Dynamic Route</span>
-    <div class="flex items-center gap-2 w-full">
-        <input type="text" id="shortlink-url" readonly value="https://link.pixelping.app/xyz" class="flex-1 bg-slate-50 dark:bg-slate-800 text-xs font-mono text-slate-700 dark:text-slate-200 px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none select-all">
-        <button id="btn-copy-link" class="bg-blue-600 dark:bg-ppBlue hover:bg-blue-700 dark:hover:bg-[#1bb5e0] text-white dark:text-ppBase px-4 py-2 rounded-lg font-bold text-xs transition-colors shadow-sm">Copy</button>
-    </div>
-</div>
-            </div>
-
+            <!-- MID-CANVAS: THE ENGINE ROOM (Moved from old Col 1) -->
             <div class="w-full flex flex-col gap-4">
-                <button id="btn-print" class="w-full bg-slate-800 dark:bg-slate-800 border border-yellow-500/40 hover:border-yellow-400 hover:bg-slate-700 text-yellow-500 font-bold py-3 px-4 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-lg group cursor-pointer">
-                    <svg class="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                
+                <!-- NOMAD STATE: The Power Ladder Teaser -->
+                <div id="nomad-teaser-box" onclick="openMasterKeyModal()" class="w-full p-4 bg-[#0f172a]/90 border border-yellow-500/40 rounded-xl shadow-[0_0_20px_rgba(234,179,8,0.15)] relative overflow-hidden group cursor-pointer hover:-translate-y-1 hover:border-yellow-400 transition-all duration-300 flex flex-col items-center text-center">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-300 to-yellow-600 shadow-[0_0_12px_rgba(234,179,8,0.9)] pointer-events-none"></div>
+                    <span class="mk-badge mb-2">Upgrade Engine</span>
+                    <h4 class="text-sm font-bold text-white uppercase tracking-widest mb-3">The Platform Architecture</h4>
+                    <div class="grid grid-cols-3 gap-2 w-full text-left">
+                        <div class="bg-slate-800/80 p-2 rounded border border-slate-700">
+                            <div class="text-[8px] text-slate-400 font-bold uppercase tracking-wider mb-1">Tier 1</div>
+                            <div class="text-[10px] font-bold text-white leading-tight">Zero-Friction Core</div>
+                        </div>
+                        <div class="bg-yellow-500/10 p-2 rounded border border-yellow-500/30">
+                            <div class="text-[8px] text-yellow-500 font-bold uppercase tracking-wider mb-1">Tier 2</div>
+                            <div class="text-[10px] font-bold text-yellow-400 leading-tight">Master Key</div>
+                        </div>
+                        <div class="bg-ppGreen/10 p-2 rounded border border-ppGreen/30">
+                            <div class="text-[8px] text-ppGreen font-bold uppercase tracking-wider mb-1">Tier 3</div>
+                            <div class="text-[10px] font-bold text-ppGreen leading-tight">Evolution</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- EVOLUTION STATE: Telemetry & Admin Portal -->
+                <div id="telemetry-dashboard" class="hidden w-full p-4 bg-[#061a2b] border border-ppGreen/40 rounded-xl shadow-[0_0_20px_rgba(60,255,143,0.1)] relative overflow-hidden flex flex-col">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-ppGreen shadow-[0_0_12px_rgba(60,255,143,0.8)] pointer-events-none"></div>
+                    <div class="flex justify-between items-center mb-3 border-b border-ppGreen/20 pb-2">
+                        <span class="text-[10px] font-mono text-ppGreen uppercase tracking-widest">● Live Telemetry</span>
+                        
+                        <!-- THE NEW EMBEDDED ADMIN PORTAL -->
+                        <a href="admin.html" target="_blank" class="flex items-center gap-1.5 text-[9px] font-mono text-slate-900 bg-ppGreen hover:bg-[#2ce07a] px-2 py-1 rounded transition-colors uppercase font-bold tracking-wider shadow-sm">
+                            ⚙️ Command Center
+                        </a>
+                    </div>
+                    <div class="grid grid-cols-3 gap-3">
+                        <div class="flex flex-col">
+                            <span class="text-[9px] text-slate-500 font-mono uppercase">30-Day Pings</span>
+                            <span id="ping-count" class="text-base font-bold text-white font-mono">0</span>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-[9px] text-slate-500 font-mono uppercase">Active Routes</span>
+                            <span id="route-count" class="text-base font-bold text-white font-mono">0</span>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-[9px] text-slate-500 font-mono uppercase">Top Link</span>
+                            <span id="top-link-display" class="text-xs font-bold text-ppBlue font-mono truncate mt-1">/none</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="w-full flex flex-col gap-3">
+                <button id="btn-print" class="w-full bg-slate-800 dark:bg-slate-800 border border-yellow-500/40 hover:border-yellow-400 hover:bg-slate-700 text-yellow-500 font-bold py-3 px-4 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-lg group cursor-pointer text-sm">
+                    <svg class="w-4 h-4 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
                     <span>Print Code & Label <span id="print-pro-badge" class="mk-badge">Master Key</span></span>
                 </button>
 
-                <button id="btn-main-action" class="w-full bg-gradient-to-r from-yellow-400 to-yellow-600 hover:from-yellow-300 hover:to-yellow-500 text-slate-900 font-extrabold py-3 px-4 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(234,179,8,0.2)] cursor-pointer">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                    <span>Save Code <span class="bg-slate-900 text-yellow-400 text-[10px] px-1.5 py-0.5 rounded ml-1 uppercase tracking-widest font-extrabold">Master Key</span></span>
+                <button id="btn-main-action" class="w-full bg-gradient-to-r from-yellow-400 to-yellow-600 hover:from-yellow-300 hover:to-yellow-500 text-slate-900 font-extrabold py-3 px-4 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(234,179,8,0.2)] cursor-pointer text-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    <span>Save Code <span class="bg-slate-900 text-yellow-400 text-[9px] px-1.5 py-0.5 rounded ml-1 uppercase tracking-widest font-extrabold">Master Key</span></span>
                 </button>
             </div>
 
-            <div class="mb-6 pt-4 border-t border-slate-200 dark:border-slate-700/50">
-    <label class="block text-xs text-slate-500 dark:text-ppLight font-bold uppercase tracking-wider mb-2">Export Format</label>
-    
-    <div class="flex gap-3">
-        <!-- EDUCATIONAL TOOLTIP WRAPPER -->
-        <div class="relative group flex-1">
-            <select id="export-format" class="w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg outline-none border border-slate-300 dark:border-slate-700 focus:border-[#2563eb] transition-colors cursor-pointer text-sm font-medium">
-                <option value="png">Standard Image (PNG)</option>
-                <option value="svg">Infinite Vector (SVG) [MASTER KEY]</option>
-                <option value="pdf">Document (PDF) [MASTER KEY]</option>
-            </select>
-            <div class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 hidden group-hover:block w-[220px] bg-slate-900 text-white text-[11px] p-3 rounded-lg shadow-xl z-50 text-center pointer-events-none border border-slate-700 before:content-[''] before:absolute before:top-full before:left-1/2 before:-translate-x-1/2 before:border-4 before:border-transparent before:border-t-slate-900 font-medium">
-                Need this for a massive billboard? Get infinite scaling with SVG export on Master Key.
+            <div class="w-full bg-white/50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-200 dark:border-slate-700/50">
+                <label class="block text-[10px] text-slate-500 dark:text-ppLight font-bold uppercase tracking-wider mb-2">Export Format</label>
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <div class="relative group flex-1">
+                        <select id="export-format" class="w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg outline-none border border-slate-300 dark:border-slate-700 focus:border-[#27cfff] transition-colors cursor-pointer text-xs font-medium">
+                            <option value="png">Standard Image (PNG)</option>
+                            <option value="svg">Infinite Vector (SVG) [MASTER KEY]</option>
+                            <option value="pdf">Document (PDF) [MASTER KEY]</option>
+                        </select>
+                        <div class="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 hidden group-hover:block w-[220px] bg-slate-900 text-white text-[11px] p-3 rounded-lg shadow-xl z-50 text-center pointer-events-none border border-slate-700 before:content-[''] before:absolute before:top-full before:left-1/2 before:-translate-x-1/2 before:border-4 before:border-transparent before:border-t-slate-900 font-medium">
+                            Need this for a massive billboard? Get infinite scaling with SVG export on Master Key.
+                        </div>
+                    </div>
+
+                    <button id="btn-download" class="px-4 py-2 bg-slate-800 dark:bg-slate-700 hover:bg-slate-700 dark:hover:bg-slate-600 text-white text-xs font-bold rounded-lg transition-transform active:scale-95 shadow-md flex items-center justify-center gap-2">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        Download
+                    </button>
+                </div>
             </div>
-        </div>
 
-        <button id="btn-download" class="px-5 py-2 bg-slate-800 dark:bg-slate-700 hover:bg-slate-700 dark:hover:bg-slate-600 text-white text-sm font-bold rounded-lg transition-transform active:scale-95 shadow-md flex items-center justify-center gap-2">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-            Download
-        </button>
-    </div>
-</div>
-
-            <div id="history-container" class="w-full mt-6 bg-slate-100 dark:bg-slate-800/40 rounded-2xl border-4 border-slate-300 dark:border-slate-700 p-5 flex-1 flex flex-col min-h-[300px] shadow-inner transition-colors">
-                <div class="flex justify-between items-end border-b-2 border-slate-200 dark:border-gray-700 pb-2 mb-4 uppercase tracking-wide">
-    <h3 class="text-sm font-medium text-blue-600 dark:text-ppBlue flex items-center">
-        <span>Recent Codes (Last 10)</span>
-        <span class="mk-badge">Master Key</span>
-    </h3>
-    <button id="btn-clear-history" class="text-[10px] uppercase tracking-wider font-bold text-slate-400 hover:text-red-500 transition-colors">
-        Clear All
-    </button>
-</div>
-                <div id="history-content" class="flex-1 flex flex-col overflow-y-auto max-h-[600px] pr-2">
+            <div id="history-container" class="w-full bg-slate-100 dark:bg-slate-800/40 rounded-xl border-2 border-slate-300 dark:border-slate-700 p-4 flex flex-col min-h-[200px] shadow-inner transition-colors">
+                <div class="flex justify-between items-end border-b border-slate-200 dark:border-gray-700 pb-2 mb-3 uppercase tracking-wide">
+                    <h3 class="text-xs font-medium text-blue-600 dark:text-ppBlue flex items-center">
+                        <span>Recent Codes (10)</span>
+                        <span class="mk-badge">Master Key</span>
+                    </h3>
+                    <button id="btn-clear-history" class="text-[9px] uppercase tracking-wider font-bold text-slate-400 hover:text-red-500 transition-colors">
+                        Clear All
+                    </button>
+                </div>
+                <div id="history-content" class="flex-1 flex flex-col overflow-y-auto max-h-[300px] pr-1 space-y-2">
                 </div>
             </div>
         </div>
     </main>
 
 <!-- PRICING SECTION START -->
-<section id="pricing-section" class="w-full bg-[#090d16] py-20 px-6 font-sans border-t border-slate-800 mt-8">
+<section id="pricing-section" class="w-full bg-[#061a2b] py-20 px-6 font-sans border-t border-slate-800 mt-8">
     <div class="max-w-6xl mx-auto">
         
         <div id="pricing-header" class="text-center mb-16">
@@ -684,21 +669,21 @@
             </div>
 
             <!-- TIER 3: EVOLUTION -->
-            <div id="card-tier-3" class="bg-[#0f3a5a]/40 border border-[]/40 rounded-3xl p-8 flex flex-col hover:border-[]/80 transition-colors relative shadow-[0_0_30px_rgba(60,255,143,0.05)] w-full">
-                <h3 class="text-[] text-xl font-bold uppercase tracking-wider mb-2">Evolution</h3>
+            <div id="card-tier-3" class="bg-[#0f3a5a]/40 border border-[#3cff8f]/40 rounded-3xl p-8 flex flex-col hover:border-[#3cff8f]/80 transition-colors relative shadow-[0_0_30px_rgba(60,255,143,0.05)] w-full">
+                <h3 class="text-[#3cff8f] text-xl font-bold uppercase tracking-wider mb-2">Evolution</h3>
                 <p class="text-slate-400 text-sm mb-6 h-10">Ignite the engine. Dynamic routing, live analytics, and total command over your field operations.</p>
                 <div class="mb-8 flex items-baseline">
                     <span class="text-4xl font-extrabold text-white">$39</span>
                     <span class="text-slate-500 text-sm font-medium ml-1">/ month</span>
                 </div>
                 <ul class="space-y-4 mb-8 flex-1 text-sm text-slate-300 font-medium">
-                    <li class="flex items-start gap-3"><span class="text-[]">✓</span> <span class="font-bold text-white">Everything in Master Key, plus:</span></li>
-                    <li class="flex items-start gap-3"><span class="text-[]">✓</span> Cloudflare Dynamic Routing</li>
-                    <li class="flex items-start gap-3"><span class="text-[]">✓</span> Live Scan Telemetry Dashboard</li>
-                    <li class="flex items-start gap-3"><span class="text-[]">✓</span> Admin Command Center Access</li>
-                    <li class="flex items-start gap-3"><span class="text-[]">✓</span> Cloud-Saved Link History</li>
+                    <li class="flex items-start gap-3"><span class="text-[#3cff8f]">✓</span> <span class="font-bold text-white">Everything in Master Key, plus:</span></li>
+                    <li class="flex items-start gap-3"><span class="text-[#3cff8f]">✓</span> Cloudflare Dynamic Routing</li>
+                    <li class="flex items-start gap-3"><span class="text-[#3cff8f]">✓</span> Live Scan Telemetry Dashboard</li>
+                    <li class="flex items-start gap-3"><span class="text-[#3cff8f]">✓</span> Admin Command Center Access</li>
+                    <li class="flex items-start gap-3"><span class="text-[#3cff8f]">✓</span> Cloud-Saved Link History</li>
                 </ul>
-                <button onclick="openEvolutionModal()" class="w-full text-center bg-[] hover:bg-[#2ce07a] text-slate-900 font-extrabold py-3 rounded-xl transition-colors shadow-[0_0_15px_rgba(60,255,143,0.2)] cursor-pointer">Subscribe to Evolution</button>
+                <button onclick="openEvolutionModal()" class="w-full text-center bg-[#3cff8f] hover:bg-[#2ce07a] text-slate-900 font-extrabold py-3 rounded-xl transition-colors shadow-[0_0_15px_rgba(60,255,143,0.2)] cursor-pointer">Subscribe to Evolution</button>
             </div>
 
         </div>
@@ -1069,13 +1054,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                     
                     const successHTML = `
                         <div id="key-reveal-overlay" style="position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;">
-                            <div style="background:#0f172a;border:2px solid ;border-radius:16px;padding:32px;max-width:420px;width:100%;text-align:center;box-shadow:0 20px 40px rgba(60,255,143,0.15);">
+                            <div style="background:#0f172a;border:2px solid #3cff8f;border-radius:16px;padding:32px;max-width:420px;width:100%;text-align:center;box-shadow:0 20px 40px rgba(60,255,143,0.15);">
                                 <div style="font-size:48px;margin-bottom:16px;">🎉</div>
                                 <h2 style="color:white;font-size:24px;font-weight:bold;margin-bottom:12px;">Payment Successful!</h2>
                                 <p style="color:#94a3b8;font-size:14px;margin-bottom:24px;line-height:1.5;">Your account has been upgraded. Below is your permanent offline license key—save it somewhere safe!</p>
                                 
                                 <div style="background:#1e293b;border:1px solid #334155;padding:16px;border-radius:12px;margin-bottom:24px;">
-                                    <code style="color:;font-size:20px;font-weight:bold;letter-spacing:2px;">${data.licenseKey || 'AUTO-UNLOCKED'}</code>
+                                    <code style="color:#3cff8f;font-size:20px;font-weight:bold;letter-spacing:2px;">${data.licenseKey || 'AUTO-UNLOCKED'}</code>
                                 </div>
                                 
                                 <button onclick="navigator.clipboard.writeText('${data.licenseKey || ''}'); this.innerText='✓ Copied to Clipboard'; this.style.background='#22c55e';" style="background:#3b82f6;color:white;border:none;padding:14px 24px;border-radius:10px;font-weight:bold;cursor:pointer;width:100%;margin-bottom:16px;transition:all 0.2s;">Copy License Key</button>
@@ -1159,7 +1144,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             const defaults = {
                 cornersType: 'dot', mask: 'none', icon: '',
-                colorDots: '#2563eb', colorCorners: '', colorBg: '#ffffff'
+                colorDots: '#27cfff', colorCorners: '#3cff8f', colorBg: '#ffffff'
             };
 
             const savedBrandKit = JSON.parse(localStorage.getItem('pixelping-brand-kit'));
@@ -2205,16 +2190,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     iconMoon.classList.add('hidden'); 
                 } 
             });
-
-            // const bgContainer = document.getElementById('pixel-bg');
-            // const colors = ['#2563eb', '', '#0f3a5a'];
-            // for(let i=0; i<20; i++) {
-            //     let div = document.createElement('div'); div.className = 'floating-pixel';
-            //     let size = Math.random() * 20 + 10; div.style.width = size + 'px'; div.style.height = size + 'px';
-            //     div.style.left = Math.random() * 100 + 'vw'; div.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-            //     div.style.animationDelay = (Math.random() * 8) + 's'; div.style.animationDuration = (Math.random() * 6 + 6) + 's';
-            //     bgContainer.appendChild(div);
-           // }
         });
 
     if (document.getElementById('mode-static') && document.getElementById('mode-dynamic')) {
@@ -2322,7 +2297,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     await window.Clerk.load({
                         appearance: {
                             baseTheme: document.documentElement.classList.contains('dark') ? 'dark' : 'light',
-                            variables: { colorPrimary: '#2563eb' }
+                            variables: { colorPrimary: '#27cfff' }
                         }
                     });
                     
