@@ -19,11 +19,11 @@
             theme: {
                 extend: {
                     colors: {
-                        ppBase: '#061a2b',
+                        ppBase: '#090d16',
                         ppDark: '#0f3a5a',
                         ppLight: '#dff4ff',
-                        ppBlue: '#27cfff',
-                        ppGreen: '#3cff8f'
+                        ppBlue: '#2563eb',
+                        ppGreen: ''
                     }
                 }
             }
@@ -32,14 +32,14 @@
 
     <style>
         /* Base & Inputs */
-        input[type=range] { accent-color: #27cfff; }
+        input[type=range] { accent-color: #2563eb; }
         input[type=color] { border: none; padding: 0; background: none; }
         input[type=color]::-webkit-color-swatch-wrapper { padding: 0; }
         input[type=color]::-webkit-color-swatch { border: 2px solid #0f3a5a; border-radius: 0.5rem; }
 
         /* Background Eye Candy */
         .pixel-bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; background-color: #f8fafc; transition: background-color 0.3s; }
-        .dark .pixel-bg { background-color: #061a2b; background-image: radial-gradient(#0f3a5a 1px, transparent 1px); background-size: 30px 30px; }
+        .dark .pixel-bg { background-color: #090d16; background-image: radial-gradient(#0f3a5a 1px, transparent 1px); background-size: 30px 30px; }
         .floating-pixel { position: absolute; border-radius: 4px; opacity: 0; animation: floatUp infinite linear; }
         @keyframes floatUp { 0% { transform: translateY(100vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.4; } 90% { opacity: 0.4; } 100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; } }
 
@@ -53,7 +53,7 @@
 
         /* Tier Badges (Master Key & Evolution) */
         .mk-badge { background: linear-gradient(to right, #facc15, #ca8a04); color: #0f172a; font-size: 9px; padding: 3px 6px; border-radius: 4px; margin-left: 8px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; display: inline-block; vertical-align: middle; white-space: nowrap; box-shadow: 0 1px 2px rgba(0,0,0,0.15); }
-        .evo-badge { background: #3cff8f; color: #061a2b; font-size: 9px; padding: 3px 6px; border-radius: 4px; margin-left: 8px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; display: inline-block; vertical-align: middle; white-space: nowrap; box-shadow: 0 1px 2px rgba(0,0,0,0.15); }
+        .evo-badge { background: ; color: #090d16; font-size: 9px; padding: 3px 6px; border-radius: 4px; margin-left: 8px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; display: inline-block; vertical-align: middle; white-space: nowrap; box-shadow: 0 1px 2px rgba(0,0,0,0.15); }
         
         /* The Gatekeeper Hide Rule */
         .pro-hidden .mk-badge { display: none !important; }
@@ -142,14 +142,14 @@
     <header class="w-full max-w-5xl mb-8 mt-14 flex items-center justify-between z-10 relative">
         <div class="flex items-center gap-4">
             <svg class="w-10 h-10 md:w-12 md:h-12" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                <rect width="512" height="512" rx="96" fill="#061a2b"/>
+                <rect width="512" height="512" rx="96" fill="#090d16"/>
                 <rect x="28" y="28" width="456" height="456" rx="80" fill="none" stroke="#0f3a5a" stroke-width="4"/>
                 <rect x="96" y="96" width="96" height="96" rx="18" fill="#dff4ff"/>
                 <rect x="320" y="96" width="96" height="96" rx="18" fill="#dff4ff"/>
                 <rect x="96" y="288" width="96" height="96" rx="18" fill="#dff4ff"/>
-                <rect x="140" y="140" width="16" height="16" rx="4" fill="#27cfff"/>
-                <rect x="364" y="140" width="16" height="16" rx="4" fill="#27cfff"/>
-                <rect x="140" y="332" width="16" height="16" rx="4" fill="#3cff8f"/>
+                <rect x="140" y="140" width="16" height="16" rx="4" fill="#2563eb"/>
+                <rect x="364" y="140" width="16" height="16" rx="4" fill="#2563eb"/>
+                <rect x="140" y="332" width="16" height="16" rx="4" fill=""/>
             </svg>
         <div>
             <h1 id="main-title" class="text-2xl md:text-3xl font-bold tracking-wide text-slate-900 dark:text-white transition-colors">PixelPing</h1>
@@ -502,7 +502,7 @@
         </div>
 
         <!-- EVOLUTION STATE: Telemetry & Admin Portal -->
-        <div id="telemetry-dashboard" class="hidden w-full p-5 bg-[#061a2b] border border-ppGreen/40 rounded-xl shadow-[0_0_20px_rgba(60,255,143,0.1)] relative overflow-hidden flex flex-col">
+        <div id="telemetry-dashboard" class="hidden w-full p-5 bg-[#090d16] border border-ppGreen/40 rounded-xl shadow-[0_0_20px_rgba(60,255,143,0.1)] relative overflow-hidden flex flex-col">
             <div class="absolute top-0 left-0 w-full h-1 bg-ppGreen shadow-[0_0_12px_rgba(60,255,143,0.8)] pointer-events-none"></div>
             <div class="flex justify-between items-center mb-4 border-b border-ppGreen/20 pb-2">
                 <span class="text-xs font-mono text-ppGreen uppercase tracking-widest">● Live Telemetry</span>
@@ -575,7 +575,7 @@
     <div class="flex gap-3">
         <!-- EDUCATIONAL TOOLTIP WRAPPER -->
         <div class="relative group flex-1">
-            <select id="export-format" class="w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg outline-none border border-slate-300 dark:border-slate-700 focus:border-[#27cfff] transition-colors cursor-pointer text-sm font-medium">
+            <select id="export-format" class="w-full bg-white dark:bg-ppBase text-slate-900 dark:text-white px-3 py-2 rounded-lg outline-none border border-slate-300 dark:border-slate-700 focus:border-[#2563eb] transition-colors cursor-pointer text-sm font-medium">
                 <option value="png">Standard Image (PNG)</option>
                 <option value="svg">Infinite Vector (SVG) [MASTER KEY]</option>
                 <option value="pdf">Document (PDF) [MASTER KEY]</option>
@@ -609,7 +609,7 @@
     </main>
 
 <!-- PRICING SECTION START -->
-<section id="pricing-section" class="w-full bg-[#061a2b] py-20 px-6 font-sans border-t border-slate-800 mt-8">
+<section id="pricing-section" class="w-full bg-[#090d16] py-20 px-6 font-sans border-t border-slate-800 mt-8">
     <div class="max-w-6xl mx-auto">
         
         <div id="pricing-header" class="text-center mb-16">
@@ -657,21 +657,21 @@
             </div>
 
             <!-- TIER 3: EVOLUTION -->
-            <div id="card-tier-3" class="bg-[#0f3a5a]/40 border border-[#3cff8f]/40 rounded-3xl p-8 flex flex-col hover:border-[#3cff8f]/80 transition-colors relative shadow-[0_0_30px_rgba(60,255,143,0.05)] w-full">
-                <h3 class="text-[#3cff8f] text-xl font-bold uppercase tracking-wider mb-2">Evolution</h3>
+            <div id="card-tier-3" class="bg-[#0f3a5a]/40 border border-[]/40 rounded-3xl p-8 flex flex-col hover:border-[]/80 transition-colors relative shadow-[0_0_30px_rgba(60,255,143,0.05)] w-full">
+                <h3 class="text-[] text-xl font-bold uppercase tracking-wider mb-2">Evolution</h3>
                 <p class="text-slate-400 text-sm mb-6 h-10">Ignite the engine. Dynamic routing, live analytics, and total command over your field operations.</p>
                 <div class="mb-8 flex items-baseline">
                     <span class="text-4xl font-extrabold text-white">$39</span>
                     <span class="text-slate-500 text-sm font-medium ml-1">/ month</span>
                 </div>
                 <ul class="space-y-4 mb-8 flex-1 text-sm text-slate-300 font-medium">
-                    <li class="flex items-start gap-3"><span class="text-[#3cff8f]">✓</span> <span class="font-bold text-white">Everything in Master Key, plus:</span></li>
-                    <li class="flex items-start gap-3"><span class="text-[#3cff8f]">✓</span> Cloudflare Dynamic Routing</li>
-                    <li class="flex items-start gap-3"><span class="text-[#3cff8f]">✓</span> Live Scan Telemetry Dashboard</li>
-                    <li class="flex items-start gap-3"><span class="text-[#3cff8f]">✓</span> Admin Command Center Access</li>
-                    <li class="flex items-start gap-3"><span class="text-[#3cff8f]">✓</span> Cloud-Saved Link History</li>
+                    <li class="flex items-start gap-3"><span class="text-[]">✓</span> <span class="font-bold text-white">Everything in Master Key, plus:</span></li>
+                    <li class="flex items-start gap-3"><span class="text-[]">✓</span> Cloudflare Dynamic Routing</li>
+                    <li class="flex items-start gap-3"><span class="text-[]">✓</span> Live Scan Telemetry Dashboard</li>
+                    <li class="flex items-start gap-3"><span class="text-[]">✓</span> Admin Command Center Access</li>
+                    <li class="flex items-start gap-3"><span class="text-[]">✓</span> Cloud-Saved Link History</li>
                 </ul>
-                <button onclick="openEvolutionModal()" class="w-full text-center bg-[#3cff8f] hover:bg-[#2ce07a] text-slate-900 font-extrabold py-3 rounded-xl transition-colors shadow-[0_0_15px_rgba(60,255,143,0.2)] cursor-pointer">Subscribe to Evolution</button>
+                <button onclick="openEvolutionModal()" class="w-full text-center bg-[] hover:bg-[#2ce07a] text-slate-900 font-extrabold py-3 rounded-xl transition-colors shadow-[0_0_15px_rgba(60,255,143,0.2)] cursor-pointer">Subscribe to Evolution</button>
             </div>
 
         </div>
@@ -1042,13 +1042,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                     
                     const successHTML = `
                         <div id="key-reveal-overlay" style="position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;">
-                            <div style="background:#0f172a;border:2px solid #3cff8f;border-radius:16px;padding:32px;max-width:420px;width:100%;text-align:center;box-shadow:0 20px 40px rgba(60,255,143,0.15);">
+                            <div style="background:#0f172a;border:2px solid ;border-radius:16px;padding:32px;max-width:420px;width:100%;text-align:center;box-shadow:0 20px 40px rgba(60,255,143,0.15);">
                                 <div style="font-size:48px;margin-bottom:16px;">🎉</div>
                                 <h2 style="color:white;font-size:24px;font-weight:bold;margin-bottom:12px;">Payment Successful!</h2>
                                 <p style="color:#94a3b8;font-size:14px;margin-bottom:24px;line-height:1.5;">Your account has been upgraded. Below is your permanent offline license key—save it somewhere safe!</p>
                                 
                                 <div style="background:#1e293b;border:1px solid #334155;padding:16px;border-radius:12px;margin-bottom:24px;">
-                                    <code style="color:#3cff8f;font-size:20px;font-weight:bold;letter-spacing:2px;">${data.licenseKey || 'AUTO-UNLOCKED'}</code>
+                                    <code style="color:;font-size:20px;font-weight:bold;letter-spacing:2px;">${data.licenseKey || 'AUTO-UNLOCKED'}</code>
                                 </div>
                                 
                                 <button onclick="navigator.clipboard.writeText('${data.licenseKey || ''}'); this.innerText='✓ Copied to Clipboard'; this.style.background='#22c55e';" style="background:#3b82f6;color:white;border:none;padding:14px 24px;border-radius:10px;font-weight:bold;cursor:pointer;width:100%;margin-bottom:16px;transition:all 0.2s;">Copy License Key</button>
@@ -1132,7 +1132,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             const defaults = {
                 cornersType: 'dot', mask: 'none', icon: '',
-                colorDots: '#27cfff', colorCorners: '#3cff8f', colorBg: '#ffffff'
+                colorDots: '#2563eb', colorCorners: '', colorBg: '#ffffff'
             };
 
             const savedBrandKit = JSON.parse(localStorage.getItem('pixelping-brand-kit'));
@@ -2180,7 +2180,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
 
             // const bgContainer = document.getElementById('pixel-bg');
-            // const colors = ['#27cfff', '#3cff8f', '#0f3a5a'];
+            // const colors = ['#2563eb', '', '#0f3a5a'];
             // for(let i=0; i<20; i++) {
             //     let div = document.createElement('div'); div.className = 'floating-pixel';
             //     let size = Math.random() * 20 + 10; div.style.width = size + 'px'; div.style.height = size + 'px';
@@ -2295,7 +2295,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     await window.Clerk.load({
                         appearance: {
                             baseTheme: document.documentElement.classList.contains('dark') ? 'dark' : 'light',
-                            variables: { colorPrimary: '#27cfff' }
+                            variables: { colorPrimary: '#2563eb' }
                         }
                     });
                     
