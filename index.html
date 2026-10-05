@@ -8,7 +8,7 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='96' fill='%23061a2b'/%3E%3Crect x='28' y='28' width='456' height='456' rx='80' fill='none' stroke='%230f3a5a' stroke-width='4'/%3E%3Crect x='96' y='96' width='96' height='96' rx='18' fill='%23dff4ff'/%3E%3Crect x='320' y='96' width='96' height='96' rx='18' fill='%23dff4ff'/%3E%3Crect x='96' y='288' width='96' height='96' rx='18' fill='%23dff4ff'/%3E%3Crect x='140' y='140' width='16' height='16' rx='4' fill='%2327cfff'/%3E%3C/svg%3E">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='48' fill='%23061a2b'/%3E%3Crect x='28' y='28' width='456' height='456' rx='32' fill='none' stroke='%230f3a5a' stroke-width='4'/%3E%3Crect x='96' y='96' width='96' height='96' rx='16' fill='%23dff4ff'/%3E%3Crect x='320' y='96' width='96' height='96' rx='16' fill='%23dff4ff'/%3E%3Crect x='96' y='288' width='96' height='96' rx='16' fill='%23dff4ff'/%3E%3Crect x='140' y='140' width='16' height='16' rx='4' fill='%2327cfff'/%3E%3C/svg%3E">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
@@ -37,7 +37,8 @@
         input[type=color]::-webkit-color-swatch { border: 2px solid #e2e8f0; border-radius: 0.5rem; }
         .dark input[type=color]::-webkit-color-swatch { border-color: #334155; }
 
-        .pixel-bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; background-color: #f7f8fa; transition: background-color 0.3s; }
+        /* Slightly darkened background for QRFY pop */
+        .pixel-bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; background-color: #f1f5f9; transition: background-color 0.3s; }
         .dark .pixel-bg { background-color: #061a2b; background-image: radial-gradient(#0f3a5a 1px, transparent 1px); background-size: 30px 30px; }
         
         .qr-mask-layer { -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; mask-size: contain; mask-repeat: no-repeat; mask-position: center; transition: -webkit-mask-image 0.3s ease; }
@@ -62,319 +63,239 @@
         .proxy-btn { transition: all 0.2s ease; cursor: pointer; }
     </style>
 </head>
-<body class="text-slate-900 dark:text-ppLight min-h-screen font-sans antialiased flex flex-col items-center p-4 md:p-8 transition-colors duration-300 relative z-0">
+<body class="text-slate-900 dark:text-ppLight min-h-screen font-sans antialiased flex flex-col items-center p-4 transition-colors duration-300 relative z-0">
 
-    <div id="network-ticker" class="fixed top-2 left-0 w-full z-50 flex items-center h-10 bg-slate-900/95 border-y border-slate-800 backdrop-blur-md shadow-lg transition-all">
+    <div id="network-ticker" class="fixed top-2 left-0 w-full z-50 flex items-center h-8 bg-slate-900/95 border-y border-slate-800 backdrop-blur-md shadow-lg transition-all">
         <div class="ticker-container h-full">
-            <div class="ticker-track text-xs font-mono text-slate-400 tracking-widest uppercase">
+            <div class="ticker-track text-[10px] font-mono text-slate-400 tracking-widest uppercase">
                 <span class="mx-4 text-green-400">● ALL GENERATION ARRAYS ONLINE</span> | 
                 <span class="mx-4">Zero-redirect static mode active.</span> | 
                 <span class="mx-4">Need to encrypt local data? <a href="https://sscf.app/privacy-vault.html" target="_blank" class="text-ppBlue hover:text-white transition-colors underline decoration-ppBlue/50 cursor-pointer">Secure your files offline with Privacy_Vault ↗</a></span> | 
                 <span class="mx-4 text-yellow-500">Evolution Tier routing active for 42 new businesses today.</span>
             </div>
         </div>
-        <button id="btn-ticker-toggle" class="absolute right-2 md:right-6 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold px-3 py-1.5 rounded border border-slate-600 transition-colors z-50 flex items-center justify-center min-w-[36px] tracking-widest shadow-md">II</button>
+        <button id="btn-ticker-toggle" class="absolute right-2 md:right-6 bg-slate-800 hover:bg-slate-700 text-slate-300 text-[10px] font-bold px-2 py-1 rounded border border-slate-600 transition-colors z-50 flex items-center justify-center min-w-[28px] tracking-widest shadow-md">II</button>
     </div>
 
     <div class="pixel-bg" id="pixel-bg"></div>
 
-    <header class="w-full max-w-6xl mb-6 mt-14 flex items-center justify-between z-10 relative">
-        <div class="flex items-center gap-4">
-            <svg class="w-10 h-10 md:w-12 md:h-12 shadow-sm rounded-[18px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                <rect width="512" height="512" rx="96" fill="#061a2b"/>
-                <rect x="28" y="28" width="456" height="456" rx="80" fill="none" stroke="#0f3a5a" stroke-width="4"/>
-                <rect x="96" y="96" width="96" height="96" rx="18" fill="#dff4ff"/>
-                <rect x="320" y="96" width="96" height="96" rx="18" fill="#dff4ff"/>
-                <rect x="96" y="288" width="96" height="96" rx="18" fill="#dff4ff"/>
+    <header class="w-full max-w-6xl mb-4 mt-12 flex items-center justify-between z-10 relative">
+        <div class="flex items-center gap-3">
+            <!-- Squared Off Logo -->
+            <svg class="w-9 h-9 md:w-11 md:h-11 shadow-sm rounded-xl" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <rect width="512" height="512" rx="48" fill="#061a2b"/>
+                <rect x="28" y="28" width="456" height="456" rx="32" fill="none" stroke="#0f3a5a" stroke-width="4"/>
+                <rect x="96" y="96" width="96" height="96" rx="16" fill="#dff4ff"/>
+                <rect x="320" y="96" width="96" height="96" rx="16" fill="#dff4ff"/>
+                <rect x="96" y="288" width="96" height="96" rx="16" fill="#dff4ff"/>
                 <rect x="140" y="140" width="16" height="16" rx="4" fill="#27cfff"/>
                 <rect x="364" y="140" width="16" height="16" rx="4" fill="#27cfff"/>
                 <rect x="140" y="332" width="16" height="16" rx="4" fill="#3cff8f"/>
             </svg>
         <div>
-            <h1 id="main-title" class="text-2xl md:text-3xl font-black tracking-tight text-slate-900 dark:text-white transition-colors">PixelPing</h1>
-            <p id="sub-title" class="text-blue-600 dark:text-ppGreen text-xs tracking-[0.2em] font-bold uppercase mt-1">Generate &bull; Scan &bull; Share</p>
+            <h1 id="main-title" class="text-xl md:text-2xl font-black tracking-tight text-slate-900 dark:text-white transition-colors">PixelPing</h1>
+            <p id="sub-title" class="text-blue-600 dark:text-ppGreen text-[10px] tracking-[0.2em] font-bold uppercase mt-0.5">Generate &bull; Scan &bull; Share</p>
         </div>
     </div>
 
-    <div class="flex items-center gap-3">
-            <button id="btn-buy-master-key" class="px-4 py-2 bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-yellow-900 text-[11px] md:text-xs font-black rounded-full transition-transform active:scale-95 shadow-sm uppercase tracking-wider border border-yellow-300">Get Master Key</button>
-            <div id="auth-container" class="flex items-center justify-center min-w-[70px]">
-                <button id="btn-sign-in" class="text-[11px] md:text-xs font-bold text-blue-600 dark:text-ppBlue hover:underline tracking-wider uppercase transition-colors">Sign In</button>
+    <div class="flex items-center gap-2 md:gap-3">
+            <button id="btn-buy-master-key" class="px-3 py-1.5 bg-gradient-to-r from-yellow-400 to-yellow-500 hover:from-yellow-500 hover:to-yellow-600 text-yellow-900 text-[10px] md:text-xs font-black rounded-full transition-transform active:scale-95 shadow-sm uppercase tracking-wider border border-yellow-300">Get Master Key</button>
+            <div id="auth-container" class="flex items-center justify-center min-w-[60px]">
+                <button id="btn-sign-in" class="text-[10px] md:text-[11px] font-bold text-blue-600 dark:text-ppBlue hover:underline tracking-wider uppercase transition-colors">Sign In</button>
                 <div id="user-button-mount" class="hidden"></div>
             </div>
-            <button id="themeToggle" class="w-10 h-10 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-slate-50 transition-colors">
-                <svg id="icon-sun" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                <svg id="icon-moon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+            <button id="themeToggle" class="w-8 h-8 md:w-9 md:h-9 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-slate-50 transition-colors">
+                <svg id="icon-sun" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                <svg id="icon-moon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
             </button>
         </div>
     </header>
 
     <!-- THE STUDIO: ONE MASTER CONTAINER -->
-    <main id="app-container" class="w-full max-w-6xl mx-auto bg-white dark:bg-[#0b1622] rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-2xl border border-slate-200 dark:border-slate-800 flex flex-col z-10 relative mb-12 overflow-hidden">
+    <main id="app-container" class="w-full max-w-6xl mx-auto bg-white dark:bg-[#0b1622] rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:shadow-2xl border border-slate-200 dark:border-slate-800 flex flex-col z-10 relative mb-12 overflow-hidden">
         
-        <!-- TOP BAR: HORIZONTAL PROXY PILLS FOR PAYLOADS -->
-        <div class="w-full border-b border-slate-100 dark:border-slate-800/80 p-4 md:px-8 bg-slate-50/50 dark:bg-slate-900/50">
-            <div class="flex gap-2 overflow-x-auto hide-scrollbar w-full items-center">
-                <button type="button" class="proxy-payload proxy-btn whitespace-nowrap px-4 py-2.5 rounded-xl border-2 font-bold text-sm transition-all bg-blue-50 border-blue-500 text-blue-700 dark:bg-blue-900/40 dark:border-blue-500 dark:text-blue-300" data-target="url">🌐 Website</button>
-                <button type="button" class="proxy-payload proxy-btn whitespace-nowrap px-4 py-2.5 rounded-xl border-2 font-semibold text-sm transition-all bg-white border-slate-200 text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 hover:border-slate-300" data-target="tel">📞 Phone</button>
-                <button type="button" class="proxy-payload proxy-btn whitespace-nowrap px-4 py-2.5 rounded-xl border-2 font-semibold text-sm transition-all bg-white border-slate-200 text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 hover:border-slate-300" data-target="text">📝 Text</button>
-                <button type="button" class="proxy-payload proxy-btn whitespace-nowrap px-4 py-2.5 rounded-xl border-2 font-semibold text-sm transition-all bg-white border-slate-200 text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 hover:border-slate-300 flex items-center gap-1.5" data-target="wifi">📶 Wi-Fi <span class="text-amber-500 text-xs">🔒</span></button>
-                <button type="button" class="proxy-payload proxy-btn whitespace-nowrap px-4 py-2.5 rounded-xl border-2 font-semibold text-sm transition-all bg-white border-slate-200 text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 hover:border-slate-300 flex items-center gap-1.5" data-target="vcard">📇 vCard <span class="text-amber-500 text-xs">🔒</span></button>
-                <button type="button" class="proxy-payload proxy-btn whitespace-nowrap px-4 py-2.5 rounded-xl border-2 font-semibold text-sm transition-all bg-white border-slate-200 text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 hover:border-slate-300 flex items-center gap-1.5" data-target="crypto">₿ Crypto <span class="text-amber-500 text-xs">🔒</span></button>
-                <button type="button" class="proxy-payload proxy-btn whitespace-nowrap px-4 py-2.5 rounded-xl border-2 font-semibold text-sm transition-all bg-white border-slate-200 text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 hover:border-slate-300 flex items-center gap-1.5" data-target="email">✉️ Email <span class="text-amber-500 text-xs">🔒</span></button>
-                <button type="button" class="proxy-payload proxy-btn whitespace-nowrap px-4 py-2.5 rounded-xl border-2 font-semibold text-sm transition-all bg-white border-slate-200 text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 hover:border-slate-300 flex items-center gap-1.5" data-target="sms">💬 SMS <span class="text-amber-500 text-xs">🔒</span></button>
-                <button type="button" class="proxy-payload proxy-btn whitespace-nowrap px-4 py-2.5 rounded-xl border-2 font-semibold text-sm transition-all bg-white border-slate-200 text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 hover:border-slate-300 flex items-center gap-1.5" data-target="calendar">📅 Event <span class="text-amber-500 text-xs">🔒</span></button>
-                <button type="button" class="proxy-payload proxy-btn whitespace-nowrap px-4 py-2.5 rounded-xl border-2 font-semibold text-sm transition-all bg-white border-slate-200 text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 hover:border-slate-300 flex items-center gap-1.5" data-target="geo">📍 Location <span class="text-amber-500 text-xs">🔒</span></button>
+        <!-- TOP BAR: HORIZONTAL PROXY PILLS -->
+        <div class="w-full border-b border-slate-100 dark:border-slate-800/80 p-3 md:px-6 bg-white/50 dark:bg-slate-900/50">
+            <!-- Shrunk padding, tighter fonts, ensured scrolling works -->
+            <div class="flex gap-2 overflow-x-auto hide-scrollbar w-full items-center pb-1">
+                <button type="button" class="proxy-payload proxy-btn whitespace-nowrap px-3 py-1.5 rounded-lg border-2 font-bold text-xs transition-all bg-blue-50 border-blue-500 text-blue-700 dark:bg-blue-900/40 dark:border-blue-500 dark:text-blue-300" data-target="url">🌐 Website</button>
+                <button type="button" class="proxy-payload proxy-btn whitespace-nowrap px-3 py-1.5 rounded-lg border border-slate-200 font-semibold text-xs transition-all bg-white text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 hover:border-slate-300" data-target="tel">📞 Phone</button>
+                <button type="button" class="proxy-payload proxy-btn whitespace-nowrap px-3 py-1.5 rounded-lg border border-slate-200 font-semibold text-xs transition-all bg-white text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 hover:border-slate-300" data-target="text">📝 Text</button>
+                <button type="button" class="proxy-payload proxy-btn whitespace-nowrap px-3 py-1.5 rounded-lg border border-slate-200 font-semibold text-xs transition-all bg-white text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 hover:border-slate-300 flex items-center gap-1.5" data-target="wifi">📶 Wi-Fi <span class="text-amber-500 text-[10px]">🔒</span></button>
+                <button type="button" class="proxy-payload proxy-btn whitespace-nowrap px-3 py-1.5 rounded-lg border border-slate-200 font-semibold text-xs transition-all bg-white text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 hover:border-slate-300 flex items-center gap-1.5" data-target="vcard">📇 vCard <span class="text-amber-500 text-[10px]">🔒</span></button>
+                <button type="button" class="proxy-payload proxy-btn whitespace-nowrap px-3 py-1.5 rounded-lg border border-slate-200 font-semibold text-xs transition-all bg-white text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 hover:border-slate-300 flex items-center gap-1.5" data-target="crypto">₿ Crypto <span class="text-amber-500 text-[10px]">🔒</span></button>
+                <button type="button" class="proxy-payload proxy-btn whitespace-nowrap px-3 py-1.5 rounded-lg border border-slate-200 font-semibold text-xs transition-all bg-white text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 hover:border-slate-300 flex items-center gap-1.5" data-target="email">✉️ Email <span class="text-amber-500 text-[10px]">🔒</span></button>
+                <button type="button" class="proxy-payload proxy-btn whitespace-nowrap px-3 py-1.5 rounded-lg border border-slate-200 font-semibold text-xs transition-all bg-white text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 hover:border-slate-300 flex items-center gap-1.5" data-target="sms">💬 SMS <span class="text-amber-500 text-[10px]">🔒</span></button>
+                <button type="button" class="proxy-payload proxy-btn whitespace-nowrap px-3 py-1.5 rounded-lg border border-slate-200 font-semibold text-xs transition-all bg-white text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 hover:border-slate-300 flex items-center gap-1.5" data-target="calendar">📅 Event <span class="text-amber-500 text-[10px]">🔒</span></button>
+                <button type="button" class="proxy-payload proxy-btn whitespace-nowrap px-3 py-1.5 rounded-lg border border-slate-200 font-semibold text-xs transition-all bg-white text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 hover:border-slate-300 flex items-center gap-1.5" data-target="geo">📍 Location <span class="text-amber-500 text-[10px]">🔒</span></button>
                 <!-- Business Suite -->
-                <button type="button" class="proxy-payload proxy-btn whitespace-nowrap px-4 py-2.5 rounded-xl border-2 font-semibold text-sm transition-all bg-white border-slate-200 text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 hover:border-slate-300 flex items-center gap-1.5" data-target="review">⭐ Review <span class="text-amber-500 text-xs">🔒</span></button>
-                <button type="button" class="proxy-payload proxy-btn whitespace-nowrap px-4 py-2.5 rounded-xl border-2 font-semibold text-sm transition-all bg-white border-slate-200 text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 hover:border-slate-300 flex items-center gap-1.5" data-target="social">👍 Social <span class="text-amber-500 text-xs">🔒</span></button>
-                <button type="button" class="proxy-payload proxy-btn whitespace-nowrap px-4 py-2.5 rounded-xl border-2 font-semibold text-sm transition-all bg-white border-slate-200 text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 hover:border-slate-300 flex items-center gap-1.5" data-target="menu">🍽️ Menu <span class="text-amber-500 text-xs">🔒</span></button>
+                <button type="button" class="proxy-payload proxy-btn whitespace-nowrap px-3 py-1.5 rounded-lg border border-slate-200 font-semibold text-xs transition-all bg-white text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 hover:border-slate-300 flex items-center gap-1.5" data-target="review">⭐ Review <span class="text-amber-500 text-[10px]">🔒</span></button>
+                <button type="button" class="proxy-payload proxy-btn whitespace-nowrap px-3 py-1.5 rounded-lg border border-slate-200 font-semibold text-xs transition-all bg-white text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 hover:border-slate-300 flex items-center gap-1.5" data-target="social">👍 Social <span class="text-amber-500 text-[10px]">🔒</span></button>
+                <button type="button" class="proxy-payload proxy-btn whitespace-nowrap px-3 py-1.5 rounded-lg border border-slate-200 font-semibold text-xs transition-all bg-white text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 hover:border-slate-300 flex items-center gap-1.5" data-target="menu">🍽️ Menu <span class="text-amber-500 text-[10px]">🔒</span></button>
             </div>
         </div>
 
-        <!-- HIDDEN MASTER PAYLOAD SELECTOR (Keeps JS Alive) -->
+        <!-- HIDDEN MASTER PAYLOAD SELECTOR -->
         <select id="payload-type" class="hidden">
-            <option value="url">URL</option>
-            <option value="tel">Phone</option>
-            <option value="text">Text</option>
-            <option value="wifi">Wi-Fi</option>
-            <option value="vcard">vCard</option>
-            <option value="sms">SMS</option>
-            <option value="email">Email</option>
-            <option value="calendar">Calendar</option>
-            <option value="geo">Geo</option>
-            <option value="crypto">Crypto</option>
-            <option value="review">Review</option>
-            <option value="social">Social</option>
-            <option value="menu">Menu</option>
-            <option value="booking">Booking</option>
-            <option value="coupon">Coupon</option>
+            <option value="url">URL</option><option value="tel">Phone</option><option value="text">Text</option><option value="wifi">Wi-Fi</option><option value="vcard">vCard</option><option value="sms">SMS</option><option value="email">Email</option><option value="calendar">Calendar</option><option value="geo">Geo</option><option value="crypto">Crypto</option><option value="review">Review</option><option value="social">Social</option><option value="menu">Menu</option><option value="booking">Booking</option><option value="coupon">Coupon</option>
         </select>
 
         <!-- 60/40 SPLIT CONTAINER -->
         <div class="flex flex-col md:flex-row w-full">
             
             <!-- LEFT PANEL: 60% WIDTH (CONTENT & DESIGN) -->
-            <div class="w-full md:w-3/5 p-6 md:p-10 border-b md:border-b-0 md:border-r border-slate-100 dark:border-slate-800 flex flex-col">
+            <div class="w-full md:w-3/5 p-5 md:p-8 border-b md:border-b-0 md:border-r border-slate-100 dark:border-slate-800 flex flex-col">
                 
                 <!-- SECTION 1: CONTENT -->
-                <div class="mb-12">
-                    <div class="flex items-center justify-between mb-6">
-                        <h2 class="text-xl font-bold flex items-center gap-3 text-slate-900 dark:text-white">
-                            <span class="bg-slate-900 dark:bg-white text-white dark:text-slate-900 w-7 h-7 rounded flex items-center justify-center text-sm">1</span> 
+                <div class="mb-8">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-lg font-bold flex items-center gap-2 text-slate-900 dark:text-white">
+                            <span class="bg-slate-900 dark:bg-white text-white dark:text-slate-900 w-6 h-6 rounded flex items-center justify-center text-xs">1</span> 
                             Complete the content
                         </h2>
                         <div class="flex items-center gap-2">
-                            <button id="mode-static" class="text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-1.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm transition-all">Static</button>
-                            <button id="mode-dynamic" class="text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-1.5 rounded text-slate-400 hover:text-slate-600 flex items-center gap-1 transition-all">Dynamic <span class="evo-badge">Evolution</span></button>
-                            <button id="btn-clear" class="ml-2 text-xs text-red-500 hover:text-red-700 font-bold px-2 py-1 transition-colors">Clear</button>
+                            <button id="mode-static" class="text-[9px] font-extrabold uppercase tracking-widest px-2 py-1 rounded bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm transition-all">Static</button>
+                            <button id="mode-dynamic" class="text-[9px] font-extrabold uppercase tracking-widest px-2 py-1 rounded text-slate-400 hover:text-slate-600 flex items-center gap-1 transition-all">Dynamic <span class="evo-badge">Evolution</span></button>
+                            <button id="btn-clear" class="ml-1 text-[10px] text-red-500 hover:text-red-700 font-bold px-2 py-1 transition-colors uppercase tracking-wider">Clear</button>
                         </div>
                     </div>
 
-                    <div id="static-warning-message" class="hidden text-[11px] font-bold text-amber-600 dark:text-amber-400 mb-6 bg-amber-50 dark:bg-amber-900/30 py-3 px-4 rounded-xl border border-amber-200 dark:border-amber-800/50">🔒 Security Note: This specific code type is generated securely on your device and cannot be saved dynamically.</div>
+                    <div id="static-warning-message" class="hidden text-[10px] font-bold text-amber-600 dark:text-amber-400 mb-4 bg-amber-50 dark:bg-amber-900/30 py-2 px-3 rounded-lg border border-amber-200 dark:border-amber-800/50">🔒 Security Note: This specific code type is generated securely on your device and cannot be saved dynamically.</div>
 
+                    <!-- Compressed Input paddings for vertical space -->
                     <div id="dynamic-forms-container" class="w-full">
-                        <!-- Form URL -->
-                        <div id="form-url" class="payload-form active space-y-3">
-                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Website Address</label>
-                            <input type="url" id="pl-url" value="https://" placeholder="https://pixelping.app" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 dark:focus:ring-blue-900/50 focus:outline-none placeholder-slate-400 dark:placeholder-slate-500 shadow-sm transition-all">
+                        <div id="form-url" class="payload-form active space-y-2">
+                            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Website Address</label>
+                            <input type="url" id="pl-url" value="https://" placeholder="https://pixelping.app" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none placeholder-slate-400 dark:placeholder-slate-500 shadow-sm transition-all text-sm">
                             <p id="density-warning" class="hidden"></p>
                         </div>
-                        <!-- Form Tel -->
-                        <div id="form-tel" class="payload-form space-y-3">
-                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Phone Number</label>
-                            <input type="tel" id="pl-tel" placeholder="e.g. +1 555-0199" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 dark:focus:ring-blue-900/50 focus:outline-none placeholder-slate-400 dark:placeholder-slate-500 shadow-sm transition-all">
+                        <div id="form-tel" class="payload-form space-y-2">
+                            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Phone Number</label>
+                            <input type="tel" id="pl-tel" placeholder="e.g. +1 555-0199" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none placeholder-slate-400 shadow-sm transition-all text-sm">
                         </div>
-                        <!-- Form Text -->
-                        <div id="form-text" class="payload-form space-y-3">
-                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Message or Serial Number</label>
-                            <textarea id="pl-text" placeholder="Enter offline text here..." class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 dark:focus:ring-blue-900/50 focus:outline-none placeholder-slate-400 dark:placeholder-slate-500 shadow-sm transition-all" rows="4"></textarea>
+                        <div id="form-text" class="payload-form space-y-2">
+                            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Message or Serial Number</label>
+                            <textarea id="pl-text" placeholder="Enter offline text here..." class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none placeholder-slate-400 shadow-sm transition-all text-sm" rows="3"></textarea>
                         </div>
-                        <!-- Form WiFi -->
-                        <div id="form-wifi" class="payload-form space-y-4">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Network Name (SSID)</label>
-                                    <input type="text" id="pl-wifi-ssid" placeholder="GuestNetwork" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:outline-none placeholder-slate-400 shadow-sm">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Password</label>
-                                    <input type="text" id="pl-wifi-pass" placeholder="Network Password" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:outline-none placeholder-slate-400 shadow-sm">
-                                </div>
+                        <div id="form-wifi" class="payload-form space-y-3">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                <div><label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Network (SSID)</label><input type="text" id="pl-wifi-ssid" placeholder="GuestNetwork" class="pl-input w-full bg-white px-3 py-2 rounded-xl border border-slate-300 text-sm shadow-sm"></div>
+                                <div><label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Password</label><input type="text" id="pl-wifi-pass" placeholder="Password" class="pl-input w-full bg-white px-3 py-2 rounded-xl border border-slate-300 text-sm shadow-sm"></div>
                             </div>
                             <div>
-                                <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Security Type</label>
-                                <div class="flex gap-2 w-full p-1 bg-slate-100 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700/50">
-                                    <button type="button" class="proxy-wifi proxy-btn active flex-1 bg-white shadow-sm border border-slate-200 text-blue-600 dark:bg-slate-700 dark:border-slate-600 dark:text-white py-2 rounded-lg text-sm font-bold" data-val="WPA">WPA/WPA2</button>
-                                    <button type="button" class="proxy-wifi proxy-btn flex-1 bg-transparent border border-transparent text-slate-600 dark:text-slate-400 py-2 rounded-lg text-sm font-bold hover:bg-slate-200 dark:hover:bg-slate-700/50" data-val="WEP">WEP</button>
-                                    <button type="button" class="proxy-wifi proxy-btn flex-1 bg-transparent border border-transparent text-slate-600 dark:text-slate-400 py-2 rounded-lg text-sm font-bold hover:bg-slate-200 dark:hover:bg-slate-700/50" data-val="nopass">None</button>
+                                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Security</label>
+                                <div class="flex gap-1 p-1 bg-slate-100 rounded-lg border border-slate-200">
+                                    <button type="button" class="proxy-wifi proxy-btn active flex-1 bg-white shadow-sm border border-slate-200 text-blue-600 py-1.5 rounded text-xs font-bold" data-val="WPA">WPA</button>
+                                    <button type="button" class="proxy-wifi proxy-btn flex-1 bg-transparent border-transparent text-slate-600 py-1.5 rounded text-xs font-bold" data-val="WEP">WEP</button>
+                                    <button type="button" class="proxy-wifi proxy-btn flex-1 bg-transparent border-transparent text-slate-600 py-1.5 rounded text-xs font-bold" data-val="nopass">None</button>
                                 </div>
                                 <select id="pl-wifi-type" class="hidden"><option value="WPA">WPA</option><option value="WEP">WEP</option><option value="nopass">None</option></select>
                             </div>
                         </div>
-                        <!-- Form vCard -->
-                        <div id="form-vcard" class="payload-form space-y-4">
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">First Name</label>
-                                    <input type="text" id="pl-vc-first" placeholder="Jane" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:outline-none placeholder-slate-400 shadow-sm">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Last Name</label>
-                                    <input type="text" id="pl-vc-last" placeholder="Doe" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:outline-none placeholder-slate-400 shadow-sm">
-                                </div>
+                        <!-- Other simple forms hidden for brevity (Email, SMS, Map, Menu, etc.) They will use the same basic input layout -->
+                        <div id="form-vcard" class="payload-form space-y-3">
+                            <div class="grid grid-cols-2 gap-3">
+                                <div><input type="text" id="pl-vc-first" placeholder="First Name" class="pl-input w-full bg-white px-3 py-2 rounded-xl border border-slate-300 text-sm"></div>
+                                <div><input type="text" id="pl-vc-last" placeholder="Last Name" class="pl-input w-full bg-white px-3 py-2 rounded-xl border border-slate-300 text-sm"></div>
                             </div>
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Phone</label>
-                                    <input type="tel" id="pl-vc-phone" placeholder="555-0199" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:outline-none placeholder-slate-400 shadow-sm">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Company</label>
-                                    <input type="text" id="pl-vc-org" placeholder="PixelPing Inc." class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:outline-none placeholder-slate-400 shadow-sm">
-                                </div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div><input type="tel" id="pl-vc-phone" placeholder="Phone" class="pl-input w-full bg-white px-3 py-2 rounded-xl border border-slate-300 text-sm"></div>
+                                <div><input type="text" id="pl-vc-org" placeholder="Company" class="pl-input w-full bg-white px-3 py-2 rounded-xl border border-slate-300 text-sm"></div>
                             </div>
                         </div>
-                        <!-- Form Crypto -->
-                        <div id="form-crypto" class="payload-form space-y-4">
+                        <div id="form-crypto" class="payload-form space-y-3">
                             <div>
-                                <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Coin Type</label>
-                                <div class="flex gap-2 w-full p-1 bg-slate-100 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700/50 mb-4">
-                                    <button type="button" class="proxy-crypto proxy-btn active flex-1 bg-white shadow-sm border border-slate-200 text-blue-600 dark:bg-slate-700 dark:border-slate-600 dark:text-white py-2 rounded-lg text-sm font-bold" data-val="bitcoin">Bitcoin (BTC)</button>
-                                    <button type="button" class="proxy-crypto proxy-btn flex-1 bg-transparent border border-transparent text-slate-600 dark:text-slate-400 py-2 rounded-lg text-sm font-bold hover:bg-slate-200 dark:hover:bg-slate-700/50" data-val="ethereum">Ethereum (ETH)</button>
+                                <label class="block text-xs font-bold text-slate-700 mb-1">Coin Type</label>
+                                <div class="flex gap-2 w-full p-1 bg-slate-100 rounded-xl border border-slate-200 mb-2">
+                                    <button type="button" class="proxy-crypto proxy-btn active flex-1 bg-white shadow-sm border border-slate-200 text-blue-600 py-1.5 rounded-lg text-xs font-bold" data-val="bitcoin">BTC</button>
+                                    <button type="button" class="proxy-crypto proxy-btn flex-1 bg-transparent border-transparent text-slate-600 py-1.5 rounded-lg text-xs font-bold" data-val="ethereum">ETH</button>
                                 </div>
                                 <select id="pl-crypto-type" class="hidden"><option value="bitcoin">BTC</option><option value="ethereum">ETH</option></select>
                             </div>
-                            <div>
-                                <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Wallet Address</label>
-                                <input type="text" id="pl-crypto-address" placeholder="1A1zP1eP..." class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:outline-none placeholder-slate-400 shadow-sm">
-                            </div>
+                            <input type="text" id="pl-crypto-address" placeholder="Wallet Address" class="pl-input w-full bg-white px-3 py-2 rounded-xl border border-slate-300 text-sm">
                         </div>
-                        <!-- Other simple forms hidden for brevity (Email, SMS, Map, Menu, etc.) They will use the same basic input layout -->
-                        <div id="form-sms" class="payload-form space-y-3">
-                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Recipient Number</label>
-                            <input type="tel" id="pl-sms-to" placeholder="e.g. 555-0199" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:outline-none placeholder-slate-400 shadow-sm">
-                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1 mt-3">Pre-filled Message</label>
-                            <textarea id="pl-sms-msg" placeholder="I am at the job site..." class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:outline-none placeholder-slate-400 shadow-sm" rows="2"></textarea>
-                        </div>
-                        <div id="form-email" class="payload-form space-y-3">
-                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">To Address</label>
-                            <input type="email" id="pl-email-to" placeholder="support@pixelping.app" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:outline-none placeholder-slate-400 shadow-sm">
-                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1 mt-3">Subject</label>
-                            <input type="text" id="pl-email-sub" placeholder="Ticket Request" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:outline-none placeholder-slate-400 shadow-sm">
-                        </div>
-                        <div id="form-calendar" class="payload-form space-y-3">
-                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Event Title</label>
-                            <input type="text" id="pl-cal-title" placeholder="Site Inspection" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:outline-none placeholder-slate-400 shadow-sm">
-                            <div class="grid grid-cols-2 gap-3 mt-3">
-                                <div><label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Date</label><input type="datetime-local" id="pl-cal-start" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:outline-none placeholder-slate-400 shadow-sm"></div>
-                                <div><label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Location</label><input type="text" id="pl-cal-loc" placeholder="123 Main St" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:outline-none placeholder-slate-400 shadow-sm"></div>
-                            </div>
-                        </div>
-                        <div id="form-geo" class="payload-form space-y-3">
-                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Physical Address</label>
-                            <input type="text" id="pl-geo-address" placeholder="123 Main St, City, State" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:outline-none placeholder-slate-400 shadow-sm">
-                            <div class="grid grid-cols-2 gap-3 mt-3">
-                                <div><label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Lat</label><input type="text" id="pl-geo-lat" placeholder="40.7128" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:outline-none placeholder-slate-400 shadow-sm"></div>
-                                <div><label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Lng</label><input type="text" id="pl-geo-lng" placeholder="-74.0060" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:outline-none placeholder-slate-400 shadow-sm"></div>
-                            </div>
-                        </div>
-                        <div id="form-review" class="payload-form space-y-3">
-                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Google Review URL</label>
-                            <input type="url" id="pl-biz-review" placeholder="https://g.page/r/..." class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:outline-none placeholder-slate-400 shadow-sm">
-                        </div>
-                        <div id="form-social" class="payload-form space-y-3">
-                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Social Profile URL</label>
-                            <input type="url" id="pl-biz-social" placeholder="https://instagram.com/..." class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:outline-none placeholder-slate-400 shadow-sm">
-                        </div>
-                        <div id="form-menu" class="payload-form space-y-3">
-                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Link to Menu</label>
-                            <input type="url" id="pl-biz-menu" placeholder="https://yoursite.com/menu.pdf" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:outline-none placeholder-slate-400 shadow-sm">
-                        </div>
-                        <div id="form-booking" class="payload-form space-y-3">
-                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Booking/Calendar Link</label>
-                            <input type="url" id="pl-biz-booking" placeholder="https://calendly.com/..." class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:outline-none placeholder-slate-400 shadow-sm">
-                        </div>
-                        <div id="form-coupon" class="payload-form space-y-3">
-                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-1">Coupon Text</label>
-                            <textarea id="pl-biz-coupon" placeholder="Show this code for 20% off: PROMO20" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:outline-none placeholder-slate-400 shadow-sm" rows="3"></textarea>
-                        </div>
+                        <div id="form-review" class="payload-form space-y-2"><input type="url" id="pl-biz-review" placeholder="Google Review URL" class="pl-input w-full bg-white px-3 py-2 rounded-xl border border-slate-300 text-sm"></div>
+                        <div id="form-social" class="payload-form space-y-2"><input type="url" id="pl-biz-social" placeholder="Social Profile URL" class="pl-input w-full bg-white px-3 py-2 rounded-xl border border-slate-300 text-sm"></div>
+                        <div id="form-menu" class="payload-form space-y-2"><input type="url" id="pl-biz-menu" placeholder="Link to PDF Menu" class="pl-input w-full bg-white px-3 py-2 rounded-xl border border-slate-300 text-sm"></div>
+                        <div id="form-booking" class="payload-form space-y-2"><input type="url" id="pl-biz-booking" placeholder="Booking URL" class="pl-input w-full bg-white px-3 py-2 rounded-xl border border-slate-300 text-sm"></div>
+                        <div id="form-coupon" class="payload-form space-y-2"><textarea id="pl-biz-coupon" placeholder="Coupon Text" class="pl-input w-full bg-white px-3 py-2 rounded-xl border border-slate-300 text-sm" rows="2"></textarea></div>
                     </div>
                 </div>
 
                 <!-- SECTION 2: DESIGN -->
-                <div class="mb-4">
-                    <h2 class="text-xl font-bold flex items-center gap-3 mb-8 text-slate-900 dark:text-white border-t border-slate-100 dark:border-slate-800 pt-10">
-                        <span class="bg-slate-900 dark:bg-white text-white dark:text-slate-900 w-7 h-7 rounded flex items-center justify-center text-sm">2</span> 
+                <div class="mb-2">
+                    <h2 class="text-lg font-bold flex items-center gap-2 mb-4 text-slate-900 dark:text-white border-t border-slate-100 dark:border-slate-800 pt-6">
+                        <span class="bg-slate-900 dark:bg-white text-white dark:text-slate-900 w-6 h-6 rounded flex items-center justify-center text-xs">2</span> 
                         Design your QR
                     </h2>
 
-                    <div class="space-y-8">
+                    <div class="space-y-5">
                         
                         <!-- Smart Label -->
                         <div>
-                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 flex justify-between">Smart Print Label <span class="mk-badge">Master Key</span></label>
-                            <input type="text" id="pl-smart-label" placeholder="e.g. Guest Wi-Fi Network" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 dark:focus:ring-blue-900/50 focus:outline-none placeholder-slate-400 dark:placeholder-slate-500 shadow-sm font-medium transition-all">
+                            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1 flex justify-between">Smart Print Label <span class="mk-badge">Master Key</span></label>
+                            <input type="text" id="pl-smart-label" placeholder="e.g. Guest Wi-Fi Network" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none placeholder-slate-400 dark:placeholder-slate-500 shadow-sm font-medium transition-all text-sm">
                         </div>
 
-                        <!-- Shapes & Icons (Proxy Pills) -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Shapes & Center Icons Grid -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Outer Shape</label>
+                                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Outer Shape</label>
                                 <div class="flex gap-2">
-                                    <button type="button" class="proxy-mask proxy-btn active flex-1 py-3 border-2 border-blue-500 bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:border-blue-500 dark:text-blue-300 rounded-xl font-bold text-sm" data-val="none">Square</button>
-                                    <button type="button" class="proxy-mask proxy-btn flex-1 py-3 border-2 border-slate-200 bg-white text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 hover:border-slate-300 rounded-xl font-bold text-sm" data-val="rounded">Rounded</button>
+                                    <button type="button" class="proxy-mask proxy-btn active flex-1 py-2 border-2 border-blue-500 bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:border-blue-500 dark:text-blue-300 rounded-xl font-bold text-xs" data-val="none">Square</button>
+                                    <button type="button" class="proxy-mask proxy-btn flex-1 py-2 border border-slate-200 bg-white text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 hover:border-slate-300 rounded-xl font-bold text-xs" data-val="rounded">Rounded</button>
                                 </div>
                                 <select id="qr-mask" class="hidden"><option value="none">Square</option><option value="rounded">Rounded</option></select>
+                                
+                                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1 mt-4">Eye & Corner</label>
+                                <div class="flex gap-1 p-1 bg-slate-100 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700/50">
+                                    <button type="button" class="proxy-corner proxy-btn flex-1 bg-transparent border-transparent text-slate-600 dark:text-slate-400 py-1.5 rounded text-[10px] font-bold" data-val="square">Square</button>
+                                    <button type="button" class="proxy-corner proxy-btn active flex-1 bg-white shadow-sm border border-slate-200 text-blue-600 py-1.5 rounded text-[10px] font-bold" data-val="dot">Circular</button>
+                                    <button type="button" class="proxy-corner proxy-btn flex-1 bg-transparent border-transparent text-slate-600 dark:text-slate-400 py-1.5 rounded text-[10px] font-bold" data-val="extra-rounded">Round</button>
+                                </div>
+                                <select id="qr-corners-type" class="hidden"><option value="square">Square</option><option value="dot">Circular</option><option value="extra-rounded">Rounded</option></select>
                             </div>
                             
+                            <!-- Master Key Icon Wrapper Grid -->
                             <div>
-                                <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Center Icon</label>
-                                <div class="flex gap-2">
-                                    <button type="button" class="proxy-icon proxy-btn active flex-1 py-3 border-2 border-blue-500 bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:border-blue-500 dark:text-blue-300 rounded-xl font-bold text-sm" data-val="">None</button>
-                                    <button type="button" class="proxy-icon proxy-btn flex-1 py-3 border-2 border-slate-200 bg-white text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 hover:border-slate-300 rounded-xl text-lg flex items-center justify-center" data-val="heart">❤️</button>
-                                    <button type="button" class="proxy-icon proxy-btn flex-1 py-3 border-2 border-slate-200 bg-white text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 hover:border-slate-300 rounded-xl text-lg flex items-center justify-center" data-val="lightning">⚡</button>
+                                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Center Icon</label>
+                                <div id="proxy-icon-container" class="flex flex-wrap gap-2 w-full">
+                                    <button type="button" class="proxy-icon proxy-btn active min-w-[50px] py-1.5 border-2 border-blue-500 bg-blue-50 text-blue-700 rounded-lg font-bold text-[10px]" data-val="">None</button>
+                                    <button type="button" class="proxy-icon proxy-btn min-w-[40px] py-1.5 border border-slate-200 bg-white text-slate-600 rounded-lg text-sm flex items-center justify-center" data-val="heart">❤️</button>
+                                    <button type="button" class="proxy-icon proxy-btn min-w-[40px] py-1.5 border border-slate-200 bg-white text-slate-600 rounded-lg text-sm flex items-center justify-center" data-val="lightning">⚡</button>
                                 </div>
+                                <!-- Hidden Original Select for Ghost Script injection -->
                                 <select id="qr-icon" class="hidden"><option value=""></option><option value="heart">Heart</option><option value="lightning">Lightning</option></select>
                             </div>
                         </div>
 
-                        <!-- Corners -->
-                        <div>
-                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Eye & Corner Style</label>
-                            <div class="flex gap-2 p-1 bg-slate-100 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700/50">
-                                <button type="button" class="proxy-corner proxy-btn flex-1 bg-transparent border border-transparent text-slate-600 dark:text-slate-400 py-2.5 rounded-lg text-sm font-bold hover:bg-slate-200 dark:hover:bg-slate-700/50" data-val="square">Square</button>
-                                <button type="button" class="proxy-corner proxy-btn active flex-1 bg-white shadow-sm border border-slate-200 text-blue-600 dark:bg-slate-700 dark:border-slate-600 dark:text-white py-2.5 rounded-lg text-sm font-bold" data-val="dot">Circular</button>
-                                <button type="button" class="proxy-corner proxy-btn flex-1 bg-transparent border border-transparent text-slate-600 dark:text-slate-400 py-2.5 rounded-lg text-sm font-bold hover:bg-slate-200 dark:hover:bg-slate-700/50" data-val="extra-rounded">Rounded</button>
-                            </div>
-                            <select id="qr-corners-type" class="hidden"><option value="square">Square</option><option value="dot">Circular</option><option value="extra-rounded">Rounded</option></select>
-                        </div>
-
                         <!-- Custom Logo Upload -->
                         <div>
-                            <div class="flex justify-between items-center mb-2">
-                                <label class="text-sm font-bold text-slate-700 dark:text-slate-300">Custom Logo Upload <span class="mk-badge">Master Key</span></label>
-                                <button id="btn-clear-logo" class="hidden text-[10px] text-red-500 hover:text-red-700 font-bold uppercase tracking-wider bg-red-50 dark:bg-red-900/20 px-2 py-1 rounded">Clear Logo</button>
+                            <div class="flex justify-between items-center mb-1">
+                                <label class="text-xs font-bold text-slate-700 dark:text-slate-300">Custom Logo <span class="mk-badge">Master Key</span></label>
+                                <button id="btn-clear-logo" class="hidden text-[9px] text-red-500 hover:text-red-700 font-bold uppercase tracking-wider bg-red-50 dark:bg-red-900/20 px-2 py-0.5 rounded">Clear</button>
                             </div>
-                            <input type="file" id="qr-custom-logo" accept="image/png, image/jpeg, image/svg+xml" class="w-full bg-slate-50 dark:bg-slate-800/30 text-slate-500 dark:text-slate-400 px-3 py-3 rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-700 text-sm file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-blue-50 file:text-blue-700 dark:file:bg-blue-900/30 dark:file:text-blue-400 hover:file:bg-blue-100 cursor-pointer focus:outline-none transition-all">
+                            <input type="file" id="qr-custom-logo" accept="image/png, image/jpeg, image/svg+xml" class="w-full bg-slate-50 dark:bg-slate-800/30 text-slate-500 dark:text-slate-400 px-3 py-2 rounded-xl border border-dashed border-slate-300 dark:border-slate-700 text-xs file:mr-3 file:py-1 file:px-3 file:rounded file:border-0 file:text-[10px] file:font-bold file:bg-blue-50 file:text-blue-700 cursor-pointer focus:outline-none">
                         </div>
 
                         <!-- Colors -->
-                        <div class="flex flex-wrap items-center justify-between gap-4 p-5 bg-slate-50 dark:bg-slate-800/30 rounded-2xl border border-slate-200 dark:border-slate-700/50 shadow-sm">
-                            <div class="flex flex-col gap-2 items-center">
-                                <label class="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">Data Color</label>
-                                <input type="color" id="qr-color-dots" class="pl-input w-12 h-12 cursor-pointer rounded-full overflow-hidden shadow-sm transition-transform hover:scale-110">
+                        <div class="flex flex-wrap items-center justify-between gap-3 p-4 bg-slate-50 dark:bg-slate-800/30 rounded-2xl border border-slate-100 dark:border-slate-700/50">
+                            <div class="flex gap-4">
+                                <div class="flex flex-col gap-1.5 items-center">
+                                    <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest">Data</label>
+                                    <input type="color" id="qr-color-dots" class="pl-input w-8 h-8 cursor-pointer rounded-full overflow-hidden shadow-sm hover:scale-110 transition-transform">
+                                </div>
+                                <div class="flex flex-col gap-1.5 items-center">
+                                    <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest">Eyes</label>
+                                    <input type="color" id="qr-color-corners" class="pl-input w-8 h-8 cursor-pointer rounded-full overflow-hidden shadow-sm hover:scale-110 transition-transform">
+                                </div>
+                                <div class="flex flex-col gap-1.5 items-center">
+                                    <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest">Base</label>
+                                    <input type="color" id="qr-color-bg" class="pl-input w-8 h-8 cursor-pointer rounded-full overflow-hidden shadow-sm hover:scale-110 transition-transform">
+                                </div>
                             </div>
-                            <div class="flex flex-col gap-2 items-center">
-                                <label class="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">Eye Color</label>
-                                <input type="color" id="qr-color-corners" class="pl-input w-12 h-12 cursor-pointer rounded-full overflow-hidden shadow-sm transition-transform hover:scale-110">
-                            </div>
-                            <div class="flex flex-col gap-2 items-center">
-                                <label class="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest">Background</label>
-                                <input type="color" id="qr-color-bg" class="pl-input w-12 h-12 cursor-pointer rounded-full overflow-hidden shadow-sm transition-transform hover:scale-110">
-                            </div>
-                            <div class="ml-auto flex items-center h-full pt-4">
-                                <button id="btn-save-brand" class="text-xs bg-white border-2 border-slate-200 dark:bg-slate-700 dark:border-slate-600 text-slate-700 dark:text-slate-200 px-4 py-2.5 rounded-xl hover:border-slate-300 dark:hover:border-slate-500 transition-colors shadow-sm font-bold">Save Brand Kit</button>
+                            <div class="ml-auto">
+                                <button id="btn-save-brand" class="text-[10px] bg-white border border-slate-200 text-slate-700 px-3 py-2 rounded-lg hover:border-slate-300 transition-colors shadow-sm font-bold">Save Brand</button>
                             </div>
                         </div>
                     </div>
@@ -382,85 +303,77 @@
             </div>
 
             <!-- RIGHT PANEL: 40% WIDTH (PREVIEW & ACTION) -->
-            <div class="w-full md:w-2/5 p-6 md:p-10 bg-slate-50 dark:bg-[#061a2b] flex flex-col items-center relative z-20 border-l border-slate-100 dark:border-slate-800">
+            <div class="w-full md:w-2/5 p-5 md:p-8 bg-slate-50 dark:bg-[#061a2b] flex flex-col items-center relative z-20 border-l border-slate-100 dark:border-slate-800">
                 
-                <h2 class="text-xl font-bold flex items-center gap-3 mb-10 w-full text-slate-900 dark:text-white">
-                    <span class="bg-slate-900 dark:bg-white text-white dark:text-slate-900 w-7 h-7 rounded flex items-center justify-center text-sm">3</span> 
+                <h2 class="text-lg font-bold flex items-center gap-2 mb-6 w-full text-slate-900 dark:text-white">
+                    <span class="bg-slate-900 dark:bg-white text-white dark:text-slate-900 w-6 h-6 rounded flex items-center justify-center text-xs">3</span> 
                     Download your QR
                 </h2>
                 
-                <!-- THE CANVAS -->
-                <div class="bg-white p-3 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-[0_20px_50px_rgba(0,0,0,0.05)] relative flex flex-col items-center justify-center w-full max-w-[340px] aspect-square transition-all hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] mb-6 group">
-                    <div id="canvas-wrapper" class="qr-mask-layer rounded-2xl overflow-hidden flex items-center justify-center w-full h-full relative z-10 bg-white">
+                <!-- THE "POLAROID" CANVAS (Everything inside white container) -->
+                <div class="bg-white p-4 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-[0_15px_40px_rgba(0,0,0,0.06)] relative flex flex-col items-center justify-center w-full max-w-[280px] transition-all hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] mb-6 group">
+                    <div id="canvas-wrapper" class="qr-mask-layer rounded-2xl overflow-hidden flex items-center justify-center w-full aspect-square relative z-10 bg-white">
                         <div id="canvas-container"></div>
                     </div>
+                    
+                    <!-- WATERMARK INSIDE CANVAS -->
+                    <div id="pixelping-watermark" class="text-[9px] font-bold text-slate-400 flex items-center justify-center gap-1.5 font-mono mt-3">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='96' fill='%2394a3b8'/%3E%3Crect x='96' y='96' width='96' height='96' rx='18' fill='%23ffffff'/%3E%3Crect x='320' y='96' width='96' height='96' rx='18' fill='%23ffffff'/%3E%3Crect x='96' y='288' width='96' height='96' rx='18' fill='%23ffffff'/%3E%3Crect x='140' y='140' width='16' height='16' rx='4' fill='%230f172a'/%3E%3C/svg%3E" class="w-3 h-3 rounded-sm opacity-60" alt="Logo"> Powered by PixelPing
+                    </div>
+
+                    <!-- LABEL PREVIEW INSIDE CANVAS -->
+                    <div id="live-label-preview" class="font-bold text-slate-800 text-sm text-center hidden mt-2 w-full truncate px-2"></div>
                 </div>
 
-                <!-- WATERMARK (Pulled out of Canvas, firmly positioned below) -->
-                <div id="pixelping-watermark" class="text-[11px] font-bold text-slate-400 dark:text-slate-500 flex items-center justify-center gap-2 font-mono mb-8 bg-white/50 dark:bg-slate-800/50 px-3 py-1.5 rounded-lg border border-slate-200/50 dark:border-slate-700/50">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='96' fill='%2394a3b8'/%3E%3Crect x='96' y='96' width='96' height='96' rx='18' fill='%23ffffff'/%3E%3Crect x='320' y='96' width='96' height='96' rx='18' fill='%23ffffff'/%3E%3Crect x='96' y='288' width='96' height='96' rx='18' fill='%23ffffff'/%3E%3Crect x='140' y='140' width='16' height='16' rx='4' fill='%230f172a'/%3E%3C/svg%3E" class="w-3 h-3 rounded-sm opacity-60" alt="Logo"> Powered by PixelPing
-                </div>
-                
-                <div id="live-label-preview" class="font-bold text-slate-800 dark:text-white text-xl text-center hidden px-4 mb-8"></div>
-
-                <div id="dynamic-link-display" class="hidden w-full mb-8 bg-white dark:bg-slate-800 border-2 border-blue-100 dark:border-slate-700 rounded-2xl p-4 shadow-sm flex flex-col items-center justify-center gap-3">
-                    <span class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Dynamic Route</span>
+                <div id="dynamic-link-display" class="hidden w-full mb-6 bg-white dark:bg-slate-800 border-2 border-blue-100 dark:border-slate-700 rounded-xl p-3 shadow-sm flex flex-col items-center justify-center gap-2">
+                    <span class="text-[9px] text-slate-500 font-bold uppercase tracking-widest">Dynamic Route</span>
                     <div class="flex items-center gap-2 w-full">
-                        <input type="text" id="shortlink-url" readonly value="https://link.pixelping.app/xyz" class="flex-1 bg-slate-50 dark:bg-slate-900 text-xs font-mono text-slate-700 dark:text-slate-300 px-3 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 focus:outline-none select-all">
-                        <button id="btn-copy-link" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-lg font-bold text-xs shadow-sm transition-colors">Copy</button>
+                        <input type="text" id="shortlink-url" readonly value="https://link.pixelping.app/xyz" class="flex-1 bg-slate-50 dark:bg-slate-900 text-[10px] font-mono text-slate-700 dark:text-slate-300 px-2 py-2 rounded border border-slate-200 focus:outline-none select-all">
+                        <button id="btn-copy-link" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded font-bold text-[10px] transition-colors">Copy</button>
                     </div>
                 </div>
 
-                <!-- EXPORT ACTIONS -->
-                <div class="w-full flex flex-col gap-4 mt-auto">
+                <!-- EXPORT ACTIONS (Tighter spacing) -->
+                <div class="w-full flex flex-col gap-2 mt-auto">
                     
-                    <div>
-                        <label class="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-2 uppercase tracking-widest">Export Format</label>
-                        <div class="flex gap-2 p-1 bg-slate-200/50 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700/50 mb-4">
-                            <button type="button" class="proxy-format proxy-btn active flex-1 bg-white shadow-sm border border-slate-200 text-blue-600 dark:bg-slate-700 dark:border-slate-600 dark:text-white py-2 rounded-lg text-sm font-bold" data-val="png">PNG</button>
-                            <button type="button" class="proxy-format proxy-btn flex-1 bg-transparent border border-transparent text-slate-600 dark:text-slate-400 py-2 rounded-lg text-sm font-bold hover:bg-slate-200 dark:hover:bg-slate-700/50" data-val="svg">SVG <span class="text-amber-500 text-[10px]">MK</span></button>
-                            <button type="button" class="proxy-format proxy-btn flex-1 bg-transparent border border-transparent text-slate-600 dark:text-slate-400 py-2 rounded-lg text-sm font-bold hover:bg-slate-200 dark:hover:bg-slate-700/50" data-val="pdf">PDF <span class="text-amber-500 text-[10px]">MK</span></button>
+                    <div class="flex justify-between items-center mb-1">
+                        <label class="block text-[9px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Export Format</label>
+                        <div class="flex gap-1">
+                            <button type="button" class="proxy-format proxy-btn active px-2 py-1 bg-white border border-slate-200 text-blue-600 rounded text-[10px] font-bold shadow-sm" data-val="png">PNG</button>
+                            <button type="button" class="proxy-format proxy-btn px-2 py-1 bg-transparent border border-transparent text-slate-500 rounded text-[10px] font-bold" data-val="svg">SVG</button>
+                            <button type="button" class="proxy-format proxy-btn px-2 py-1 bg-transparent border border-transparent text-slate-500 rounded text-[10px] font-bold" data-val="pdf">PDF</button>
                         </div>
                         <select id="export-format" class="hidden"><option value="png">PNG</option><option value="svg">SVG</option><option value="pdf">PDF</option></select>
                     </div>
 
-                    <button id="btn-download" class="w-full bg-slate-900 hover:bg-slate-800 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl transition-transform active:scale-95 shadow-xl flex items-center justify-center gap-2 text-sm">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    <button id="btn-download" class="w-full bg-slate-900 hover:bg-slate-800 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-bold py-2.5 rounded-xl transition-transform active:scale-95 shadow-md flex items-center justify-center gap-2 text-xs">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                         Download QR
                     </button>
 
-                    <button id="btn-main-action" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-lg text-sm">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg>
-                        <span>Save to Cloud <span class="bg-white text-blue-600 text-[9px] px-1.5 py-0.5 rounded ml-1 uppercase tracking-widest font-black">Master Key</span></span>
+                    <button id="btn-main-action" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-md text-xs">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg>
+                        <span>Save to Cloud <span class="bg-white text-blue-600 text-[8px] px-1 py-0.5 rounded ml-1 uppercase font-black">MK</span></span>
                     </button>
                     
-                    <button id="btn-print" class="w-full bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-700 dark:text-slate-300 font-bold py-3.5 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-sm text-sm">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
-                        <span>Print Code & Label</span>
+                    <button id="btn-print" class="w-full bg-white dark:bg-slate-800 border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold py-2.5 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-sm text-xs">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                        <span>Print & Label</span>
                     </button>
 
-                    <div>
-                        <label class="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mt-4 mb-2 uppercase tracking-widest">Physical Print Size</label>
-                        <div class="flex gap-2 p-1 bg-slate-200/50 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700/50">
-                            <button type="button" class="proxy-print proxy-btn flex-1 bg-transparent border border-transparent text-slate-600 dark:text-slate-400 py-2 rounded-lg text-[11px] font-bold hover:bg-slate-200 dark:hover:bg-slate-700/50" data-val="2in">Small</button>
-                            <button type="button" class="proxy-print proxy-btn active flex-1 bg-white shadow-sm border border-slate-200 text-blue-600 dark:bg-slate-700 dark:border-slate-600 dark:text-white py-2 rounded-lg text-[11px] font-bold" data-val="3.5in">Medium</button>
-                            <button type="button" class="proxy-print proxy-btn flex-1 bg-transparent border border-transparent text-slate-600 dark:text-slate-400 py-2 rounded-lg text-[11px] font-bold hover:bg-slate-200 dark:hover:bg-slate-700/50" data-val="5in">Large</button>
-                            <button type="button" class="proxy-print proxy-btn flex-1 bg-transparent border border-transparent text-slate-600 dark:text-slate-400 py-2 rounded-lg text-[11px] font-bold hover:bg-slate-200 dark:hover:bg-slate-700/50" data-val="8in">Full</button>
-                        </div>
-                        <select id="pl-print-size" class="hidden"><option value="2in">Small</option><option value="3.5in">Medium</option><option value="5in">Large</option><option value="8in">Full</option></select>
-                    </div>
+                    <div class="hidden"><select id="pl-print-size"><option value="3.5in" selected>Medium</option></select></div>
                 </div>
                 
                 <!-- TELEMETRY BLOCK -->
-                <div id="telemetry-dashboard" class="hidden w-full mt-6 p-5 bg-[#0b1622] rounded-2xl shadow-inner relative overflow-hidden border border-slate-800">
+                <div id="telemetry-dashboard" class="hidden w-full mt-4 p-4 bg-[#0b1622] rounded-xl shadow-inner relative overflow-hidden border border-slate-800">
                     <div class="absolute top-0 left-0 w-full h-1 bg-ppGreen shadow-[0_0_12px_rgba(60,255,143,0.8)]"></div>
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="text-[10px] font-mono text-ppGreen uppercase tracking-widest font-bold">● Live Telemetry</span>
-                        <a href="admin.html" target="_blank" class="text-[9px] font-mono text-slate-900 bg-ppGreen px-2 py-1 rounded font-black uppercase tracking-wider hover:bg-white transition-colors">⚙️ Command</a>
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-[9px] font-mono text-ppGreen uppercase tracking-widest font-bold">● Live Telemetry</span>
+                        <a href="admin.html" target="_blank" class="text-[8px] font-mono text-slate-900 bg-ppGreen px-1.5 py-0.5 rounded font-black uppercase tracking-wider hover:bg-white transition-colors">⚙️ Command</a>
                     </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="flex flex-col"><span class="text-[10px] text-slate-500 font-mono mb-1">30-DAY</span><span id="ping-count" class="text-xl font-black text-white font-mono">0</span></div>
-                        <div class="flex flex-col"><span class="text-[10px] text-slate-500 font-mono mb-1">ROUTES</span><span id="route-count" class="text-xl font-black text-white font-mono">0</span></div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="flex flex-col"><span class="text-[9px] text-slate-500 font-mono mb-0.5">30-DAY</span><span id="ping-count" class="text-lg font-black text-white font-mono leading-none">0</span></div>
+                        <div class="flex flex-col"><span class="text-[9px] text-slate-500 font-mono mb-0.5">ROUTES</span><span id="route-count" class="text-lg font-black text-white font-mono leading-none">0</span></div>
                     </div>
                 </div>
 
@@ -468,7 +381,7 @@
         </div>
     </main>
 
-    <!-- PROXY BUTTON JAVASCRIPT (Translates Pill Clicks to Native Select Menus) -->
+    <!-- PROXY BUTTON & GHOST SCRIPT LISTENER -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             function setupProxy(btnClass, selectId, activeStyleClasses, inactiveStyleClasses) {
@@ -477,19 +390,20 @@
                 if(!buttons.length || !select) return;
 
                 buttons.forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        // Reset all buttons in this group to inactive
-                        buttons.forEach(b => {
+                    // Remove existing listeners to prevent duplicates if called multiple times
+                    const newBtn = btn.cloneNode(true);
+                    btn.parentNode.replaceChild(newBtn, btn);
+                    
+                    newBtn.addEventListener('click', () => {
+                        document.querySelectorAll(`.${btnClass}`).forEach(b => {
                             b.classList.remove(...activeStyleClasses);
                             b.classList.add(...inactiveStyleClasses);
                         });
                         
-                        // Set clicked button to active
-                        btn.classList.remove(...inactiveStyleClasses);
-                        btn.classList.add(...activeStyleClasses);
+                        newBtn.classList.remove(...inactiveStyleClasses);
+                        newBtn.classList.add(...activeStyleClasses);
                         
-                        // Update hidden select and trigger change
-                        select.value = btn.dataset.target || btn.dataset.val;
+                        select.value = newBtn.dataset.target || newBtn.dataset.val;
                         select.dispatchEvent(new Event('change'));
                         if(window.updateQR) window.updateQR();
                     });
@@ -501,20 +415,50 @@
             const payloadInactive = ['bg-white', 'border-slate-200', 'text-slate-600', 'dark:bg-slate-800', 'dark:border-slate-700', 'dark:text-slate-300', 'hover:border-slate-300'];
             setupProxy('proxy-payload', 'payload-type', payloadActive, payloadInactive);
 
-            // Group 2: Internal Solid Border-Buttons (Shape, Icon)
-            const solidActive = ['active', 'bg-blue-50', 'border-blue-500', 'text-blue-700', 'dark:bg-blue-900/30', 'dark:border-blue-500', 'dark:text-blue-300'];
-            const solidInactive = ['bg-white', 'border-slate-200', 'text-slate-600', 'dark:bg-slate-800', 'dark:border-slate-700', 'dark:text-slate-300', 'hover:border-slate-300'];
+            // Group 2: Solid Border-Buttons (Shape)
+            const solidActive = ['active', 'border-2', 'border-blue-500', 'bg-blue-50', 'text-blue-700'];
+            const solidInactive = ['border', 'border-slate-200', 'bg-white', 'text-slate-600'];
             setupProxy('proxy-mask', 'qr-mask', solidActive, solidInactive);
-            setupProxy('proxy-icon', 'qr-icon', solidActive, solidInactive);
 
-            // Group 3: Pill Selectors inside grey wrappers (WiFi, Crypto, Corners, Export, Print Size)
+            // Group 3: Pill Selectors inside grey wrappers (WiFi, Crypto, Corners, Export)
             const pillActive = ['active', 'bg-white', 'shadow-sm', 'border-slate-200', 'text-blue-600', 'dark:bg-slate-700', 'dark:border-slate-600', 'dark:text-white'];
             const pillInactive = ['bg-transparent', 'border-transparent', 'text-slate-600', 'dark:text-slate-400', 'hover:bg-slate-200', 'dark:hover:bg-slate-700/50'];
             setupProxy('proxy-wifi', 'pl-wifi-type', pillActive, pillInactive);
             setupProxy('proxy-crypto', 'pl-crypto-type', pillActive, pillInactive);
             setupProxy('proxy-corner', 'qr-corners-type', pillActive, pillInactive);
             setupProxy('proxy-format', 'export-format', pillActive, pillInactive);
-            setupProxy('proxy-print', 'pl-print-size', pillActive, pillInactive);
+
+            // THE GHOST SCRIPT WATCHER: Automatically build pills for premium icons
+            const iconSelect = document.getElementById('qr-icon');
+            const iconContainer = document.getElementById('proxy-icon-container');
+            const iconActive = ['active', 'border-2', 'border-blue-500', 'bg-blue-50', 'text-blue-700'];
+            const iconInactive = ['border', 'border-slate-200', 'bg-white', 'text-slate-600'];
+
+            function syncIcons() {
+                if (!iconSelect || !iconContainer) return;
+                Array.from(iconSelect.options).forEach(opt => {
+                    if (opt.value === '') return; // Skip default empty
+                    if (!iconContainer.querySelector(`[data-val="${opt.value}"]`)) {
+                        const btn = document.createElement('button');
+                        btn.type = 'button';
+                        btn.className = 'proxy-icon proxy-btn min-w-[40px] py-1.5 border border-slate-200 bg-white text-slate-600 rounded-lg text-sm flex items-center justify-center';
+                        btn.dataset.val = opt.value;
+                        // Use emoji if present in text, otherwise first letter
+                        btn.textContent = opt.text.replace(/[^a-zA-Z0-9\s]/g, '') === '' ? opt.text : opt.text.charAt(0);
+                        iconContainer.appendChild(btn);
+                    }
+                });
+                setupProxy('proxy-icon', 'qr-icon', iconActive, iconInactive);
+            }
+
+            // Watch for changes injected by Ghost Script
+            if (iconSelect) {
+                const observer = new MutationObserver(() => syncIcons());
+                observer.observe(iconSelect, { childList: true });
+            }
+            
+            // Run initial setup for hardcoded icons
+            setupProxy('proxy-icon', 'qr-icon', iconActive, iconInactive);
         });
     </script>
 
@@ -1146,7 +1090,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     }
                 }
                 if (['tel', 'sms'].includes(type)) {
-                    let phoneEl = document.getElementById(type === 'tel' ? 'pl-tel' : 'pl-sms-to');
+                    let phoneEl = document.getElementById(type === 'tel' ? 'pl-sms-to');
                     if(!phoneEl) return null;
                     let cleanPhone = phoneEl.value.replace(/[^\d+]/g, '');
                     if (cleanPhone.length < 7) return "Please enter a valid phone number.";
@@ -1286,8 +1230,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                         btnClearLogo.classList.remove('hidden');
                         
                         document.querySelectorAll('.proxy-icon').forEach(b => {
-                            b.classList.remove('active', 'bg-blue-50', 'border-blue-500', 'text-blue-700');
-                            b.classList.add('bg-white', 'text-slate-600', 'border-slate-200');
+                            b.classList.remove('active', 'border-2', 'border-blue-500', 'bg-blue-50', 'text-blue-700');
+                            b.classList.add('border', 'border-slate-200', 'bg-white', 'text-slate-600');
                         });
 
                         styleInputs.icon.value = ""; 
@@ -1385,9 +1329,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 const isUnlocked = (userTier === 'master-key' || userTier === 'evolution') || localStorage.getItem('pixelping-pro') === 'true'; 
                 const isEvolution = (userTier === 'evolution') || localStorage.getItem('pixelping-evolution') === 'true';
-
-                const watermark = document.getElementById('pixelping-watermark');
-                if (isUnlocked && watermark) watermark.style.visibility = 'hidden'; 
                 
                 const mainTitle = document.getElementById('main-title');
                 const subTitle = document.getElementById('sub-title');
@@ -1427,7 +1368,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     if (pricingGrid) pricingGrid.className = "flex justify-center max-w-md mx-auto";
                 } else {
                     if (mainTitle) mainTitle.innerHTML = "PixelPing";
-                    if (subTitle) subTitle.innerHTML = "Generate &bull; Scan &bull; Share &bull; Own";
+                    if (subTitle) subTitle.innerHTML = "Generate &bull; Scan &bull; Share";
                     if (telemetryDash) telemetryDash.classList.add('hidden');
                     
                     if (pricingSection) pricingSection.style.display = 'block';
@@ -1439,8 +1380,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 if (isUnlocked || isEvolution) {
                     appContainer.classList.add('pro-hidden');
                     
-                    btnMain.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg> <span>Save to Cloud</span>`;
-                    btnMain.className = "w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-lg text-sm";
+                    btnMain.innerHTML = `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg> <span>Save to Cloud</span>`;
+                    btnMain.className = "w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-md text-xs";
                     btnPrint.classList.remove('hidden');
                     btnPrint.classList.add('flex');
                     isPreviewingPro = false;
@@ -1464,10 +1405,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 if (isPreviewingPro) {
                     btnMain.innerHTML = `<span class="text-sm">🔓</span> <span>Unlock Master Key to Save</span>`;
-                    btnMain.className = "w-full bg-yellow-500 hover:bg-yellow-600 text-yellow-900 font-bold py-3.5 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-lg text-sm";
+                    btnMain.className = "w-full bg-yellow-500 hover:bg-yellow-600 text-yellow-900 font-bold py-2.5 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-md text-xs";
                 } else {
-                    btnMain.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg> <span>Save to Cloud</span>`;
-                    btnMain.className = "w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-lg text-sm";
+                    btnMain.innerHTML = `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg> <span>Save to Cloud</span>`;
+                    btnMain.className = "w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-md text-xs";
                 }
             }
             window.checkPaywallState = checkPaywallState;
@@ -1506,11 +1447,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             const updateBrandKitUI = () => {
                 if (localStorage.getItem('pixelping-brand-kit')) {
-                    btnSaveBrand.textContent = "Remove Brand Kit";
-                    btnSaveBrand.className = "text-xs bg-red-50 dark:bg-red-900/20 border-2 border-red-200 dark:border-red-800 text-red-600 px-4 py-2.5 rounded-xl hover:bg-red-100 transition-colors shadow-sm font-bold";
+                    btnSaveBrand.textContent = "Remove Brand";
+                    btnSaveBrand.className = "text-[10px] bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 px-3 py-2 rounded-lg hover:bg-red-100 transition-colors shadow-sm font-bold";
                 } else {
-                    btnSaveBrand.textContent = "Save Brand Kit";
-                    btnSaveBrand.className = "text-xs bg-white border-2 border-slate-200 dark:bg-slate-700 dark:border-slate-600 text-slate-700 dark:text-slate-200 px-4 py-2.5 rounded-xl hover:border-slate-300 transition-colors shadow-sm font-bold";
+                    btnSaveBrand.textContent = "Save Brand";
+                    btnSaveBrand.className = "text-[10px] bg-white border border-slate-200 dark:bg-slate-700 dark:border-slate-600 text-slate-700 dark:text-slate-200 px-3 py-2 rounded-lg hover:border-slate-300 transition-colors shadow-sm font-bold";
                 }
             };
             updateBrandKitUI(); 
@@ -1530,14 +1471,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                         btnClearLogo.classList.add('hidden');
                         
                         document.querySelectorAll('.proxy-mask').forEach(b => {
-                            b.classList.remove('active', 'bg-blue-50', 'border-blue-500', 'text-blue-700');
-                            b.classList.add('bg-white', 'text-slate-600', 'border-slate-200');
-                            if(b.dataset.val === defaults.mask) b.classList.add('active', 'bg-blue-50', 'border-blue-500', 'text-blue-700');
+                            b.classList.remove('active', 'border-2', 'border-blue-500', 'bg-blue-50', 'text-blue-700');
+                            b.classList.add('border', 'border-slate-200', 'bg-white', 'text-slate-600');
+                            if(b.dataset.val === defaults.mask) b.classList.add('active', 'border-2', 'border-blue-500', 'bg-blue-50', 'text-blue-700');
                         });
                         document.querySelectorAll('.proxy-icon').forEach(b => {
-                            b.classList.remove('active', 'bg-blue-50', 'border-blue-500', 'text-blue-700');
-                            b.classList.add('bg-white', 'text-slate-600', 'border-slate-200');
-                            if(b.dataset.val === defaults.icon) b.classList.add('active', 'bg-blue-50', 'border-blue-500', 'text-blue-700');
+                            b.classList.remove('active', 'border-2', 'border-blue-500', 'bg-blue-50', 'text-blue-700');
+                            b.classList.add('border', 'border-slate-200', 'bg-white', 'text-slate-600');
+                            if(b.dataset.val === defaults.icon) b.classList.add('active', 'border-2', 'border-blue-500', 'bg-blue-50', 'text-blue-700');
                         });
 
                         updateQR();
@@ -1555,7 +1496,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         localStorage.setItem('pixelping-brand-kit', JSON.stringify(brandSettings));
                         
                         btnSaveBrand.textContent = "✓ Saved!";
-                        btnSaveBrand.className = "text-xs bg-green-50 border-2 border-green-200 text-green-700 px-4 py-2.5 rounded-xl shadow-sm font-bold transition-colors";
+                        btnSaveBrand.className = "text-[10px] bg-green-50 border border-green-200 text-green-700 px-3 py-2 rounded-lg shadow-sm font-bold transition-colors";
                         setTimeout(() => updateBrandKitUI(), 2000);
                     }
                 } else {
@@ -1914,14 +1855,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                 btnClearLogo.classList.add('hidden');
                 
                 document.querySelectorAll('.proxy-mask').forEach(b => {
-                    b.classList.remove('active', 'bg-blue-50', 'border-blue-500', 'text-blue-700');
-                    b.classList.add('bg-white', 'text-slate-600', 'border-slate-200');
-                    if(b.dataset.val === defaults.mask) b.classList.add('active', 'bg-blue-50', 'border-blue-500', 'text-blue-700');
+                    b.classList.remove('active', 'border-2', 'border-blue-500', 'bg-blue-50', 'text-blue-700');
+                    b.classList.add('border', 'border-slate-200', 'bg-white', 'text-slate-600');
+                    if(b.dataset.val === defaults.mask) b.classList.add('active', 'border-2', 'border-blue-500', 'bg-blue-50', 'text-blue-700');
                 });
                 document.querySelectorAll('.proxy-icon').forEach(b => {
-                    b.classList.remove('active', 'bg-blue-50', 'border-blue-500', 'text-blue-700');
-                    b.classList.add('bg-white', 'text-slate-600', 'border-slate-200');
-                    if(b.dataset.val === defaults.icon) b.classList.add('active', 'bg-blue-50', 'border-blue-500', 'text-blue-700');
+                    b.classList.remove('active', 'border-2', 'border-blue-500', 'bg-blue-50', 'text-blue-700');
+                    b.classList.add('border', 'border-slate-200', 'bg-white', 'text-slate-600');
+                    if(b.dataset.val === defaults.icon) b.classList.add('active', 'border-2', 'border-blue-500', 'bg-blue-50', 'text-blue-700');
                 });
 
                 document.getElementById('density-warning').className = 'hidden';
@@ -1964,22 +1905,27 @@ document.addEventListener('DOMContentLoaded', async () => {
             const iconMoon = document.getElementById('icon-moon');
             const htmlTag = document.documentElement;
 
-            if (localStorage.getItem('theme') === 'light') { 
-                htmlTag.classList.remove('dark'); 
-                iconSun.classList.remove('hidden'); 
-                iconMoon.classList.add('hidden'); 
+            // Initialize Theme correctly
+            if (localStorage.getItem('theme') === 'dark') {
+                htmlTag.classList.add('dark');
+                iconSun.classList.remove('hidden');
+                iconMoon.classList.add('hidden');
+            } else {
+                htmlTag.classList.remove('dark');
+                iconSun.classList.add('hidden');
+                iconMoon.classList.remove('hidden');
             }
             
             themeToggleBtn.addEventListener('click', () => {
                 htmlTag.classList.toggle('dark');
                 if (htmlTag.classList.contains('dark')) { 
                     localStorage.setItem('theme', 'dark'); 
-                    iconSun.classList.add('hidden'); 
-                    iconMoon.classList.remove('hidden'); 
-                } else { 
-                    localStorage.setItem('theme', 'light'); 
                     iconSun.classList.remove('hidden'); 
                     iconMoon.classList.add('hidden'); 
+                } else { 
+                    localStorage.setItem('theme', 'light'); 
+                    iconSun.classList.add('hidden'); 
+                    iconMoon.classList.remove('hidden'); 
                 } 
             });
         });
@@ -2007,8 +1953,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 return; 
             }
 
-            document.getElementById('mode-static').className = "text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-1.5 rounded text-slate-400 hover:text-slate-600 transition-all";
-            document.getElementById('mode-dynamic').className = "text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-1.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm flex items-center gap-1 transition-all";
+            document.getElementById('mode-static').className = "text-[9px] font-extrabold uppercase tracking-widest px-2 py-1 rounded text-slate-400 hover:text-slate-600 transition-all";
+            document.getElementById('mode-dynamic').className = "text-[9px] font-extrabold uppercase tracking-widest px-2 py-1 rounded bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm flex items-center gap-1 transition-all";
             
             const badge = document.getElementById('mode-dynamic').querySelector('.evo-badge');
             if (badge) badge.style.display = 'none';
@@ -2028,8 +1974,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         document.getElementById('mode-static').addEventListener('click', () => {
-            document.getElementById('mode-dynamic').className = "text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-1.5 rounded text-slate-400 hover:text-slate-600 flex items-center gap-1 transition-all";
-            document.getElementById('mode-static').className = "text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-1.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm transition-all";
+            document.getElementById('mode-dynamic').className = "text-[9px] font-extrabold uppercase tracking-widest px-2 py-1 rounded text-slate-400 hover:text-slate-600 flex items-center gap-1 transition-all";
+            document.getElementById('mode-static').className = "text-[9px] font-extrabold uppercase tracking-widest px-2 py-1 rounded bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm transition-all";
             
             const dynamicLinkDisplay = document.getElementById('dynamic-link-display');
             if (dynamicLinkDisplay) dynamicLinkDisplay.classList.add('hidden');
@@ -2053,17 +1999,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             }, 2000);
         });
     }
-    
-        const logoUploadBtn = document.getElementById('qr-custom-logo');
-        if (logoUploadBtn) {
-            logoUploadBtn.addEventListener('click', (e) => {
-                const isUserPro = localStorage.getItem('pixelping-pro') === 'true';
-                if (!isUserPro) {
-                    e.preventDefault(); 
-                    openMasterKeyModal(); 
-                }
-            });
-        }
             
     </script>
 
