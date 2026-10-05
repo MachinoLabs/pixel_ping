@@ -38,7 +38,7 @@
         .dark input[type=color]::-webkit-color-swatch { border-color: #334155; }
 
         /* Slightly darkened background for QRFY pop */
-        .pixel-bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; background-color: #f1f5f9; transition: background-color 0.3s; }
+        .pixel-bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; background-color: #e2e8f0; transition: background-color 0.3s; }
         .dark .pixel-bg { background-color: #061a2b; background-image: radial-gradient(#0f3a5a 1px, transparent 1px); background-size: 30px 30px; }
         
         .qr-mask-layer { -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; mask-size: contain; mask-repeat: no-repeat; mask-position: center; transition: -webkit-mask-image 0.3s ease; }
@@ -112,7 +112,7 @@
     </header>
 
     <!-- THE STUDIO: ONE MASTER CONTAINER -->
-    <main id="app-container" class="w-full max-w-6xl mx-auto bg-white dark:bg-[#0b1622] rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:shadow-2xl border border-slate-200 dark:border-slate-800 flex flex-col z-10 relative mb-12 overflow-hidden">
+    <main id="app-container" class="w-full max-w-[1400px] mx-auto bg-white dark:bg-[#0b1622] rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:shadow-2xl border border-slate-200 dark:border-slate-800 flex flex-col z-10 relative mb-4 overflow-hidden">
         
         <!-- TOP BAR: HORIZONTAL PROXY PILLS -->
         <div class="w-full border-b border-slate-100 dark:border-slate-800/80 p-3 md:px-6 bg-white/50 dark:bg-slate-900/50">
@@ -137,14 +137,14 @@
 
         <!-- HIDDEN MASTER PAYLOAD SELECTOR -->
         <select id="payload-type" class="hidden">
-            <option value="url">URL</option><option value="tel">Phone</option><option value="text">Text</option><option value="wifi">Wi-Fi</option><option value="vcard">vCard</option><option value="sms">SMS</option><option value="email">Email</option><option value="calendar">Calendar</option><option value="geo">Geo</option><option value="crypto">Crypto</option><option value="review">Review</option><option value="social">Social</option><option value="menu">Menu</option><option value="booking">Booking</option><option value="coupon">Coupon</option>
+            <option value="url" selected>URL</option><option value="tel">Phone</option><option value="text">Text</option><option value="wifi">Wi-Fi</option><option value="vcard">vCard</option><option value="sms">SMS</option><option value="email">Email</option><option value="calendar">Calendar</option><option value="geo">Geo</option><option value="crypto">Crypto</option><option value="review">Review</option><option value="social">Social</option><option value="menu">Menu</option><option value="booking">Booking</option><option value="coupon">Coupon</option>
         </select>
 
         <!-- 60/40 SPLIT CONTAINER -->
         <div class="flex flex-col md:flex-row w-full">
             
             <!-- LEFT PANEL: 60% WIDTH (CONTENT & DESIGN) -->
-            <div class="w-full md:w-3/5 p-5 md:p-8 border-b md:border-b-0 md:border-r border-slate-100 dark:border-slate-800 flex flex-col">
+            <div class="w-full md:w-3/5 p-4 md:p-5 border-b md:border-b-0 md:border-r border-slate-100 dark:border-slate-800 flex flex-col">
                 
                 <!-- SECTION 1: CONTENT -->
                 <div class="mb-8">
@@ -189,7 +189,7 @@
                                     <button type="button" class="proxy-wifi proxy-btn flex-1 bg-transparent border-transparent text-slate-600 py-1.5 rounded text-xs font-bold" data-val="WEP">WEP</button>
                                     <button type="button" class="proxy-wifi proxy-btn flex-1 bg-transparent border-transparent text-slate-600 py-1.5 rounded text-xs font-bold" data-val="nopass">None</button>
                                 </div>
-                                <select id="pl-wifi-type" class="hidden"><option value="WPA">WPA</option><option value="WEP">WEP</option><option value="nopass">None</option></select>
+                                <select id="pl-wifi-type" class="hidden"><option value="WPA" selected>WPA</option><option value="WEP">WEP</option><option value="nopass">None</option></select>
                             </div>
                         </div>
                         <!-- Other simple forms hidden for brevity (Email, SMS, Map, Menu, etc.) They will use the same basic input layout -->
@@ -210,7 +210,7 @@
                                     <button type="button" class="proxy-crypto proxy-btn active flex-1 bg-white shadow-sm border border-slate-200 text-blue-600 py-1.5 rounded-lg text-xs font-bold" data-val="bitcoin">BTC</button>
                                     <button type="button" class="proxy-crypto proxy-btn flex-1 bg-transparent border-transparent text-slate-600 py-1.5 rounded-lg text-xs font-bold" data-val="ethereum">ETH</button>
                                 </div>
-                                <select id="pl-crypto-type" class="hidden"><option value="bitcoin">BTC</option><option value="ethereum">ETH</option></select>
+                                <select id="pl-crypto-type" class="hidden"><option value="bitcoin" selected>BTC</option><option value="ethereum">ETH</option></select>
                             </div>
                             <input type="text" id="pl-crypto-address" placeholder="Wallet Address" class="pl-input w-full bg-white px-3 py-2 rounded-xl border border-slate-300 text-sm">
                         </div>
@@ -245,7 +245,7 @@
                                     <button type="button" class="proxy-mask proxy-btn active flex-1 py-2 border-2 border-blue-500 bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:border-blue-500 dark:text-blue-300 rounded-xl font-bold text-xs" data-val="none">Square</button>
                                     <button type="button" class="proxy-mask proxy-btn flex-1 py-2 border border-slate-200 bg-white text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 hover:border-slate-300 rounded-xl font-bold text-xs" data-val="rounded">Rounded</button>
                                 </div>
-                                <select id="qr-mask" class="hidden"><option value="none">Square</option><option value="rounded">Rounded</option></select>
+                                <select id="qr-mask" class="hidden"><option value="none" selected>Square</option><option value="rounded">Rounded</option></select>
                                 
                                 <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1 mt-4">Eye & Corner</label>
                                 <div class="flex gap-1 p-1 bg-slate-100 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700/50">
@@ -253,7 +253,7 @@
                                     <button type="button" class="proxy-corner proxy-btn active flex-1 bg-white shadow-sm border border-slate-200 text-blue-600 py-1.5 rounded text-[10px] font-bold" data-val="dot">Circular</button>
                                     <button type="button" class="proxy-corner proxy-btn flex-1 bg-transparent border-transparent text-slate-600 dark:text-slate-400 py-1.5 rounded text-[10px] font-bold" data-val="extra-rounded">Round</button>
                                 </div>
-                                <select id="qr-corners-type" class="hidden"><option value="square">Square</option><option value="dot">Circular</option><option value="extra-rounded">Rounded</option></select>
+                                <select id="qr-corners-type" class="hidden"><option value="square">Square</option><option value="dot" selected>Circular</option><option value="extra-rounded">Rounded</option></select>
                             </div>
                             
                             <!-- Master Key Icon Wrapper Grid -->
@@ -303,7 +303,7 @@
             </div>
 
             <!-- RIGHT PANEL: 40% WIDTH (PREVIEW & ACTION) -->
-            <div class="w-full md:w-2/5 p-5 md:p-8 bg-slate-50 dark:bg-[#061a2b] flex flex-col items-center relative z-20 border-l border-slate-100 dark:border-slate-800">
+            <div class="w-full md:w-2/5 p-4 md:p-5 bg-slate-50 dark:bg-[#061a2b] flex flex-col items-center relative z-20 border-l border-slate-100 dark:border-slate-800">
                 
                 <h2 class="text-lg font-bold flex items-center gap-2 mb-6 w-full text-slate-900 dark:text-white">
                     <span class="bg-slate-900 dark:bg-white text-white dark:text-slate-900 w-6 h-6 rounded flex items-center justify-center text-xs">3</span> 
@@ -343,7 +343,7 @@
                             <button type="button" class="proxy-format proxy-btn px-2 py-1 bg-transparent border border-transparent text-slate-500 rounded text-[10px] font-bold" data-val="svg">SVG</button>
                             <button type="button" class="proxy-format proxy-btn px-2 py-1 bg-transparent border border-transparent text-slate-500 rounded text-[10px] font-bold" data-val="pdf">PDF</button>
                         </div>
-                        <select id="export-format" class="hidden"><option value="png">PNG</option><option value="svg">SVG</option><option value="pdf">PDF</option></select>
+                        <select id="export-format" class="hidden"><option value="png" selected>PNG</option><option value="svg">SVG</option><option value="pdf">PDF</option></select>
                     </div>
 
                     <button id="btn-download" class="w-full bg-slate-900 hover:bg-slate-800 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-bold py-2.5 rounded-xl transition-transform active:scale-95 shadow-md flex items-center justify-center gap-2 text-xs">
@@ -2049,6 +2049,225 @@ document.addEventListener('DOMContentLoaded', async () => {
         })();
     </script>
 
-<script src="arsenal.js"></script>
+<script>
+    // 1. CONFIGURATION (Replace these with your actual live URLs/Keys)
+    const STRIPE_PUBLISHABLE_KEY = "pk_live_4da9IrIAP8JS8AkaSRPohpDs00tXpFdfdU";
+    const WORKER_URL = "https://fourth-rail-checkout.amateuraiguy.workers.dev";
+
+    // 2. THE CHECKOUT ENGINE
+    async function initCheckout(priceId, mode = 'payment', userId = null) {
+        try {
+            if (!window.Stripe) {
+                const script = document.createElement("script");
+                script.src = "https://js.stripe.com/v3/";
+                document.head.appendChild(script);
+                await new Promise(resolve => script.onload = resolve);
+            }
+
+            const stripe = window.Stripe(STRIPE_PUBLISHABLE_KEY); 
+
+            const response = await fetch(`${WORKER_URL}/create-session`, {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ priceId: priceId, mode: mode, userId: window.Clerk?.user?.id || userId })
+            });
+
+            const data = await response.json();
+            if (data.error) throw new Error(data.error);
+
+            const clientSecret = data.clientSecret;
+
+            const checkout = await stripe.initEmbeddedCheckout({
+    clientSecret: clientSecret,
+    onComplete: async () => {
+        checkout.destroy();
+        document.getElementById("fourth-rail-overlay").remove();
+        
+        // Unlock the app
+        localStorage.setItem('pixelping-pro', 'true');
+        if (mode === 'subscription') {
+            localStorage.setItem('pixelping-evolution', 'true');
+        }
+        
+        // Refresh the UI to remove the locks
+        if (typeof window.checkPaywallState === 'function') {
+            window.checkPaywallState();
+        }
+        console.log("Payment Successful! App Unlocked.");
+    }
+});
+
+            const overlay = document.createElement("div");
+            overlay.id = "fourth-rail-overlay";
+            overlay.style = "position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.85);backdrop-filter:blur(5px);z-index:9999;display:flex;align-items:center;justify-content:center;";
+
+            const closeBtn = document.createElement("button");
+            closeBtn.innerHTML = "✕ Cancel & Return";
+            closeBtn.style = "position:absolute;top:20px;right:20px;background:#ff3366;color:#fff;border:none;padding:10px 20px;font-family:sans-serif;font-weight:bold;font-size:14px;border-radius:30px;cursor:pointer;z-index:10000;box-shadow:0 4px 12px rgba(0,0,0,0.3);";
+            closeBtn.onclick = () => {
+                checkout.destroy(); 
+                overlay.remove();  
+            };
+
+            const checkoutContainer = document.createElement("div");
+            checkoutContainer.id = "fourth-rail-checkout";
+            checkoutContainer.style = "width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto; border-radius: 12px;";
+
+            overlay.appendChild(closeBtn);
+            overlay.appendChild(checkoutContainer);
+            document.body.appendChild(overlay);
+
+            checkout.mount("#fourth-rail-checkout");
+
+        } catch (error) {
+            console.error("Fourth Rail Checkout Error:", error);
+            //alert("Failed to securely connect to the payment processor. Please try again.");
+        }
+    }
+
+    // 3. THE GATEKEEPER TRIGGERS
+const btnBuyMasterKey = document.getElementById('btn-buy-master-key');
+if (btnBuyMasterKey) {
+    btnBuyMasterKey.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopImmediatePropagation(); // Kill the double modal
+        
+        if (!window.Clerk || !window.Clerk.user) {
+            window.Clerk.openSignUp(); // Pop account creation
+            return;
+        }
+        // Launch Stripe AND pass the Clerk User ID
+        initCheckout('price_1U85qDIZcbLigL0N6FImW5v6', 'payment', window.Clerk.user.id);
+    });
+}
+
+const btnBuyEvolution = document.getElementById('btn-buy-evolution');
+if (btnBuyEvolution) {
+    btnBuyEvolution.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopImmediatePropagation(); // Kill the double modal
+        
+        if (!window.Clerk || !window.Clerk.user) {
+            window.Clerk.openSignUp(); // Pop account creation
+            return;
+        }
+        // Launch Stripe AND pass the Clerk User ID
+        initCheckout('price_1U87KcIZcbLigL0Nou9BMy4z', 'subscription', window.Clerk.user.id);
+    });
+}
+</script>
+    
+<!-- 🟢 ARSENAL DEEP-LINK ENGINE -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. THE ARSENAL RECIPE DICTIONARY
+    const arsenalPlays = {
+        "tip-jar": {
+            payload: "crypto",
+            ctaText: "Scan to tip",
+            printSize: "2in", 
+            dataColor: "#000000",
+            eyeColor: "#000000",
+            bgColor: "#ffffff",
+            eyeStyle: "dot", 
+            centerIcon: "", 
+            tierRequired: "master-key"
+        },
+        "ghost-trainer": {
+            payload: "url",
+            ctaText: "Watch Equipment Tutorial",
+            printSize: "3.5in", 
+            dataColor: "#10b981", 
+            eyeColor: "#10b981",
+            bgColor: "#ffffff",
+            eyeStyle: "square",
+            centerIcon: "",
+            tierRequired: "free"
+        },
+        "cloud-clipboard": {
+            payload: "url",
+            ctaText: "Scan to Update Ledger",
+            printSize: "3.5in",
+            dataColor: "#000000",
+            eyeColor: "#000000",
+            bgColor: "#ffffff",
+            eyeStyle: "square",
+            centerIcon: "",
+            tierRequired: "free"
+        },
+        "stealth-merch": {
+            payload: "url",
+            ctaText: "", 
+            printSize: "2in",
+            dataColor: "#000000",
+            eyeColor: "#000000",
+            bgColor: "#ffffff",
+            eyeStyle: "square",
+            centerIcon: "",
+            tierRequired: "free"
+        },
+        "phantom-speakeasy": {
+            payload: "url", 
+            ctaText: "Unlock Secret Menu",
+            printSize: "3.5in",
+            dataColor: "#d4af37", 
+            eyeColor: "#d4af37",
+            bgColor: "#1a1a1a",   
+            eyeStyle: "dot",
+            centerIcon: "",
+            tierRequired: "evolution"
+        }
+    };
+
+    // 2. THE CATCHER'S MITT
+    const recipeParams = new URLSearchParams(window.location.search);
+    const requestedPlay = recipeParams.get('play');
+
+    if (requestedPlay && arsenalPlays[requestedPlay]) {
+        const recipe = arsenalPlays[requestedPlay];
+
+        // 3. UI INJECTOR
+        document.getElementById('payload-type').value = recipe.payload;
+        document.getElementById('pl-smart-label').value = recipe.ctaText;
+        document.getElementById('pl-print-size').value = recipe.printSize;
+        
+        document.getElementById('qr-color-dots').value = recipe.dataColor;
+        document.getElementById('qr-color-corners').value = recipe.eyeColor;
+        document.getElementById('qr-color-bg').value = recipe.bgColor;
+        document.getElementById('qr-corners-type').value = recipe.eyeStyle;
+        document.getElementById('qr-icon').value = recipe.centerIcon;
+
+        // Activate the correct form
+        document.querySelectorAll('.payload-form').forEach(form => {
+            form.classList.toggle('active', form.id === 'form-' + recipe.payload);
+        });
+
+        // Re-render canvas
+        if (typeof window.updateQR === 'function') {
+            window.updateQR();
+        }
+
+        // 4. THE MONETIZATION GATEKEEPER
+        setTimeout(() => {
+            const isMasterKey = localStorage.getItem('pixelping-pro') === 'true';
+            const isEvolution = localStorage.getItem('pixelping-evolution') === 'true';
+
+            if (recipe.tierRequired === "master-key" && !isMasterKey) {
+                if (typeof window.openMasterKeyModal === 'function') {
+                    window.openMasterKeyModal();
+                }
+            } 
+            else if (recipe.tierRequired === "evolution") {
+                const btnDynamic = document.getElementById('mode-dynamic');
+                if (btnDynamic) btnDynamic.click();
+
+                if (!isEvolution && typeof window.openEvolutionModal === 'function') {
+                    window.openEvolutionModal();
+                }
+            }
+        }, 500); 
+    }
+});
+</script>
 </body>
 </html>
