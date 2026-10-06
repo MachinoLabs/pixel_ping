@@ -37,7 +37,6 @@
         input[type=color]::-webkit-color-swatch { border: 2px solid #e2e8f0; border-radius: 0.5rem; }
         .dark input[type=color]::-webkit-color-swatch { border-color: #334155; }
 
-        /* Slightly darkened background for QRFY pop */
         .pixel-bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; background-color: #e2e8f0; transition: background-color 0.3s; }
         .dark .pixel-bg { background-color: #061a2b; background-image: radial-gradient(#0f3a5a 1px, transparent 1px); background-size: 30px 30px; }
         
@@ -59,8 +58,20 @@
 
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        
         .proxy-btn { transition: all 0.2s ease; cursor: pointer; }
+
+        /* Modals & Overlays */
+        .ml-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); z-index: 998; }
+        .ml-modal { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 999; padding: 16px; }
+        .ml-modal[hidden], .ml-overlay[hidden] { display: none; }
+        .ml-modal-inner { background: #f7f6f2; color: #111827; border-radius: 16px; padding: 24px; width: 100%; max-width: 420px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); font-family: system-ui, -apple-system, sans-serif; }
+        .dark .ml-modal-inner { background: #0f172a; color: #f1f5f9; border: 1px solid #1e293b; }
+        
+        .footer { width: 100%; text-align: center; padding: 2rem 0; margin-top: 3rem; border-top: 1px solid rgba(148, 163, 184, 0.2); position: relative; z-index: 10; }
+        .footer-tag { font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; }
+        .footer-credits { font-size: 0.6875rem; color: #94a3b8; line-height: 1.6; }
+        .footer-credits a { color: inherit; text-decoration: none; transition: color 0.2s; }
+        .footer-credits a:hover { color: #27cfff; }
     </style>
 </head>
 <body class="text-slate-900 dark:text-ppLight min-h-screen font-sans antialiased flex flex-col items-center p-4 transition-colors duration-300 relative z-0">
@@ -81,7 +92,6 @@
 
     <header class="w-full max-w-6xl mb-4 mt-12 flex items-center justify-between z-10 relative">
         <div class="flex items-center gap-3">
-            <!-- Squared Off Logo -->
             <svg class="w-9 h-9 md:w-11 md:h-11 shadow-sm rounded-xl" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                 <rect width="512" height="512" rx="48" fill="#061a2b"/>
                 <rect x="28" y="28" width="456" height="456" rx="32" fill="none" stroke="#0f3a5a" stroke-width="4"/>
@@ -111,12 +121,9 @@
         </div>
     </header>
 
-    <!-- THE STUDIO: ONE MASTER CONTAINER -->
     <main id="app-container" class="w-full max-w-[1400px] mx-auto bg-white dark:bg-[#0b1622] rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:shadow-2xl border border-slate-200 dark:border-slate-800 flex flex-col z-10 relative mb-4 overflow-hidden">
         
-        <!-- TOP BAR: HORIZONTAL PROXY PILLS -->
         <div class="w-full border-b border-slate-100 dark:border-slate-800/80 p-3 md:px-6 bg-white/50 dark:bg-slate-900/50">
-            <!-- Shrunk padding, tighter fonts, ensured scrolling works -->
             <div class="flex gap-2 overflow-x-auto hide-scrollbar w-full items-center pb-1">
                 <button type="button" class="proxy-payload proxy-btn whitespace-nowrap px-3 py-1.5 rounded-lg border-2 font-bold text-xs transition-all bg-blue-50 border-blue-500 text-blue-700 dark:bg-blue-900/40 dark:border-blue-500 dark:text-blue-300" data-target="url">🌐 Website</button>
                 <button type="button" class="proxy-payload proxy-btn whitespace-nowrap px-3 py-1.5 rounded-lg border border-slate-200 font-semibold text-xs transition-all bg-white text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 hover:border-slate-300" data-target="tel">📞 Phone</button>
@@ -128,25 +135,22 @@
                 <button type="button" class="proxy-payload proxy-btn whitespace-nowrap px-3 py-1.5 rounded-lg border border-slate-200 font-semibold text-xs transition-all bg-white text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 hover:border-slate-300 flex items-center gap-1.5" data-target="sms">💬 SMS <span class="text-amber-500 text-[10px]">🔒</span></button>
                 <button type="button" class="proxy-payload proxy-btn whitespace-nowrap px-3 py-1.5 rounded-lg border border-slate-200 font-semibold text-xs transition-all bg-white text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 hover:border-slate-300 flex items-center gap-1.5" data-target="calendar">📅 Event <span class="text-amber-500 text-[10px]">🔒</span></button>
                 <button type="button" class="proxy-payload proxy-btn whitespace-nowrap px-3 py-1.5 rounded-lg border border-slate-200 font-semibold text-xs transition-all bg-white text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 hover:border-slate-300 flex items-center gap-1.5" data-target="geo">📍 Location <span class="text-amber-500 text-[10px]">🔒</span></button>
-                <!-- Business Suite -->
                 <button type="button" class="proxy-payload proxy-btn whitespace-nowrap px-3 py-1.5 rounded-lg border border-slate-200 font-semibold text-xs transition-all bg-white text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 hover:border-slate-300 flex items-center gap-1.5" data-target="review">⭐ Review <span class="text-amber-500 text-[10px]">🔒</span></button>
                 <button type="button" class="proxy-payload proxy-btn whitespace-nowrap px-3 py-1.5 rounded-lg border border-slate-200 font-semibold text-xs transition-all bg-white text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 hover:border-slate-300 flex items-center gap-1.5" data-target="social">👍 Social <span class="text-amber-500 text-[10px]">🔒</span></button>
                 <button type="button" class="proxy-payload proxy-btn whitespace-nowrap px-3 py-1.5 rounded-lg border border-slate-200 font-semibold text-xs transition-all bg-white text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 hover:border-slate-300 flex items-center gap-1.5" data-target="menu">🍽️ Menu <span class="text-amber-500 text-[10px]">🔒</span></button>
+                <button type="button" class="proxy-payload proxy-btn whitespace-nowrap px-3 py-1.5 rounded-lg border border-slate-200 font-semibold text-xs transition-all bg-white text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 hover:border-slate-300 flex items-center gap-1.5" data-target="booking">📅 Booking <span class="text-amber-500 text-[10px]">🔒</span></button>
+                <button type="button" class="proxy-payload proxy-btn whitespace-nowrap px-3 py-1.5 rounded-lg border border-slate-200 font-semibold text-xs transition-all bg-white text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 hover:border-slate-300 flex items-center gap-1.5" data-target="coupon">🎟️ Coupon <span class="text-amber-500 text-[10px]">🔒</span></button>
             </div>
         </div>
 
-        <!-- HIDDEN MASTER PAYLOAD SELECTOR -->
         <select id="payload-type" class="hidden">
             <option value="url" selected>URL</option><option value="tel">Phone</option><option value="text">Text</option><option value="wifi">Wi-Fi</option><option value="vcard">vCard</option><option value="sms">SMS</option><option value="email">Email</option><option value="calendar">Calendar</option><option value="geo">Geo</option><option value="crypto">Crypto</option><option value="review">Review</option><option value="social">Social</option><option value="menu">Menu</option><option value="booking">Booking</option><option value="coupon">Coupon</option>
         </select>
 
-        <!-- 60/40 SPLIT CONTAINER -->
         <div class="flex flex-col md:flex-row w-full">
             
-            <!-- LEFT PANEL: 60% WIDTH (CONTENT & DESIGN) -->
             <div class="w-full md:w-3/5 p-4 md:p-5 border-b md:border-b-0 md:border-r border-slate-100 dark:border-slate-800 flex flex-col">
                 
-                <!-- SECTION 1: CONTENT -->
                 <div class="mb-8">
                     <div class="flex items-center justify-between mb-4">
                         <h2 class="text-lg font-bold flex items-center gap-2 text-slate-900 dark:text-white">
@@ -162,11 +166,10 @@
 
                     <div id="static-warning-message" class="hidden text-[10px] font-bold text-amber-600 dark:text-amber-400 mb-4 bg-amber-50 dark:bg-amber-900/30 py-2 px-3 rounded-lg border border-amber-200 dark:border-amber-800/50">🔒 Security Note: This specific code type is generated securely on your device and cannot be saved dynamically.</div>
 
-                    <!-- Compressed Input paddings for vertical space -->
                     <div id="dynamic-forms-container" class="w-full">
                         <div id="form-url" class="payload-form active space-y-2">
                             <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Website Address</label>
-                            <input type="url" id="pl-url" value="https://" placeholder="https://pixelping.app" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none placeholder-slate-400 dark:placeholder-slate-500 shadow-sm transition-all text-sm">
+                            <input type="url" id="pl-url" placeholder="https://pixelping.app" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none placeholder-slate-400 dark:placeholder-slate-500 shadow-sm transition-all text-sm">
                             <p id="density-warning" class="hidden"></p>
                         </div>
                         <div id="form-tel" class="payload-form space-y-2">
@@ -179,50 +182,70 @@
                         </div>
                         <div id="form-wifi" class="payload-form space-y-3">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                <div><label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Network (SSID)</label><input type="text" id="pl-wifi-ssid" placeholder="GuestNetwork" class="pl-input w-full bg-white px-3 py-2 rounded-xl border border-slate-300 text-sm shadow-sm"></div>
-                                <div><label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Password</label><input type="text" id="pl-wifi-pass" placeholder="Password" class="pl-input w-full bg-white px-3 py-2 rounded-xl border border-slate-300 text-sm shadow-sm"></div>
+                                <div><label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Network (SSID)</label><input type="text" id="pl-wifi-ssid" placeholder="GuestNetwork" class="pl-input w-full bg-white px-3 py-2 rounded-xl border border-slate-300 text-sm shadow-sm dark:bg-slate-800/50 dark:border-slate-700 dark:text-white"></div>
+                                <div><label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Password</label><input type="text" id="pl-wifi-pass" placeholder="Password" class="pl-input w-full bg-white px-3 py-2 rounded-xl border border-slate-300 text-sm shadow-sm dark:bg-slate-800/50 dark:border-slate-700 dark:text-white"></div>
                             </div>
                             <div>
                                 <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Security</label>
-                                <div class="flex gap-1 p-1 bg-slate-100 rounded-lg border border-slate-200">
-                                    <button type="button" class="proxy-wifi proxy-btn active flex-1 bg-white shadow-sm border border-slate-200 text-blue-600 py-1.5 rounded text-xs font-bold" data-val="WPA">WPA</button>
-                                    <button type="button" class="proxy-wifi proxy-btn flex-1 bg-transparent border-transparent text-slate-600 py-1.5 rounded text-xs font-bold" data-val="WEP">WEP</button>
-                                    <button type="button" class="proxy-wifi proxy-btn flex-1 bg-transparent border-transparent text-slate-600 py-1.5 rounded text-xs font-bold" data-val="nopass">None</button>
+                                <div class="flex gap-1 p-1 bg-slate-100 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700/50">
+                                    <button type="button" class="proxy-wifi proxy-btn active flex-1 bg-white shadow-sm border border-slate-200 text-blue-600 py-1.5 rounded text-xs font-bold dark:bg-slate-700 dark:border-slate-600 dark:text-white" data-val="WPA">WPA</button>
+                                    <button type="button" class="proxy-wifi proxy-btn flex-1 bg-transparent border-transparent text-slate-600 py-1.5 rounded text-xs font-bold dark:text-slate-400" data-val="WEP">WEP</button>
+                                    <button type="button" class="proxy-wifi proxy-btn flex-1 bg-transparent border-transparent text-slate-600 py-1.5 rounded text-xs font-bold dark:text-slate-400" data-val="nopass">None</button>
                                 </div>
                                 <select id="pl-wifi-type" class="hidden"><option value="WPA" selected>WPA</option><option value="WEP">WEP</option><option value="nopass">None</option></select>
                             </div>
                         </div>
-                        <!-- Other simple forms hidden for brevity (Email, SMS, Map, Menu, etc.) They will use the same basic input layout -->
                         <div id="form-vcard" class="payload-form space-y-3">
                             <div class="grid grid-cols-2 gap-3">
-                                <div><input type="text" id="pl-vc-first" placeholder="First Name" class="pl-input w-full bg-white px-3 py-2 rounded-xl border border-slate-300 text-sm"></div>
-                                <div><input type="text" id="pl-vc-last" placeholder="Last Name" class="pl-input w-full bg-white px-3 py-2 rounded-xl border border-slate-300 text-sm"></div>
+                                <div><input type="text" id="pl-vc-first" placeholder="First Name" class="pl-input w-full bg-white px-3 py-2 rounded-xl border border-slate-300 text-sm dark:bg-slate-800/50 dark:border-slate-700 dark:text-white"></div>
+                                <div><input type="text" id="pl-vc-last" placeholder="Last Name" class="pl-input w-full bg-white px-3 py-2 rounded-xl border border-slate-300 text-sm dark:bg-slate-800/50 dark:border-slate-700 dark:text-white"></div>
                             </div>
                             <div class="grid grid-cols-2 gap-3">
-                                <div><input type="tel" id="pl-vc-phone" placeholder="Phone" class="pl-input w-full bg-white px-3 py-2 rounded-xl border border-slate-300 text-sm"></div>
-                                <div><input type="text" id="pl-vc-org" placeholder="Company" class="pl-input w-full bg-white px-3 py-2 rounded-xl border border-slate-300 text-sm"></div>
+                                <div><input type="tel" id="pl-vc-phone" placeholder="Phone" class="pl-input w-full bg-white px-3 py-2 rounded-xl border border-slate-300 text-sm dark:bg-slate-800/50 dark:border-slate-700 dark:text-white"></div>
+                                <div><input type="text" id="pl-vc-org" placeholder="Company" class="pl-input w-full bg-white px-3 py-2 rounded-xl border border-slate-300 text-sm dark:bg-slate-800/50 dark:border-slate-700 dark:text-white"></div>
                             </div>
                         </div>
                         <div id="form-crypto" class="payload-form space-y-3">
                             <div>
-                                <label class="block text-xs font-bold text-slate-700 mb-1">Coin Type</label>
-                                <div class="flex gap-2 w-full p-1 bg-slate-100 rounded-xl border border-slate-200 mb-2">
-                                    <button type="button" class="proxy-crypto proxy-btn active flex-1 bg-white shadow-sm border border-slate-200 text-blue-600 py-1.5 rounded-lg text-xs font-bold" data-val="bitcoin">BTC</button>
-                                    <button type="button" class="proxy-crypto proxy-btn flex-1 bg-transparent border-transparent text-slate-600 py-1.5 rounded-lg text-xs font-bold" data-val="ethereum">ETH</button>
+                                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Coin Type</label>
+                                <div class="flex gap-2 w-full p-1 bg-slate-100 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700/50 mb-2">
+                                    <button type="button" class="proxy-crypto proxy-btn active flex-1 bg-white shadow-sm border border-slate-200 text-blue-600 py-1.5 rounded-lg text-xs font-bold dark:bg-slate-700 dark:border-slate-600 dark:text-white" data-val="bitcoin">BTC</button>
+                                    <button type="button" class="proxy-crypto proxy-btn flex-1 bg-transparent border-transparent text-slate-600 py-1.5 rounded-lg text-xs font-bold dark:text-slate-400" data-val="ethereum">ETH</button>
                                 </div>
                                 <select id="pl-crypto-type" class="hidden"><option value="bitcoin" selected>BTC</option><option value="ethereum">ETH</option></select>
                             </div>
-                            <input type="text" id="pl-crypto-address" placeholder="Wallet Address" class="pl-input w-full bg-white px-3 py-2 rounded-xl border border-slate-300 text-sm">
+                            <input type="text" id="pl-crypto-address" placeholder="Wallet Address" class="pl-input w-full bg-white px-3 py-2 rounded-xl border border-slate-300 text-sm dark:bg-slate-800/50 dark:border-slate-700 dark:text-white">
                         </div>
-                        <div id="form-review" class="payload-form space-y-2"><input type="url" id="pl-biz-review" placeholder="Google Review URL" class="pl-input w-full bg-white px-3 py-2 rounded-xl border border-slate-300 text-sm"></div>
-                        <div id="form-social" class="payload-form space-y-2"><input type="url" id="pl-biz-social" placeholder="Social Profile URL" class="pl-input w-full bg-white px-3 py-2 rounded-xl border border-slate-300 text-sm"></div>
-                        <div id="form-menu" class="payload-form space-y-2"><input type="url" id="pl-biz-menu" placeholder="Link to PDF Menu" class="pl-input w-full bg-white px-3 py-2 rounded-xl border border-slate-300 text-sm"></div>
-                        <div id="form-booking" class="payload-form space-y-2"><input type="url" id="pl-biz-booking" placeholder="Booking URL" class="pl-input w-full bg-white px-3 py-2 rounded-xl border border-slate-300 text-sm"></div>
-                        <div id="form-coupon" class="payload-form space-y-2"><textarea id="pl-biz-coupon" placeholder="Coupon Text" class="pl-input w-full bg-white px-3 py-2 rounded-xl border border-slate-300 text-sm" rows="2"></textarea></div>
+                        <div id="form-sms" class="payload-form space-y-3">
+                            <div><label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Recipient Number</label><input type="tel" id="pl-sms-to" placeholder="e.g. 555-0199" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-sm"></div>
+                            <div><label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Message</label><textarea id="pl-sms-msg" placeholder="Pre-filled text..." class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-sm" rows="2"></textarea></div>
+                        </div>
+                        <div id="form-email" class="payload-form space-y-3">
+                            <div><label class="block text-xs text-slate-500 dark:text-ppLight mb-1">To Address</label><input type="email" id="pl-email-to" placeholder="hello@pixelping.app" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-sm"></div>
+                            <div><label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Subject</label><input type="text" id="pl-email-sub" placeholder="Subject line" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-sm"></div>
+                        </div>
+                        <div id="form-calendar" class="payload-form space-y-3">
+                            <div><label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Event Title</label><input type="text" id="pl-cal-title" placeholder="Event Title" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-sm"></div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div><label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Start Date/Time</label><input type="datetime-local" id="pl-cal-start" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-sm"></div>
+                                <div><label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Location</label><input type="text" id="pl-cal-loc" placeholder="123 Main St" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-sm"></div>
+                            </div>
+                        </div>
+                        <div id="form-geo" class="payload-form space-y-3">
+                            <div><label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Physical Address</label><input type="text" id="pl-geo-address" placeholder="123 Main St, City, State" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-sm"></div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div><label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Latitude</label><input type="text" id="pl-geo-lat" placeholder="40.7128" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-sm"></div>
+                                <div><label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Longitude</label><input type="text" id="pl-geo-lng" placeholder="-74.0060" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-sm"></div>
+                            </div>
+                        </div>
+                        <div id="form-review" class="payload-form space-y-2"><input type="url" id="pl-biz-review" placeholder="Google Review URL" class="pl-input w-full bg-white px-3 py-2 rounded-xl border border-slate-300 text-sm dark:bg-slate-800/50 dark:border-slate-700 dark:text-white"></div>
+                        <div id="form-social" class="payload-form space-y-2"><input type="url" id="pl-biz-social" placeholder="Social Profile URL" class="pl-input w-full bg-white px-3 py-2 rounded-xl border border-slate-300 text-sm dark:bg-slate-800/50 dark:border-slate-700 dark:text-white"></div>
+                        <div id="form-menu" class="payload-form space-y-2"><input type="url" id="pl-biz-menu" placeholder="Link to PDF Menu" class="pl-input w-full bg-white px-3 py-2 rounded-xl border border-slate-300 text-sm dark:bg-slate-800/50 dark:border-slate-700 dark:text-white"></div>
+                        <div id="form-booking" class="payload-form space-y-2"><input type="url" id="pl-biz-booking" placeholder="Booking URL" class="pl-input w-full bg-white px-3 py-2 rounded-xl border border-slate-300 text-sm dark:bg-slate-800/50 dark:border-slate-700 dark:text-white"></div>
+                        <div id="form-coupon" class="payload-form space-y-2"><textarea id="pl-biz-coupon" placeholder="Coupon Text" class="pl-input w-full bg-white px-3 py-2 rounded-xl border border-slate-300 text-sm dark:bg-slate-800/50 dark:border-slate-700 dark:text-white" rows="2"></textarea></div>
                     </div>
                 </div>
 
-                <!-- SECTION 2: DESIGN -->
                 <div class="mb-2">
                     <h2 class="text-lg font-bold flex items-center gap-2 mb-4 text-slate-900 dark:text-white border-t border-slate-100 dark:border-slate-800 pt-6">
                         <span class="bg-slate-900 dark:bg-white text-white dark:text-slate-900 w-6 h-6 rounded flex items-center justify-center text-xs">2</span> 
@@ -231,13 +254,11 @@
 
                     <div class="space-y-5">
                         
-                        <!-- Smart Label -->
                         <div>
                             <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1 flex justify-between">Smart Print Label <span class="mk-badge">Master Key</span></label>
                             <input type="text" id="pl-smart-label" placeholder="e.g. Guest Wi-Fi Network" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none placeholder-slate-400 dark:placeholder-slate-500 shadow-sm font-medium transition-all text-sm">
                         </div>
 
-                        <!-- Shapes & Center Icons Grid -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Outer Shape</label>
@@ -250,26 +271,24 @@
                                 <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1 mt-4">Eye & Corner</label>
                                 <div class="flex gap-1 p-1 bg-slate-100 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700/50">
                                     <button type="button" class="proxy-corner proxy-btn flex-1 bg-transparent border-transparent text-slate-600 dark:text-slate-400 py-1.5 rounded text-[10px] font-bold" data-val="square">Square</button>
-                                    <button type="button" class="proxy-corner proxy-btn active flex-1 bg-white shadow-sm border border-slate-200 text-blue-600 py-1.5 rounded text-[10px] font-bold" data-val="dot">Circular</button>
+                                    <button type="button" class="proxy-corner proxy-btn active flex-1 bg-white shadow-sm border border-slate-200 text-blue-600 py-1.5 rounded text-[10px] font-bold dark:bg-slate-700 dark:border-slate-600 dark:text-white" data-val="dot">Circular</button>
                                     <button type="button" class="proxy-corner proxy-btn flex-1 bg-transparent border-transparent text-slate-600 dark:text-slate-400 py-1.5 rounded text-[10px] font-bold" data-val="extra-rounded">Round</button>
                                 </div>
                                 <select id="qr-corners-type" class="hidden"><option value="square">Square</option><option value="dot" selected>Circular</option><option value="extra-rounded">Rounded</option></select>
                             </div>
                             
-                            <!-- Master Key Icon Wrapper Grid -->
                             <div>
                                 <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Center Icon</label>
                                 <div id="proxy-icon-container" class="flex flex-wrap gap-2 w-full">
-                                    <button type="button" class="proxy-icon proxy-btn active min-w-[50px] py-1.5 border-2 border-blue-500 bg-blue-50 text-blue-700 rounded-lg font-bold text-[10px]" data-val="">None</button>
-                                    <button type="button" class="proxy-icon proxy-btn min-w-[40px] py-1.5 border border-slate-200 bg-white text-slate-600 rounded-lg text-sm flex items-center justify-center" data-val="heart">❤️</button>
-                                    <button type="button" class="proxy-icon proxy-btn min-w-[40px] py-1.5 border border-slate-200 bg-white text-slate-600 rounded-lg text-sm flex items-center justify-center" data-val="lightning">⚡</button>
+                                    <button type="button" class="proxy-icon proxy-btn active min-w-[50px] py-1.5 border-2 border-blue-500 bg-blue-50 text-blue-700 rounded-lg font-bold text-[10px] dark:bg-blue-900/30 dark:border-blue-500 dark:text-blue-300" data-val="">None</button>
+                                    <button type="button" class="proxy-icon proxy-btn min-w-[40px] py-1.5 border border-slate-200 bg-white text-slate-600 rounded-lg text-sm flex items-center justify-center dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300" data-val="heart">❤️</button>
+                                    <button type="button" class="proxy-icon proxy-btn min-w-[40px] py-1.5 border border-slate-200 bg-white text-slate-600 rounded-lg text-sm flex items-center justify-center dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300" data-val="lightning">⚡</button>
+                                    <button type="button" class="proxy-icon proxy-btn min-w-[40px] py-1.5 border border-slate-200 bg-white text-slate-600 rounded-lg text-sm flex items-center justify-center dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300" data-val="star">⭐</button>
                                 </div>
-                                <!-- Hidden Original Select for Ghost Script injection -->
-                                <select id="qr-icon" class="hidden"><option value=""></option><option value="heart">Heart</option><option value="lightning">Lightning</option></select>
+                                <select id="qr-icon" class="hidden"><option value=""></option><option value="heart">Heart</option><option value="lightning">Lightning</option><option value="star">Star</option></select>
                             </div>
                         </div>
 
-                        <!-- Custom Logo Upload -->
                         <div>
                             <div class="flex justify-between items-center mb-1">
                                 <label class="text-xs font-bold text-slate-700 dark:text-slate-300">Custom Logo <span class="mk-badge">Master Key</span></label>
@@ -278,7 +297,6 @@
                             <input type="file" id="qr-custom-logo" accept="image/png, image/jpeg, image/svg+xml" class="w-full bg-slate-50 dark:bg-slate-800/30 text-slate-500 dark:text-slate-400 px-3 py-2 rounded-xl border border-dashed border-slate-300 dark:border-slate-700 text-xs file:mr-3 file:py-1 file:px-3 file:rounded file:border-0 file:text-[10px] file:font-bold file:bg-blue-50 file:text-blue-700 cursor-pointer focus:outline-none">
                         </div>
 
-                        <!-- Colors -->
                         <div class="flex flex-wrap items-center justify-between gap-3 p-4 bg-slate-50 dark:bg-slate-800/30 rounded-2xl border border-slate-100 dark:border-slate-700/50">
                             <div class="flex gap-4">
                                 <div class="flex flex-col gap-1.5 items-center">
@@ -295,14 +313,13 @@
                                 </div>
                             </div>
                             <div class="ml-auto">
-                                <button id="btn-save-brand" class="text-[10px] bg-white border border-slate-200 text-slate-700 px-3 py-2 rounded-lg hover:border-slate-300 transition-colors shadow-sm font-bold">Save Brand</button>
+                                <button id="btn-save-brand" class="text-[10px] bg-white border border-slate-200 text-slate-700 px-3 py-2 rounded-lg hover:border-slate-300 transition-colors shadow-sm font-bold dark:bg-slate-700 dark:border-slate-600 dark:text-slate-200">Save Brand</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- RIGHT PANEL: 40% WIDTH (PREVIEW & ACTION) -->
             <div class="w-full md:w-2/5 p-4 md:p-5 bg-slate-50 dark:bg-[#061a2b] flex flex-col items-center relative z-20 border-l border-slate-100 dark:border-slate-800">
                 
                 <h2 class="text-lg font-bold flex items-center gap-2 mb-6 w-full text-slate-900 dark:text-white">
@@ -310,38 +327,34 @@
                     Download your QR
                 </h2>
                 
-                <!-- THE "POLAROID" CANVAS (Everything inside white container) -->
                 <div class="bg-white p-4 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-[0_15px_40px_rgba(0,0,0,0.06)] relative flex flex-col items-center justify-center w-full max-w-[280px] transition-all hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] mb-6 group">
                     <div id="canvas-wrapper" class="qr-mask-layer rounded-2xl overflow-hidden flex items-center justify-center w-full aspect-square relative z-10 bg-white">
                         <div id="canvas-container"></div>
                     </div>
                     
-                    <!-- WATERMARK INSIDE CANVAS -->
                     <div id="pixelping-watermark" class="text-[9px] font-bold text-slate-400 flex items-center justify-center gap-1.5 font-mono mt-3">
                         <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='96' fill='%2394a3b8'/%3E%3Crect x='96' y='96' width='96' height='96' rx='18' fill='%23ffffff'/%3E%3Crect x='320' y='96' width='96' height='96' rx='18' fill='%23ffffff'/%3E%3Crect x='96' y='288' width='96' height='96' rx='18' fill='%23ffffff'/%3E%3Crect x='140' y='140' width='16' height='16' rx='4' fill='%230f172a'/%3E%3C/svg%3E" class="w-3 h-3 rounded-sm opacity-60" alt="Logo"> Powered by PixelPing
                     </div>
 
-                    <!-- LABEL PREVIEW INSIDE CANVAS -->
                     <div id="live-label-preview" class="font-bold text-slate-800 text-sm text-center hidden mt-2 w-full truncate px-2"></div>
                 </div>
 
                 <div id="dynamic-link-display" class="hidden w-full mb-6 bg-white dark:bg-slate-800 border-2 border-blue-100 dark:border-slate-700 rounded-xl p-3 shadow-sm flex flex-col items-center justify-center gap-2">
                     <span class="text-[9px] text-slate-500 font-bold uppercase tracking-widest">Dynamic Route</span>
                     <div class="flex items-center gap-2 w-full">
-                        <input type="text" id="shortlink-url" readonly value="https://link.pixelping.app/xyz" class="flex-1 bg-slate-50 dark:bg-slate-900 text-[10px] font-mono text-slate-700 dark:text-slate-300 px-2 py-2 rounded border border-slate-200 focus:outline-none select-all">
+                        <input type="text" id="shortlink-url" readonly value="https://link.pixelping.app/xyz" class="flex-1 bg-slate-50 dark:bg-slate-900 text-[10px] font-mono text-slate-700 dark:text-slate-300 px-2 py-2 rounded border border-slate-200 dark:border-slate-700 focus:outline-none select-all">
                         <button id="btn-copy-link" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded font-bold text-[10px] transition-colors">Copy</button>
                     </div>
                 </div>
 
-                <!-- EXPORT ACTIONS (Tighter spacing) -->
                 <div class="w-full flex flex-col gap-2 mt-auto">
                     
                     <div class="flex justify-between items-center mb-1">
                         <label class="block text-[9px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Export Format</label>
                         <div class="flex gap-1">
-                            <button type="button" class="proxy-format proxy-btn active px-2 py-1 bg-white border border-slate-200 text-blue-600 rounded text-[10px] font-bold shadow-sm" data-val="png">PNG</button>
-                            <button type="button" class="proxy-format proxy-btn px-2 py-1 bg-transparent border border-transparent text-slate-500 rounded text-[10px] font-bold" data-val="svg">SVG</button>
-                            <button type="button" class="proxy-format proxy-btn px-2 py-1 bg-transparent border border-transparent text-slate-500 rounded text-[10px] font-bold" data-val="pdf">PDF</button>
+                            <button type="button" class="proxy-format proxy-btn active px-2 py-1 bg-white border border-slate-200 text-blue-600 rounded text-[10px] font-bold shadow-sm dark:bg-slate-700 dark:border-slate-600 dark:text-white" data-val="png">PNG</button>
+                            <button type="button" class="proxy-format proxy-btn px-2 py-1 bg-transparent border border-transparent text-slate-500 rounded text-[10px] font-bold dark:text-slate-400" data-val="svg">SVG</button>
+                            <button type="button" class="proxy-format proxy-btn px-2 py-1 bg-transparent border border-transparent text-slate-500 rounded text-[10px] font-bold dark:text-slate-400" data-val="pdf">PDF</button>
                         </div>
                         <select id="export-format" class="hidden"><option value="png" selected>PNG</option><option value="svg">SVG</option><option value="pdf">PDF</option></select>
                     </div>
@@ -356,7 +369,7 @@
                         <span>Save to Cloud <span class="bg-white text-blue-600 text-[8px] px-1 py-0.5 rounded ml-1 uppercase font-black">MK</span></span>
                     </button>
                     
-                    <button id="btn-print" class="w-full bg-white dark:bg-slate-800 border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold py-2.5 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-sm text-xs">
+                    <button id="btn-print" class="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold py-2.5 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-sm text-xs">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
                         <span>Print & Label</span>
                     </button>
@@ -364,7 +377,6 @@
                     <div class="hidden"><select id="pl-print-size"><option value="3.5in" selected>Medium</option></select></div>
                 </div>
                 
-                <!-- TELEMETRY BLOCK -->
                 <div id="telemetry-dashboard" class="hidden w-full mt-4 p-4 bg-[#0b1622] rounded-xl shadow-inner relative overflow-hidden border border-slate-800">
                     <div class="absolute top-0 left-0 w-full h-1 bg-ppGreen shadow-[0_0_12px_rgba(60,255,143,0.8)]"></div>
                     <div class="flex justify-between items-center mb-3">
@@ -381,6 +393,15 @@
         </div>
     </main>
 
+    <footer class="footer">
+        <p class="footer-tag">Built with the StupidSimpleCrazyFast™ micro-app framework.</p>
+        <div class="footer-credits">
+            Built by <a href="https://machinolabs.com" target="_blank">MachinoLabs</a> • <a href="https://machinolabs.com" target="_blank">machinolabs.com</a> • <a href="https://stupidsimplecrazyfast.com" target="_blank">stupidsimplecrazyfast.com</a>
+            <br>
+            Joe • 717.623.2907
+        </div>
+    </footer>
+
     <!-- PROXY BUTTON & GHOST SCRIPT LISTENER -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -390,7 +411,6 @@
                 if(!buttons.length || !select) return;
 
                 buttons.forEach(btn => {
-                    // Remove existing listeners to prevent duplicates if called multiple times
                     const newBtn = btn.cloneNode(true);
                     btn.parentNode.replaceChild(newBtn, btn);
                     
@@ -410,17 +430,14 @@
                 });
             }
 
-            // Group 1: The Top Payload Border-Buttons
             const payloadActive = ['active', 'bg-blue-50', 'border-blue-500', 'text-blue-700', 'dark:bg-blue-900/40', 'dark:border-blue-500', 'dark:text-blue-300'];
             const payloadInactive = ['bg-white', 'border-slate-200', 'text-slate-600', 'dark:bg-slate-800', 'dark:border-slate-700', 'dark:text-slate-300', 'hover:border-slate-300'];
             setupProxy('proxy-payload', 'payload-type', payloadActive, payloadInactive);
 
-            // Group 2: Solid Border-Buttons (Shape)
-            const solidActive = ['active', 'border-2', 'border-blue-500', 'bg-blue-50', 'text-blue-700'];
-            const solidInactive = ['border', 'border-slate-200', 'bg-white', 'text-slate-600'];
+            const solidActive = ['active', 'border-2', 'border-blue-500', 'bg-blue-50', 'text-blue-700', 'dark:bg-blue-900/30', 'dark:border-blue-500', 'dark:text-blue-300'];
+            const solidInactive = ['border', 'border-slate-200', 'bg-white', 'text-slate-600', 'dark:bg-slate-800', 'dark:border-slate-700', 'dark:text-slate-300', 'hover:border-slate-300'];
             setupProxy('proxy-mask', 'qr-mask', solidActive, solidInactive);
 
-            // Group 3: Pill Selectors inside grey wrappers (WiFi, Crypto, Corners, Export)
             const pillActive = ['active', 'bg-white', 'shadow-sm', 'border-slate-200', 'text-blue-600', 'dark:bg-slate-700', 'dark:border-slate-600', 'dark:text-white'];
             const pillInactive = ['bg-transparent', 'border-transparent', 'text-slate-600', 'dark:text-slate-400', 'hover:bg-slate-200', 'dark:hover:bg-slate-700/50'];
             setupProxy('proxy-wifi', 'pl-wifi-type', pillActive, pillInactive);
@@ -428,22 +445,20 @@
             setupProxy('proxy-corner', 'qr-corners-type', pillActive, pillInactive);
             setupProxy('proxy-format', 'export-format', pillActive, pillInactive);
 
-            // THE GHOST SCRIPT WATCHER: Automatically build pills for premium icons
             const iconSelect = document.getElementById('qr-icon');
             const iconContainer = document.getElementById('proxy-icon-container');
-            const iconActive = ['active', 'border-2', 'border-blue-500', 'bg-blue-50', 'text-blue-700'];
-            const iconInactive = ['border', 'border-slate-200', 'bg-white', 'text-slate-600'];
+            const iconActive = ['active', 'border-2', 'border-blue-500', 'bg-blue-50', 'text-blue-700', 'dark:bg-blue-900/30', 'dark:border-blue-500', 'dark:text-blue-300'];
+            const iconInactive = ['border', 'border-slate-200', 'bg-white', 'text-slate-600', 'dark:bg-slate-800', 'dark:border-slate-700', 'dark:text-slate-300'];
 
             function syncIcons() {
                 if (!iconSelect || !iconContainer) return;
                 Array.from(iconSelect.options).forEach(opt => {
-                    if (opt.value === '') return; // Skip default empty
+                    if (opt.value === '') return; 
                     if (!iconContainer.querySelector(`[data-val="${opt.value}"]`)) {
                         const btn = document.createElement('button');
                         btn.type = 'button';
-                        btn.className = 'proxy-icon proxy-btn min-w-[40px] py-1.5 border border-slate-200 bg-white text-slate-600 rounded-lg text-sm flex items-center justify-center';
+                        btn.className = 'proxy-icon proxy-btn min-w-[40px] py-1.5 border border-slate-200 bg-white text-slate-600 rounded-lg text-sm flex items-center justify-center dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300';
                         btn.dataset.val = opt.value;
-                        // Use emoji if present in text, otherwise first letter
                         btn.textContent = opt.text.replace(/[^a-zA-Z0-9\s]/g, '') === '' ? opt.text : opt.text.charAt(0);
                         iconContainer.appendChild(btn);
                     }
@@ -451,13 +466,11 @@
                 setupProxy('proxy-icon', 'qr-icon', iconActive, iconInactive);
             }
 
-            // Watch for changes injected by Ghost Script
             if (iconSelect) {
                 const observer = new MutationObserver(() => syncIcons());
                 observer.observe(iconSelect, { childList: true });
             }
             
-            // Run initial setup for hardcoded icons
             setupProxy('proxy-icon', 'qr-icon', iconActive, iconInactive);
         });
     </script>
@@ -473,7 +486,6 @@
 
        <div id="pricing-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
             
-            <!-- TIER 1: ZERO-FRICTION CORE -->
             <div id="card-tier-1" class="bg-[#0f3a5a]/40 border border-slate-700 rounded-3xl p-8 flex flex-col hover:border-slate-500 transition-colors relative">
                 <h3 class="text-white text-xl font-bold uppercase tracking-wider mb-2">Zero-Friction Core</h3>
                 <p class="text-slate-400 text-sm mb-6 h-10">Build static codes offline. No tracking. No redirects. No BS.</p>
@@ -491,7 +503,6 @@
                 <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="w-full text-center bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 rounded-xl transition-colors border border-slate-600 cursor-pointer">Launch Canvas</button>
             </div>
 
-            <!-- TIER 2: MASTER KEY -->
             <div id="card-tier-2" class="bg-[#0f172a] border-2 border-yellow-500 rounded-3xl p-8 flex flex-col relative transform md:-translate-y-4 shadow-[0_0_40px_rgba(234,179,8,0.15)]">
                 <h3 class="text-yellow-400 text-xl font-bold uppercase tracking-wider mb-2">Master Key</h3>
                 <p class="text-slate-400 text-sm mb-6 h-10">Own the canvas. Unlock business-grade payloads, brand kits, and infinite vector scaling.</p>
@@ -510,7 +521,6 @@
                 <button onclick="openMasterKeyModal()" class="w-full text-center bg-gradient-to-r from-yellow-400 to-yellow-600 hover:from-yellow-300 hover:to-yellow-500 text-slate-900 font-extrabold py-3 rounded-xl transition-all shadow-lg active:scale-95 cursor-pointer">Get Master Key</button>
             </div>
 
-            <!-- TIER 3: EVOLUTION -->
             <div id="card-tier-3" class="bg-[#0f3a5a]/40 border border-[#3cff8f]/40 rounded-3xl p-8 flex flex-col hover:border-[#3cff8f]/80 transition-colors relative shadow-[0_0_30px_rgba(60,255,143,0.05)] w-full">
                 <h3 class="text-[#3cff8f] text-xl font-bold uppercase tracking-wider mb-2">Evolution</h3>
                 <p class="text-slate-400 text-sm mb-6 h-10">Ignite the engine. Dynamic routing, live analytics, and total command over your field operations.</p>
@@ -529,88 +539,9 @@
             </div>
 
         </div>
-
-            
-
-        </div>
     </div>
 </section>
 <!-- PRICING SECTION END -->
-
-    <div id="infoOverlay" class="ml-overlay" hidden></div>
-    <div id="infoModal" class="ml-modal" hidden>
-        <div class="ml-modal-inner">
-            
-            <div class="ml-info-header">
-                <h2>About PixelPing</h2>
-                <button id="infoCloseBtn" class="ml-info-close" type="button" aria-label="Close info">✕</button>
-            </div>
-            
-            <div class="ml-info-tabs">
-                <button class="ml-info-tab ml-info-tab-active" data-tab="about" type="button">About</button>
-                <button class="ml-info-tab" data-tab="how" type="button">How To</button>
-                <button class="ml-info-tab" data-tab="faq" type="button">FAQ</button>
-                <button class="ml-info-tab" data-tab="other" type="button">Other Apps</button>
-                <button class="ml-info-tab" data-tab="credits" type="button">Credits</button>
-            </div>
-            
-            <div class="ml-info-body">
-                
-                <section class="ml-info-panel" data-panel="about">
-                    <p><strong>PixelPing creates fast, offline-first QR codes tailored for field operations.</strong></p>
-                    <ul class="space-y-1 mt-2">
-                        <li>• Runs instantly without downloads</li>
-                        <li>• 100% offline-ready and ad-free</li>
-                        <li>• High Error Correction ensures codes survive dirt and damage</li>
-                        <li>• Free tier includes standard codes; Master Key unlocks premium payloads and styling</li>
-                    </ul>
-                </section>
-                
-                <section class="ml-info-panel" data-panel="how" hidden>
-                    <h3>How to Use</h3>
-                    <ul class="space-y-2">
-                        <li><strong>Step 1:</strong> Select what you want your code to do (Open a URL, share Wi-Fi, etc.) and enter the details.</li>
-                        <li><strong>Step 2:</strong> Use the Smart Print Label to name your code so people know what to scan.</li>
-                        <li><strong>Step 3:</strong> Customize the aesthetics and structure to match your brand.</li>
-                        <li><strong>Step 4:</strong> Save the code digitally, or Print it directly.</li>
-                    </ul>
-                </section>
-                
-                <section class="ml-info-panel" data-panel="faq" hidden>
-                    <h3>Frequently Asked Questions</h3>
-                    <p><strong>Does this app collect data?</strong><br>No. PixelPing is completely client-side. Your payloads and settings stay strictly on your local device.</p>
-                    <p><strong>Can I use this without Wi-Fi?</strong><br>Yes! Once you load the app for the first time, it is fully functional offline.</p>
-                    <p><strong>What do I get with the Master Key?</strong><br>The Master Key unlocks advanced payloads (like Wi-Fi, vCards, and Crypto), custom styling, the Smart Print Label feature, and much more.</p>
-                </section>
-                
-                <section class="ml-info-panel" data-panel="other" hidden>
-                    <div class="ml-other-games">
-                        <a href="https://sscf.app/privacy-vault.html" target="_blank" class="ml-other-tile">
-                            <div class="ml-other-title">Privacy_Vault</div>
-                            <div class="ml-other-sub">Your Data Encrypted Offline</div>
-                        </a>
-                        <a href="https://sscf.app/stackfive/index.html" target="_blank" class="ml-other-tile">
-                            <div class="ml-other-title">StackFive • Brain Teaser</div>
-                            <div class="ml-other-sub">A Colorful Logic Puzzle From MachinoLabs.</div>
-                        </a>
-                    </div>
-                </section>
-                
-                <section class="ml-info-panel" data-panel="credits" hidden>
-                    <footer class="text-xs text-slate-500 pt-2 border-t border-slate-200 dark:border-slate-700">
-                        <p class="font-medium mb-2">Built with the StupidSimpleCrazyFast™ micro-app framework.</p>
-                        <div class="opacity-80">
-                            Built by <a href="https://machinolabs.com" target="_blank" class="hover:underline text-blue-500">MachinoLabs</a> • <a href="https://machinolabs.com" target="_blank" class="hover:underline text-blue-500">machinolabs.com</a> • <a href="https://stupidsimplecrazyfast.com" target="_blank" class="hover:underline text-blue-500">stupidsimplecrazyfast.com</a>
-                            <br>
-                            Joe • 717.623.2907<br>
-                            Let's Build Something
-                        </div>
-                    </footer>
-                </section>
-                
-            </div>
-        </div>
-    </div>
 
     <div id="unlockOverlay" class="ml-overlay" hidden></div>
     <div id="unlockModal" class="ml-modal" hidden>
@@ -667,18 +598,6 @@
     </div>
 
 <script>
-/**
- * Fourth Rail Core - Embedded Checkout Engine
- * Version 1.1.0 (Unminified & Upgraded)
- * (c) 2026 MachinoLabs | License: Commercial
- */
-
-console.log(
-    "%cHold up! 👋\n\n%cThis application's payment rails are secured by Fourth Rail Core.\nUnauthorized ripping, tampering with local payment tokens, or bypass \nattempts are strictly prohibited.\n\nRespect the build, support indie devs, and keep it ethical.\n\n© 2026 MachinoLabs • Built with StupidSimpleCrazyFast™",
-    "color: #ff3366; font-size: 36px; font-weight: bold; text-shadow: 1px 1px 0px #222, 2px 2px 0px #222;",
-    "color: #64748b; font-size: 13px; font-family: monospace; line-height: 1.5;"
-);
-
 class FourthRail {
     constructor(config) {
         if (!config.workerUrl) throw new Error("Fourth Rail Error: workerUrl is required.");
@@ -781,15 +700,6 @@ window.FourthRail = FourthRail;
 </script>
 
     <script>
-        console.log(
-            "%cHold up! ✋", 
-            "color: #ff4757; font-size: 40px; font-weight: bold; text-shadow: 2px 2px 0px #000;"
-        );
-        console.log(
-            "%cWe love that you're looking under the hood of PixelPing. But before you go tinkering with local storage or ripping code, please remember:\n\nThis application is the proprietary property of MachinoLabs. Unauthorized copying, reverse engineering, or redistribution is strictly prohibited.\n\nRespect the build, support indie devs, and keep it ethical. \n\n© 2026 MachinoLabs • Built by Joe", 
-            "font-size: 14px; color: #0f3a5a; font-weight: bold; line-height: 1.5;"
-        );
-
     function animateTelemetry(elementId, start, end, duration) {
         const obj = document.getElementById(elementId);
         if (!obj) return;
@@ -1180,7 +1090,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             const svgIcons = {
                 heart: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23ff4757' d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/%3E%3C/svg%3E",
-                lightning: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fbc531' d='M7 14h3v9l9-13h-4V1z'/%3E%3C/svg%3E"
+                lightning: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fbc531' d='M7 14h3v9l9-13h-4V1z'/%3E%3C/svg%3E",
+                star: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 14 14'%3E%3Cpath fill='%23fddc5c' d='M7 13.375c4.08 0 6.375-2.295 6.375-6.375S11.08 0.625 7 0.625 0.625 2.92 0.625 7 2.92 13.375 7 13.375Z'/%3E%3Cpath fill='%230c098c' fill-rule='evenodd' d='M2.72444 2.72444C1.78946 3.65942 1.25 5.07504 1.25 7c0 1.92496 0.53946 3.3406 1.47444 4.2756C3.65942 12.2105 5.07504 12.75 7 12.75c1.92496 0 3.3406-0.5395 4.2756-1.4744C12.2105 10.3406 12.75 8.92496 12.75 7s-0.5395-3.34058-1.4744-4.27556C10.3406 1.78946 8.92496 1.25 7 1.25s-3.34058 0.53946-4.27556 1.47444Zm-0.88388-0.88388C3.07308 0.60804 4.84496 0 7 0s3.9269 0.60804 5.1594 1.84056C13.392 3.07308 14 4.84496 14 7s-0.608 3.9269-1.8406 5.1594C10.9269 13.392 9.15504 14 7 14c-2.15504 0-3.92692-0.608-5.15944-1.8406C0.60804 10.9269 0 9.15504 0 7c0-2.15504 0.60804-3.92692 1.84056-5.15944Zm5.94647 1.26702c-0.3937-0.54014-1.17866-0.53993-1.57241-0.00032-0.37798 0.51801-0.6477 1.07354-0.83439 1.69543-0.60383 0.01259-1.18055 0.10792-1.75494 0.30155-0.63351 0.21356-0.86669 0.96956-0.50963 1.51228 0.35253 0.53583 0.77516 0.9764 1.29193 1.35189-0.17458 0.60034-0.25981 1.19699-0.26589 1.81619-0.0064 0.6516 0.60469 1.1955 1.2844 0.9748 0.57233-0.1858 1.08731-0.4567 1.57319-0.82815 0.48632 0.37155 1.00207 0.64245 1.57472 0.82825 0.67962 0.2205 1.2907-0.3233 1.28431-0.9749-0.00608-0.6192-0.09131-1.21585-0.26589-1.81619 0.51677-0.37549 0.93937-0.81606 1.29197-1.35189 0.357-0.54272 0.1238-1.29872-0.5097-1.51228-0.57434-0.19362-1.15103-0.28895-1.75483-0.30154-0.18635-0.62152-0.45519-1.177-0.83284-1.69512Z'/%3E%3C/svg%3E"
             };
 
             const maskShapes = {
@@ -1869,43 +1780,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                 updateQR();
             });
 
-            const infoBtn = document.getElementById("infoBtn");
-            const infoOverlay = document.getElementById("infoOverlay");
-            const infoModal = document.getElementById("infoModal");
-            const infoCloseBtn = document.getElementById("infoCloseBtn");
-            const tabButtons = Array.from(document.querySelectorAll(".ml-info-tab"));
-            const panels = Array.from(document.querySelectorAll(".ml-info-panel"));
-
-            function openInfo() { infoOverlay.hidden = false; infoModal.hidden = false; }
-            function closeInfo() { infoOverlay.hidden = true; infoModal.hidden = true; }
-
-            function setActiveTab(tabName) {
-                tabButtons.forEach(btn => {
-                    btn.classList.toggle("ml-info-tab-active", btn.dataset.tab === tabName);
-                });
-                panels.forEach(panel => {
-                    panel.hidden = (panel.dataset.panel !== tabName);
-                });
-            }
-
-            infoBtn.addEventListener("click", () => { infoModal.hidden ? openInfo() : closeInfo(); });
-            infoOverlay.addEventListener("click", closeInfo);
-            infoCloseBtn.addEventListener("click", closeInfo);
-
-            tabButtons.forEach(btn => {
-                btn.addEventListener("click", () => setActiveTab(btn.dataset.tab));
-            });
-
-            document.addEventListener("keydown", (e) => {
-                if (e.key === "Escape" && !infoModal.hidden) closeInfo();
-            });
-
             const themeToggleBtn = document.getElementById('themeToggle');
             const iconSun = document.getElementById('icon-sun');
             const iconMoon = document.getElementById('icon-moon');
             const htmlTag = document.documentElement;
 
-            // Initialize Theme correctly
             if (localStorage.getItem('theme') === 'dark') {
                 htmlTag.classList.add('dark');
                 iconSun.classList.remove('hidden');
@@ -2048,226 +1927,5 @@ document.addEventListener('DOMContentLoaded', async () => {
             document.body.appendChild(script);
         })();
     </script>
-
-<script>
-    // 1. CONFIGURATION (Replace these with your actual live URLs/Keys)
-    const STRIPE_PUBLISHABLE_KEY = "pk_live_4da9IrIAP8JS8AkaSRPohpDs00tXpFdfdU";
-    const WORKER_URL = "https://fourth-rail-checkout.amateuraiguy.workers.dev";
-
-    // 2. THE CHECKOUT ENGINE
-    async function initCheckout(priceId, mode = 'payment', userId = null) {
-        try {
-            if (!window.Stripe) {
-                const script = document.createElement("script");
-                script.src = "https://js.stripe.com/v3/";
-                document.head.appendChild(script);
-                await new Promise(resolve => script.onload = resolve);
-            }
-
-            const stripe = window.Stripe(STRIPE_PUBLISHABLE_KEY); 
-
-            const response = await fetch(`${WORKER_URL}/create-session`, {
-                method: "POST",
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ priceId: priceId, mode: mode, userId: window.Clerk?.user?.id || userId })
-            });
-
-            const data = await response.json();
-            if (data.error) throw new Error(data.error);
-
-            const clientSecret = data.clientSecret;
-
-            const checkout = await stripe.initEmbeddedCheckout({
-    clientSecret: clientSecret,
-    onComplete: async () => {
-        checkout.destroy();
-        document.getElementById("fourth-rail-overlay").remove();
-        
-        // Unlock the app
-        localStorage.setItem('pixelping-pro', 'true');
-        if (mode === 'subscription') {
-            localStorage.setItem('pixelping-evolution', 'true');
-        }
-        
-        // Refresh the UI to remove the locks
-        if (typeof window.checkPaywallState === 'function') {
-            window.checkPaywallState();
-        }
-        console.log("Payment Successful! App Unlocked.");
-    }
-});
-
-            const overlay = document.createElement("div");
-            overlay.id = "fourth-rail-overlay";
-            overlay.style = "position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.85);backdrop-filter:blur(5px);z-index:9999;display:flex;align-items:center;justify-content:center;";
-
-            const closeBtn = document.createElement("button");
-            closeBtn.innerHTML = "✕ Cancel & Return";
-            closeBtn.style = "position:absolute;top:20px;right:20px;background:#ff3366;color:#fff;border:none;padding:10px 20px;font-family:sans-serif;font-weight:bold;font-size:14px;border-radius:30px;cursor:pointer;z-index:10000;box-shadow:0 4px 12px rgba(0,0,0,0.3);";
-            closeBtn.onclick = () => {
-                checkout.destroy(); 
-                overlay.remove();  
-            };
-
-            const checkoutContainer = document.createElement("div");
-            checkoutContainer.id = "fourth-rail-checkout";
-            checkoutContainer.style = "width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto; border-radius: 12px;";
-
-            overlay.appendChild(closeBtn);
-            overlay.appendChild(checkoutContainer);
-            document.body.appendChild(overlay);
-
-            checkout.mount("#fourth-rail-checkout");
-
-        } catch (error) {
-            console.error("Fourth Rail Checkout Error:", error);
-            //alert("Failed to securely connect to the payment processor. Please try again.");
-        }
-    }
-
-    // 3. THE GATEKEEPER TRIGGERS
-const btnBuyMasterKey = document.getElementById('btn-buy-master-key');
-if (btnBuyMasterKey) {
-    btnBuyMasterKey.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopImmediatePropagation(); // Kill the double modal
-        
-        if (!window.Clerk || !window.Clerk.user) {
-            window.Clerk.openSignUp(); // Pop account creation
-            return;
-        }
-        // Launch Stripe AND pass the Clerk User ID
-        initCheckout('price_1U85qDIZcbLigL0N6FImW5v6', 'payment', window.Clerk.user.id);
-    });
-}
-
-const btnBuyEvolution = document.getElementById('btn-buy-evolution');
-if (btnBuyEvolution) {
-    btnBuyEvolution.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopImmediatePropagation(); // Kill the double modal
-        
-        if (!window.Clerk || !window.Clerk.user) {
-            window.Clerk.openSignUp(); // Pop account creation
-            return;
-        }
-        // Launch Stripe AND pass the Clerk User ID
-        initCheckout('price_1U87KcIZcbLigL0Nou9BMy4z', 'subscription', window.Clerk.user.id);
-    });
-}
-</script>
-    
-<!-- 🟢 ARSENAL DEEP-LINK ENGINE -->
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. THE ARSENAL RECIPE DICTIONARY
-    const arsenalPlays = {
-        "tip-jar": {
-            payload: "crypto",
-            ctaText: "Scan to tip",
-            printSize: "2in", 
-            dataColor: "#000000",
-            eyeColor: "#000000",
-            bgColor: "#ffffff",
-            eyeStyle: "dot", 
-            centerIcon: "", 
-            tierRequired: "master-key"
-        },
-        "ghost-trainer": {
-            payload: "url",
-            ctaText: "Watch Equipment Tutorial",
-            printSize: "3.5in", 
-            dataColor: "#10b981", 
-            eyeColor: "#10b981",
-            bgColor: "#ffffff",
-            eyeStyle: "square",
-            centerIcon: "",
-            tierRequired: "free"
-        },
-        "cloud-clipboard": {
-            payload: "url",
-            ctaText: "Scan to Update Ledger",
-            printSize: "3.5in",
-            dataColor: "#000000",
-            eyeColor: "#000000",
-            bgColor: "#ffffff",
-            eyeStyle: "square",
-            centerIcon: "",
-            tierRequired: "free"
-        },
-        "stealth-merch": {
-            payload: "url",
-            ctaText: "", 
-            printSize: "2in",
-            dataColor: "#000000",
-            eyeColor: "#000000",
-            bgColor: "#ffffff",
-            eyeStyle: "square",
-            centerIcon: "",
-            tierRequired: "free"
-        },
-        "phantom-speakeasy": {
-            payload: "url", 
-            ctaText: "Unlock Secret Menu",
-            printSize: "3.5in",
-            dataColor: "#d4af37", 
-            eyeColor: "#d4af37",
-            bgColor: "#1a1a1a",   
-            eyeStyle: "dot",
-            centerIcon: "",
-            tierRequired: "evolution"
-        }
-    };
-
-    // 2. THE CATCHER'S MITT
-    const recipeParams = new URLSearchParams(window.location.search);
-    const requestedPlay = recipeParams.get('play');
-
-    if (requestedPlay && arsenalPlays[requestedPlay]) {
-        const recipe = arsenalPlays[requestedPlay];
-
-        // 3. UI INJECTOR
-        document.getElementById('payload-type').value = recipe.payload;
-        document.getElementById('pl-smart-label').value = recipe.ctaText;
-        document.getElementById('pl-print-size').value = recipe.printSize;
-        
-        document.getElementById('qr-color-dots').value = recipe.dataColor;
-        document.getElementById('qr-color-corners').value = recipe.eyeColor;
-        document.getElementById('qr-color-bg').value = recipe.bgColor;
-        document.getElementById('qr-corners-type').value = recipe.eyeStyle;
-        document.getElementById('qr-icon').value = recipe.centerIcon;
-
-        // Activate the correct form
-        document.querySelectorAll('.payload-form').forEach(form => {
-            form.classList.toggle('active', form.id === 'form-' + recipe.payload);
-        });
-
-        // Re-render canvas
-        if (typeof window.updateQR === 'function') {
-            window.updateQR();
-        }
-
-        // 4. THE MONETIZATION GATEKEEPER
-        setTimeout(() => {
-            const isMasterKey = localStorage.getItem('pixelping-pro') === 'true';
-            const isEvolution = localStorage.getItem('pixelping-evolution') === 'true';
-
-            if (recipe.tierRequired === "master-key" && !isMasterKey) {
-                if (typeof window.openMasterKeyModal === 'function') {
-                    window.openMasterKeyModal();
-                }
-            } 
-            else if (recipe.tierRequired === "evolution") {
-                const btnDynamic = document.getElementById('mode-dynamic');
-                if (btnDynamic) btnDynamic.click();
-
-                if (!isEvolution && typeof window.openEvolutionModal === 'function') {
-                    window.openEvolutionModal();
-                }
-            }
-        }, 500); 
-    }
-});
-</script>
 </body>
 </html>
