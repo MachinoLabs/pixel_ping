@@ -59,6 +59,10 @@
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         .proxy-btn { transition: all 0.2s ease; cursor: pointer; }
+        .proxy-btn.is-active { border-color: #3b82f6 !important; background: #eff6ff !important; color: #1d4ed8 !important; box-shadow: inset 0 0 0 1px #3b82f6; }
+        .dark .proxy-btn.is-active { border-color: #3b82f6 !important; background: rgba(30,64,175,0.28) !important; color: #bfdbfe !important; }
+        #premium-icons-grid button { min-height: 78px; }
+        #premium-icons-grid img { width: 30px; height: 30px; object-fit: contain; }
 
         /* Modals & Overlays */
         .ml-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); z-index: 998; }
@@ -66,12 +70,251 @@
         .ml-modal[hidden], .ml-overlay[hidden] { display: none; }
         .ml-modal-inner { background: #f7f6f2; color: #111827; border-radius: 16px; padding: 24px; width: 100%; max-width: 420px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); font-family: system-ui, -apple-system, sans-serif; }
         .dark .ml-modal-inner { background: #0f172a; color: #f1f5f9; border: 1px solid #1e293b; }
+
+        /* Info / About modal retained from the OG */
+        .ml-info-close { border: none; background: rgba(0,0,0,0.05); border-radius: 50%; width: 28px; height: 28px; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; color: inherit; }
+        .dark .ml-info-close { background: rgba(255,255,255,0.1); }
+        .ml-info-close:hover { background: rgba(0,0,0,0.1); }
+        .dark .ml-info-close:hover { background: rgba(255,255,255,0.2); }
+        .ml-info-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .ml-info-header h2 { margin: 0; font-size: 18px; font-weight: 700; }
+        .ml-info-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 12px; }
+        .dark .ml-info-tabs { border-bottom-color: rgba(255,255,255,0.1); }
+        .ml-info-tab { border-radius: 999px; border: 1px solid rgba(15, 23, 42, 0.18); background: rgba(15, 23, 42, 0.02); padding: 6px 12px; font-size: 12px; font-weight: 500; cursor: pointer; color: inherit; transition: all 0.2s; }
+        .dark .ml-info-tab { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); }
+        .ml-info-tab-active { background: #0b1220; color: #f9fafb; border-color: #0b1220; }
+        .dark .ml-info-tab-active { background: #3b82f6; color: #ffffff; border-color: #3b82f6; }
+        .ml-info-body { max-height: 55vh; overflow-y: auto; font-size: 13px; line-height: 1.5; padding-right: 4px; }
+        .ml-info-body h3 { margin: 4px 0 8px; font-size: 14px; font-weight: bold; }
+        .ml-info-body p, .ml-info-body ul { margin-top: 0; margin-bottom: 12px; }
+        .ml-info-body a { color: #2563eb; text-decoration: none; font-weight: 500; }
+        .dark .ml-info-body a { color: #60a5fa; }
+        .ml-info-body a:hover { text-decoration: underline; }
+        .ml-info-panel[hidden] { display: none; }
+        .ml-other-games { display: grid; grid-template-columns: 1fr; gap: 8px; }
+        .ml-other-tile { display: block; padding: 12px 14px; border-radius: 9px; border: 1px solid rgba(15, 23, 42, 0.18); background: #ffffff; text-decoration: none; color: #111827; transition: background 0.2s, transform 0.1s; }
+        .dark .ml-other-tile { background: #1e293b; border-color: #334155; color: #f1f5f9; }
+        .ml-other-tile:hover { background: #f1f5f9; transform: translateY(-1px); text-decoration: none !important; }
+        .dark .ml-other-tile:hover { background: #0f172a; }
+        .ml-other-title { font-weight: 700; font-size: 14px; margin-bottom: 2px; }
+        .ml-other-sub { font-size: 12px; opacity: 0.7; }
+        .ml-info-body::-webkit-scrollbar { width: 6px; }
+        .ml-info-body::-webkit-scrollbar-track { background: rgba(0,0,0,0.05); border-radius: 10px; }
+        .dark .ml-info-body::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
+        .ml-info-body::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 10px; }
+        .dark .ml-info-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); }
         
         .footer { width: 100%; text-align: center; padding: 2rem 0; margin-top: 3rem; border-top: 1px solid rgba(148, 163, 184, 0.2); position: relative; z-index: 10; }
         .footer-tag { font-size: 0.75rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; }
         .footer-credits { font-size: 0.6875rem; color: #94a3b8; line-height: 1.6; }
         .footer-credits a { color: inherit; text-decoration: none; transition: color 0.2s; }
         .footer-credits a:hover { color: #27cfff; }
+
+
+        /* QR display fit: keep the 320px generator/export resolution intact while sizing
+           only the on-page preview so the complete code and quiet zone remain visible. */
+        #qr-card { max-width: 330px; }
+        #canvas-wrapper {
+            box-sizing: border-box;
+            padding: 8px;
+        }
+        #canvas-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #canvas-container svg,
+        #canvas-container canvas {
+            width: 100% !important;
+            height: 100% !important;
+            max-width: 100% !important;
+            max-height: 100% !important;
+            display: block !important;
+        }
+
+        /* The free-state Platform Architecture teaser was intentionally retired because
+           Choose Your Engine is now the single FOMO/tier presentation. Keep this area only
+           when a paid-state Evolution/telemetry card is actually visible. */
+        #tier-status-area:has(#master-key-evolution-card.hidden):has(#telemetry-dashboard.hidden) {
+            display: none;
+        }
+
+        /* Short-desktop vertical compression: preserve the redesigned UI while keeping the
+           complete working generator visible on laptop-height viewports. */
+        @media (min-width: 1024px) and (max-height: 850px) {
+            body { padding: 8px !important; }
+            #network-ticker { height: 28px !important; }
+            #app-header {
+                max-width: 1400px !important;
+                margin-top: 34px !important;
+                margin-bottom: 6px !important;
+            }
+            #app-header > div:first-child { gap: 10px !important; }
+            #app-header #main-title { line-height: 1 !important; }
+            #app-header #sub-title { margin-top: 2px !important; line-height: 1.1 !important; }
+
+            #payload-tray { padding: 6px 10px !important; }
+            #payload-buttons { gap: 5px !important; padding-bottom: 0 !important; }
+            #payload-buttons .proxy-payload {
+                padding: 4px 9px !important;
+                font-size: 11px !important;
+                line-height: 1.1 !important;
+                border-radius: 7px !important;
+            }
+
+            #generator-controls, #qr-panel { padding: 10px 14px !important; }
+            #qr-content-section { margin-bottom: 10px !important; }
+            #qr-content-section > .flex:first-child { margin-bottom: 7px !important; }
+            #static-warning-message { margin-bottom: 7px !important; padding-top: 5px !important; padding-bottom: 5px !important; }
+            #generator-controls .pl-input:not([type="color"]):not([type="file"]) {
+                padding-top: 6px !important;
+                padding-bottom: 6px !important;
+            }
+            #generator-controls textarea.pl-input { line-height: 1.25 !important; }
+
+            #design-section > h2 {
+                margin-bottom: 8px !important;
+                padding-top: 10px !important;
+            }
+            #design-stack > :not([hidden]) ~ :not([hidden]) { margin-top: 9px !important; }
+            #design-grid { gap: 10px !important; }
+            #design-grid .proxy-mask { padding-top: 6px !important; padding-bottom: 6px !important; }
+            #design-grid .proxy-corner { padding-top: 5px !important; padding-bottom: 5px !important; }
+            #design-grid label.mt-4 { margin-top: 9px !important; }
+            #proxy-icon-container { gap: 6px !important; }
+            #proxy-icon-container .proxy-icon,
+            #btn-more-icons { padding-top: 5px !important; padding-bottom: 5px !important; }
+            #brand-controls { margin-top: 9px !important; }
+            #brand-controls > .flex:first-child { margin-bottom: 5px !important; }
+            #brand-controls > .flex:last-child { padding: 7px 9px !important; gap: 12px !important; }
+            #brand-controls input[type="color"] { width: 29px !important; height: 29px !important; }
+            #custom-logo-control { margin-top: 4px !important; }
+            #custom-logo-control input[type="file"] { padding-top: 5px !important; padding-bottom: 5px !important; }
+
+            #qr-panel-title { margin-bottom: 7px !important; }
+            #qr-card {
+                max-width: 290px !important;
+                padding: 9px !important;
+                margin-bottom: 8px !important;
+                border-radius: 20px !important;
+            }
+            #canvas-wrapper {
+                width: 225px !important;
+                height: 225px !important;
+                aspect-ratio: 1 / 1 !important;
+                padding: 10px !important;
+            }
+            #canvas-container {
+                width: 100% !important;
+                height: 100% !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+            }
+            #canvas-container svg,
+            #canvas-container canvas {
+                width: 100% !important;
+                height: 100% !important;
+                max-width: 100% !important;
+                max-height: 100% !important;
+            }
+            #pixelping-watermark { margin-top: 6px !important; font-size: 10px !important; }
+            #pixelping-watermark img { width: 12px !important; height: 12px !important; }
+            #live-label-preview { margin-top: 4px !important; font-size: 12px !important; line-height: 1.15 !important; }
+            #dynamic-link-display { margin-bottom: 8px !important; padding: 8px !important; }
+            #qr-actions { gap: 6px !important; }
+            #export-row { gap: 8px !important; }
+            #action-row { gap: 6px !important; }
+            #action-row button { padding-top: 7px !important; padding-bottom: 7px !important; }
+        }
+
+
+
+        /* Final visual-accessibility polish: contrast, focus, and component separation only. */
+        :root { --pp-focus-ring: #2563eb; }
+        :where(button, a, input, select, textarea, [tabindex]):focus-visible {
+            outline: 3px solid var(--pp-focus-ring) !important;
+            outline-offset: 2px !important;
+        }
+        .dark :where(button, a, input, select, textarea, [tabindex]):focus-visible {
+            outline-color: #60a5fa !important;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #64748b !important;
+            opacity: 1 !important;
+        }
+        .dark input::placeholder,
+        .dark textarea::placeholder { color: #94a3b8 !important; }
+
+        /* Make the lower feature groupings read as one deliberate component family. */
+        #history-container {
+            background: #f8fafc !important;
+            border-color: #cbd5e1 !important;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05), inset 0 1px 0 rgba(255,255,255,0.9) !important;
+        }
+        .dark #history-container {
+            background: rgba(30, 41, 59, 0.72) !important;
+            border-color: #475569 !important;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.03) !important;
+        }
+        #history-content > div { opacity: 1 !important; }
+        #history-content p { color: #475569 !important; }
+        .dark #history-content p { color: #cbd5e1 !important; }
+        #btn-clear-history {
+            color: #64748b !important;
+            font-size: 10px !important;
+        }
+        #btn-clear-history:hover,
+        #btn-clear-history:focus-visible { color: #dc2626 !important; }
+
+        #brand-colors-panel {
+            background: #f8fafc !important;
+            border-color: #cbd5e1 !important;
+        }
+        .dark #brand-colors-panel {
+            background: rgba(30, 41, 59, 0.72) !important;
+            border-color: #475569 !important;
+        }
+        #custom-logo-control input[type="file"] {
+            background: #ffffff !important;
+            border-color: #94a3b8 !important;
+            color: #475569 !important;
+        }
+        .dark #custom-logo-control input[type="file"] {
+            background: rgba(30, 41, 59, 0.72) !important;
+            border-color: #64748b !important;
+            color: #cbd5e1 !important;
+        }
+        #custom-logo-control input[type="file"]::file-selector-button {
+            background: #dbeafe !important;
+            color: #1d4ed8 !important;
+            font-weight: 700 !important;
+        }
+        .dark #custom-logo-control input[type="file"]::file-selector-button {
+            background: #1e3a8a !important;
+            color: #dbeafe !important;
+        }
+
+        /* Available-but-inactive controls stay readable; disabled controls remain visibly disabled. */
+        #mode-dynamic:disabled { color: #94a3b8 !important; opacity: 0.7; }
+        .dark #mode-dynamic:disabled { color: #64748b !important; }
+        #unlockCloseBtn,
+        #evolutionCloseBtn { color: #475569; }
+        .dark #unlockCloseBtn,
+        .dark #evolutionCloseBtn { color: #cbd5e1; }
+
+        /* Saved-history rows and their reload affordance remain visible to mouse and keyboard users. */
+        #history-content li { border-color: #cbd5e1 !important; }
+        .dark #history-content li { border-color: #475569 !important; }
+        #history-content li > button { opacity: 0.65 !important; }
+        #history-content li:hover > button,
+        #history-content li:focus-within > button,
+        #history-content li > button:focus-visible { opacity: 1 !important; }
+
     </style>
 </head>
 <body class="text-slate-900 dark:text-ppLight min-h-screen font-sans antialiased flex flex-col items-center p-4 transition-colors duration-300 relative z-0">
@@ -90,9 +333,9 @@
 
     <div class="pixel-bg" id="pixel-bg"></div>
 
-    <header class="w-full max-w-6xl mb-4 mt-12 flex items-center justify-between z-10 relative">
+    <header id="app-header" class="w-full max-w-6xl mb-4 mt-12 flex items-center justify-between z-10 relative">
         <div class="flex items-center gap-3">
-            <svg class="w-9 h-9 md:w-11 md:h-11 shadow-sm rounded-xl" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+            <svg class="w-9 h-9 md:w-11 md:h-11 shadow-sm rounded-[5px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                 <rect width="512" height="512" rx="48" fill="#061a2b"/>
                 <rect x="28" y="28" width="456" height="456" rx="32" fill="none" stroke="#0f3a5a" stroke-width="4"/>
                 <rect x="96" y="96" width="96" height="96" rx="16" fill="#dff4ff"/>
@@ -114,17 +357,18 @@
                 <button id="btn-sign-in" class="text-[10px] md:text-[11px] font-bold text-blue-600 dark:text-ppBlue hover:underline tracking-wider uppercase transition-colors">Sign In</button>
                 <div id="user-button-mount" class="hidden"></div>
             </div>
-            <button id="themeToggle" class="w-8 h-8 md:w-9 md:h-9 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-slate-50 transition-colors">
+            <button id="themeToggle" type="button" aria-label="Toggle light and dark theme" class="w-8 h-8 md:w-9 md:h-9 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-slate-50 transition-colors">
                 <svg id="icon-sun" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                 <svg id="icon-moon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
             </button>
+            <button id="infoBtn" type="button" aria-label="App info" class="w-8 h-8 md:w-9 md:h-9 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors font-bold">ⓘ</button>
         </div>
     </header>
 
-    <main id="app-container" class="w-full max-w-[1400px] mx-auto bg-white dark:bg-[#0b1622] rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:shadow-2xl border border-slate-200 dark:border-slate-800 flex flex-col z-10 relative mb-4 overflow-hidden">
+    <main id="app-container" class="w-full max-w-[1400px] mx-auto bg-white dark:bg-[#0b1622] rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:shadow-2xl border border-slate-200 dark:border-slate-800 flex flex-col z-10 relative mb-4">
         
-        <div class="w-full border-b border-slate-100 dark:border-slate-800/80 p-3 md:px-6 bg-white/50 dark:bg-slate-900/50">
-            <div class="flex gap-2 overflow-x-auto hide-scrollbar w-full items-center pb-1">
+        <div id="payload-tray" class="w-full border-b border-slate-100 dark:border-slate-800/80 p-3 md:px-6 bg-white/50 dark:bg-slate-900/50">
+            <div id="payload-buttons" class="flex flex-wrap gap-2 w-full items-center pb-1">
                 <button type="button" class="proxy-payload proxy-btn whitespace-nowrap px-3 py-1.5 rounded-lg border-2 font-bold text-xs transition-all bg-blue-50 border-blue-500 text-blue-700 dark:bg-blue-900/40 dark:border-blue-500 dark:text-blue-300" data-target="url">🌐 Website</button>
                 <button type="button" class="proxy-payload proxy-btn whitespace-nowrap px-3 py-1.5 rounded-lg border border-slate-200 font-semibold text-xs transition-all bg-white text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 hover:border-slate-300" data-target="tel">📞 Phone</button>
                 <button type="button" class="proxy-payload proxy-btn whitespace-nowrap px-3 py-1.5 rounded-lg border border-slate-200 font-semibold text-xs transition-all bg-white text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 hover:border-slate-300" data-target="text">📝 Text</button>
@@ -147,19 +391,16 @@
             <option value="url" selected>URL</option><option value="tel">Phone</option><option value="text">Text</option><option value="wifi">Wi-Fi</option><option value="vcard">vCard</option><option value="sms">SMS</option><option value="email">Email</option><option value="calendar">Calendar</option><option value="geo">Geo</option><option value="crypto">Crypto</option><option value="review">Review</option><option value="social">Social</option><option value="menu">Menu</option><option value="booking">Booking</option><option value="coupon">Coupon</option>
         </select>
 
-        <div class="flex flex-col md:flex-row w-full">
+        <div id="generator-row" class="flex flex-col md:flex-row w-full">
             
-            <div class="w-full md:w-3/5 p-4 md:p-5 border-b md:border-b-0 md:border-r border-slate-100 dark:border-slate-800 flex flex-col">
+            <div id="generator-controls" class="w-full md:w-3/5 p-4 md:p-5 border-b md:border-b-0 md:border-r border-slate-100 dark:border-slate-800 flex flex-col">
                 
-                <div class="mb-8">
+                <div id="qr-content-section" class="mb-8">
                     <div class="flex items-center justify-between mb-4">
-                        <h2 class="text-lg font-bold flex items-center gap-2 text-slate-900 dark:text-white">
-                            <span class="bg-slate-900 dark:bg-white text-white dark:text-slate-900 w-6 h-6 rounded flex items-center justify-center text-xs">1</span> 
-                            Complete the content
-                        </h2>
+                        <h2 class="text-lg font-bold text-slate-900 dark:text-white">QR Content</h2>
                         <div class="flex items-center gap-2">
                             <button id="mode-static" class="text-[9px] font-extrabold uppercase tracking-widest px-2 py-1 rounded bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm transition-all">Static</button>
-                            <button id="mode-dynamic" class="text-[9px] font-extrabold uppercase tracking-widest px-2 py-1 rounded text-slate-400 hover:text-slate-600 flex items-center gap-1 transition-all">Dynamic <span class="evo-badge">Evolution</span></button>
+                            <button id="mode-dynamic" class="text-[9px] font-extrabold uppercase tracking-widest px-2 py-1 rounded text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-white flex items-center gap-1 transition-all">Dynamic <span class="evo-badge">Evolution</span></button>
                             <button id="btn-clear" class="ml-1 text-[10px] text-red-500 hover:text-red-700 font-bold px-2 py-1 transition-colors uppercase tracking-wider">Clear</button>
                         </div>
                     </div>
@@ -169,8 +410,7 @@
                     <div id="dynamic-forms-container" class="w-full">
                         <div id="form-url" class="payload-form active space-y-2">
                             <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Website Address</label>
-                            <input type="url" id="pl-url" placeholder="https://pixelping.app" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none placeholder-slate-400 dark:placeholder-slate-500 shadow-sm transition-all text-sm">
-                            <p id="density-warning" class="hidden"></p>
+                            <input type="url" id="pl-url" placeholder="https://pixelping.app/" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none placeholder-slate-400 dark:placeholder-slate-500 shadow-sm transition-all text-sm">
                         </div>
                         <div id="form-tel" class="payload-form space-y-2">
                             <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Phone Number</label>
@@ -192,7 +432,7 @@
                                     <button type="button" class="proxy-wifi proxy-btn flex-1 bg-transparent border-transparent text-slate-600 py-1.5 rounded text-xs font-bold dark:text-slate-400" data-val="WEP">WEP</button>
                                     <button type="button" class="proxy-wifi proxy-btn flex-1 bg-transparent border-transparent text-slate-600 py-1.5 rounded text-xs font-bold dark:text-slate-400" data-val="nopass">None</button>
                                 </div>
-                                <select id="pl-wifi-type" class="hidden"><option value="WPA" selected>WPA</option><option value="WEP">WEP</option><option value="nopass">None</option></select>
+                                <select id="pl-wifi-type" class="pl-input hidden"><option value="WPA" selected>WPA</option><option value="WEP">WEP</option><option value="nopass">None</option></select>
                             </div>
                         </div>
                         <div id="form-vcard" class="payload-form space-y-3">
@@ -212,7 +452,7 @@
                                     <button type="button" class="proxy-crypto proxy-btn active flex-1 bg-white shadow-sm border border-slate-200 text-blue-600 py-1.5 rounded-lg text-xs font-bold dark:bg-slate-700 dark:border-slate-600 dark:text-white" data-val="bitcoin">BTC</button>
                                     <button type="button" class="proxy-crypto proxy-btn flex-1 bg-transparent border-transparent text-slate-600 py-1.5 rounded-lg text-xs font-bold dark:text-slate-400" data-val="ethereum">ETH</button>
                                 </div>
-                                <select id="pl-crypto-type" class="hidden"><option value="bitcoin" selected>BTC</option><option value="ethereum">ETH</option></select>
+                                <select id="pl-crypto-type" class="pl-input hidden"><option value="bitcoin" selected>BTC</option><option value="ethereum">ETH</option></select>
                             </div>
                             <input type="text" id="pl-crypto-address" placeholder="Wallet Address" class="pl-input w-full bg-white px-3 py-2 rounded-xl border border-slate-300 text-sm dark:bg-slate-800/50 dark:border-slate-700 dark:text-white">
                         </div>
@@ -244,29 +484,27 @@
                         <div id="form-booking" class="payload-form space-y-2"><input type="url" id="pl-biz-booking" placeholder="Booking URL" class="pl-input w-full bg-white px-3 py-2 rounded-xl border border-slate-300 text-sm dark:bg-slate-800/50 dark:border-slate-700 dark:text-white"></div>
                         <div id="form-coupon" class="payload-form space-y-2"><textarea id="pl-biz-coupon" placeholder="Coupon Text" class="pl-input w-full bg-white px-3 py-2 rounded-xl border border-slate-300 text-sm dark:bg-slate-800/50 dark:border-slate-700 dark:text-white" rows="2"></textarea></div>
                     </div>
+                    <p id="density-warning" class="hidden"></p>
                 </div>
 
-                <div class="mb-2">
-                    <h2 class="text-lg font-bold flex items-center gap-2 mb-4 text-slate-900 dark:text-white border-t border-slate-100 dark:border-slate-800 pt-6">
-                        <span class="bg-slate-900 dark:bg-white text-white dark:text-slate-900 w-6 h-6 rounded flex items-center justify-center text-xs">2</span> 
-                        Design your QR
-                    </h2>
+                <div id="design-section" class="mb-2">
+                    <h2 class="text-lg font-bold mb-4 text-slate-900 dark:text-white border-t border-slate-100 dark:border-slate-800 pt-6">Design your QR</h2>
 
-                    <div class="space-y-5">
+                    <div id="design-stack" class="space-y-5">
                         
                         <div>
                             <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1 flex justify-between">Smart Print Label <span class="mk-badge">Master Key</span></label>
                             <input type="text" id="pl-smart-label" placeholder="e.g. Guest Wi-Fi Network" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none placeholder-slate-400 dark:placeholder-slate-500 shadow-sm font-medium transition-all text-sm">
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
+                        <div id="design-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="flex flex-col">
                                 <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Outer Shape</label>
                                 <div class="flex gap-2">
                                     <button type="button" class="proxy-mask proxy-btn active flex-1 py-2 border-2 border-blue-500 bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:border-blue-500 dark:text-blue-300 rounded-xl font-bold text-xs" data-val="none">Square</button>
                                     <button type="button" class="proxy-mask proxy-btn flex-1 py-2 border border-slate-200 bg-white text-slate-600 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 hover:border-slate-300 rounded-xl font-bold text-xs" data-val="rounded">Rounded</button>
                                 </div>
-                                <select id="qr-mask" class="hidden"><option value="none" selected>Square</option><option value="rounded">Rounded</option></select>
+                                <select id="qr-mask" class="pl-input hidden"><option value="none" selected>Square</option><option value="rounded">Rounded</option></select>
                                 
                                 <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1 mt-4">Eye & Corner</label>
                                 <div class="flex gap-1 p-1 bg-slate-100 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700/50">
@@ -274,69 +512,70 @@
                                     <button type="button" class="proxy-corner proxy-btn active flex-1 bg-white shadow-sm border border-slate-200 text-blue-600 py-1.5 rounded text-[10px] font-bold dark:bg-slate-700 dark:border-slate-600 dark:text-white" data-val="dot">Circular</button>
                                     <button type="button" class="proxy-corner proxy-btn flex-1 bg-transparent border-transparent text-slate-600 dark:text-slate-400 py-1.5 rounded text-[10px] font-bold" data-val="extra-rounded">Round</button>
                                 </div>
-                                <select id="qr-corners-type" class="hidden"><option value="square">Square</option><option value="dot" selected>Circular</option><option value="extra-rounded">Rounded</option></select>
+                                <select id="qr-corners-type" class="pl-input hidden"><option value="square">Square</option><option value="dot" selected>Circular</option><option value="extra-rounded">Rounded</option></select>
+            <section id="history-container" class="mt-3 w-full flex-1 bg-slate-50 dark:bg-slate-800/30 rounded-xl border border-slate-200 dark:border-slate-700 p-3 flex flex-col min-h-[138px] shadow-inner transition-colors">
+                <div class="flex justify-between items-center border-b border-slate-200 dark:border-slate-700 pb-1.5 mb-2 uppercase tracking-wide">
+                    <h3 class="text-xs font-medium text-blue-600 dark:text-ppBlue flex items-center">
+                        <span>Recent Codes (Last 5)</span><span class="mk-badge">Master Key</span>
+                    </h3>
+                    <button id="btn-clear-history" class="text-[9px] uppercase tracking-wider font-bold text-slate-400 hover:text-red-500 transition-colors">Clear All</button>
+                </div>
+                <div id="history-content" class="flex-1 flex flex-col overflow-y-auto max-h-[118px] pr-1"></div>
+            </section>
                             </div>
                             
                             <div>
                                 <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Center Icon</label>
                                 <div id="proxy-icon-container" class="flex flex-wrap gap-2 w-full">
-                                    <button type="button" class="proxy-icon proxy-btn active min-w-[50px] py-1.5 border-2 border-blue-500 bg-blue-50 text-blue-700 rounded-lg font-bold text-[10px] dark:bg-blue-900/30 dark:border-blue-500 dark:text-blue-300" data-val="">None</button>
-                                    <button type="button" class="proxy-icon proxy-btn min-w-[40px] py-1.5 border border-slate-200 bg-white text-slate-600 rounded-lg text-sm flex items-center justify-center dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300" data-val="heart">❤️</button>
-                                    <button type="button" class="proxy-icon proxy-btn min-w-[40px] py-1.5 border border-slate-200 bg-white text-slate-600 rounded-lg text-sm flex items-center justify-center dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300" data-val="lightning">⚡</button>
-                                    <button type="button" class="proxy-icon proxy-btn min-w-[40px] py-1.5 border border-slate-200 bg-white text-slate-600 rounded-lg text-sm flex items-center justify-center dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300" data-val="star">⭐</button>
+                                    <button type="button" class="proxy-icon proxy-btn active min-w-[50px] py-1.5 border-2 border-blue-500 bg-blue-50 text-blue-700 rounded-lg font-bold text-[10px] dark:bg-blue-900/30 dark:border-blue-500 dark:text-blue-300" data-val="" aria-label="No center icon">None</button>
+                                    <button type="button" class="proxy-icon proxy-btn min-w-[40px] py-1.5 border border-slate-200 bg-white text-slate-600 rounded-lg text-sm flex items-center justify-center dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300" data-val="heart" aria-label="Heart center icon">❤️</button>
+                                    <button type="button" class="proxy-icon proxy-btn min-w-[40px] py-1.5 border border-slate-200 bg-white text-slate-600 rounded-lg text-sm flex items-center justify-center dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300" data-val="lightning" aria-label="Lightning center icon">⚡</button>
+                                    <button type="button" class="proxy-icon proxy-btn min-w-[40px] py-1.5 border border-slate-200 bg-white text-slate-600 rounded-lg text-sm flex items-center justify-center dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300" data-val="star" aria-label="Star center icon">⭐</button>
+                                    <button type="button" id="btn-more-icons" class="min-w-[84px] py-1.5 px-3 border border-amber-300 bg-amber-50 text-amber-800 rounded-lg text-[10px] font-black uppercase tracking-wide dark:bg-amber-900/20 dark:border-amber-700 dark:text-amber-300">More Icons</button>
                                 </div>
-                                <select id="qr-icon" class="hidden"><option value=""></option><option value="heart">Heart</option><option value="lightning">Lightning</option><option value="star">Star</option></select>
+                                <select id="qr-icon" class="pl-input hidden"><option value=""></option><option value="heart">Heart</option><option value="lightning">Lightning</option><option value="star">Star</option></select>
+
+                                <div id="brand-controls" class="mt-4">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <label class="block text-xs font-bold text-slate-700 dark:text-slate-300">Brand Colors</label>
+                                        <button id="btn-save-brand" class="text-[10px] bg-white border border-slate-200 text-slate-700 px-3 py-1.5 rounded-lg hover:border-slate-300 transition-colors shadow-sm font-bold dark:bg-slate-700 dark:border-slate-600 dark:text-slate-200">Save Brand</button>
+                                    </div>
+                                    <div id="brand-colors-panel" class="flex gap-4 p-3 bg-slate-50 dark:bg-slate-800/30 rounded-xl border border-slate-100 dark:border-slate-700/50">
+                                        <div class="flex flex-col gap-1.5 items-center"><label for="qr-color-dots" class="text-[10px] font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest">Data</label><input type="color" id="qr-color-dots" aria-label="QR data color" class="pl-input w-8 h-8 cursor-pointer rounded-full overflow-hidden shadow-sm hover:scale-110 transition-transform"></div>
+                                        <div class="flex flex-col gap-1.5 items-center"><label for="qr-color-corners" class="text-[10px] font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest">Eyes</label><input type="color" id="qr-color-corners" aria-label="QR eye color" class="pl-input w-8 h-8 cursor-pointer rounded-full overflow-hidden shadow-sm hover:scale-110 transition-transform"></div>
+                                        <div class="flex flex-col gap-1.5 items-center"><label for="qr-color-bg" class="text-[10px] font-black text-slate-600 dark:text-slate-300 uppercase tracking-widest">Base</label><input type="color" id="qr-color-bg" aria-label="QR background color" class="pl-input w-8 h-8 cursor-pointer rounded-full overflow-hidden shadow-sm hover:scale-110 transition-transform"></div>
+                                    </div>
+
+                                    <div id="custom-logo-control" class="mt-1.5">
+                                    <div class="flex justify-between items-center mb-1">
+                                        <label class="text-xs font-bold text-slate-700 dark:text-slate-300">Custom Logo <span class="mk-badge">Master Key</span></label>
+                                        <button id="btn-clear-logo" class="hidden text-[9px] text-red-500 hover:text-red-700 font-bold uppercase tracking-wider bg-red-50 dark:bg-red-900/20 px-2 py-0.5 rounded">Clear</button>
+                                    </div>
+                                    <input type="file" id="qr-custom-logo" accept="image/png, image/jpeg, image/svg+xml" class="pl-input w-full bg-slate-50 dark:bg-slate-800/30 text-slate-500 dark:text-slate-400 px-3 py-2 rounded-xl border border-dashed border-slate-300 dark:border-slate-700 text-xs file:mr-3 file:py-1 file:px-3 file:rounded file:border-0 file:text-[10px] file:font-bold file:bg-blue-50 file:text-blue-700 cursor-pointer focus:outline-none">
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        <div>
-                            <div class="flex justify-between items-center mb-1">
-                                <label class="text-xs font-bold text-slate-700 dark:text-slate-300">Custom Logo <span class="mk-badge">Master Key</span></label>
-                                <button id="btn-clear-logo" class="hidden text-[9px] text-red-500 hover:text-red-700 font-bold uppercase tracking-wider bg-red-50 dark:bg-red-900/20 px-2 py-0.5 rounded">Clear</button>
-                            </div>
-                            <input type="file" id="qr-custom-logo" accept="image/png, image/jpeg, image/svg+xml" class="w-full bg-slate-50 dark:bg-slate-800/30 text-slate-500 dark:text-slate-400 px-3 py-2 rounded-xl border border-dashed border-slate-300 dark:border-slate-700 text-xs file:mr-3 file:py-1 file:px-3 file:rounded file:border-0 file:text-[10px] file:font-bold file:bg-blue-50 file:text-blue-700 cursor-pointer focus:outline-none">
-                        </div>
 
-                        <div class="flex flex-wrap items-center justify-between gap-3 p-4 bg-slate-50 dark:bg-slate-800/30 rounded-2xl border border-slate-100 dark:border-slate-700/50">
-                            <div class="flex gap-4">
-                                <div class="flex flex-col gap-1.5 items-center">
-                                    <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest">Data</label>
-                                    <input type="color" id="qr-color-dots" class="pl-input w-8 h-8 cursor-pointer rounded-full overflow-hidden shadow-sm hover:scale-110 transition-transform">
-                                </div>
-                                <div class="flex flex-col gap-1.5 items-center">
-                                    <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest">Eyes</label>
-                                    <input type="color" id="qr-color-corners" class="pl-input w-8 h-8 cursor-pointer rounded-full overflow-hidden shadow-sm hover:scale-110 transition-transform">
-                                </div>
-                                <div class="flex flex-col gap-1.5 items-center">
-                                    <label class="text-[9px] font-black text-slate-500 uppercase tracking-widest">Base</label>
-                                    <input type="color" id="qr-color-bg" class="pl-input w-8 h-8 cursor-pointer rounded-full overflow-hidden shadow-sm hover:scale-110 transition-transform">
-                                </div>
-                            </div>
-                            <div class="ml-auto">
-                                <button id="btn-save-brand" class="text-[10px] bg-white border border-slate-200 text-slate-700 px-3 py-2 rounded-lg hover:border-slate-300 transition-colors shadow-sm font-bold dark:bg-slate-700 dark:border-slate-600 dark:text-slate-200">Save Brand</button>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="w-full md:w-2/5 p-4 md:p-5 bg-slate-50 dark:bg-[#061a2b] flex flex-col items-center relative z-20 border-l border-slate-100 dark:border-slate-800">
+            <div id="qr-panel" class="w-full md:w-2/5 p-4 md:p-5 bg-slate-50 dark:bg-[#061a2b] flex flex-col items-center relative z-20 border-l border-slate-100 dark:border-slate-800 md:sticky md:top-6 md:self-start">
                 
-                <h2 class="text-lg font-bold flex items-center gap-2 mb-6 w-full text-slate-900 dark:text-white">
-                    <span class="bg-slate-900 dark:bg-white text-white dark:text-slate-900 w-6 h-6 rounded flex items-center justify-center text-xs">3</span> 
-                    Download your QR
-                </h2>
+                <h2 id="qr-panel-title" class="text-lg font-bold mb-6 w-full text-slate-900 dark:text-white">Download your QR</h2>
                 
-                <div class="bg-white p-4 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-[0_15px_40px_rgba(0,0,0,0.06)] relative flex flex-col items-center justify-center w-full max-w-[280px] transition-all hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] mb-6 group">
+                <div id="qr-card" class="bg-white p-4 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-[0_15px_40px_rgba(0,0,0,0.06)] relative flex flex-col items-center justify-center w-full max-w-[330px] transition-all hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)] mb-6 group">
                     <div id="canvas-wrapper" class="qr-mask-layer rounded-2xl overflow-hidden flex items-center justify-center w-full aspect-square relative z-10 bg-white">
                         <div id="canvas-container"></div>
                     </div>
                     
-                    <div id="pixelping-watermark" class="text-[9px] font-bold text-slate-400 flex items-center justify-center gap-1.5 font-mono mt-3">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='96' fill='%2394a3b8'/%3E%3Crect x='96' y='96' width='96' height='96' rx='18' fill='%23ffffff'/%3E%3Crect x='320' y='96' width='96' height='96' rx='18' fill='%23ffffff'/%3E%3Crect x='96' y='288' width='96' height='96' rx='18' fill='%23ffffff'/%3E%3Crect x='140' y='140' width='16' height='16' rx='4' fill='%230f172a'/%3E%3C/svg%3E" class="w-3 h-3 rounded-sm opacity-60" alt="Logo"> Powered by PixelPing
+                    <div id="pixelping-watermark" class="text-[12px] font-bold text-[#333] flex items-center justify-center gap-[5px] font-mono mt-3">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='96' fill='%23061a2b'/%3E%3Crect x='28' y='28' width='456' height='456' rx='80' fill='none' stroke='%230f3a5a' stroke-width='4'/%3E%3Crect x='96' y='96' width='96' height='96' rx='18' fill='%23dff4ff'/%3E%3Crect x='320' y='96' width='96' height='96' rx='18' fill='%23dff4ff'/%3E%3Crect x='96' y='288' width='96' height='96' rx='18' fill='%23dff4ff'/%3E%3Crect x='140' y='140' width='16' height='16' rx='4' fill='%2327cfff'/%3E%3C/svg%3E" class="w-3.5 h-3.5 rounded-[3px]" alt="Logo"> Powered by PixelPing.app
                     </div>
 
-                    <div id="live-label-preview" class="font-bold text-slate-800 text-sm text-center hidden mt-2 w-full truncate px-2"></div>
+                    <div id="live-label-preview" class="font-bold text-slate-800 text-sm text-center hidden mt-2 w-full whitespace-normal break-words leading-snug px-2"></div>
                 </div>
 
                 <div id="dynamic-link-display" class="hidden w-full mb-6 bg-white dark:bg-slate-800 border-2 border-blue-100 dark:border-slate-700 rounded-xl p-3 shadow-sm flex flex-col items-center justify-center gap-2">
@@ -347,133 +586,74 @@
                     </div>
                 </div>
 
-                <div class="w-full flex flex-col gap-2 mt-auto">
-                    
-                    <div class="flex justify-between items-center mb-1">
-                        <label class="block text-[9px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Export Format</label>
-                        <div class="flex gap-1">
-                            <button type="button" class="proxy-format proxy-btn active px-2 py-1 bg-white border border-slate-200 text-blue-600 rounded text-[10px] font-bold shadow-sm dark:bg-slate-700 dark:border-slate-600 dark:text-white" data-val="png">PNG</button>
-                            <button type="button" class="proxy-format proxy-btn px-2 py-1 bg-transparent border border-transparent text-slate-500 rounded text-[10px] font-bold dark:text-slate-400" data-val="svg">SVG</button>
-                            <button type="button" class="proxy-format proxy-btn px-2 py-1 bg-transparent border border-transparent text-slate-500 rounded text-[10px] font-bold dark:text-slate-400" data-val="pdf">PDF</button>
+                <div id="qr-actions" class="w-full flex flex-col gap-3 mt-auto">
+                    <div id="export-row" class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-600 dark:text-slate-300 uppercase tracking-widest mb-1">Export Format</label>
+                            <div class="flex gap-1">
+                                <button type="button" class="proxy-format proxy-btn px-2 py-1 bg-white border border-slate-200 text-blue-600 rounded text-[10px] font-bold shadow-sm dark:bg-slate-700 dark:border-slate-600 dark:text-white" data-val="png">PNG</button>
+                                <button type="button" class="proxy-format proxy-btn px-2 py-1 bg-transparent border border-transparent text-slate-500 rounded text-[10px] font-bold dark:text-slate-400" data-val="svg">SVG</button>
+                                <button type="button" class="proxy-format proxy-btn px-2 py-1 bg-transparent border border-transparent text-slate-500 rounded text-[10px] font-bold dark:text-slate-400" data-val="pdf">PDF</button>
+                            </div>
+                            <select id="export-format" class="hidden"><option value="png" selected>PNG</option><option value="svg">SVG</option><option value="pdf">PDF</option></select>
                         </div>
-                        <select id="export-format" class="hidden"><option value="png" selected>PNG</option><option value="svg">SVG</option><option value="pdf">PDF</option></select>
+                        <div class="sm:min-w-[190px]">
+                            <label for="pl-print-size" class="block text-[10px] font-bold text-slate-600 dark:text-slate-300 uppercase tracking-widest mb-1">Physical Print Size</label>
+                            <select id="pl-print-size" class="pl-input w-full bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-[10px] font-bold focus:outline-none focus:border-blue-500">
+                                <option value="2in">Small (2" - Stickers)</option>
+                                <option value="3.5in" selected>Medium (3.5" - Labels)</option>
+                                <option value="5in">Large (5" - Signs)</option>
+                                <option value="8in">Full Page (8" - Window Posters)</option>
+                            </select>
+                        </div>
                     </div>
 
-                    <button id="btn-download" class="w-full bg-slate-900 hover:bg-slate-800 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-bold py-2.5 rounded-xl transition-transform active:scale-95 shadow-md flex items-center justify-center gap-2 text-xs">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                        Download QR
-                    </button>
-
-                    <button id="btn-main-action" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-md text-xs">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg>
-                        <span>Save to Cloud <span class="bg-white text-blue-600 text-[8px] px-1 py-0.5 rounded ml-1 uppercase font-black">MK</span></span>
-                    </button>
-                    
-                    <button id="btn-print" class="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold py-2.5 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-sm text-xs">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
-                        <span>Print & Label</span>
-                    </button>
-
-                    <div class="hidden"><select id="pl-print-size"><option value="3.5in" selected>Medium</option></select></div>
-                </div>
-                
-                <div id="telemetry-dashboard" class="hidden w-full mt-4 p-4 bg-[#0b1622] rounded-xl shadow-inner relative overflow-hidden border border-slate-800">
-                    <div class="absolute top-0 left-0 w-full h-1 bg-ppGreen shadow-[0_0_12px_rgba(60,255,143,0.8)]"></div>
-                    <div class="flex justify-between items-center mb-3">
-                        <span class="text-[9px] font-mono text-ppGreen uppercase tracking-widest font-bold">● Live Telemetry</span>
-                        <a href="admin.html" target="_blank" class="text-[8px] font-mono text-slate-900 bg-ppGreen px-1.5 py-0.5 rounded font-black uppercase tracking-wider hover:bg-white transition-colors">⚙️ Command</a>
-                    </div>
-                    <div class="grid grid-cols-2 gap-3">
-                        <div class="flex flex-col"><span class="text-[9px] text-slate-500 font-mono mb-0.5">30-DAY</span><span id="ping-count" class="text-lg font-black text-white font-mono leading-none">0</span></div>
-                        <div class="flex flex-col"><span class="text-[9px] text-slate-500 font-mono mb-0.5">ROUTES</span><span id="route-count" class="text-lg font-black text-white font-mono leading-none">0</span></div>
+                    <div id="action-row" class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                        <button id="btn-download" class="w-full bg-slate-900 hover:bg-slate-800 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-bold py-2.5 px-2 rounded-xl transition-transform active:scale-95 shadow-md flex items-center justify-center gap-2 text-xs">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                            <span>Download QR</span>
+                        </button>
+                        <button id="btn-main-action" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-2 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-md text-xs">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg>
+                            <span>Save Code</span>
+                        </button>
+                        <button id="btn-print" class="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold py-2.5 px-2 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-sm text-xs">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                            <span>Print & Label</span>
+                        </button>
                     </div>
                 </div>
 
             </div>
         </div>
-    </main>
 
-    <footer class="footer">
-        <p class="footer-tag">Built with the StupidSimpleCrazyFast™ micro-app framework.</p>
-        <div class="footer-credits">
-            Built by <a href="https://machinolabs.com" target="_blank">MachinoLabs</a> • <a href="https://machinolabs.com" target="_blank">machinolabs.com</a> • <a href="https://stupidsimplecrazyfast.com" target="_blank">stupidsimplecrazyfast.com</a>
-            <br>
-            Joe • 717.623.2907
+
+        <div id="tier-status-area" class="w-full grid grid-cols-1 md:grid-cols-2 gap-4 p-0 border-t border-slate-100 dark:border-slate-800">
+
+            <section class="w-full flex flex-col gap-3 md:col-start-2">
+                <div id="master-key-evolution-card" class="hidden w-full p-4 bg-[#0f172a]/95 border border-ppGreen/30 rounded-2xl shadow-[0_0_20px_rgba(60,255,143,0.08)] relative overflow-hidden min-h-[230px] flex flex-col justify-center">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-400 to-ppGreen pointer-events-none"></div>
+                    <span class="text-[9px] text-yellow-400 font-black uppercase tracking-[0.2em] mb-2">Master Key Active</span>
+                    <h4 class="text-base font-bold text-white mb-2">Ready for Evolution?</h4>
+                    <p class="text-xs text-slate-400 mb-4">Keep the Master Key design suite and add dynamic routing, live scan telemetry, and Command Center control.</p>
+                    <button type="button" onclick="openEvolutionModal()" class="self-start bg-ppGreen hover:bg-[#2ce07a] text-slate-900 font-black text-[10px] uppercase tracking-wider px-4 py-2 rounded-lg transition-colors">Explore Evolution</button>
+                </div>
+
+                <div id="telemetry-dashboard" class="hidden w-full p-4 bg-[#061a2b] border border-ppGreen/40 rounded-2xl shadow-[0_0_20px_rgba(60,255,143,0.1)] relative overflow-hidden flex flex-col min-h-[230px] justify-center">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-ppGreen shadow-[0_0_12px_rgba(60,255,143,0.8)] pointer-events-none"></div>
+                    <div class="flex justify-between items-center mb-4 border-b border-ppGreen/20 pb-2">
+                        <span class="text-xs font-mono text-ppGreen uppercase tracking-widest">● Live Telemetry</span>
+                        <a href="admin.html" target="_blank" class="flex items-center gap-1.5 text-[10px] font-mono text-slate-900 bg-ppGreen hover:bg-[#2ce07a] px-2.5 py-1 rounded transition-colors uppercase font-bold tracking-wider shadow-sm">⚙️ Command Center</a>
+                    </div>
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="flex flex-col"><span class="text-[10px] text-slate-500 font-mono uppercase">30-Day Pings</span><span id="ping-count" class="text-lg font-bold text-white font-mono">0</span></div>
+                        <div class="flex flex-col"><span class="text-[10px] text-slate-500 font-mono uppercase">Active Routes</span><span id="route-count" class="text-lg font-bold text-white font-mono">0</span></div>
+                        <div class="flex flex-col min-w-0"><span class="text-[10px] text-slate-500 font-mono uppercase">Top Link</span><span id="top-link-display" class="text-sm font-bold text-ppBlue font-mono truncate mt-1">/none</span></div>
+                    </div>
+                </div>
+            </section>
         </div>
-    </footer>
-
-    <!-- PROXY BUTTON & GHOST SCRIPT LISTENER -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            function setupProxy(btnClass, selectId, activeStyleClasses, inactiveStyleClasses) {
-                const buttons = document.querySelectorAll(`.${btnClass}`);
-                const select = document.getElementById(selectId);
-                if(!buttons.length || !select) return;
-
-                buttons.forEach(btn => {
-                    const newBtn = btn.cloneNode(true);
-                    btn.parentNode.replaceChild(newBtn, btn);
-                    
-                    newBtn.addEventListener('click', () => {
-                        document.querySelectorAll(`.${btnClass}`).forEach(b => {
-                            b.classList.remove(...activeStyleClasses);
-                            b.classList.add(...inactiveStyleClasses);
-                        });
-                        
-                        newBtn.classList.remove(...inactiveStyleClasses);
-                        newBtn.classList.add(...activeStyleClasses);
-                        
-                        select.value = newBtn.dataset.target || newBtn.dataset.val;
-                        select.dispatchEvent(new Event('change'));
-                        if(window.updateQR) window.updateQR();
-                    });
-                });
-            }
-
-            const payloadActive = ['active', 'bg-blue-50', 'border-blue-500', 'text-blue-700', 'dark:bg-blue-900/40', 'dark:border-blue-500', 'dark:text-blue-300'];
-            const payloadInactive = ['bg-white', 'border-slate-200', 'text-slate-600', 'dark:bg-slate-800', 'dark:border-slate-700', 'dark:text-slate-300', 'hover:border-slate-300'];
-            setupProxy('proxy-payload', 'payload-type', payloadActive, payloadInactive);
-
-            const solidActive = ['active', 'border-2', 'border-blue-500', 'bg-blue-50', 'text-blue-700', 'dark:bg-blue-900/30', 'dark:border-blue-500', 'dark:text-blue-300'];
-            const solidInactive = ['border', 'border-slate-200', 'bg-white', 'text-slate-600', 'dark:bg-slate-800', 'dark:border-slate-700', 'dark:text-slate-300', 'hover:border-slate-300'];
-            setupProxy('proxy-mask', 'qr-mask', solidActive, solidInactive);
-
-            const pillActive = ['active', 'bg-white', 'shadow-sm', 'border-slate-200', 'text-blue-600', 'dark:bg-slate-700', 'dark:border-slate-600', 'dark:text-white'];
-            const pillInactive = ['bg-transparent', 'border-transparent', 'text-slate-600', 'dark:text-slate-400', 'hover:bg-slate-200', 'dark:hover:bg-slate-700/50'];
-            setupProxy('proxy-wifi', 'pl-wifi-type', pillActive, pillInactive);
-            setupProxy('proxy-crypto', 'pl-crypto-type', pillActive, pillInactive);
-            setupProxy('proxy-corner', 'qr-corners-type', pillActive, pillInactive);
-            setupProxy('proxy-format', 'export-format', pillActive, pillInactive);
-
-            const iconSelect = document.getElementById('qr-icon');
-            const iconContainer = document.getElementById('proxy-icon-container');
-            const iconActive = ['active', 'border-2', 'border-blue-500', 'bg-blue-50', 'text-blue-700', 'dark:bg-blue-900/30', 'dark:border-blue-500', 'dark:text-blue-300'];
-            const iconInactive = ['border', 'border-slate-200', 'bg-white', 'text-slate-600', 'dark:bg-slate-800', 'dark:border-slate-700', 'dark:text-slate-300'];
-
-            function syncIcons() {
-                if (!iconSelect || !iconContainer) return;
-                Array.from(iconSelect.options).forEach(opt => {
-                    if (opt.value === '') return; 
-                    if (!iconContainer.querySelector(`[data-val="${opt.value}"]`)) {
-                        const btn = document.createElement('button');
-                        btn.type = 'button';
-                        btn.className = 'proxy-icon proxy-btn min-w-[40px] py-1.5 border border-slate-200 bg-white text-slate-600 rounded-lg text-sm flex items-center justify-center dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300';
-                        btn.dataset.val = opt.value;
-                        btn.textContent = opt.text.replace(/[^a-zA-Z0-9\s]/g, '') === '' ? opt.text : opt.text.charAt(0);
-                        iconContainer.appendChild(btn);
-                    }
-                });
-                setupProxy('proxy-icon', 'qr-icon', iconActive, iconInactive);
-            }
-
-            if (iconSelect) {
-                const observer = new MutationObserver(() => syncIcons());
-                observer.observe(iconSelect, { childList: true });
-            }
-            
-            setupProxy('proxy-icon', 'qr-icon', iconActive, iconInactive);
-        });
-    </script>
+    </main>
 
 <!-- PRICING SECTION START -->
 <section id="pricing-section" class="w-full bg-[#061a2b] py-20 px-6 font-sans border-t border-slate-800 mt-8">
@@ -543,11 +723,104 @@
 </section>
 <!-- PRICING SECTION END -->
 
+    <div class="w-full text-center mt-8 z-10 relative">
+        <a href="help.html" target="_blank" class="inline-block text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-ppBlue dark:hover:text-ppBlue transition-colors uppercase tracking-widest">Help Center &amp; DNS Guides</a>
+    </div>
+    <footer class="footer">
+        <p class="footer-tag">Built with the StupidSimpleCrazyFast™ micro-app framework.</p>
+        <div class="footer-credits">
+            Built by <a href="https://machinolabs.com" target="_blank">MachinoLabs</a> • <a href="https://machinolabs.com" target="_blank">machinolabs.com</a> • <a href="https://stupidsimplecrazyfast.com" target="_blank">stupidsimplecrazyfast.com</a><br>
+            Joe • 717.623.2907
+        </div>
+    </footer>
+
+
+    <div id="infoOverlay" class="ml-overlay" hidden></div>
+    <div id="infoModal" class="ml-modal" role="dialog" aria-modal="true" aria-labelledby="infoModalTitle" hidden>
+        <div class="ml-modal-inner">
+            <div class="ml-info-header">
+                <h2 id="infoModalTitle">About PixelPing</h2>
+                <button id="infoCloseBtn" class="ml-info-close" type="button" aria-label="Close info">✕</button>
+            </div>
+            <div class="ml-info-tabs">
+                <button class="ml-info-tab ml-info-tab-active" data-tab="about" type="button" data-modal-initial-focus>About</button>
+                <button class="ml-info-tab" data-tab="how" type="button">How To</button>
+                <button class="ml-info-tab" data-tab="faq" type="button">FAQ</button>
+                <button class="ml-info-tab" data-tab="other" type="button">Other Apps</button>
+                <button class="ml-info-tab" data-tab="credits" type="button">Credits</button>
+            </div>
+            <div class="ml-info-body">
+                <section class="ml-info-panel" data-panel="about">
+                    <p><strong>PixelPing creates fast, offline-first QR codes tailored for field operations.</strong></p>
+                    <ul class="space-y-1 mt-2">
+                        <li>• Runs instantly without downloads</li>
+                        <li>• 100% offline-ready and ad-free</li>
+                        <li>• High Error Correction ensures codes survive dirt and damage</li>
+                        <li>• Free tier includes standard codes; Master Key unlocks premium payloads and styling</li>
+                    </ul>
+                </section>
+                <section class="ml-info-panel" data-panel="how" hidden>
+                    <h3>How to Use</h3>
+                    <ul class="space-y-2">
+                        <li><strong>Step 1:</strong> Select what you want your code to do (Open a URL, share Wi-Fi, etc.) and enter the details.</li>
+                        <li><strong>Step 2:</strong> Use the Smart Print Label to name your code so people know what to scan.</li>
+                        <li><strong>Step 3:</strong> Customize the aesthetics and structure to match your brand.</li>
+                        <li><strong>Step 4:</strong> Save the code digitally, or Print it directly.</li>
+                    </ul>
+                </section>
+                <section class="ml-info-panel" data-panel="faq" hidden>
+                    <h3>Frequently Asked Questions</h3>
+                    <p><strong>Does this app collect data?</strong><br>No. PixelPing is completely client-side. Your payloads and settings stay strictly on your local device.</p>
+                    <p><strong>Can I use this without Wi-Fi?</strong><br>Yes! Once you load the app for the first time, it is fully functional offline.</p>
+                    <p><strong>What do I get with the Master Key?</strong><br>The Master Key unlocks advanced payloads (like Wi-Fi, vCards, and Crypto), custom styling, the Smart Print Label feature, and much more.</p>
+                </section>
+                <section class="ml-info-panel" data-panel="other" hidden>
+                    <div class="ml-other-games">
+                        <a href="https://sscf.app/privacy-vault.html" target="_blank" class="ml-other-tile">
+                            <div class="ml-other-title">Privacy_Vault</div>
+                            <div class="ml-other-sub">Your Data Encrypted Offline</div>
+                        </a>
+                        <a href="https://sscf.app/stackfive/index.html" target="_blank" class="ml-other-tile">
+                            <div class="ml-other-title">StackFive • Brain Teaser</div>
+                            <div class="ml-other-sub">A Colorful Logic Puzzle From MachinoLabs.</div>
+                        </a>
+                    </div>
+                </section>
+                <section class="ml-info-panel" data-panel="credits" hidden>
+                    <footer class="text-xs text-slate-500 pt-2 border-t border-slate-200 dark:border-slate-700">
+                        <p class="font-medium mb-2">Built with the StupidSimpleCrazyFast™ micro-app framework.</p>
+                        <div class="opacity-80">
+                            Built by <a href="https://machinolabs.com" target="_blank" class="hover:underline text-blue-500">MachinoLabs</a> • <a href="https://machinolabs.com" target="_blank" class="hover:underline text-blue-500">machinolabs.com</a> • <a href="https://stupidsimplecrazyfast.com" target="_blank" class="hover:underline text-blue-500">stupidsimplecrazyfast.com</a>
+                            <br>
+                            Joe • 717.623.2907<br>
+                            Let's Build Something
+                        </div>
+                    </footer>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <div id="premium-icons-overlay" class="ml-overlay" hidden></div>
+    <div id="premium-icons-modal" class="ml-modal" role="dialog" aria-modal="true" aria-labelledby="premiumIconsTitle" hidden>
+        <div class="ml-modal-inner max-w-2xl">
+            <div class="flex items-center justify-between mb-4">
+                <div>
+                    <div class="text-[9px] font-black uppercase tracking-[0.2em] text-amber-500">Master Key</div>
+                    <h2 id="premiumIconsTitle" class="font-bold text-xl text-slate-900 dark:text-white">Premium Center Icons</h2>
+                </div>
+                <button id="premium-icons-close" type="button" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-300 font-bold hover:bg-slate-200 dark:hover:bg-slate-700" aria-label="Close premium icons">✕</button>
+            </div>
+            <div id="premium-icons-grid" class="grid grid-cols-3 sm:grid-cols-5 gap-3 max-h-[55vh] overflow-y-auto pr-1"></div>
+            <p id="premium-icons-empty" class="hidden text-xs text-slate-500 dark:text-slate-400 text-center py-8">Premium icons are not loaded yet.</p>
+        </div>
+    </div>
+
     <div id="unlockOverlay" class="ml-overlay" hidden></div>
-    <div id="unlockModal" class="ml-modal" hidden>
+    <div id="unlockModal" class="ml-modal" role="dialog" aria-modal="true" aria-labelledby="unlockModalTitle" hidden>
         <div class="ml-modal-inner text-center">
             <div class="bg-yellow-100 text-yellow-600 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-xl">🔒</div>
-            <h2 class="font-bold text-xl mb-2">Unlock the Master Key</h2>
+            <h2 id="unlockModalTitle" class="font-bold text-xl mb-2">Unlock the Master Key</h2>
             <p class="text-sm text-slate-600 dark:text-slate-400 mb-6">You've previewed a Premium feature. Get the Master Key for lifetime access to custom branding, advanced payloads, and limitless static generation. No monthly hostage fees, ever.</p>
             
             <button id="btn-buy-master-key-modal" class="block w-full bg-slate-900 dark:bg-blue-600 text-white font-bold py-3 rounded-lg mb-6 hover:bg-slate-800 dark:hover:bg-blue-700 transition-colors">Get Master Key - $99</button>
@@ -564,7 +837,7 @@
     </div>
     
     <div id="evolutionOverlay" class="ml-overlay" hidden></div>
-    <div id="evolutionModal" class="ml-modal" hidden>
+    <div id="evolutionModal" class="ml-modal" role="dialog" aria-modal="true" aria-labelledby="evolutionModalTitle" hidden>
         <div class="ml-modal-inner text-center border-2 border-ppGreen/50 shadow-[0_0_30px_rgba(60,255,143,0.15)] relative overflow-hidden">
             <div class="absolute top-0 left-0 w-full h-1 bg-ppGreen shadow-[0_0_12px_rgba(60,255,143,0.8)]"></div>
             
@@ -572,7 +845,7 @@
                 <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
             </div>
             
-           <h2 class="font-bold text-2xl mb-2 text-slate-900 dark:text-white">Ignite the Engine.</h2>
+           <h2 id="evolutionModalTitle" class="font-bold text-2xl mb-2 text-slate-900 dark:text-white">Ignite the Engine.</h2>
 <p class="text-sm text-slate-700 dark:text-slate-400 mb-6">You hold the Master Key. Now, take total control of your field operations. Upgrade to Evolution to unlock Cloudflare dynamic routing, live analytics, and the Command Center.</p>
             
             <div class="bg-slate-900/50 rounded-lg p-4 mb-6 text-left border border-slate-700">
@@ -598,6 +871,18 @@
     </div>
 
 <script>
+/**
+ * Fourth Rail Core - Embedded Checkout Engine
+ * Version 1.1.0 (Unminified & Upgraded)
+ * (c) 2026 MachinoLabs | License: Commercial
+ */
+
+console.log(
+    "%cHold up! 👋\n\n%cThis application's payment rails are secured by Fourth Rail Core.\nUnauthorized ripping, tampering with local payment tokens, or bypass \nattempts are strictly prohibited.\n\nRespect the build, support indie devs, and keep it ethical.\n\n© 2026 MachinoLabs • Built with StupidSimpleCrazyFast™",
+    "color: #ff3366; font-size: 36px; font-weight: bold; text-shadow: 1px 1px 0px #222, 2px 2px 0px #222;",
+    "color: #64748b; font-size: 13px; font-family: monospace; line-height: 1.5;"
+);
+
 class FourthRail {
     constructor(config) {
         if (!config.workerUrl) throw new Error("Fourth Rail Error: workerUrl is required.");
@@ -700,6 +985,17 @@ window.FourthRail = FourthRail;
 </script>
 
     <script>
+        // --- Proprietary Warning ---
+        console.log(
+            "%cHold up! ✋", 
+            "color: #ff4757; font-size: 40px; font-weight: bold; text-shadow: 2px 2px 0px #000;"
+        );
+        console.log(
+            "%cWe love that you're looking under the hood of PixelPing. But before you go tinkering with local storage or ripping code, please remember:\n\nThis application is the proprietary property of MachinoLabs. Unauthorized copying, reverse engineering, or redistribution is strictly prohibited.\n\nRespect the build, support indie devs, and keep it ethical. \n\n© 2026 MachinoLabs • Built by Joe", 
+            "font-size: 14px; color: #0f3a5a; font-weight: bold; line-height: 1.5;"
+        );
+
+    // --- Telemetry Animation ---
     function animateTelemetry(elementId, start, end, duration) {
         const obj = document.getElementById(elementId);
         if (!obj) return;
@@ -760,22 +1056,26 @@ window.FourthRail = FourthRail;
         }
     }
 
+// --- Premium Paywall Modal Function ---
     window.openMasterKeyModal = function() {
         if (localStorage.getItem('pixelping-pro') === 'true') return;
         document.getElementById('unlockModal').hidden = false;
         document.getElementById('unlockOverlay').hidden = false;
     };
 
+// --- FOURTH RAIL CORE: STRIPE RECEIPT VERIFICATION ---
 document.addEventListener('DOMContentLoaded', async () => {
     const urlParams = new URLSearchParams(window.location.search);
     const sessionId = urlParams.get('session_id');
 
     if (sessionId) {
+        console.log("💳 Receipt found! Verifying...");
         try {
             const response = await fetch(`https://fourth-rail-checkout.amateuraiguy.workers.dev/verify?session_id=${sessionId}`);
             if (response.ok) {
                 const data = await response.json();
                 if (data.valid) {
+                    console.log(`✅ Payment verified! Mode: ${data.mode}. Unlocking...`);
                     if (data.mode === 'subscription') {
                         localStorage.setItem('pixelping-pro', 'true'); 
                         localStorage.setItem('pixelping-evolution', 'true');
@@ -813,6 +1113,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         
         document.addEventListener('DOMContentLoaded', () => {
 
+            // --- LIVE NETWORK TICKER LOGIC ---
             const tickerBlock = document.getElementById('network-ticker');
             const btnTickerToggle = document.getElementById('btn-ticker-toggle');
             
@@ -831,17 +1132,20 @@ document.addEventListener('DOMContentLoaded', async () => {
                 });
             }
 
+            // 🟢 FOURTH RAIL CORE INTIALIZATION
             const rail = typeof FourthRail !== 'undefined' ? new FourthRail({
                 workerUrl: "https://fourth-rail-checkout.amateuraiguy.workers.dev",
                 stripePublicKey: "pk_live_4da9IrIAP8JS8AkaSRPohpDs00tXpFdfdU",
                 onUnlock: () => {
                     localStorage.setItem('pixelping-pro', 'true');
                     checkPaywallState();
+                    renderHistory();
                     closeUnlockModal();
                     closeEvolutionModal();
                 }
             }) : null;
 
+            // Wire Master Key Purchase Triggers
             const masterKeyBtns = [document.getElementById('btn-buy-master-key'), document.getElementById('btn-buy-master-key-modal')];
             masterKeyBtns.forEach(btn => {
                 if (btn && rail) {
@@ -856,6 +1160,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
             });
 
+            // Wire Evolution Purchase Triggers
             const evoBtns = [document.getElementById('btn-buy-evolution'), document.getElementById('btn-buy-evolution-modal')];
             evoBtns.forEach(btn => {
                 if (btn && rail) {
@@ -879,14 +1184,17 @@ document.addEventListener('DOMContentLoaded', async () => {
             const isProUser = localStorage.getItem('pixelping-pro') === 'true';
             const activeSettings = (isProUser && savedBrandKit) ? savedBrandKit : defaults;
 
+            // ⚡ Watermark Gatekeeper
+            const watermark = document.getElementById('pixelping-watermark');
+            if (isProUser && watermark) {
+                watermark.style.display = 'none';
+            }
+
+            // --- Smart URL Prefixing, Auto-Cleanup & Density Meter ---
             const smartUrlBox = document.getElementById('pl-url'); 
             const densityText = document.getElementById('density-warning');
 
             if (smartUrlBox) {
-                smartUrlBox.addEventListener('focus', function() {
-                    if (this.value === '') this.value = 'https://';
-                });
-
                 smartUrlBox.addEventListener('blur', function() {
                     if (this.value === 'https://') {
                         this.value = ''; 
@@ -903,22 +1211,24 @@ document.addEventListener('DOMContentLoaded', async () => {
                     } else if (this.value.startsWith('https://http://')) {
                         this.value = this.value.replace('https://http://', 'http://');
                     }
-
-                    if (densityText) {
-                        const charCount = this.value.length;
-                        if (charCount > 150) {
-                            densityText.textContent = "Critical Density: Code may fail to scan at small print sizes.";
-                            densityText.className = "text-[10px] font-bold mt-1.5 text-red-500 block animate-pulse"; 
-                        } else if (charCount > 70) {
-                            densityText.textContent = "High Density: Code may be hard to scan on older phones.";
-                            densityText.className = "text-[10px] font-bold mt-1.5 text-yellow-500 block";
-                        } else {
-                            densityText.className = 'hidden'; 
-                        }
-                    }
                 });
             }
+
+            function updateDensityWarning(serializedPayload) {
+                if (!densityText) return;
+                const charCount = (serializedPayload || '').length;
+                if (charCount > 150) {
+                    densityText.textContent = "Critical Density: Code may fail to scan at small print sizes.";
+                    densityText.className = "text-[10px] font-bold mt-2 text-red-500 block animate-pulse";
+                } else if (charCount > 70) {
+                    densityText.textContent = "High Density: Code may be hard to scan on older phones.";
+                    densityText.className = "text-[10px] font-bold mt-2 text-yellow-500 block";
+                } else {
+                    densityText.className = 'hidden';
+                }
+            }
             
+            // 🟢 INJECT GHOST SCRIPT ON BOOT (OFFLINE-FIRST)
             const cachedGhostScript = localStorage.getItem('pixelping-ghost');
             if (isProUser && cachedGhostScript) {
                 try {
@@ -934,6 +1244,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const forms = document.querySelectorAll('.payload-form');
             const allInputs = document.querySelectorAll('.pl-input');
             const canvasWrapper = document.getElementById('canvas-wrapper');
+            const appContainer = document.getElementById('app-container');
             
             const btnMain = document.getElementById('btn-main-action');
             const btnPrint = document.getElementById('btn-print');
@@ -956,20 +1267,38 @@ document.addEventListener('DOMContentLoaded', async () => {
             styleInputs.mask.value = activeSettings.mask;
             styleInputs.icon.value = activeSettings.icon;
 
+            // 🟢 THE TRAFFIC CONTROLLER & THE BOUNCER LOGIC
             const staticPayloads = ['wifi', 'text', 'vcard', 'calendar', 'crypto'];
             const warningToast = document.getElementById('static-warning-message');
             const btnStatic = document.getElementById('mode-static');
             const btnDynamic = document.getElementById('mode-dynamic');
             const dynamicLinkDisplay = document.getElementById('dynamic-link-display'); 
 
+            let previousPayloadType = typeSelector.value;
             typeSelector.addEventListener('change', (e) => {
                 const action = e.target.value;
+                if (action !== previousPayloadType) {
+                    const previousForm = document.getElementById('form-' + previousPayloadType);
+                    if (previousForm) {
+                        previousForm.querySelectorAll('input, textarea, select').forEach(input => {
+                            if (input.type === 'file') return;
+                            if (input.tagName === 'SELECT') {
+                                const declaredDefault = Array.from(input.options).find(option => option.defaultSelected);
+                                input.value = declaredDefault ? declaredDefault.value : (input.options[0] ? input.options[0].value : '');
+                            } else {
+                                input.value = '';
+                            }
+                        });
+                    }
+                    smartLabelInput.value = '';
+                    previousPayloadType = action;
+                }
                 const targetId = 'form-' + action;
                 forms.forEach(form => form.classList.toggle('active', form.id === targetId));
 
                 if (staticPayloads.includes(action)) {
                     if (dynamicLinkDisplay && !dynamicLinkDisplay.classList.contains('hidden')) {
-                        if(btnStatic) btnStatic.click();
+                        btnStatic.click();
                     }
                     if (btnDynamic) {
                         btnDynamic.disabled = true;
@@ -992,7 +1321,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const type = typeSelector.value;
                 if (['url', 'review', 'social', 'menu', 'booking'].includes(type)) {
                     let inputEl = document.getElementById(type === 'url' ? 'pl-url' : `pl-biz-${type}`);
-                    if(!inputEl) return null;
                     let rawUrl = inputEl.value.trim();
                     if (rawUrl === 'https://' || rawUrl === '') return "Please enter a valid link or URL.";
                     if (!rawUrl.startsWith('http://') && !rawUrl.startsWith('https://')) {
@@ -1000,8 +1328,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     }
                 }
                 if (['tel', 'sms'].includes(type)) {
-                    let phoneEl = document.getElementById(type === 'tel' ? 'pl-sms-to');
-                    if(!phoneEl) return null;
+                    let phoneEl = document.getElementById(type === 'tel' ? 'pl-tel' : 'pl-sms-to');
                     let cleanPhone = phoneEl.value.replace(/[^\d+]/g, '');
                     if (cleanPhone.length < 7) return "Please enter a valid phone number.";
                 }
@@ -1020,8 +1347,16 @@ document.addEventListener('DOMContentLoaded', async () => {
                     if (!ssid) return "Please enter the Wi-Fi Network Name (SSID).";
                 }
                 if (type === 'crypto') {
-                    let addr = document.getElementById('pl-crypto-address').value.trim();
+                    const coin = document.getElementById('pl-crypto-type').value;
+                    const addr = document.getElementById('pl-crypto-address').value.trim();
                     if (!addr) return "Please enter your Wallet Address.";
+                    if (coin === 'bitcoin') {
+                        const legacyBitcoin = /^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$/;
+                        const bech32Bitcoin = /^bc1[ac-hj-np-z02-9]{11,71}$/i;
+                        if (!legacyBitcoin.test(addr) && !bech32Bitcoin.test(addr)) return "Please enter a valid Bitcoin wallet address.";
+                    } else if (coin === 'ethereum') {
+                        if (!/^0x[a-fA-F0-9]{40}$/.test(addr)) return "Please enter a valid Ethereum wallet address.";
+                    }
                 }
                 return null;
             };
@@ -1056,7 +1391,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     const l = document.getElementById('pl-vc-last').value;
                     const p = document.getElementById('pl-vc-phone').value;
                     const o = document.getElementById('pl-vc-org').value;
-                    if(f || l) payload = `BEGIN:VCARD\nVERSION:3.0\nN:${l};${f}\nORG:${o}\nTEL:${p}\nEND:VCARD`;
+                    if(f || l || p || o) payload = `BEGIN:VCARD\nVERSION:3.0\nN:${l};${f}\nORG:${o}\nTEL:${p}\nEND:VCARD`;
                 } else if (type === 'calendar') {
                     const t = document.getElementById('pl-cal-title').value;
                     const sRaw = document.getElementById('pl-cal-start').value;
@@ -1068,7 +1403,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     const lat = document.getElementById('pl-geo-lat').value;
                     const lng = document.getElementById('pl-geo-lng').value;
                     if (addr) {
-                        payload = `geo:0,0?q=${encodeURIComponent(addr)}`;
+                        payload = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addr.trim())}`;
                     } else if(lat && lng) {
                         payload = `geo:${lat},${lng}`;
                     }
@@ -1077,15 +1412,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                     const addr = document.getElementById('pl-crypto-address').value;
                     if(addr) payload = `${coin}:${addr}`;
                 } else if (['review', 'social', 'menu', 'booking'].includes(type)) {
-                    let inputEl = document.getElementById(`pl-biz-${type}`);
-                    if(inputEl) payload = inputEl.value;
+                    payload = document.getElementById(`pl-biz-${type}`).value;
                     if(payload && !payload.startsWith('http')) payload = 'https://' + payload;
                 } else if (type === 'coupon') {
-                    let inputEl = document.getElementById('pl-biz-coupon');
-                    if(inputEl) payload = inputEl.value;
+                    payload = document.getElementById('pl-biz-coupon').value;
                 }
                 
-                return payload && payload.trim() !== "" ? payload : "https://pixelping.app";
+                return payload.trim() !== "" ? payload : "https://pixelping.app/";
             }
 
             const svgIcons = {
@@ -1101,11 +1434,31 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             const qrCode = new QRCodeStyling({
                 width: 320, height: 320, type: "svg", margin: 5,
-                data: "https://pixelping.app",
+                data: "https://pixelping.app/",
                 qrOptions: { errorCorrectionLevel: 'H' },
                 imageOptions: { crossOrigin: "anonymous", margin: 8, imageSize: 0.35, hideBackgroundDots: true }
             });
-            qrCode.append(document.getElementById("canvas-container"));
+
+            // The QR engine intentionally stays at 320x320 for export quality. The preview
+            // SVG needs a viewBox so CSS can scale the whole 320px drawing into the compact
+            // on-screen wrapper instead of clipping the right and bottom edges.
+            const qrPreviewContainer = document.getElementById("canvas-container");
+            function fitQrPreviewSvg() {
+                const svg = qrPreviewContainer && qrPreviewContainer.querySelector('svg');
+                if (!svg) return;
+                svg.setAttribute('viewBox', '0 0 320 320');
+                svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+                svg.style.width = '100%';
+                svg.style.height = '100%';
+                svg.style.maxWidth = '100%';
+                svg.style.maxHeight = '100%';
+                svg.style.display = 'block';
+            }
+
+            qrCode.append(qrPreviewContainer);
+            fitQrPreviewSvg();
+            const qrPreviewObserver = new MutationObserver(fitQrPreviewSvg);
+            qrPreviewObserver.observe(qrPreviewContainer, { childList: true, subtree: true });
 
             window.qrCode = qrCode;
             window.updateQR = updateQR;
@@ -1139,12 +1492,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                         
                         customLogoBase64 = canvas.toDataURL('image/png');
                         btnClearLogo.classList.remove('hidden');
-                        
-                        document.querySelectorAll('.proxy-icon').forEach(b => {
-                            b.classList.remove('active', 'border-2', 'border-blue-500', 'bg-blue-50', 'text-blue-700');
-                            b.classList.add('border', 'border-slate-200', 'bg-white', 'text-slate-600');
-                        });
-
                         styleInputs.icon.value = ""; 
                         updateQR();
                     };
@@ -1164,8 +1511,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const iconVal = styleInputs.icon.value;
                 const maskVal = styleInputs.mask.value;
                 
+                const serializedPayload = generatePayloadString();
                 const qrOptions = {
-                    data: generatePayloadString(),
+                    data: serializedPayload,
                     dotsOptions: { color: styleInputs.colorDots.value, type: 'square' },
                     cornersSquareOptions: { color: styleInputs.colorCorners.value, type: styleInputs.cornersType.value },
                     cornersDotOptions: { color: styleInputs.colorCorners.value, type: styleInputs.cornersType.value },
@@ -1191,6 +1539,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 
                 qrOptions.imageOptions = { margin: 8, imageSize: 0.35, hideBackgroundDots: true };
                 qrCode.update(qrOptions);
+                fitQrPreviewSvg();
+                updateDensityWarning(serializedPayload);
 
                 canvasWrapper.style.webkitMaskImage = maskShapes[maskVal];
                 canvasWrapper.style.maskImage = maskShapes[maskVal];
@@ -1240,9 +1590,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 const isUnlocked = (userTier === 'master-key' || userTier === 'evolution') || localStorage.getItem('pixelping-pro') === 'true'; 
                 const isEvolution = (userTier === 'evolution') || localStorage.getItem('pixelping-evolution') === 'true';
+
+                const watermark = document.getElementById('pixelping-watermark');
+                if (isUnlocked && watermark) watermark.style.display = 'none'; 
                 
                 const mainTitle = document.getElementById('main-title');
                 const subTitle = document.getElementById('sub-title');
+                const nomadTeaser = document.getElementById('nomad-teaser-box');
                 const telemetryDash = document.getElementById('telemetry-dashboard');
                 
                 const pricingSection = document.getElementById('pricing-section');
@@ -1251,8 +1605,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const cardTier2 = document.getElementById('card-tier-2');
 
                 if (isEvolution) {
-                    if (mainTitle) mainTitle.innerHTML = "PixelPing";
-                    if (subTitle) subTitle.innerHTML = "TELEMETRY &bull; COMMAND &bull; CONTROL";
+                    if (mainTitle) mainTitle.innerHTML = "PixelPing: <span class='text-ppGreen'>Evolution</span>";
+                    if (subTitle) subTitle.innerHTML = "TELEMETRY • COMMAND • CONTROL";
+                    if (nomadTeaser) nomadTeaser.style.display = 'none';
                     const topNavBtn = document.getElementById('btn-buy-master-key');
                     if (topNavBtn) topNavBtn.style.display = 'none';
                     if (telemetryDash) {
@@ -1261,8 +1616,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                     }
                     if (pricingSection) pricingSection.style.display = 'none'; 
                 } else if (isUnlocked) {
-                    if (mainTitle) mainTitle.innerHTML = "PixelPing";
-                    if (subTitle) subTitle.innerHTML = "<span class='text-yellow-600 dark:text-yellow-500'>MASTER KEY AUTHENTICATED</span>";
+                    if (mainTitle) mainTitle.innerHTML = "PixelPing: Rebellion";
+                    if (subTitle) subTitle.innerHTML = "<span class='text-yellow-500'>MASTER KEY AUTHENTICATED</span>";
                     const topNavBtn = document.getElementById('btn-buy-master-key');
                     if (topNavBtn) topNavBtn.style.display = 'none';
 
@@ -1271,6 +1626,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     if (pricingH2) pricingH2.innerHTML = "Ignite the Engine.";
                     if (pricingP) pricingP.innerHTML = "Your Master Key unlocked the design suite. Evolution unlocks the telemetry. Track every scan and swap destinations without ever reprinting a code.";
     
+                    if (nomadTeaser) nomadTeaser.style.display = 'none';
                     if (telemetryDash) telemetryDash.classList.add('hidden'); 
                     
                     if (pricingSection) pricingSection.style.display = 'block';
@@ -1279,7 +1635,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                     if (pricingGrid) pricingGrid.className = "flex justify-center max-w-md mx-auto";
                 } else {
                     if (mainTitle) mainTitle.innerHTML = "PixelPing";
-                    if (subTitle) subTitle.innerHTML = "Generate &bull; Scan &bull; Share";
+                    if (subTitle) subTitle.innerHTML = "Generate &bull; Scan &bull; Share &bull; Own";
+                    if (nomadTeaser) nomadTeaser.style.display = 'flex';
                     if (telemetryDash) telemetryDash.classList.add('hidden');
                     
                     if (pricingSection) pricingSection.style.display = 'block';
@@ -1290,9 +1647,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 if (isUnlocked || isEvolution) {
                     appContainer.classList.add('pro-hidden');
+                    if (document.getElementById('founders-story-box')) document.getElementById('founders-story-box').style.display = 'none';
                     
-                    btnMain.innerHTML = `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg> <span>Save to Cloud</span>`;
-                    btnMain.className = "w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-md text-xs";
+                    btnMain.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg> <span>Save Code</span>`;
+                    btnMain.className = "w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-2 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-md text-xs";
                     btnPrint.classList.remove('hidden');
                     btnPrint.classList.add('flex');
                     isPreviewingPro = false;
@@ -1315,14 +1673,85 @@ document.addEventListener('DOMContentLoaded', async () => {
                 isPreviewingPro = usingProPayload || usingProLabel || usingProStyles;
 
                 if (isPreviewingPro) {
-                    btnMain.innerHTML = `<span class="text-sm">🔓</span> <span>Unlock Master Key to Save</span>`;
-                    btnMain.className = "w-full bg-yellow-500 hover:bg-yellow-600 text-yellow-900 font-bold py-2.5 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-md text-xs";
+                    btnMain.innerHTML = `<span class="text-lg">🔓</span> <span>Unlock Master Key to Save</span>`;
+                    btnMain.className = "w-full bg-yellow-500 hover:bg-yellow-600 text-yellow-900 font-bold py-2.5 px-2 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-md text-xs";
                 } else {
-                    btnMain.innerHTML = `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg> <span>Save to Cloud</span>`;
-                    btnMain.className = "w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-md text-xs";
+                    btnMain.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg> <span>Save Code</span>`;
+                    btnMain.className = "w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-2 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-md text-xs";
                 }
             }
             window.checkPaywallState = checkPaywallState;
+
+            function renderHistory() {
+                const historyContent = document.getElementById('history-content');
+                const isPro = localStorage.getItem('pixelping-pro') === 'true';
+
+                if (!isPro) {
+                    historyContent.innerHTML = `
+                        <div class="flex-1 flex flex-col items-center justify-center text-center opacity-60 mt-4">
+                            <span class="text-2xl mb-2">📜</span>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">History is a Master Key feature.<br>Unlock to save and reload your last 5 codes.</p>
+                        </div>`;
+                    return;
+                }
+
+                const history = JSON.parse(localStorage.getItem('pixelping-history')) || [];
+                if (history.length === 0) {
+                    historyContent.innerHTML = `
+                        <div class="flex-1 flex flex-col items-center justify-center text-center opacity-60 mt-4">
+                            <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">No recent codes yet.<br>Save or print a code to see it here!</p>
+                        </div>`;
+                    return;
+                }
+
+                historyContent.innerHTML = '<ul class="space-y-2 w-full"></ul>';
+                const ul = historyContent.querySelector('ul');
+
+                const typeNames = {
+                    url: '🌐 URL', tel: '📞 Phone', text: '📝 Text',
+                    wifi: '📶 Wi-Fi', vcard: '📇 Contact', sms: '💬 SMS',
+                    email: '✉️ Email', calendar: '📅 Event', geo: '📍 Location', crypto: '₿ Crypto',
+                    review: '⭐ Google Review', social: '👍 Social Media', menu: '🍽️ Menu', booking: '📅 Booking', coupon: '🎟️ Coupon'
+                };
+
+                history.forEach((item) => {
+                    const li = document.createElement('li');
+                    li.className = "bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-2 rounded-lg cursor-pointer hover:border-blue-400 dark:hover:border-ppBlue transition-colors shadow-sm flex items-center justify-between group";
+                    
+                    const title = item.label || 'Unnamed Code';
+                    const subTitle = typeNames[item.type] || item.type;
+
+                    const textContainer = document.createElement('div');
+                    textContainer.className = "flex flex-col overflow-hidden";
+
+                    const titleSpan = document.createElement('span');
+                    titleSpan.className = "text-xs font-bold text-slate-700 dark:text-slate-200 truncate";
+                    titleSpan.textContent = title;
+
+                    const subSpan = document.createElement('span');
+                    subSpan.className = "text-[10px] text-slate-500 dark:text-slate-400";
+                    subSpan.textContent = `${subTitle} • ${item.date}`;
+
+                    textContainer.appendChild(titleSpan);
+                    textContainer.appendChild(subSpan);
+
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.setAttribute('aria-label', `Reload ${title}`);
+                    btn.className = "text-blue-600 dark:text-blue-300 opacity-60 group-hover:opacity-100 transition-opacity p-1";
+                    btn.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>`;
+
+                    li.appendChild(textContainer);
+                    li.appendChild(btn);
+
+                    li.addEventListener('click', () => loadHistoryItem(item));
+                    btn.addEventListener('click', (event) => {
+                        event.stopPropagation();
+                        loadHistoryItem(item);
+                    });
+                    ul.appendChild(li);
+                });
+            }
 
             function saveToHistory() {
                 if (localStorage.getItem('pixelping-pro') !== 'true') return;
@@ -1344,25 +1773,61 @@ document.addEventListener('DOMContentLoaded', async () => {
                 };
                 
                 document.querySelectorAll('.payload-form input, .payload-form textarea, .payload-form select').forEach(inp => {
-                    if (inp.type !== 'file' && !inp.classList.contains('hidden')) state.inputs[inp.id] = inp.value;
+                    if (inp.type !== 'file') state.inputs[inp.id] = inp.value;
                 });
 
                 let history = JSON.parse(localStorage.getItem('pixelping-history')) || [];
                 history.unshift(state);
-                if (history.length > 10) history.pop(); 
+                if (history.length > 5) history.pop(); 
                 
                 localStorage.setItem('pixelping-history', JSON.stringify(history));
+                renderHistory();
+            }
+
+            function loadHistoryItem(item) {
+                typeSelector.value = item.type;
+                previousPayloadType = item.type;
+                forms.forEach(form => form.classList.toggle('active', form.id === 'form-' + item.type));
+                smartLabelInput.value = item.label || '';
+
+                if (item.inputs) {
+                    Object.keys(item.inputs).forEach(id => {
+                        const el = document.getElementById(id);
+                        if (el) el.value = item.inputs[id];
+                    });
+                }
+
+                if (item.styles) {
+                    styleInputs.cornersType.value = item.styles.cornersType;
+                    styleInputs.colorDots.value = item.styles.colorDots;
+                    styleInputs.colorCorners.value = item.styles.colorCorners;
+                    styleInputs.colorBg.value = item.styles.colorBg;
+                    styleInputs.mask.value = item.styles.mask;
+                    styleInputs.icon.value = item.styles.icon;
+                    
+                    if (item.styles.customLogo) {
+                        customLogoBase64 = item.styles.customLogo;
+                        btnClearLogo.classList.remove('hidden');
+                    } else {
+                        customLogoBase64 = null;
+                        logoInput.value = '';
+                        btnClearLogo.classList.add('hidden');
+                    }
+                }
+
+                updateQR();
             }
 
             updateQR();
+            renderHistory();
 
             const updateBrandKitUI = () => {
                 if (localStorage.getItem('pixelping-brand-kit')) {
-                    btnSaveBrand.textContent = "Remove Brand";
-                    btnSaveBrand.className = "text-[10px] bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 px-3 py-2 rounded-lg hover:bg-red-100 transition-colors shadow-sm font-bold";
+                    btnSaveBrand.textContent = "Remove Brand Kit";
+                    btnSaveBrand.className = "text-[10px] bg-red-100 text-red-700 border border-red-300 dark:bg-red-900/40 dark:text-red-400 dark:border-red-800 px-3 py-1.5 rounded-lg hover:opacity-90 transition-colors shadow-sm font-bold cursor-pointer";
                 } else {
-                    btnSaveBrand.textContent = "Save Brand";
-                    btnSaveBrand.className = "text-[10px] bg-white border border-slate-200 dark:bg-slate-700 dark:border-slate-600 text-slate-700 dark:text-slate-200 px-3 py-2 rounded-lg hover:border-slate-300 transition-colors shadow-sm font-bold";
+                    btnSaveBrand.textContent = "Save Brand Kit";
+                    btnSaveBrand.className = "text-[10px] bg-white border border-slate-200 text-slate-700 px-3 py-1.5 rounded-lg hover:border-slate-300 transition-colors shadow-sm font-bold dark:bg-slate-700 dark:border-slate-600 dark:text-slate-200 cursor-pointer";
                 }
             };
             updateBrandKitUI(); 
@@ -1380,18 +1845,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                         customLogoBase64 = null;
                         logoInput.value = '';
                         btnClearLogo.classList.add('hidden');
-                        
-                        document.querySelectorAll('.proxy-mask').forEach(b => {
-                            b.classList.remove('active', 'border-2', 'border-blue-500', 'bg-blue-50', 'text-blue-700');
-                            b.classList.add('border', 'border-slate-200', 'bg-white', 'text-slate-600');
-                            if(b.dataset.val === defaults.mask) b.classList.add('active', 'border-2', 'border-blue-500', 'bg-blue-50', 'text-blue-700');
-                        });
-                        document.querySelectorAll('.proxy-icon').forEach(b => {
-                            b.classList.remove('active', 'border-2', 'border-blue-500', 'bg-blue-50', 'text-blue-700');
-                            b.classList.add('border', 'border-slate-200', 'bg-white', 'text-slate-600');
-                            if(b.dataset.val === defaults.icon) b.classList.add('active', 'border-2', 'border-blue-500', 'bg-blue-50', 'text-blue-700');
-                        });
-
                         updateQR();
                         updateBrandKitUI();
                     } else {
@@ -1407,7 +1860,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         localStorage.setItem('pixelping-brand-kit', JSON.stringify(brandSettings));
                         
                         btnSaveBrand.textContent = "✓ Saved!";
-                        btnSaveBrand.className = "text-[10px] bg-green-50 border border-green-200 text-green-700 px-3 py-2 rounded-lg shadow-sm font-bold transition-colors";
+                        btnSaveBrand.className = "text-[10px] bg-green-100 text-green-700 border border-green-300 dark:bg-green-900/40 dark:text-green-400 dark:border-green-800 px-3 py-1.5 rounded-lg transition-colors shadow-sm font-bold cursor-pointer";
                         setTimeout(() => updateBrandKitUI(), 2000);
                     }
                 } else {
@@ -1484,6 +1937,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                         closeUnlockModal();
                         checkPaywallState();
+                        renderHistory(); 
                         alert('Master Key Unlocked! Thank you for your support.');
                     } else {
                         alert('Verification Failed: ' + data.error);
@@ -1507,7 +1961,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 if (isPreviewingPro) {
                     openUnlockModal();
                 } else {
-                    const isDynamicMode = document.getElementById('dynamic-link-display') && !document.getElementById('dynamic-link-display').classList.contains('hidden');
+                    const isDynamicMode = dynamicLinkDisplay && !dynamicLinkDisplay.classList.contains('hidden');
                     
                     if (isDynamicMode) {
                         e.preventDefault(); 
@@ -1520,17 +1974,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                         const newSlug = window.pendingSlug || Math.random().toString(36).substring(2, 8).toLowerCase();
                         
-                        const shortlinkUrl = document.getElementById('shortlink-url');
                         if (shortlinkUrl) {
                             shortlinkUrl.value = `https://link.pixelping.app/${newSlug}`;
-                            shortlinkUrl.classList.add('bg-slate-200', 'transition-colors', 'duration-300');
-                            setTimeout(() => shortlinkUrl.classList.remove('bg-slate-200'), 400);
+                            shortlinkUrl.classList.add('bg-slate-700', 'transition-colors', 'duration-300');
+                            setTimeout(() => shortlinkUrl.classList.remove('bg-slate-700'), 400);
                         }
 
                         const destinationValue = generatePayloadString();
                         const payload = {
                             slug: newSlug,
-                            destination: destinationValue || 'https://pixelping.app',
+                            destination: destinationValue || 'https://pixelping.app/',
                             userId: window.Clerk.user.id,
                             createdAt: new Date().toISOString()
                         };
@@ -1755,58 +2208,96 @@ document.addEventListener('DOMContentLoaded', async () => {
             document.getElementById('btn-clear').addEventListener('click', () => {
                 allInputs.forEach(input => {
                     if (input.type === 'color' || input.type === 'file') return;
-                    if (input.tagName === 'SELECT') input.selectedIndex = 0;
-                    else input.value = '';
+                    if (input.tagName === 'SELECT') {
+                        const declaredDefault = Array.from(input.options).find(option => option.defaultSelected);
+                        input.value = declaredDefault ? declaredDefault.value : (input.options[0] ? input.options[0].value : '');
+                    } else {
+                        input.value = '';
+                    }
                 });
+
+                typeSelector.value = 'url';
+                previousPayloadType = 'url';
+                forms.forEach(form => form.classList.toggle('active', form.id === 'form-url'));
+                smartUrlBox.value = '';
+                smartLabelInput.value = '';
+                styleInputs.cornersType.value = defaults.cornersType;
                 styleInputs.colorDots.value = defaults.colorDots;
                 styleInputs.colorCorners.value = defaults.colorCorners;
                 styleInputs.colorBg.value = defaults.colorBg;
+                styleInputs.mask.value = defaults.mask;
+                styleInputs.icon.value = defaults.icon;
+                const printSize = document.getElementById('pl-print-size');
+                if (printSize) printSize.value = '3.5in';
+                const exportFormat = document.getElementById('export-format');
+                if (exportFormat) exportFormat.value = 'png';
                 customLogoBase64 = null;
                 logoInput.value = '';
                 btnClearLogo.classList.add('hidden');
-                
-                document.querySelectorAll('.proxy-mask').forEach(b => {
-                    b.classList.remove('active', 'border-2', 'border-blue-500', 'bg-blue-50', 'text-blue-700');
-                    b.classList.add('border', 'border-slate-200', 'bg-white', 'text-slate-600');
-                    if(b.dataset.val === defaults.mask) b.classList.add('active', 'border-2', 'border-blue-500', 'bg-blue-50', 'text-blue-700');
-                });
-                document.querySelectorAll('.proxy-icon').forEach(b => {
-                    b.classList.remove('active', 'border-2', 'border-blue-500', 'bg-blue-50', 'text-blue-700');
-                    b.classList.add('border', 'border-slate-200', 'bg-white', 'text-slate-600');
-                    if(b.dataset.val === defaults.icon) b.classList.add('active', 'border-2', 'border-blue-500', 'bg-blue-50', 'text-blue-700');
-                });
-
-                document.getElementById('density-warning').className = 'hidden';
+                if (btnStatic) btnStatic.click();
+                if (btnDynamic) {
+                    btnDynamic.disabled = false;
+                    btnDynamic.style.opacity = '1';
+                    btnDynamic.style.cursor = 'pointer';
+                }
+                if (warningToast) warningToast.classList.add('hidden');
+                if (densityText) densityText.className = 'hidden';
                 updateQR();
             });
+
+            const infoBtn = document.getElementById("infoBtn");
+            const infoOverlay = document.getElementById("infoOverlay");
+            const infoModal = document.getElementById("infoModal");
+            const infoCloseBtn = document.getElementById("infoCloseBtn");
+            if (infoBtn && infoOverlay && infoModal && infoCloseBtn) {
+                const tabButtons = Array.from(document.querySelectorAll(".ml-info-tab"));
+                const panels = Array.from(document.querySelectorAll(".ml-info-panel"));
+                function openInfo() { infoOverlay.hidden = false; infoModal.hidden = false; }
+                function closeInfo() { infoOverlay.hidden = true; infoModal.hidden = true; }
+                function setActiveTab(tabName) {
+                    tabButtons.forEach(btn => btn.classList.toggle("ml-info-tab-active", btn.dataset.tab === tabName));
+                    panels.forEach(panel => { panel.hidden = (panel.dataset.panel !== tabName); });
+                }
+                infoBtn.addEventListener("click", () => { infoModal.hidden ? openInfo() : closeInfo(); });
+                infoOverlay.addEventListener("click", closeInfo);
+                infoCloseBtn.addEventListener("click", closeInfo);
+                tabButtons.forEach(btn => btn.addEventListener("click", () => setActiveTab(btn.dataset.tab)));
+                document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !infoModal.hidden) closeInfo(); });
+            }
 
             const themeToggleBtn = document.getElementById('themeToggle');
             const iconSun = document.getElementById('icon-sun');
             const iconMoon = document.getElementById('icon-moon');
             const htmlTag = document.documentElement;
 
-            if (localStorage.getItem('theme') === 'dark') {
-                htmlTag.classList.add('dark');
-                iconSun.classList.remove('hidden');
-                iconMoon.classList.add('hidden');
-            } else {
-                htmlTag.classList.remove('dark');
-                iconSun.classList.add('hidden');
-                iconMoon.classList.remove('hidden');
+            if (localStorage.getItem('theme') === 'light') { 
+                htmlTag.classList.remove('dark'); 
+                iconSun.classList.remove('hidden'); 
+                iconMoon.classList.add('hidden'); 
             }
             
             themeToggleBtn.addEventListener('click', () => {
                 htmlTag.classList.toggle('dark');
                 if (htmlTag.classList.contains('dark')) { 
                     localStorage.setItem('theme', 'dark'); 
-                    iconSun.classList.remove('hidden'); 
-                    iconMoon.classList.add('hidden'); 
-                } else { 
-                    localStorage.setItem('theme', 'light'); 
                     iconSun.classList.add('hidden'); 
                     iconMoon.classList.remove('hidden'); 
+                } else { 
+                    localStorage.setItem('theme', 'light'); 
+                    iconSun.classList.remove('hidden'); 
+                    iconMoon.classList.add('hidden'); 
                 } 
             });
+
+            // const bgContainer = document.getElementById('pixel-bg');
+            // const colors = ['#27cfff', '#3cff8f', '#0f3a5a'];
+            // for(let i=0; i<20; i++) {
+            //     let div = document.createElement('div'); div.className = 'floating-pixel';
+            //     let size = Math.random() * 20 + 10; div.style.width = size + 'px'; div.style.height = size + 'px';
+            //     div.style.left = Math.random() * 100 + 'vw'; div.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            //     div.style.animationDelay = (Math.random() * 8) + 's'; div.style.animationDuration = (Math.random() * 6 + 6) + 's';
+            //     bgContainer.appendChild(div);
+           // }
         });
 
     if (document.getElementById('mode-static') && document.getElementById('mode-dynamic')) {
@@ -1832,8 +2323,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 return; 
             }
 
-            document.getElementById('mode-static').className = "text-[9px] font-extrabold uppercase tracking-widest px-2 py-1 rounded text-slate-400 hover:text-slate-600 transition-all";
-            document.getElementById('mode-dynamic').className = "text-[9px] font-extrabold uppercase tracking-widest px-2 py-1 rounded bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm flex items-center gap-1 transition-all";
+            document.getElementById('mode-static').className = "flex-1 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest py-1.5 rounded-md text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-white transition-all";
+            document.getElementById('mode-dynamic').className = "w-full text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest py-1.5 rounded-md bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm transition-all flex justify-center items-center gap-1.5";
             
             const badge = document.getElementById('mode-dynamic').querySelector('.evo-badge');
             if (badge) badge.style.display = 'none';
@@ -1853,8 +2344,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         document.getElementById('mode-static').addEventListener('click', () => {
-            document.getElementById('mode-dynamic').className = "text-[9px] font-extrabold uppercase tracking-widest px-2 py-1 rounded text-slate-400 hover:text-slate-600 flex items-center gap-1 transition-all";
-            document.getElementById('mode-static').className = "text-[9px] font-extrabold uppercase tracking-widest px-2 py-1 rounded bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm transition-all";
+            document.getElementById('mode-dynamic').className = "w-full text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest py-1.5 rounded-md text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-white transition-all flex justify-center items-center gap-1.5";
+            document.getElementById('mode-static').className = "flex-1 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-widest py-1.5 rounded-md bg-white dark:bg-slate-700 text-slate-800 dark:text-white shadow-sm transition-all";
             
             const dynamicLinkDisplay = document.getElementById('dynamic-link-display');
             if (dynamicLinkDisplay) dynamicLinkDisplay.classList.add('hidden');
@@ -1870,14 +2361,38 @@ document.addEventListener('DOMContentLoaded', async () => {
             
             const originalText = btnCopyLink.innerText;
             btnCopyLink.innerText = "Copied!";
-            btnCopyLink.classList.add('bg-green-500', 'text-white');
+            btnCopyLink.classList.add('bg-green-500', 'dark:bg-ppGreen', 'text-slate-900');
             
             setTimeout(() => {
                 btnCopyLink.innerText = originalText;
-                btnCopyLink.classList.remove('bg-green-500', 'text-white');
+                btnCopyLink.classList.remove('bg-green-500', 'dark:bg-ppGreen', 'text-slate-900');
             }, 2000);
         });
     }
+    
+        const btnClearHistory = document.getElementById('btn-clear-history');
+        if (btnClearHistory) {
+            btnClearHistory.addEventListener('click', () => {
+                if (confirm("Are you sure you want to permanently delete your entire code history?")) {
+                    localStorage.removeItem('pixelping-history');
+                    const historyContent = document.getElementById('history-content');
+                    if (historyContent) {
+                        historyContent.innerHTML = '<div class="text-center text-slate-500 text-xs py-4 mt-2">History cleared.</div>';
+                    }
+                }
+            });
+        }
+
+        const logoUploadBtn = document.getElementById('qr-custom-logo');
+        if (logoUploadBtn) {
+            logoUploadBtn.addEventListener('click', (e) => {
+                const isUserPro = localStorage.getItem('pixelping-pro') === 'true';
+                if (!isUserPro) {
+                    e.preventDefault(); 
+                    openMasterKeyModal(); 
+                }
+            });
+        }
             
     </script>
 
@@ -1901,6 +2416,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         btnSignIn.classList.add('hidden');
                         userButtonMount.classList.remove('hidden');
                         window.Clerk.mountUserButton(userButtonMount);
+                        // Safely trigger the UI update
                     if (typeof window.checkPaywallState === 'function') {
                        window.checkPaywallState();
             }
@@ -1927,5 +2443,250 @@ document.addEventListener('DOMContentLoaded', async () => {
             document.body.appendChild(script);
         })();
     </script>
+
+<script src="arsenal.js"></script>
+<script>
+// PixelPing redesigned-shell adapter: visual controls only; OG engine remains authoritative.
+document.addEventListener('DOMContentLoaded', () => {
+    const byId = (id) => document.getElementById(id);
+
+    // Accessibility-only modal helper: trap keyboard focus, support Escape, and restore focus to the launcher.
+    const modalReturnFocus = new WeakMap();
+    const modalCloseButtons = {
+        infoModal: 'infoCloseBtn',
+        unlockModal: 'unlockCloseBtn',
+        evolutionModal: 'evolutionCloseBtn',
+        'premium-icons-modal': 'premium-icons-close'
+    };
+
+    function modalFocusables(modal) {
+        return Array.from(modal.querySelectorAll('button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'))
+            .filter(el => !el.hidden && el.getAttribute('aria-hidden') !== 'true' && el.offsetParent !== null);
+    }
+
+    function focusOpenedModal(modal) {
+        if (!modal || modal.hidden) return;
+        const active = document.activeElement;
+        if (active && !modal.contains(active)) modalReturnFocus.set(modal, active);
+        requestAnimationFrame(() => {
+            const preferred = modal.querySelector('[data-modal-initial-focus]');
+            const focusables = modalFocusables(modal);
+            const target = preferred || focusables[0] || modal;
+            if (!modal.hasAttribute('tabindex')) modal.setAttribute('tabindex', '-1');
+            if (target && typeof target.focus === 'function') target.focus();
+        });
+    }
+
+    function restoreModalFocus(modal) {
+        const previous = modalReturnFocus.get(modal);
+        modalReturnFocus.delete(modal);
+        if (previous && previous.isConnected && typeof previous.focus === 'function') {
+            requestAnimationFrame(() => previous.focus());
+        }
+    }
+
+    document.querySelectorAll('.ml-modal').forEach(modal => {
+        new MutationObserver(() => {
+            if (modal.hidden) restoreModalFocus(modal);
+            else focusOpenedModal(modal);
+        }).observe(modal, { attributes: true, attributeFilter: ['hidden'] });
+
+        modal.addEventListener('keydown', event => {
+            if (event.key === 'Escape') {
+                const closeButton = byId(modalCloseButtons[modal.id]);
+                if (closeButton) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    closeButton.click();
+                }
+                return;
+            }
+            if (event.key !== 'Tab') return;
+            const focusables = modalFocusables(modal);
+            if (!focusables.length) {
+                event.preventDefault();
+                modal.focus();
+                return;
+            }
+            const first = focusables[0];
+            const last = focusables[focusables.length - 1];
+            if (event.shiftKey && document.activeElement === first) {
+                event.preventDefault();
+                last.focus();
+            } else if (!event.shiftKey && document.activeElement === last) {
+                event.preventDefault();
+                first.focus();
+            }
+        });
+    });
+
+    function syncGroup(selector, value) {
+        document.querySelectorAll(selector).forEach(btn => {
+            const btnValue = btn.dataset.target ?? btn.dataset.val ?? '';
+            const isActive = btnValue === value;
+            btn.classList.toggle('is-active', isActive);
+            btn.setAttribute('aria-pressed', String(isActive));
+        });
+    }
+
+    function bindProxy(selector, selectId) {
+        const select = byId(selectId);
+        if (!select) return;
+        document.querySelectorAll(selector).forEach(btn => {
+            btn.addEventListener('click', () => {
+                const value = btn.dataset.target ?? btn.dataset.val ?? '';
+                select.value = value;
+                select.dispatchEvent(new Event('change', { bubbles: true }));
+                if (typeof window.updateQR === 'function') window.updateQR();
+                syncShell();
+            });
+        });
+    }
+
+    function syncShell() {
+        const mappings = [
+            ['.proxy-payload', 'payload-type'],
+            ['.proxy-mask', 'qr-mask'],
+            ['.proxy-wifi', 'pl-wifi-type'],
+            ['.proxy-crypto', 'pl-crypto-type'],
+            ['.proxy-corner', 'qr-corners-type'],
+            ['.proxy-format', 'export-format'],
+            ['.proxy-icon', 'qr-icon']
+        ];
+        mappings.forEach(([selector, id]) => { const el = byId(id); if (el) syncGroup(selector, el.value); });
+        syncEntitlementShell();
+    }
+
+    bindProxy('.proxy-payload', 'payload-type');
+    bindProxy('.proxy-mask', 'qr-mask');
+    bindProxy('.proxy-wifi', 'pl-wifi-type');
+    bindProxy('.proxy-crypto', 'pl-crypto-type');
+    bindProxy('.proxy-corner', 'qr-corners-type');
+    bindProxy('.proxy-format', 'export-format');
+    bindProxy('.proxy-icon', 'qr-icon');
+
+    const iconSelect = byId('qr-icon');
+    const premiumOverlay = byId('premium-icons-overlay');
+    const premiumModal = byId('premium-icons-modal');
+    const premiumGrid = byId('premium-icons-grid');
+    const premiumEmpty = byId('premium-icons-empty');
+
+    function userTier() {
+        let clerkTier = 'free';
+        if (window.Clerk && window.Clerk.user && window.Clerk.user.publicMetadata) {
+            clerkTier = window.Clerk.user.publicMetadata.tier || 'free';
+        }
+        if (clerkTier === 'evolution' || localStorage.getItem('pixelping-evolution') === 'true') return 'evolution';
+        if (clerkTier === 'master-key' || localStorage.getItem('pixelping-pro') === 'true') return 'master-key';
+        return 'free';
+    }
+
+    function isMasterKeyUnlocked() {
+        const tier = userTier();
+        return tier === 'master-key' || tier === 'evolution' || localStorage.getItem('pixelping-pro') === 'true';
+    }
+
+    function premiumIconNames() {
+        const names = new Set();
+        if (iconSelect) {
+            Array.from(iconSelect.options).forEach(opt => {
+                if (opt.value && !['heart','lightning','star'].includes(opt.value)) names.add(opt.value);
+            });
+        }
+        if (window.proIcons) Object.keys(window.proIcons).forEach(name => names.add(name));
+        return Array.from(names);
+    }
+
+    function prettifyIconName(name) {
+        return name.replace(/[-_]+/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+    }
+
+    function renderPremiumIcons() {
+        if (!premiumGrid || !premiumEmpty || !iconSelect) return;
+        const names = premiumIconNames();
+        premiumGrid.innerHTML = '';
+        premiumEmpty.classList.toggle('hidden', names.length !== 0);
+        names.forEach(name => {
+            if (!Array.from(iconSelect.options).some(o => o.value === name)) {
+                const opt = document.createElement('option'); opt.value = name; opt.textContent = prettifyIconName(name); iconSelect.appendChild(opt);
+            }
+            const tile = document.createElement('button');
+            tile.type = 'button';
+            tile.className = 'border border-slate-200 dark:border-slate-700 rounded-xl p-2 bg-white dark:bg-slate-800 hover:border-blue-400 dark:hover:border-ppBlue transition-colors flex flex-col items-center justify-center gap-2 text-center';
+            const iconData = window.proIcons && window.proIcons[name];
+            if (iconData) {
+                const img = document.createElement('img');
+                img.alt = prettifyIconName(name);
+                img.src = iconData.startsWith('<svg') ? 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(iconData) : iconData;
+                tile.appendChild(img);
+            } else {
+                const fallback = document.createElement('span'); fallback.className = 'text-lg'; fallback.textContent = '◆'; tile.appendChild(fallback);
+            }
+            const label = document.createElement('span'); label.className = 'text-[9px] font-bold text-slate-600 dark:text-slate-300 leading-tight'; label.textContent = prettifyIconName(name); tile.appendChild(label);
+            if (iconSelect.value === name) tile.classList.add('ring-2','ring-blue-500');
+            tile.addEventListener('click', () => {
+                iconSelect.value = name;
+                iconSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                if (typeof window.updateQR === 'function') window.updateQR();
+                closePremiumIcons();
+                syncShell();
+            });
+            premiumGrid.appendChild(tile);
+        });
+    }
+
+    function openPremiumIcons() {
+        if (!isMasterKeyUnlocked()) {
+            if (typeof window.openMasterKeyModal === 'function') window.openMasterKeyModal();
+            return;
+        }
+        renderPremiumIcons();
+        if (premiumOverlay) premiumOverlay.hidden = false;
+        if (premiumModal) premiumModal.hidden = false;
+    }
+    function closePremiumIcons() {
+        if (premiumOverlay) premiumOverlay.hidden = true;
+        if (premiumModal) premiumModal.hidden = true;
+    }
+
+    const moreIcons = byId('btn-more-icons');
+    if (moreIcons) moreIcons.addEventListener('click', openPremiumIcons);
+    if (premiumOverlay) premiumOverlay.addEventListener('click', closePremiumIcons);
+    const premiumClose = byId('premium-icons-close');
+    if (premiumClose) premiumClose.addEventListener('click', closePremiumIcons);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && premiumModal && !premiumModal.hidden) closePremiumIcons(); });
+    if (iconSelect) new MutationObserver(() => { if (premiumModal && !premiumModal.hidden) renderPremiumIcons(); }).observe(iconSelect, { childList: true });
+
+    function syncEntitlementShell() {
+        const tier = userTier();
+        const mkCard = byId('master-key-evolution-card');
+        if (mkCard) mkCard.classList.toggle('hidden', tier !== 'master-key');
+    }
+
+    const mainTitle = byId('main-title');
+    const telemetry = byId('telemetry-dashboard');
+    if (mainTitle) new MutationObserver(syncEntitlementShell).observe(mainTitle, { childList: true, subtree: true });
+    if (telemetry) new MutationObserver(syncEntitlementShell).observe(telemetry, { attributes: true, attributeFilter: ['class'] });
+
+    const history = byId('history-container');
+    if (history) history.addEventListener('click', () => setTimeout(syncShell, 0));
+    const clear = byId('btn-clear');
+    if (clear) clear.addEventListener('click', () => setTimeout(syncShell, 0));
+
+    // Ghost Script calls window.updateQR after adding premium icon data. Preserve OG behavior and then refresh only the shell presentation.
+    if (typeof window.updateQR === 'function') {
+        const ogWindowUpdateQR = window.updateQR;
+        window.updateQR = function(...args) {
+            const result = ogWindowUpdateQR.apply(this, args);
+            syncShell();
+            if (premiumModal && !premiumModal.hidden) renderPremiumIcons();
+            return result;
+        };
+    }
+
+    syncShell();
+});
+</script>
+
 </body>
 </html>
