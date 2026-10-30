@@ -87,7 +87,7 @@
                 </h2>
                 <div class="space-y-4 text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
                     <p>PixelPing is a rebellion against the subscription-hostage model of the modern internet. Most QR code generators let you create a "free" code, secretly make it dynamic, and then break your code a week later unless you pay a surprise $20/month subscription.</p>
-                    <p>We do things differently. <b>PixelPing creates fast, offline-first codes tailored for field operations.</b> By default, our codes are generated 100% locally on your device. They don't use tracking servers, they don't redirect, and they will work forever. Build it once, own it forever.</p>
+                    <p>We do things differently. <b>PixelPing creates fast, offline-first codes tailored for field operations.</b> QR generation happens locally on your device. Paid accounts can also sync saved Recent Codes and brand settings across devices. They don't use tracking servers, they don't redirect, and they will work forever. Build it once, own it forever.</p>
                 </div>
             </section>
 
@@ -188,12 +188,12 @@
                 <div class="space-y-6">
                     <div>
                         <h4 class="text-base font-bold text-slate-900 dark:text-ppLight mb-1">What is the difference between Static and Dynamic?</h4>
-                        <p class="text-sm text-slate-600 dark:text-slate-400"><b>Static (Local)</b> codes are built entirely on your device and are never sent to a server. Because they don't redirect, they can never be tracked or broken. <b>Dynamic</b> codes are saved to our cloud engine, allowing you to update where the code points even after you've printed it. Dynamic codes track scans but require an internet connection.</p>
+                        <p class="text-sm text-slate-600 dark:text-slate-400"><b>Static (Local)</b> codes are generated on your device. Saved Recent Codes can sync to your signed-in paid account; scanning a Static code does not use PixelPing routing servers. Because they don't redirect, they can never be tracked or broken. <b>Dynamic</b> codes are saved to our cloud engine, allowing you to update where the code points even after you've printed it. Dynamic codes track scans but require an internet connection.</p>
                     </div>
 
                     <div>
                         <h4 class="text-base font-bold text-slate-900 dark:text-ppLight mb-1">Does this app collect my data?</h4>
-                        <p class="text-sm text-slate-600 dark:text-slate-400">No. If you generate a Static code, your payloads and settings stay strictly on your local device. We only store data when you explicitly choose to create a Dynamic link so we know where to route the traffic.</p>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">Static QR generation happens on your device. With Master Key or Evolution, Recent Codes added by saving, downloading, or printing, and your saved brand kit, sync to your signed-in account so they are available on another device. Saved code contents can include contact details or Wi-Fi passwords. Local copies remain available offline and pending saves sync when you reconnect and sign in to the same account. Dynamic links and their destinations are stored online for routing. Your unfinished canvas is not synced.</p>
                     </div>
 
                     <div>
@@ -221,7 +221,7 @@
         <div class="text-[11px] text-slate-400 dark:text-slate-500 mb-1">
             Built by <a href="https://machinolabs.com" target="_blank" class="hover:text-ppBlue transition-colors">MachinoLabs</a> • <a href="https://machinolabs.com" target="_blank" class="hover:text-ppBlue transition-colors">machinolabs.com</a> • <a href="https://stupidsimplecrazyfast.com" target="_blank" class="hover:text-ppBlue transition-colors">stupidsimplecrazyfast.com</a>
             <br>
-            Joe • 717.623.2907
+            Joe • <a href="mailto:support@senditin.app">support@senditin.app</a>
         </div>
     </div>
 
@@ -262,6 +262,66 @@ if (localStorage.getItem('theme') === 'dark') {
             });
         }
     });
+</script>
+<!-- PixelPing tab return navigation -->
+<script data-page="secondary">
+(() => {
+    // Coordinate only these same-origin pages; never share account or QR data.
+    const pages = new Set(['admin.html', 'help.html', 'manual.html']);
+    const generator = document.currentScript.dataset.page === 'generator';
+    const returnId = generator ? crypto.randomUUID() : new URL(location.href).searchParams.get('ppReturn');
+    let channel;
+    try { if (returnId && /^[a-f0-9-]{36}$/i.test(returnId)) channel = new BroadcastChannel('pixelping-return-' + returnId); } catch (_) {}
+    let pending = null;
+    if (channel) channel.onmessage = ({data}) => {
+        if (!data || typeof data.request !== 'string') return;
+        if (generator && data.type === 'return') {
+            window.focus();
+            setTimeout(() => channel.postMessage({type: 'ready', request: data.request, focused: document.hasFocus()}), 100);
+        } else if (!generator && data.type === 'ready' && pending?.request === data.request) {
+            clearTimeout(pending.timer);
+            const link = pending.link; pending = null;
+            if (data.focused) window.close();
+            if (!window.closed) showReturnHint(link);
+        }
+    };
+    function showReturnHint(link) {
+        let hint = document.getElementById('pixelping-return-hint');
+        if (!hint) {
+            hint = document.createElement('span'); hint.id = 'pixelping-return-hint';
+            hint.setAttribute('role', 'status');
+            hint.className = 'block text-xs text-slate-600 dark:text-slate-300 mt-2';
+            link.insertAdjacentElement('afterend', hint);
+        }
+        hint.textContent = 'Your generator is still open. Switch to its tab; you can close this tab.';
+    }
+    function prepareLink(link) {
+        const url = new URL(link.getAttribute('href'), location.href);
+        if (url.origin !== location.origin || !pages.has(url.pathname.split('/').pop())) return;
+        link.target = '_blank'; link.rel = 'noopener';
+        if (channel) { url.searchParams.set('ppReturn', returnId); link.href = url.href; }
+    }
+    document.querySelectorAll('a[href]').forEach(prepareLink);
+    document.addEventListener('click', event => {
+        const link = event.target.closest('a[href]');
+        if (!link) return;
+        prepareLink(link);
+        if (generator || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        const url = new URL(link.href, location.href);
+        if (url.origin !== location.origin || !['/', '/index.html'].includes(url.pathname)) return;
+        if (!channel) return; // Direct entry or unsupported browser: normal same-tab link.
+        event.preventDefault();
+        if (pending) return;
+        const request = crypto.randomUUID();
+        const timer = setTimeout(() => {
+            pending = null;
+            // Original generator was closed or reloaded: use this tab.
+            location.assign(url.href);
+        }, 1800);
+        pending = {request, timer, link};
+        channel.postMessage({type: 'return', request});
+    });
+})();
 </script>
 </body>
 </html>

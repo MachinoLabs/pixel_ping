@@ -1,0 +1,177 @@
+/* PixelPing button roles. Color identifies purpose; outlines identify selection.
+   Text labels, checkmarks, ARIA state and existing handlers retain their meaning. */
+#recent-heading { color: var(--pp-navy); }
+.dark #recent-heading { color: #E2E8F0; }
+.pp-library-tab {
+    min-height: 34px; padding: 6px 10px; border: 1px solid #B7C4CF;
+    border-radius: 7px; background: #EEF2F5; color: #17324D;
+    font-weight: 800; font-size: 12px; line-height: 1.4;
+}
+#tab-my-codes { background: #4F7A68; border-color: #4F7A68; color: #FFFFFF; }
+#tab-my-codes:hover { background: #3C6355; }
+#tab-recent:hover { background: #E2E8F0; }
+.pp-library-tab[aria-selected="true"] { box-shadow: 0 0 0 2px #17324D; }
+.dark .pp-library-tab { background: #243E52; color: #E2E8F0; border-color: #638095; }
+.dark #tab-my-codes { background: #4F7A68; border-color: #4F7A68; color: #FFFFFF; }
+.dark #tab-my-codes:hover { background: #3C6355; }
+.dark #tab-recent:hover { background: #334155; }
+.dark .pp-library-tab[aria-selected="true"] { box-shadow: 0 0 0 2px #E2E8F0; }
+.pp-library-tab:focus-visible { outline: 3px solid #3F7C78; outline-offset: 4px; }
+.dark .pp-library-tab:focus-visible { outline-color: #A8D1C7; }
+
+.pp-code-type {
+    display: inline-block; padding: 1px 6px; border: 1px solid #B7C4CF;
+    border-radius: 5px; font-size: 10px; font-weight: 800; line-height: 1.5;
+    white-space: nowrap; vertical-align: baseline;
+}
+.pp-type-static { background: #EEF2F5; color: #17324D; }
+.pp-type-dynamic { background: #E7F0EE; color: #215B56; border-color: #A5C6BA; }
+.dark .pp-type-static { background: #243E52; color: #E2E8F0; border-color: #638095; }
+.dark .pp-type-dynamic { background: #25473F; color: #D6EEE5; border-color: #638B79; }
+.pp-code-metadata { font-weight: 400; }
+
+#btn-main-action[data-route-state="activated"]:not(.bg-yellow-500),
+#btn-main-action[data-route-state="activated"]:not(.bg-yellow-500):hover {
+    background: #E7F0EE; color: #215B56; box-shadow: inset 0 0 0 1px #A5C6BA;
+    cursor: default;
+}
+.dark #btn-main-action[data-route-state="activated"]:not(.bg-yellow-500),
+.dark #btn-main-action[data-route-state="activated"]:not(.bg-yellow-500):hover {
+    background: #25473F; color: #D6EEE5; box-shadow: inset 0 0 0 1px #638B79;
+}
+#btn-save-as-new { color: #215B56; }
+.dark #btn-save-as-new { color: #A8D1C7; }
+.pp-action-link, #btn-check-route, #codes-refresh, #codes-retry, #notifications-mark-read {
+    color: #17324D;
+}
+.dark .pp-action-link, .dark #btn-check-route, .dark #codes-refresh,
+.dark #codes-retry, .dark #notifications-mark-read { color: #D9E6EF; }
+.pp-action-link:hover { text-decoration: underline; }
+.pp-action-link.pp-action-danger, #codes-discard, #btn-clear-history { color: #B91C1C; }
+.dark .pp-action-link.pp-action-danger, .dark #codes-discard,
+.dark #btn-clear-history { color: #FCA5A5; }
+#codes-help { min-width: 28px; min-height: 28px; border-radius: 6px; color: #17324D; }
+#codes-help:hover { background: #E2E8F0; }
+.dark #codes-help { color: #D9E6EF; }
+.dark #codes-help:hover { background: #334155; }
+
+#codes-dialog .pp-dialog-action {
+    padding: 8px 12px; border: 1px solid transparent; border-radius: 8px;
+    font-size: 14px; font-weight: 700;
+}
+#codes-dialog .pp-dialog-save { background: #4F7A68; color: #FFFFFF; }
+#codes-dialog .pp-dialog-save:hover { background: #3C6355; }
+#codes-dialog .pp-dialog-ordinary { background: #17324D; color: #FFFFFF; }
+#codes-dialog .pp-dialog-ordinary:hover { background: #244864; }
+#codes-dialog .pp-dialog-neutral { background: #F6F7F9; color: #17324D; border-color: #B7C4CF; }
+#codes-dialog .pp-dialog-neutral:hover { background: #E2E8F0; }
+#codes-dialog .pp-dialog-danger { background: #FEF2F2; color: #B91C1C; border-color: #FCA5A5; }
+#codes-dialog .pp-dialog-danger:hover { background: #FEE2E2; }
+.dark #codes-dialog .pp-dialog-neutral { background: #243E52; color: #E2E8F0; border-color: #638095; }
+.dark #codes-dialog .pp-dialog-neutral:hover { background: #334155; }
+.dark #codes-dialog .pp-dialog-danger { background: #451A1A; color: #FCA5A5; border-color: #B75A5A; }
+.dark #codes-dialog .pp-dialog-danger:hover { background: #5B2222; }
+#codes-dialog .pp-dialog-action:focus-visible { outline: 3px solid #3F7C78; outline-offset: 3px; }
+.dark #codes-dialog .pp-dialog-action:focus-visible { outline-color: #A8D1C7; }
+
+/* Existing Command Center saves follow the same roles. No route actions change. */
+#saveEditBtn, #saveActionBtn, #saveDomainBtn { background: #4F7A68; color: #FFFFFF; }
+#saveEditBtn:hover, #saveActionBtn:hover, #saveDomainBtn:hover { background: #3C6355; }
+#verifyDomainAgain { background: #17324D; color: #FFFFFF; }
+#verifyDomainAgain:hover { background: #244864; }
+
+/* Batch 61: scoped help and library surfaces; existing button colors retained. */
+.pp-help-bubble { display:inline-flex; align-items:center; min-height:32px; min-width:32px; padding:3px 6px; border-radius:6px; color:#17324D; font-size:12px; font-weight:600; vertical-align:middle; }
+.pp-help-bubble:hover { background:#E2E8F0; }
+.pp-help-row { display:flex; justify-content:flex-end; flex-wrap:wrap; gap:6px; margin-top:4px; }
+.pp-help-dialog, .pp-library-dialog { box-sizing:border-box; margin:auto; padding:24px; width:calc(100% - 32px); max-width:520px; max-height:85dvh; overflow:auto; border:1px solid #B7C4CF; border-radius:20px; background:#F8FAFC; color:#17324D; box-shadow:0 20px 60px #0003; }
+.pp-help-dialog::backdrop, .pp-library-dialog::backdrop { background:#0007; }
+.pp-help-dialog h2, .pp-library-header h2 { font-size:20px; font-weight:800; line-height:1.3; }
+.pp-help-dialog p { white-space:pre-line; margin:16px 0; line-height:1.6; font-size:14px; }
+.pp-help-dialog label { display:block; font-size:13px; font-weight:700; }
+.pp-help-dialog input, .pp-library-tools input, .pp-library-tools select { box-sizing:border-box; display:block; width:100%; background:#fff; color:#17324D; border:1px solid #B7C4CF; border-radius:8px; padding:10px; margin-top:5px; font-size:14px; }
+.pp-help-dialog [hidden], .pp-library-dialog [hidden] { display:none !important; }
+.pp-help-actions { display:flex; flex-wrap:wrap; justify-content:flex-end; gap:8px; }
+:is(.pp-help-dialog,.pp-library-dialog,.pp-library-entry) .pp-dialog-action { padding:9px 12px; border:1px solid transparent; border-radius:8px; font-size:13px; font-weight:700; min-height:40px; }
+:is(.pp-help-dialog,.pp-library-dialog,.pp-library-entry) .pp-dialog-save { background:#4F7A68; color:#fff; }
+:is(.pp-help-dialog,.pp-library-dialog) .pp-dialog-ordinary { background:#17324D; color:#fff; }
+:is(.pp-help-dialog,.pp-library-dialog) .pp-dialog-neutral { background:#EEF2F5; color:#17324D; border-color:#B7C4CF; }
+:is(.pp-help-dialog,.pp-library-dialog) .pp-dialog-danger { background:#FEF2F2; color:#B91C1C; border-color:#FCA5A5; }
+.pp-library-entry, .pp-library-header { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:12px; }
+.pp-library-entry { padding:20px; border:1px solid #B7C4CF; border-radius:16px; background:#fff; }
+.pp-library-dialog { max-width:1000px; height:min(85dvh,760px); }
+.pp-library-dialog[open] { display:flex; flex-direction:column; }
+.pp-library-dialog > :not(.pp-library-list) { flex-shrink:0; }
+.pp-library-dialog .pp-library-list { flex:1; min-height:0; overflow-y:auto; align-content:start; padding:3px; }
+.pp-library-description, #library-status, #library-feedback { font-size:13px; margin:12px 0; }
+.pp-library-tools { display:flex; flex-wrap:wrap; align-items:flex-end; gap:12px; margin:12px 0; }
+.pp-library-tools label { flex:1 1 180px; font-size:12px; font-weight:700; }
+.pp-library-list { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr)); gap:12px; }
+.pp-library-card { padding:14px; border:1px solid #B7C4CF; border-radius:12px; background:#fff; overflow-wrap:anywhere; min-width:0; }
+.pp-library-card h3 { font-size:15px; font-weight:700; }
+.pp-library-card p { font-size:12px; margin:8px 0; }
+.pp-library-actions { display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-top:12px; }
+.pp-library-actions .pp-action-link { min-height:36px; padding:4px; font-size:12px; font-weight:700; }
+.pp-help-bubble:focus-visible, :is(.pp-help-dialog,.pp-library-dialog,.pp-library-entry) :is(button,input,select):focus-visible { outline:3px solid #3F7C78; outline-offset:3px; }
+.dark .pp-help-bubble { color:#D9E6EF; }
+.dark .pp-help-bubble:hover { background:#334155; }
+.dark :is(.pp-help-dialog,.pp-library-dialog,.pp-library-entry,.pp-library-card) { background:#172B3D; color:#E2E8F0; border-color:#638095; }
+.dark :is(.pp-help-dialog input,.pp-library-tools input,.pp-library-tools select) { background:#243E52; color:#E2E8F0; border-color:#638095; }
+.dark :is(.pp-help-dialog,.pp-library-dialog) .pp-dialog-neutral { background:#243E52; color:#E2E8F0; border-color:#638095; }
+.dark :is(.pp-help-dialog,.pp-library-dialog) .pp-dialog-danger { background:#451A1A; color:#FCA5A5; border-color:#B75A5A; }
+.dark :is(.pp-help-dialog,.pp-library-dialog,.pp-library-entry) :focus-visible { outline-color:#A8D1C7; }
+@media(max-width:480px) { .pp-help-dialog,.pp-library-dialog { padding:16px; } .pp-library-entry { padding:16px; } }
+
+/* Route-card saving follows the existing green save role. */
+.pp-route-save { background:#4F7A68; color:#fff; border-radius:7px; padding:7px 9px; min-height:36px; }
+.pp-route-save:hover { background:#3C6355; }
+.pp-route-save:focus-visible { outline:3px solid #3F7C78; outline-offset:3px; }
+.dark .pp-route-save:focus-visible { outline-color:#A8D1C7; }
+
+/* Versioned Terms surface, scoped to the new dialog. */
+/* Compact checkout agreement; signup uses Clerk's native checkbox. */
+.pp-policy-links { margin:12px 0 0; font-size:12px; line-height:1.6; color:#526577; }
+.pp-policy-links a { color:inherit; text-decoration:underline; text-underline-offset:3px; }
+.dark .pp-policy-links { color:#B7C4CF; }
+.pp-terms-dialog { box-sizing:border-box; margin:auto; padding:18px; width:calc(100% - 32px); max-width:420px; max-height:85dvh; overflow:auto; border:1px solid #B7C4CF; border-radius:12px; background:#F8FAFC; color:#17324D; }
+.pp-terms-dialog::backdrop { background:#0006; }
+.pp-terms-dialog h2 { margin:0; font-size:18px; line-height:1.35; font-weight:700; }
+.pp-terms-dialog p { font-size:13px; line-height:1.5; margin:10px 0; }
+.pp-terms-dialog a { color:#215B56; text-decoration:underline; text-underline-offset:2px; font-weight:600; }
+.pp-terms-dialog label { display:flex; align-items:flex-start; gap:9px; padding:10px 0; font-size:13px; line-height:1.6; cursor:pointer; }
+.pp-terms-dialog input[type=checkbox] { width:16px; height:16px; flex-shrink:0; margin:3px 0 0; accent-color:#4F7A68; }
+.pp-terms-dialog .pp-help-actions { display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; margin-top:12px; }
+.pp-terms-dialog .pp-dialog-action { padding:8px 10px; border:1px solid #B7C4CF; border-radius:7px; font-size:13px; font-weight:600; }
+.pp-terms-dialog .pp-dialog-save { background:#4F7A68; color:#fff; border-color:#4F7A68; }
+.pp-terms-dialog .pp-dialog-neutral { background:#EEF2F5; color:#17324D; }
+.pp-terms-dialog button:disabled { opacity:.55; cursor:not-allowed; }
+.pp-terms-dialog .pp-terms-error { color:#B91C1C; }
+.pp-terms-dialog .pp-terms-error:empty { display:none; }
+.pp-terms-dialog :focus-visible { outline:3px solid #3F7C78; outline-offset:3px; }
+.dark .pp-terms-dialog { background:#172B3D; color:#E2E8F0; border-color:#638095; }
+.dark .pp-terms-dialog a { color:#A8D1C7; }
+.dark .pp-terms-dialog .pp-dialog-neutral { background:#243E52; color:#E2E8F0; border-color:#638095; }
+.dark .pp-terms-dialog .pp-terms-error { color:#FCA5A5; }
+
+/* An unavailable route cannot be activated; show the actual disabled state. */
+#btn-main-action[data-route-state="unavailable"]:not(.bg-yellow-500),
+#btn-main-action[data-route-state="unavailable"]:not(.bg-yellow-500):hover {
+ background:#E2E8F0; color:#475569; border-color:#CBD5E1; box-shadow:none; cursor:not-allowed;
+}
+.dark #btn-main-action[data-route-state="unavailable"]:not(.bg-yellow-500),
+.dark #btn-main-action[data-route-state="unavailable"]:not(.bg-yellow-500):hover { background:#334155; color:#CBD5E1; border-color:#64748B; }
+
+#recovery-inventory-dialog { width:min(92vw,760px); max-width:760px; max-height:85dvh; overflow-y:auto; }
+.pp-inventory-list { list-style:none; margin:12px 0; padding:0; }
+.pp-inventory-list li { display:flex; flex-wrap:wrap; gap:6px 16px; justify-content:space-between; border-bottom:1px solid #CBD5E1; padding:10px 0; overflow-wrap:anywhere; }
+.pp-inventory-list span { font-family:monospace; font-size:12px; }
+#route-pagination[hidden] { display:none; }
+#route-pagination button:disabled { opacity:.5; cursor:default; }
+
+#route-pagination .pp-dialog-action, #inventory-open {
+ padding:8px 12px; border:1px solid #17324D; border-radius:8px; background:#17324D; color:#fff; font-size:13px; font-weight:700;
+}
+#route-pagination .pp-dialog-action:not(:disabled):hover, #inventory-open:hover {background:#244864;}
+#recovery-inventory-dialog[open] {display:flex;flex-direction:column;overflow:hidden;}
+#recovery-inventory-dialog .pp-inventory-list {overflow-y:auto;min-height:0;flex:1;}
+#recovery-inventory-dialog > :not(.pp-inventory-list) {flex-shrink:0;}

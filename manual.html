@@ -152,7 +152,7 @@
            <!-- Section: Guerrilla Arsenal -->
 <section id="guerrilla-plays" class="bg-white dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 sm:p-8 rounded-2xl shadow-xl scroll-mt-8 relative">
     <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-3">
-        <span>🎯</span> The 50-Play Guerrilla Arsenal
+        <span>🎯</span> The Guerrilla Arsenal — More than 50 Preset Plays Included
     </h2>
     
     <!-- Unlocked Plays -->
@@ -166,7 +166,7 @@
         <div class="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5">
             <h4 class="font-bold text-slate-900 dark:text-white mb-2">The Offline Survival Cache</h4>
             <p class="text-xs text-slate-600 dark:text-slate-400 mb-3"><span class="font-semibold text-ppBlue">Niche:</span> Outdoors, Industrial</p>
-            <p class="text-sm text-slate-600 dark:text-slate-300">Use the Zero-Friction Core to generate a Text Payload containing offline rendezvous coordinates or emergency info for dead zones.</p>
+            <p class="text-sm text-slate-600 dark:text-slate-300">Use Nomad — Free Forever to generate a Text Payload containing offline rendezvous coordinates or emergency info for dead zones.</p>
         </div>
     </div>
 
@@ -193,16 +193,16 @@
                 
                 <div class="row-form">
                     <div class="text-center mb-6">
-                        <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Unlock the Full 50-Play Arsenal</h4>
-                        <p class="text-sm text-slate-600 dark:text-slate-400">Drop your email to download the complete 16-page PDF playbook.</p>
+                        <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Unlock the Full 51-Play Arsenal</h4>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">Drop your email to download the complete manifesto and 51-play guide.</p>
                     </div>
 
-                    <form class="ml-block-form w-full" action="https://assets.mailerlite.com/jsonp/2606711/forms/197319855177729206/subscribe" data-code="" method="post" target="_blank">
+                    <form class="ml-block-form w-full" action="#" onsubmit="return false" data-code="" method="post" target="_blank">
                         <div class="mb-4">
                             <input aria-label="email" aria-required="true" type="email" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-ppBlue" data-inputmask="" name="fields[email]" placeholder="Enter your email address" autocomplete="email">
                         </div>
                         <input type="hidden" name="ml-submit" value="1">
-                        <button type="submit" class="primary w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold py-3 px-4 rounded-lg hover:bg-ppBlue dark:hover:bg-ppBlue dark:hover:text-white transition-colors">Download the PDF</button>
+                        <button disabled title="Unavailable in staging" type="submit" class="primary w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold py-3 px-4 rounded-lg hover:bg-ppBlue dark:hover:bg-ppBlue dark:hover:text-white transition-colors">Download the PDF</button>
                         <button disabled="disabled" style="display: none;" type="button" class="loading w-full bg-slate-400 text-white font-bold py-3 px-4 rounded-lg cursor-not-allowed">
                             Loading...
                         </button>
@@ -236,7 +236,7 @@
                     </div>
                     <div class="border-l-4 border-ppBlue pl-4">
                         <h4 class="font-bold text-slate-900 dark:text-white mb-1">3. The Error Correction Trade-Off</h4>
-                        <p class="text-sm text-slate-600 dark:text-slate-300">Packing massive amounts of data into a code lowers its built-in error correction, making it fragile[cite: 2]. For dirty or outdoor environments, keep text payloads short (under 150 words) to ensure high error-correction[cite: 2].</p>
+                        <p class="text-sm text-slate-600 dark:text-slate-300">More data creates a denser QR code that can be harder to scan at a small print size. Keep the content concise, preserve a clear margin, and test the finished print in its actual lighting and location.</p>
                     </div>
                 </div>
             </section>
@@ -262,10 +262,8 @@
             $('.ml-subscribe-form-45398377 .row-form').hide();
         }
     </script>
-    <script src="https://groot.mailerlite.com/js/w/webforms.min.js?v83147fa8ce2d95cb73ece7f28b469519" type="text/javascript"></script>
-    <script>
-        fetch("https://assets.mailerlite.com/jsonp/2606711/forms/197319855177729206/takel")
-    </script>
+    
+    
 
     <!-- Theme Toggle Script -->
     <script>
@@ -297,5 +295,65 @@
             }
         });
     </script>
+<!-- PixelPing tab return navigation -->
+<script data-page="secondary">
+(() => {
+    // Coordinate only these same-origin pages; never share account or QR data.
+    const pages = new Set(['admin.html', 'help.html', 'manual.html']);
+    const generator = document.currentScript.dataset.page === 'generator';
+    const returnId = generator ? crypto.randomUUID() : new URL(location.href).searchParams.get('ppReturn');
+    let channel;
+    try { if (returnId && /^[a-f0-9-]{36}$/i.test(returnId)) channel = new BroadcastChannel('pixelping-return-' + returnId); } catch (_) {}
+    let pending = null;
+    if (channel) channel.onmessage = ({data}) => {
+        if (!data || typeof data.request !== 'string') return;
+        if (generator && data.type === 'return') {
+            window.focus();
+            setTimeout(() => channel.postMessage({type: 'ready', request: data.request, focused: document.hasFocus()}), 100);
+        } else if (!generator && data.type === 'ready' && pending?.request === data.request) {
+            clearTimeout(pending.timer);
+            const link = pending.link; pending = null;
+            if (data.focused) window.close();
+            if (!window.closed) showReturnHint(link);
+        }
+    };
+    function showReturnHint(link) {
+        let hint = document.getElementById('pixelping-return-hint');
+        if (!hint) {
+            hint = document.createElement('span'); hint.id = 'pixelping-return-hint';
+            hint.setAttribute('role', 'status');
+            hint.className = 'block text-xs text-slate-600 dark:text-slate-300 mt-2';
+            link.insertAdjacentElement('afterend', hint);
+        }
+        hint.textContent = 'Your generator is still open. Switch to its tab; you can close this tab.';
+    }
+    function prepareLink(link) {
+        const url = new URL(link.getAttribute('href'), location.href);
+        if (url.origin !== location.origin || !pages.has(url.pathname.split('/').pop())) return;
+        link.target = '_blank'; link.rel = 'noopener';
+        if (channel) { url.searchParams.set('ppReturn', returnId); link.href = url.href; }
+    }
+    document.querySelectorAll('a[href]').forEach(prepareLink);
+    document.addEventListener('click', event => {
+        const link = event.target.closest('a[href]');
+        if (!link) return;
+        prepareLink(link);
+        if (generator || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        const url = new URL(link.href, location.href);
+        if (url.origin !== location.origin || !['/', '/index.html'].includes(url.pathname)) return;
+        if (!channel) return; // Direct entry or unsupported browser: normal same-tab link.
+        event.preventDefault();
+        if (pending) return;
+        const request = crypto.randomUUID();
+        const timer = setTimeout(() => {
+            pending = null;
+            // Original generator was closed or reloaded: use this tab.
+            location.assign(url.href);
+        }, 1800);
+        pending = {request, timer, link};
+        channel.postMessage({type: 'return', request});
+    });
+})();
+</script>
 </body>
 </html>
