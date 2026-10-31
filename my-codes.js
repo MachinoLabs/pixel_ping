@@ -104,20 +104,7 @@ window.addEventListener('DOMContentLoaded',()=>{
   }catch{/* Existing account data remains visible when status lookup fails. */}finally{clearTimeout(timer);if(run===routeRun&&owner===lib.owner())render()}
  }
  function button(label,fn){const b=document.createElement('button');b.type='button';b.className='pp-action-link text-xs font-bold underline';if(label==='Delete Saved Design')b.className+=' pp-action-danger';b.textContent=label;b.addEventListener('click',()=>Promise.resolve(fn()).catch(error));return b}
- // Retain the library's occupied height so tab/list changes cannot collapse
- // the page beneath the sticky preview. Re-measure at a new viewport width.
- let libraryWidth=0,libraryHeight=0;
- function retainLibraryHeight(){
-  const panel=$('history-container');
-  if(!panel)return;
-  const width=panel.getBoundingClientRect().width;
-  if(!width)return;
-  if(Math.abs(width-libraryWidth)>1){libraryWidth=width;libraryHeight=0;panel.style.minHeight=''}
-  libraryHeight=Math.max(libraryHeight,Math.ceil(panel.getBoundingClientRect().height));
-  panel.style.minHeight=libraryHeight+'px';
- }
  function render(){
-  retainLibraryHeight();
   const owner=lib.owner();if(opened&&opened.owner!==owner){opened=null;baseline='';suggested=''}
   const items=lib.items();
   if(opened?.item.pending){const ack=items.find(x=>x.id===opened.item.id&&!x.pending);if(ack)opened.item={...ack}}
@@ -147,9 +134,8 @@ window.addEventListener('DOMContentLoaded',()=>{
    $('codes-list').append(li);
   }
   if(!$('codes-list').children.length){const li=document.createElement('li');li.className='text-xs text-slate-600 dark:text-slate-300 py-3';li.textContent=owner?(items.length?'No matching saved designs.':'No saved designs yet. Use Save to My Codes to keep one.'):'Sign in to view your saved designs.';$('codes-list').append(li)}
-  retainLibraryHeight();
  }
- function tab(name){if(selectedTab===name)return;retainLibraryHeight();selectedTab=name;const my=name==='codes';$('history-content').hidden=my;$('workspace-sync-status').hidden=my;$('btn-clear-history').hidden=my;$('my-codes-panel').hidden=!my;$('recent-heading').textContent=my?'My Codes — Saved Designs':'Recent Codes — Last 5';$('tab-recent').setAttribute('aria-selected',String(!my));$('tab-my-codes').setAttribute('aria-selected',String(my));$('tab-recent').tabIndex=my?-1:0;$('tab-my-codes').tabIndex=my?0:-1;if(my){lib.sync();checkStatuses();const key='pixelping-my-codes-help-v1:'+lib.owner();let seen=false;try{seen=Boolean(localStorage.getItem(key))}catch{}if(lib.owner()&&!seen){help().then(()=>{try{localStorage.setItem(key,'seen')}catch{}})}}render()}
+ function tab(name){if(selectedTab===name)return;selectedTab=name;const my=name==='codes';$('history-content').hidden=my;$('workspace-sync-status').hidden=my;$('btn-clear-history').hidden=my;$('my-codes-panel').hidden=!my;$('recent-heading').textContent=my?'My Codes — Saved Designs':'Recent Codes — Last 5';$('tab-recent').setAttribute('aria-selected',String(!my));$('tab-my-codes').setAttribute('aria-selected',String(my));$('tab-recent').tabIndex=my?-1:0;$('tab-my-codes').tabIndex=my?0:-1;if(my){lib.sync();checkStatuses();const key='pixelping-my-codes-help-v1:'+lib.owner();let seen=false;try{seen=Boolean(localStorage.getItem(key))}catch{}if(lib.owner()&&!seen){help().then(()=>{try{localStorage.setItem(key,'seen')}catch{}})}}render()}
  $('tab-recent').addEventListener('click',()=>tab('recent'));$('tab-my-codes').addEventListener('click',()=>tab('codes'));
  for(const id of ['tab-recent','tab-my-codes'])$(id).addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();const my=e.key==='End'||e.key!=='Home'&&selectedTab==='recent';tab(my?'codes':'recent');$(my?'tab-my-codes':'tab-recent').focus()}});
  $('codes-search').addEventListener('input',render);$('codes-help').addEventListener('click',help);
