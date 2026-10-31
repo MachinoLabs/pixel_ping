@@ -91,6 +91,7 @@ window.addEventListener('DOMContentLoaded',()=>{
  async function checkStatuses(){
   const owner=window.Clerk?.user?.id,session=window.Clerk?.session,run=++routeRun;routeStates=new Map();checkedOwner=owner;
   if(!owner||!window.pixelPingHasEvolution?.()){render();return}
+  for(const item of lib.items()){const route=item.state.route;if(route)routeStates.set(route.slug,'Checking route…')}
   let timer;
   try{
    const token=await Promise.race([session.getToken(),new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('Status check timed out.')),10000)})]);clearTimeout(timer);if(!token)return;
@@ -100,8 +101,8 @@ window.addEventListener('DOMContentLoaded',()=>{
    if(run!==routeRun||owner!==lib.owner()||sessionKey(window.Clerk?.session)!==sessionKey(session))return;
    for(const x of data[0]?.links||[])routeStates.set(x.slug,'Route active');for(const x of data[1]?.actions||[])routeStates.set(x.slug,'Route active');
    // Only a successful owned-list response can establish that a draft has no live route.
-   for(const item of lib.items()){const route=item.state.route;if(route&&!routeStates.has(route.slug)){const index=route.kind==='link'?0:1;const known=Array.isArray(index===0?data[index]?.links:data[index]?.actions);routeStates.set(route.slug,known&&!route.activated?'Not activated':'Unavailable')}}
-  }catch{/* Existing account data remains visible when status lookup fails. */}finally{clearTimeout(timer);if(run===routeRun&&owner===lib.owner())render()}
+   for(const item of lib.items()){const route=item.state.route;if(route&&routeStates.get(route.slug)!=='Route active'){const index=route.kind==='link'?0:1;const known=Array.isArray(index===0?data[index]?.links:data[index]?.actions);routeStates.set(route.slug,known&&!route.activated?'Not activated':'Unavailable')}}
+  }catch{/* Existing account data remains visible when status lookup fails. */}finally{clearTimeout(timer);if(run===routeRun&&owner===lib.owner()&&sessionKey(window.Clerk?.session)===sessionKey(session)){for(const [slug,status] of routeStates){if(status==='Checking route…')routeStates.set(slug,'Unavailable')}render()}}
  }
  function button(label,fn){const b=document.createElement('button');b.type='button';b.className='pp-action-link text-xs font-bold underline';if(label==='Delete Saved Design')b.className+=' pp-action-danger';b.textContent=label;b.addEventListener('click',()=>Promise.resolve(fn()).catch(error));return b}
  function render(){
@@ -119,7 +120,7 @@ window.addEventListener('DOMContentLoaded',()=>{
    const details=document.createElement('p');details.className='text-xs text-slate-600 dark:text-slate-300 break-words';
    const dynamic=item.state.mode==='dynamic';const verified=checkedOwner===owner?routeStates.get(item.state.route?.slug):null;
    const badge=document.createElement('span');badge.className='pp-code-type '+(dynamic?'pp-type-dynamic':'pp-type-static');badge.textContent=dynamic?'Dynamic':'Static';
-   const status=document.createElement('span');status.className='pp-code-metadata';status.textContent=`${dynamic?' · '+(verified||'Unavailable — status not checked'):''} · Updated ${new Date(item.updatedAt).toLocaleDateString()}${item.pending?' · Sync pending':''}`;details.append(badge,status);
+   const status=document.createElement('span');status.className='pp-code-metadata';status.textContent=`${dynamic?' · '+(verified||'Status not checked'):''} · Updated ${new Date(item.updatedAt).toLocaleDateString()}${item.pending?' · Sync pending':''}`;details.append(badge,status);
    const dest=document.createElement('p');dest.className='text-xs truncate';dest.textContent=destination(item.state);dest.title=dest.textContent;
    const controls=document.createElement('div');controls.className='flex gap-3 mt-2';const open=button('Open',()=>openDesign(item));open.title='Open in Canvas';open.setAttribute('aria-label',`Open in Canvas: ${item.name}`);controls.append(open);
    const more=document.createElement('details');const summary=document.createElement('summary');summary.textContent='More actions';summary.className='text-xs cursor-pointer';more.append(summary);
@@ -127,7 +128,7 @@ window.addEventListener('DOMContentLoaded',()=>{
    actions.append(button('Rename',async()=>{if(!lib.paid()){window.openMasterKeyModal?.();return}const actionOwner=lib.owner();const answer=await ask({title:'Rename saved design',message:'The QR and its live destination will stay the same.',name:item.name,choices:[['save','Rename','ordinary'],['cancel','Cancel']]});if(answer.action==='save'&&lib.owner()===actionOwner){const owner=lib.owner();await lib.change('rename',{item,name:answer.value});if(opened?.item.id===item.id&&opened.owner===owner&&opened.item.revision===item.revision){const updated=lib.items().find(x=>x.id===item.id);if(updated)opened.item={...updated}}render()}}),button('Duplicate',()=>openDesign(item,true)),button('Delete Saved Design',async()=>{if(!lib.paid()){window.openMasterKeyModal?.();return}const actionOwner=lib.owner();const answer=await ask({title:'Delete saved design?',message:`Delete “${item.name}” from My Codes?\n\nThis removes only the saved design from My Codes. It does not delete or deactivate its dynamic route; any active QR keeps working.`,choices:[['cancel','Cancel'],['delete','Delete Saved Design']]});if(answer.action==='delete'&&lib.owner()===actionOwner){await lib.change('delete',{item});if(opened?.item.id===item.id){opened=null;baseline=''}render()}}));
    if(window.pixelPingHelp)actions.append(window.pixelPingHelp.bubble('duplicate'),window.pixelPingHelp.bubble('delete'));
    more.append(actions);controls.append(more);li.append(name,details,dest,controls);
-   if(dynamic&&(!verified||verified==='Unavailable')){
+   if(dynamic&&verified==='Unavailable'){
     const info=document.createElement('p');info.className='text-xs text-slate-600 dark:text-slate-300 mt-2';info.textContent='Design retained. Refresh to check the route. If it was deleted, Duplicate creates a new QR that needs activation and new printed copies.';
     li.append(info,button('Route help',async()=>{const actionOwner=lib.owner(),session=window.Clerk?.session;const a=await ask({title:'Route unavailable — design retained',message:'A connection or account problem can prevent a status check. Refresh this page, then click Sync and try again. If needed, sign in again. If the route was deleted, it cannot be reactivated. You can duplicate this saved design into a new QR, activate it, then download and replace old printed copies.',choices:[['cancel','Close'],['duplicate','Duplicate into New QR']]});if(a.action==='duplicate'&&lib.owner()===actionOwner&&sessionKey(window.Clerk?.session)===sessionKey(session))await openDesign(item,true)}));
    }
@@ -206,3 +207,4 @@ window.addEventListener('DOMContentLoaded',()=>{
  window.dispatchEvent(new Event('pixelping:canvas-controls-ready'));
  render();lib.sync();receiveLibraryDesign();
 });
+
