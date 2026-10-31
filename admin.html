@@ -255,7 +255,7 @@
         <div class="pp-modal-inner relative">
             <button id="closeEditBtn" aria-label="Close destination editor" class="absolute top-4 right-4 text-slate-500 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white">✕</button>
             <h2 class="text-xl font-bold mb-1">Reroute Link</h2>
-            <p class="text-xs text-slate-600 dark:text-slate-300 mb-6 font-mono" id="edit-slug-display">pixelping-worker.amateuraiguy.workers.dev/---</p>
+            <p class="text-xs text-slate-600 dark:text-slate-300 mb-6 font-mono" id="edit-slug-display">qr.pixelping.app/---</p>
             <label for="edit-destination-input" class="block text-xs font-bold text-slate-700 dark:text-ppLight mb-2 uppercase tracking-wide">New Destination URL</label>
             <input type="url" id="edit-destination-input" aria-describedby="edit-destination-help" placeholder="sscf.app or https://sscf.app/" class="w-full bg-white dark:bg-slate-900 text-slate-900 dark:text-white px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-700 focus:border-ppBlue focus:outline-none mb-2">
             <p id="edit-destination-help" class="text-xs text-slate-600 dark:text-slate-300 mb-6">Enter a website address. We add https:// if needed. Your QR link stays the same.</p>
@@ -354,7 +354,7 @@
         let currentEditSlug = null;
         let currentEditRevision = null;
         let globalLinksData = [];
-        let userBaseDomain = "pixelping-worker.amateuraiguy.workers.dev"; // Default
+        let userBaseDomain = "qr.pixelping.app"; // Default
 
         const API_URL = "https://pixelping-worker.amateuraiguy.workers.dev/api/links";
         async function clerkApiHeaders(json = false) {
@@ -390,7 +390,7 @@
             window.pixelPingCommandAccount = null;
             window.dispatchEvent(new Event('pixelping:command-account'));
             ++suiteGeneration; routePage=1; document.getElementById('route-pagination').hidden=true; suiteOwner = null; globalLinksData = []; globalActionsData = [];
-            userBaseDomain = 'pixelping-worker.amateuraiguy.workers.dev'; activeDomainBadge.classList.add('hidden');
+            userBaseDomain = 'qr.pixelping.app'; activeDomainBadge.classList.add('hidden');
             grid.replaceChildren(); closeActionModal(); closeModal(); setActionListFeedback('');
             document.getElementById('route-tools').classList.add('hidden');
             mainDash.classList.add('hidden'); loadingState.classList.remove('hidden');
@@ -612,7 +612,7 @@
                     userBaseDomain = web.value.customDomain;
                     activeDomainBadge.classList.remove('hidden'); activeDomainBadge.textContent = `🟢 ${userBaseDomain}`;
                 } else {
-                    userBaseDomain = 'pixelping-worker.amateuraiguy.workers.dev'; activeDomainBadge.classList.add('hidden');
+                    userBaseDomain = 'qr.pixelping.app'; activeDomainBadge.classList.add('hidden');
                 }
                 const problems = [];
                 if (web.status !== 'fulfilled' || !Array.isArray(web.value.links)) problems.push('Web routes could not be loaded.');
@@ -872,7 +872,7 @@
                 activeDomainBadge.textContent = `🟢 ${userBaseDomain}`;
                 renderSuiteCards(globalLinksData);
             } else {
-                userBaseDomain = 'pixelping-worker.amateuraiguy.workers.dev';
+                userBaseDomain = 'qr.pixelping.app';
                 activeDomainBadge.classList.add('hidden');
                 renderSuiteCards(globalLinksData);
             }

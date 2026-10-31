@@ -853,7 +853,7 @@
                     <span class="text-[9px] text-slate-500 font-bold uppercase tracking-widest">Dynamic Route</span>
                     <p id="dynamic-route-status" role="status" aria-live="polite" class="text-xs text-slate-700 dark:text-slate-200 text-center">Save to activate status</p>
                     <div class="flex items-center gap-2 w-full">
-                        <input type="text" id="shortlink-url" readonly value="https://pixelping-worker.amateuraiguy.workers.dev/xyz" class="flex-1 bg-slate-50 dark:bg-slate-900 text-[10px] font-mono text-slate-700 dark:text-slate-300 px-2 py-2 rounded border border-slate-200 dark:border-slate-700 focus:outline-none select-all">
+                        <input type="text" id="shortlink-url" readonly value="https://qr.pixelping.app/xyz" class="flex-1 bg-slate-50 dark:bg-slate-900 text-[10px] font-mono text-slate-700 dark:text-slate-300 px-2 py-2 rounded border border-slate-200 dark:border-slate-700 focus:outline-none select-all">
                         <button id="btn-copy-link" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded font-bold text-[10px] transition-colors">Copy</button>
                     </div>
                         <button id="btn-main-action" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-2 rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 shadow-md text-xs">
@@ -2243,7 +2243,7 @@ window.pixelPingRetryPurchaseReceipt = () => {
                 // code; it never silently changes an already-printed action.
                 window.pendingSlug = window.pixelPingNewSlug();
                 window.pixelPingDynamicSavedSlug = null;
-                shortlinkUrl.value = `https://pixelping-worker.amateuraiguy.workers.dev/${window.pendingSlug}`;
+                shortlinkUrl.value = `https://qr.pixelping.app/${window.pendingSlug}`;
                 smartActionSaved = null;
                 smartActionUnconfirmed = null;
                 smartActionStatus.textContent = 'New draft. Save it before downloading or printing.';
@@ -2320,7 +2320,7 @@ window.pixelPingRetryPurchaseReceipt = () => {
                         if ([400, 401, 403, 413].includes(response.status)) submitted = false;
                         throw new Error(data.error || 'The action could not be saved.');
                     }
-                    let host = 'pixelping-worker.amateuraiguy.workers.dev';
+                    let host = 'qr.pixelping.app';
                     try {
                         const domainResponse = await fetch(`${workerUrl}/api/domains`, { headers: { Authorization: `Bearer ${token}` } });
                         if (domainResponse.ok) {
@@ -3183,7 +3183,7 @@ window.pixelPingRetryPurchaseReceipt = () => {
                             window.pixelPingDynamicSavedRevision = data.revision;
                             window.pixelPingDynamicSavedDestination = payload.destination;
                             window.pixelPingRouteUnavailable = false;
-                            if (!updating && shortlinkUrl) shortlinkUrl.value = `${workerUrl}/${newSlug}`;
+                            if (!updating && shortlinkUrl) shortlinkUrl.value = `https://qr.pixelping.app/${newSlug}`;
                             // Use the branded hostname only after server-confirmed activation.
                             try {
                                 const domainResponse = await fetch(`${workerUrl}/api/domains`, {
@@ -3643,7 +3643,7 @@ window.pixelPingRetryPurchaseReceipt = () => {
                     window.pixelPingDynamicSavedRevision = data.link.revision;
                     window.pixelPingDynamicSavedDestination = data.link.destination;
                     const host = data.customDomain && /^[a-z0-9.-]+$/.test(data.customDomain)
-                        ? data.customDomain : 'pixelping-worker.amateuraiguy.workers.dev';
+                        ? data.customDomain : 'qr.pixelping.app';
                     shortlinkUrl.value = `https://${host}/${slug}`;
                     updateQR();
                     refreshed = true;
@@ -3773,7 +3773,7 @@ window.pixelPingRetryPurchaseReceipt = () => {
                 window.pixelPingDynamicSavedDestination = null;
                 window.pixelPingRouteUnavailable = false;
                 smartActionSaved = null; smartActionUnconfirmed = null;
-                if (dynamic) shortlinkUrl.value = `https://pixelping-worker.amateuraiguy.workers.dev/${item.route.slug}`;
+                if (dynamic) shortlinkUrl.value = `https://qr.pixelping.app/${item.route.slug}`;
                 syncSmartActionFields();
                 if (item.print) {
                     printLayout.value = item.print.layout;
@@ -3831,7 +3831,7 @@ window.pixelPingRetryPurchaseReceipt = () => {
                     window.pixelPingDynamicSavedSlug=slug;
                     window.pixelPingRouteUnavailable=false;
                     window.dispatchEvent?.(new Event('pixelping:canvas-ready'));
-                    const host=data.customDomain&&/^[a-z0-9.-]+$/.test(data.customDomain)?data.customDomain:'pixelping-worker.amateuraiguy.workers.dev';
+                    const host=data.customDomain&&/^[a-z0-9.-]+$/.test(data.customDomain)?data.customDomain:'qr.pixelping.app';
                     shortlinkUrl.value=`https://${host}/${slug}`;
                     return true;
                 } catch(error) {
@@ -3981,7 +3981,7 @@ window.pixelPingRetryPurchaseReceipt = () => {
             window.pixelPingRouteUnavailable = false;
             const shortlinkInput = document.getElementById('shortlink-url');
             if (shortlinkInput) {
-                shortlinkInput.value = `https://pixelping-worker.amateuraiguy.workers.dev/${window.pendingSlug}`;
+                shortlinkInput.value = `https://qr.pixelping.app/${window.pendingSlug}`;
             }
             if (typeof window.updateQR === 'function') window.updateQR();
         });
