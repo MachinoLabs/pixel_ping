@@ -1,0 +1,79 @@
+{
+  "account_id": "86ec0472e00b668215fbbea031f3e8bf",
+  "main": "src/index.js",
+  "workers_dev": true,
+  "keep_vars": true,
+  "kv_namespaces": [
+    {
+      "binding": "PIXELPING_KV",
+      "id": "38f63eb3650649b28b683f47d02622b8"
+    }
+  ],
+  "name": "pixelping-worker",
+  "compatibility_date": "2024-03-20",
+  "compatibility_flags": [
+    "cache_option_enabled"
+  ],
+  "vars": {
+    "CLERK_ISSUER_URL": "https://clerk.pixelping.app",
+    "DEFAULT_ROUTING_HOSTS": "pixelping-worker.amateuraiguy.workers.dev,qr.pixelping.app",
+    "EMAIL_NOTIFICATIONS_ENABLED": "true",
+    "TERMS_STAGING_ENABLED": "true",
+    "CF_SAAS_ZONE_ID": "68ad7a630b4883c487a159dbc11209a5",
+    "CF_SAAS_CNAME_TARGET": "qr.pixelping.app"
+  },
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "ROUTE_SLUG_REGISTRY",
+        "class_name": "RouteSlugRegistry"
+      },
+      {
+        "name": "DOMAIN_REGISTRY",
+        "class_name": "DomainRegistry"
+      },
+      {
+        "name": "ACCOUNT_WORKSPACE",
+        "class_name": "AccountWorkspace"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "batch73-production-storage-v1",
+      "new_sqlite_classes": [
+        "RouteSlugRegistry",
+        "DomainRegistry",
+        "AccountWorkspace"
+      ]
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "PRIVATE_ICONS",
+      "bucket_name": "pixelping-icons-production"
+    }
+  ],
+  "ratelimits": [
+    {
+      "name": "ICON_IP_LIMITER",
+      "namespace_id": "731001",
+      "simple": {
+        "limit": 120,
+        "period": 60
+      }
+    },
+    {
+      "name": "ICON_USER_LIMITER",
+      "namespace_id": "731002",
+      "simple": {
+        "limit": 120,
+        "period": 60
+      }
+    }
+  ],
+  "triggers": {
+    "crons": []
+  },
+  "preview_urls": true
+}
