@@ -86,10 +86,14 @@ export function validateSmartAction(raw) {
   return { kind: raw.kind, action, brand: { businessName, description, logoAssetId: null }, title };
 }
 const escapeActionHtml = value => String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+function displayActionPhone(phone) {
+  const northAmerican = /^\+1(\d{3})(\d{3})(\d{4})$/.exec(phone);
+  return northAmerican ? `+1 (${northAmerican[1]}) ${northAmerican[2]}-${northAmerican[3]}` : phone;
+}
 function actionPresentation(data) {
   const a = data.action;
-  if (data.kind === 'phone') return { detail: a.phone, href: `tel:${a.phone}`, helper: 'Opens your device dialer. No call is placed automatically.', label: 'CALL', eyebrow: "LET'S CONNECT" };
-  if (data.kind === 'sms') return { detail: a.phone, href: `sms:${a.phone}${a.message ? '?body=' + encodeURIComponent(a.message) : ''}`, helper: 'Opens your messaging app with a prepared message. Nothing is sent automatically.', label: 'MESSAGE', eyebrow: 'START A CONVERSATION' };
+  if (data.kind === 'phone') return { detail: displayActionPhone(a.phone), href: `tel:${a.phone}`, helper: 'Opens your device dialer. No call is placed automatically.', label: 'CALL', eyebrow: "LET'S CONNECT" };
+  if (data.kind === 'sms') return { detail: displayActionPhone(a.phone), href: `sms:${a.phone}${a.message ? '?body=' + encodeURIComponent(a.message) : ''}`, helper: 'Opens your messaging app with a prepared message. Nothing is sent automatically.', label: 'MESSAGE', eyebrow: 'START A CONVERSATION' };
   if (data.kind === 'email') {
     const query = [];
     if (a.subject) query.push('subject=' + encodeURIComponent(a.subject));
