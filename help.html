@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PixelPing | Help Center</title>
 
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='96' fill='%23061a2b'/%3E%3Crect x='28' y='28' width='456' height='456' rx='80' fill='none' stroke='%230f3a5a' stroke-width='4'/%3E%3Crect x='96' y='96' width='96' height='96' rx='18' fill='%23dff4ff'/%3E%3Crect x='320' y='96' width='96' height='96' rx='18' fill='%23dff4ff'/%3E%3Crect x='96' y='288' width='96' height='96' rx='18' fill='%23dff4ff'/%3E%3Crect x='140' y='140' width='16' height='16' rx='4' fill='%2327cfff'/%3E%3C/svg%3E">
@@ -41,7 +41,7 @@
 
     <div class="pixel-bg" id="pixel-bg"></div>
 
-    <header class="w-full max-w-5xl mb-8 flex items-center justify-between z-10 relative bg-white/95 dark:bg-ppDark/90 backdrop-blur-md px-6 py-4 rounded-2xl border border-slate-200 dark:border-gray-800 shadow-lg">
+    <header class="w-full max-w-5xl mb-8 flex flex-wrap gap-4 items-center justify-between z-10 relative bg-white/95 dark:bg-ppDark/90 backdrop-blur-md px-6 py-4 rounded-2xl border border-slate-200 dark:border-gray-800 shadow-lg">
         <div class="flex items-center gap-4">
             <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                 <rect width="512" height="512" rx="96" fill="#061a2b"/>
@@ -68,150 +68,140 @@
 
    <main class="w-full max-w-5xl z-10 relative grid grid-cols-1 md:grid-cols-12 gap-8 items-start flex-1">
         
-        <nav class="md:col-span-3 sticky top-6 space-y-2 hidden md:block">
+        <nav class="md:col-span-3 md:sticky md:top-6 space-y-2">
             <div class="bg-slate-100/80 dark:bg-slate-900/50 backdrop-blur-md border border-slate-200 dark:border-slate-800 p-4 rounded-xl">
                 <h3 class="text-[10px] uppercase tracking-widest text-slate-500 font-bold mb-3">Jump To</h3>
-                <ul class="space-y-3">
-                    <li><a href="#about" class="text-sm text-slate-600 dark:text-slate-300 hover:text-ppBlue transition-colors font-medium">What is PixelPing?</a></li>
-                    <li><a href="#dns-guide" class="text-sm text-slate-600 dark:text-slate-300 hover:text-ppBlue transition-colors font-medium">Custom Domain Setup</a></li>
-                    <li><a href="#faq" class="text-sm text-slate-600 dark:text-slate-300 hover:text-ppBlue transition-colors font-medium">Frequently Asked Questions</a></li>
-                </ul>
+                <ul class="space-y-3"><li><a href="#about" class="underline underline-offset-2 font-semibold">Start Here</a></li><li><a href="#saving" class="underline underline-offset-2 font-semibold">Save & Activate</a></li><li><a href="#limits" class="underline underline-offset-2 font-semibold">Character Limits</a></li><li><a href="#actions" class="underline underline-offset-2 font-semibold">Action Buttons</a></li><li><a href="#downloads" class="underline underline-offset-2 font-semibold">Downloads & Print</a></li><li><a href="#account-recovery" class="underline underline-offset-2 font-semibold">Account & Recovery</a></li><li><a href="#dns-guide" class="underline underline-offset-2 font-semibold">Custom Domains</a></li><li><a href="#faq" class="underline underline-offset-2 font-semibold">FAQ & Support</a></li><li><a href="manual.html" class="underline underline-offset-2 font-semibold">Full Manual</a></li></ul>
             </div>
         </nav>
 
-        <div class="md:col-span-9 space-y-8 pb-12">
-            
-            <section id="about" class="bg-white/5 dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 sm:p-8 rounded-2xl shadow-xl">
-                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-3">
-                    <span class="text-ppBlue">⚡</span> What is PixelPing?
-                </h2>
-                <div class="space-y-4 text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
-                    <p>PixelPing is a rebellion against the subscription-hostage model of the modern internet. Most QR code generators let you create a "free" code, secretly make it dynamic, and then break your code a week later unless you pay a surprise $20/month subscription.</p>
-                    <p>We do things differently. <b>PixelPing creates fast, offline-first codes tailored for field operations.</b> QR generation happens locally on your device. Paid accounts can also sync saved Recent Codes and brand settings across devices. They don't use tracking servers, they don't redirect, and they will work forever. Build it once, own it forever.</p>
-                </div>
-            </section>
-
-<div class="bg-white dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 sm:p-8 rounded-2xl shadow-xl mt-8">
-    <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-3">
-        <span>What do I get with the Master Key?</span>
-    </h3>
-    <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
-        The free tier handles basic URLs and phone numbers perfectly. Upgrading to the Master Key is a one-time purchase that unlocks full aesthetic command, custom center-logo injection, 20 premium triggers, and unlimited razor-sharp vector (SVG) downloads for commercial printing. Buy the tool once, own it forever.
-    </p>
+        <div class="md:col-span-9 min-w-0 space-y-8">
+<section id="about" class="bg-white dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 sm:p-8 rounded-2xl shadow-xl scroll-mt-8"><h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-5">Help Center: find the next step</h2>
+<div class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed space-y-4"><p>Need a complete walkthrough? Start with the <a href="manual.html" class="underline underline-offset-2 font-semibold">Rebellion Manual</a>. This page covers common problems and the difference between a saved design, a hosted route, and an exported file.</p>
+<div class="overflow-x-auto"><table class="w-full text-left text-sm"><caption class="sr-only">I need to… reference</caption><thead><tr><th scope="col" class="p-3 border-b border-slate-300 dark:border-slate-600">I need to…</th><th scope="col" class="p-3 border-b border-slate-300 dark:border-slate-600">Where to go</th></tr>
+</thead>
+<tbody><tr><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Make or design a QR</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700"><a href="index.html" class="underline underline-offset-2 font-semibold">Generator</a></td></tr>
+<tr><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Change a live destination or Smart Card</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700"><a href="admin.html" class="underline underline-offset-2 font-semibold">Command Center</a> → Reroute Link or Edit Page</td></tr>
+<tr><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Understand saving and activation</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700"><a href="#saving" class="underline underline-offset-2 font-semibold">Save, activate, or duplicate</a></td></tr>
+<tr><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Check field sizes</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700"><a href="#limits" class="underline underline-offset-2 font-semibold">Character limits</a></td></tr>
+<tr><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Fix a paused route or missing paid access</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700"><a href="#account-recovery" class="underline underline-offset-2 font-semibold">Account &amp; Recovery</a></td></tr>
+<tr><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Set up a branded route domain</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700"><a href="#dns-guide" class="underline underline-offset-2 font-semibold">Custom Domain Setup</a></td></tr>
+</tbody>
+</table>
 </div>
-
-<div class="bg-white dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 sm:p-8 rounded-2xl shadow-xl mt-8">
-    <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-3">
-        <span>What is the Evolution Tier?</span>
-    </h3>
-    <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
-        Evolution is our subscription-based dynamic routing engine. While standard PixelPing codes are static and permanent, Evolution codes allow you to update the destination URL at any time without ever reprinting the physical code. It includes real-time scan telemetry and access to the Command Center dashboard, making it the perfect engine for managing client rosters or recurring marketing campaigns.
-    </p>
 </div>
+</section>
 
-<div class="bg-white dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 sm:p-8 rounded-2xl shadow-xl mt-8">
-    <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-3">
-        <span>Are there hidden fees?</span>
-    </h3>
-    <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
-        Never. The Master Key is a one-time purchase for lifetime access to all pro-grade design and static generation tools. You only pay a subscription if you explicitly choose to upgrade to the Evolution tier for dynamic cloud routing.
-    </p>
+
+<section id="saving" class="bg-white dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 sm:p-8 rounded-2xl shadow-xl scroll-mt-8"><h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-5">Save, activate, or duplicate</h2>
+<div class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed space-y-4"><h3 class="font-bold text-lg text-slate-900 dark:text-white pt-2">Why does a saved QR say Route unavailable?</h3>
+<p><strong>Save to My Codes saves a design; Save &amp; Activate publishes its Dynamic route.</strong> In the generator, complete all required fields, select Save &amp; Activate, and wait for Route active. If a field is highlighted, correct it and try again. A blank Business Name is not the placeholder text shown in the box.</p>
+<p>For an existing route, refresh and select Sync in the Command Center. Confirm you are signed into its owning account and that Evolution access is verified. Use Check Again if offered. An unavailable route can reflect an activation, connection, account, or deleted-route issue; repeatedly clicking Save is not a substitute for reading its feedback.</p>
+<h3 class="font-bold text-lg text-slate-900 dark:text-white pt-2">Can I add an icon after activation?</h3>
+<p>Yes. Adjust the QR artwork or Smart Print label, then update the saved design or choose Save as New. Download again to receive the changed artwork. An existing printed QR keeps its appearance. To change a live Smart Card’s content at the same URL, use Command Center → Edit Page → Save Page Changes.</p>
+<h3 class="font-bold text-lg text-slate-900 dark:text-white pt-2">What happens when I delete or duplicate?</h3>
+<p>Delete Saved Design removes the snapshot only. Delete Route permanently stops the live QR, including printed copies. A deleted route cannot be restored by saving its design again. Duplicate creates a separate design; a Dynamic copy needs a new active route and new QR copies.</p>
+<h3 class="font-bold text-lg text-slate-900 dark:text-white pt-2">My saved design is missing on another device</h3>
+<p>Check the account on both devices, reconnect, and Sync or Refresh the library. My Codes holds up to 50 saved designs; Recent contains only the last five saved or exported designs. “Sync pending” means cloud sync has not finished. Keep the originating browser’s data until it completes.</p>
 </div>
+</section>
 
-            <section id="dns-guide" class="bg-white/5 dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 sm:p-8 rounded-2xl shadow-xl scroll-mt-6">
-                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-2 flex items-center gap-3">
-                    <span class="text-ppGreen">🌐</span> Connect Your Custom Domain
-                </h2>
-                <p class="text-sm text-slate-600 dark:text-slate-400 mb-8 border-b border-slate-200 dark:border-slate-700 pb-6">To make your QR codes and shortlinks look professional (e.g., <code>links.yourwebsite.com/promo</code>), you need to connect your custom domain to PixelPing. This tells the internet that you authorize us to route your traffic securely.</p>
 
-                <div class="space-y-8">
-                    <div>
-                        <h3 class="text-lg font-bold text-slate-900 dark:text-ppLight mb-2"><span class="text-ppBlue mr-2">Step 1:</span> Initialize Your Domain</h3>
-                        <ol class="list-decimal list-inside text-sm text-slate-600 dark:text-slate-300 space-y-2 ml-2">
-                            <li>Log into your PixelPing <b>Command Center</b>.</li>
-                            <li>Click the <b>🌐 Add Custom Domain</b> button at the top of the dashboard.</li>
-                            <li>Enter the domain you want to use. <br>
-                                <div class="bg-amber-100 dark:bg-amber-900/20 border-l-4 border-amber-500 p-3 mt-2 rounded text-xs text-amber-800 dark:text-amber-200">
-                                    <b>Pro Tip:</b> We highly recommend using a subdomain like <code>links.yourwebsite.com</code> or <code>qr.yourwebsite.com</code>. Most registrars do not allow you to route a root domain (like <code>yourwebsite.com</code>) to a third-party app.
-                                </div>
-                            </li>
-                            <li>Click <b>Generate DNS Records</b>. PixelPing will securely talk to our servers and generate the exact records you need. <b>Leave this window open!</b></li>
-                        </ol>
-                    </div>
+<section id="limits" class="bg-white dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 sm:p-8 rounded-2xl shadow-xl scroll-mt-8"><h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-5">Character limits and required fields</h2>
+<div class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed space-y-4"><p>These limits apply to hosted Smart Cards and their fields. The prepared email/SMS message is separate from the printed label. The generator’s validation and counters guide entry; whitespace and line breaks can count toward the limit.</p>
+<div class="overflow-x-auto"><table class="w-full text-left text-sm"><caption class="sr-only">Field reference</caption><thead><tr><th scope="col" class="p-3 border-b border-slate-300 dark:border-slate-600">Field</th><th scope="col" class="p-3 border-b border-slate-300 dark:border-slate-600">Limit / requirement</th></tr>
+</thead>
+<tbody><tr><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Business Name</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Required for Smart Cards; up to 64 characters.</td></tr>
+<tr><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Business description</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Optional; up to 180 characters.</td></tr>
+<tr><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Phone / SMS recipient</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">US numbers are accepted. For international numbers, include + and the country code; normalized numbers support 7–15 digits.</td></tr>
+<tr><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Prepared SMS message</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Optional; up to 320 characters.</td></tr>
+<tr><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Email recipient</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">One valid email address; up to 254 characters.</td></tr>
+<tr><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Email subject</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Optional; up to 140 characters.</td></tr>
+<tr><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Prepared email body</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Optional; up to 800 characters.</td></tr>
+<tr><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Coupon code</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Required for a text Coupon Smart Card; up to 40 characters.</td></tr>
+<tr><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Coupon note</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Optional; up to 140 characters.</td></tr>
+<tr><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Redeem Offer link</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Optional public HTTPS URL; up to 2,048 characters.</td></tr>
+<tr><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Smart Print headline + message</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">1,024 characters combined, including the line break between fields.</td></tr>
+</tbody>
+</table>
+</div>
+<p>If the app reports an invalid email address, enter an actual recipient; the example shown in an empty field is only a placeholder. If a business name is required, fill the Business Details field even when the print headline already contains a name.</p>
+</div>
+</section>
 
-                    <div>
-                        <h3 class="text-lg font-bold text-slate-900 dark:text-ppLight mb-2"><span class="text-ppBlue mr-2">Step 2:</span> Log Into Your Registrar</h3>
-                        <ol class="list-decimal list-inside text-sm text-slate-600 dark:text-slate-300 space-y-2 ml-2">
-                            <li>Open a new browser tab and log into the company where you bought your domain (GoDaddy, Namecheap, Wix, Squarespace, etc.).</li>
-                            <li>Find your domain and look for a button that says <b>DNS Settings</b>, <b>Manage DNS</b>, or <b>Advanced DNS</b>.</li>
-                            <li>Look for the button to <b>Add New Record</b>.</li>
-                        </ol>
-                    </div>
 
-                    <div>
-                        <h3 class="text-lg font-bold text-slate-900 dark:text-ppLight mb-2"><span class="text-ppBlue mr-2">Step 3:</span> Add the Routing Record (CNAME)</h3>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 mb-3 ml-6">This record tells the internet to send people who scan your code directly to PixelPing's servers.</p>
-                        <ol class="list-decimal list-inside text-sm text-slate-600 dark:text-slate-300 space-y-2 ml-2">
-                            <li>Click <b>Add New Record</b> in your registrar.</li>
-                            <li>Under <b>Type</b>, select <b>CNAME</b>.</li>
-                            <li>Go back to your PixelPing tab and click <b>Copy</b> next to the <b>Name / Host</b> in Step 1. Paste it into your registrar.</li>
-                            <li>Click <b>Copy</b> next to the <b>Value / Target</b> in Step 1. Paste it into your registrar.</li>
-                            <li>Hit <b>Save</b>.</li>
-                        </ol>
-                    </div>
+<section id="actions" class="bg-white dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 sm:p-8 rounded-2xl shadow-xl scroll-mt-8"><h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-5">Phone, message, email, and coupon actions</h2>
+<div class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed space-y-4"><ul class="list-disc pl-5 space-y-3"><li><strong>Phone:</strong> opens the dialer; the visitor confirms the call.</li>
+<li><strong>SMS:</strong> opens the messaging app with the number and prepared text. It does not send automatically.</li>
+<li><strong>Email:</strong> may show an app chooser before a compose window. Select a configured mail app and check the recipient, subject, and body. A missing mail account must be configured on that device.</li>
+<li><strong>Coupon:</strong> Copy Coupon Code copies the exact displayed code. Paste into a note to verify it. Redeem Offer opens the optional link; PixelPing does not automatically apply a discount on the destination website.</li>
+</ul>
+<p>A Smart Card loading correctly and an action opening the intended app are separate checks. Test both. The device and selected app control the final compose or dial screen.</p>
+</div>
+</section>
 
-                    <div>
-                        <h3 class="text-lg font-bold text-slate-900 dark:text-ppLight mb-2"><span class="text-ppBlue mr-2">Step 4:</span> Add the Verification Record (TXT)</h3>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 mb-3 ml-6">This record acts as a secret password to prove to our security systems that you actually own this domain.</p>
-                        <ol class="list-decimal list-inside text-sm text-slate-600 dark:text-slate-300 space-y-2 ml-2">
-                            <li>Click <b>Add New Record</b> in your registrar again.</li>
-                            <li>Under <b>Type</b>, select <b>TXT</b>.</li>
-                            <li>Go back to your PixelPing tab and click <b>Copy</b> next to the <b>Name / Host</b> in Step 2. Paste it into your registrar.</li>
-                            <li>Click <b>Copy</b> next to the <b>Value / Target</b> in Step 2. Paste it into your registrar.</li>
-                            <li>Hit <b>Save</b>.</li>
-                        </ol>
-                    </div>
 
-                    <div class="bg-slate-100 dark:bg-slate-900/50 p-6 rounded-xl border border-slate-200 dark:border-slate-700">
-                        <h3 class="text-lg font-bold text-green-700 dark:text-ppGreen mb-2">🎉 You're Done!</h3>
-                        <p class="text-sm text-slate-700 dark:text-slate-300">Go back to PixelPing and click <b>"I've Added These Records."</b></p>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-2"><i>Note: It usually takes about 5 to 15 minutes for your registrar to update the global internet directories. Once those records sync, your custom domain will be live, secure, and ready to scan!</i></p>
-                    </div>
-                </div>
-            </section>
+<section id="downloads" class="bg-white dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 sm:p-8 rounded-2xl shadow-xl scroll-mt-8"><h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-5">Downloads, print preview, and scanning</h2>
+<div class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed space-y-4"><h3 class="font-bold text-lg text-slate-900 dark:text-white pt-2">Where is my PDF?</h3>
+<p>PDF export opens the print preview workflow. Choose <strong>Print / Save as PDF</strong>, then select Save as PDF in the browser’s print dialog and choose a location. Preview &amp; Print does not print immediately. Review paper size, margins, scaling, and page count.</p>
+<h3 class="font-bold text-lg text-slate-900 dark:text-white pt-2">The download is missing or will not open</h3>
+<p>Check the browser’s downloads list and download permissions. PNG and SVG download as files; PDF uses the print dialog. Open the actual file before sharing it. If a private browsing session handles the download unexpectedly, try a normal browser window and compare the result. Do not assume an unfamiliar temporary filename proves the QR data is broken.</p>
+<h3 class="font-bold text-lg text-slate-900 dark:text-white pt-2">The camera cannot read my QR</h3>
+<p>Check contrast, the clear margin around the code, logo size, and the exported resolution. PNG can print well at adequate resolution; SVG scales without raster blur. Try a larger physical code, a flat surface, and less glare. Test the final printed sample with another phone.</p>
+<h3 class="font-bold text-lg text-slate-900 dark:text-white pt-2">The camera reads it, but the destination fails</h3>
+<p>The image is being decoded. Check its website address or Dynamic route instead. A Static website QR can point to a page that has moved. For Dynamic, check activation, owning account, Evolution status, and any custom-domain verification. See <a href="#saving" class="underline underline-offset-2 font-semibold">activation help</a>.</p>
+</div>
+</section>
 
-            <section id="faq" class="bg-white/5 dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 sm:p-8 rounded-2xl shadow-xl scroll-mt-6">
-                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-3">
-                    <span class="text-ppBlue">❓</span> Frequently Asked Questions
-                </h2>
-                
-                <div class="space-y-6">
-                    <div>
-                        <h4 class="text-base font-bold text-slate-900 dark:text-ppLight mb-1">What is the difference between Static and Dynamic?</h4>
-                        <p class="text-sm text-slate-600 dark:text-slate-400"><b>Static (Local)</b> codes are generated on your device. Saved Recent Codes can sync to your signed-in paid account; scanning a Static code does not use PixelPing routing servers. Because they don't redirect, they can never be tracked or broken. <b>Dynamic</b> codes are saved to our cloud engine, allowing you to update where the code points even after you've printed it. Dynamic codes track scans but require an internet connection.</p>
-                    </div>
 
-                    <div>
-                        <h4 class="text-base font-bold text-slate-900 dark:text-ppLight mb-1">Does this app collect my data?</h4>
-                        <p class="text-sm text-slate-600 dark:text-slate-400">Static QR generation happens on your device. With Master Key or Evolution, Recent Codes added by saving, downloading, or printing, and your saved brand kit, sync to your signed-in account so they are available on another device. Saved code contents can include contact details or Wi-Fi passwords. Local copies remain available offline and pending saves sync when you reconnect and sign in to the same account. Dynamic links and their destinations are stored online for routing. Your unfinished canvas is not synced.</p>
-                    </div>
+<section id="account-recovery" class="bg-white dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 sm:p-8 rounded-2xl shadow-xl scroll-mt-8"><h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-5">Plans, billing, and Account &amp; Recovery</h2>
+<div class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed space-y-4"><p><strong>Nomad</strong> is $0 for standard Static tools. <strong>Rebellion (Master Key)</strong> is $99 one-time for premium design and Static tools. <strong>Evolution</strong> is $39/month and includes Rebellion features while subscribed plus hosted Dynamic services. Check the <a href="index.html#pricing-grid" class="underline underline-offset-2 font-semibold">current pricing and checkout</a> before buying.</p>
+<h3 class="font-bold text-lg text-slate-900 dark:text-white pt-2">I paid, but my access has not updated</h3>
+<p>Sign into the purchasing account, refresh, and use Sync. Open Account &amp; Recovery in the Command Center and select Refresh status. If payment or subscription history is unverified, contact <a href="mailto:support@senditin.app" class="underline underline-offset-2 font-semibold">support@senditin.app</a> before buying again. Include the purchase email and receipt reference, never payment-card details or passwords.</p>
+<h3 class="font-bold text-lg text-slate-900 dark:text-white pt-2">What happens if Evolution ends?</h3>
+<div class="overflow-x-auto"><table class="w-full text-left text-sm"><caption class="sr-only">Account stage reference</caption><thead><tr><th scope="col" class="p-3 border-b border-slate-300 dark:border-slate-600">Account stage</th><th scope="col" class="p-3 border-b border-slate-300 dark:border-slate-600">What to expect</th></tr>
+</thead>
+<tbody><tr><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Active / renewal canceled</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Access continues through the verified paid-through date. Review your existing subscription with billing support to resume renewal.</td></tr>
+<tr><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">30-day grace</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Dynamic redirects and editing are paused. Routes, destinations, and scan totals are retained. Resolve billing on the existing subscription, then refresh status.</td></tr>
+<tr><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Archived</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">After grace ends, Dynamic records remain recoverable for 12 months. Redirects stay paused until paid access is confirmed.</td></tr>
+<tr><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Archive ended</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">No records are automatically deleted. Contact support to check retained routes before paying.</td></tr>
+<tr><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Unverified or temporarily unavailable</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Refresh or contact support before purchasing again.</td></tr>
+</tbody>
+</table>
+</div>
+<p>Confirmed paid access restores retained routes without reprinting. Renewal cannot restore a manually deleted route. Static QR files already downloaded work independently of Evolution; their destinations must still be available. A separately owned lifetime Master Key remains available. The Command Center displays your actual paid-through and recovery dates.</p>
+<h3 class="font-bold text-lg text-slate-900 dark:text-white pt-2">Can I pause email notifications during testing?</h3>
+<p>There is currently no user-facing pause or off button for email notices. Account activity shows notices and their delivery status when enabled. Mark all read changes their read state; it does not stop future emails.</p>
+</div>
+</section>
 
-                    <div>
-                        <h4 class="text-base font-bold text-slate-900 dark:text-ppLight mb-1">Can I use this without Wi-Fi?</h4>
-                        <p class="text-sm text-slate-600 dark:text-slate-400">Yes! Once you load the main generator page for the first time, the core tool caches in your browser. You can generate local static codes (like Plain Text or WiFi) entirely offline.</p>
-                    </div>
 
-                    <div>
-                        <h4 class="text-base font-bold text-slate-900 dark:text-ppLight mb-1">What do I get with the Pro version?</h4>
-                        <p class="text-sm text-slate-600 dark:text-slate-400">The free tier handles basic URLs and phone numbers perfectly. Upgrading to Pro unlocks the Command Center dashboard, dynamic cloud routing, custom domain mapping, advanced payloads (vCards, Crypto, Calendar), and the ability to customize your code's shape, colors, and logos.</p>
-                    </div>
+<section id="dns-guide" class="bg-white dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 sm:p-8 rounded-2xl shadow-xl scroll-mt-8"><h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-5">Custom Domain Setup</h2>
+<div class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed space-y-4"><p>Use an unused subdomain you control, such as qr.example.com, for branded Evolution routes. Root/apex domains require separate support. Do not replace the DNS records that serve your main website or email.</p>
+<ol class="list-decimal pl-5 space-y-3"><li>In the <a href="admin.html" class="underline underline-offset-2 font-semibold">Command Center</a>, select <strong>Add Custom Domain</strong>. Enter the hostname and select <strong>Generate DNS Records</strong>.</li>
+<li>At your DNS provider, add the exact records returned by PixelPing. Match each Type, Name / Host, and Value / Target. Copy record value helps avoid typos; your DNS provider may expect only the subdomain portion of the name.</li>
+<li>For Cloudflare-managed customer DNS, use a <strong>DNS-only (grey cloud) CNAME</strong> during this initial integration. Use the values in your own setup screen rather than a guessed target.</li>
+<li>Return to PixelPing and select <strong>Check Verification Status</strong>. Review hostname validation, TLS certificate, and whether the CNAME points to PixelPing.</li>
+<li>Wait until <strong>Custom Domain Active</strong>. DNS propagation and certificate checks can take time; there is no fixed activation guarantee. Then test a route using the branded hostname.</li>
+</ol>
+<p>If verification stays pending, compare every record with the setup screen and check for conflicting records at that exact subdomain. If the certificate is still pending, allow time and check again. Send support the hostname and displayed statuses if it remains unresolved. A registered hostname alone is not an active domain.</p>
+</div>
+</section>
 
-                    <div>
-                        <h4 class="text-base font-bold text-slate-900 dark:text-ppLight mb-1">Are there hidden subscription fees?</h4>
-                        <p class="text-sm text-slate-600 dark:text-slate-400">Never. We hate subscriptions. The Master Key is a one-time purchase for lifetime access to the Pro tier.</p>
-                    </div>
-                </div>
-            </section>
+
+<section id="faq" class="bg-white dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 sm:p-8 rounded-2xl shadow-xl scroll-mt-8"><h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-5">Frequently asked questions</h2>
+<div class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed space-y-4"><h3 class="font-bold text-lg text-slate-900 dark:text-white pt-2">Does Static mean offline scanning?</h3>
+<p>A Static QR encodes its own data. Text can be read without visiting PixelPing, but a website still needs a connection and its own hosting. The app must first load and cache successfully for supported offline generation. Dynamic routes, account checks, and sync need internet access.</p>
+<h3 class="font-bold text-lg text-slate-900 dark:text-white pt-2">Can I change a printed code?</h3>
+<p>Static encoded content and printed artwork cannot change. An existing Dynamic route’s destination or Smart Card can be updated through the Command Center while keeping the same route URL and QR. Editing a saved design alone does not update that live route.</p>
+<h3 class="font-bold text-lg text-slate-900 dark:text-white pt-2">Will a QR logo change my Smart Card branding?</h3>
+<p>The QR center logo is part of the image you export. Smart Cards use their automatic business-name, monogram, and action layout, including the Powered by PixelPing footer. These are separate surfaces.</p>
+<h3 class="font-bold text-lg text-slate-900 dark:text-white pt-2">Where can I read the terms and privacy information?</h3>
+<p>Read <a href="terms.html" class="underline underline-offset-2 font-semibold">Terms</a> and <a href="privacy.html" class="underline underline-offset-2 font-semibold">Privacy</a> for the current policies. Avoid placing secrets in QR content: anyone who receives a QR may be able to read its payload or open its destination.</p>
+<h3 class="font-bold text-lg text-slate-900 dark:text-white pt-2">How do I report a problem?</h3>
+<p>Email <a href="mailto:support@senditin.app" class="underline underline-offset-2 font-semibold">support@senditin.app</a> with your browser/device, content type, Static or Dynamic mode, steps taken, expected result, actual result, and a screenshot of any feedback. Include the route URL only if you are comfortable sharing its content. Never send passwords, authentication codes, API keys, or full payment details.</p>
+</div>
+</section>
 
         </div>
     </main>

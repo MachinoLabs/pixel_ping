@@ -23,7 +23,7 @@
 
     <!-- Top Navigation Bar -->
     <header class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-8 pb-4">
-        <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-4 flex items-center justify-between shadow-sm">
+        <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-4 flex flex-wrap gap-4 items-center justify-between shadow-sm">
             <div class="flex items-center gap-3">
                 <div class="w-8 h-8 bg-slate-900 dark:bg-white rounded-md flex items-center justify-center">
                     <span class="text-white dark:text-slate-900 font-bold text-xs">PP</span>
@@ -34,7 +34,7 @@
                 </div>
             </div>
             <div class="flex items-center gap-4">
-                <button id="themeToggle" class="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors bg-slate-100 dark:bg-slate-700 rounded-full">
+                <button aria-label="Toggle dark mode" id="themeToggle" class="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors bg-slate-100 dark:bg-slate-700 rounded-full">
                     <svg id="icon-moon" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
                     <svg id="icon-sun" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                 </button>
@@ -50,198 +50,156 @@
         <aside class="w-full md:w-64 shrink-0 relative">
             <div class="md:sticky md:top-8 bg-slate-100/50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700 rounded-xl p-6">
                 <h4 class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-4">Jump To</h4>
-                <nav class="space-y-3 text-sm">
-                    <a href="#saas-trap" class="block text-slate-600 dark:text-slate-300 hover:text-ppBlue transition-colors font-medium">The SaaS Trap</a>
-                    <a href="#the-core" class="block text-slate-600 dark:text-slate-300 hover:text-ppBlue transition-colors font-medium">The Core Mechanics</a>
-                    <a href="#monetization" class="block text-slate-600 dark:text-slate-300 hover:text-ppBlue transition-colors font-medium">Agency Blueprint</a>
-                    <a href="#guerrilla-plays" class="block text-slate-600 dark:text-slate-300 hover:text-ppBlue transition-colors font-medium">Guerrilla Arsenal</a>
-                    <a href="#graveyard" class="block text-slate-600 dark:text-slate-300 hover:text-ppBlue transition-colors font-medium">Troubleshooting Graveyard</a>
-                </nav>
+                <nav aria-label="Manual topics" class="space-y-3 text-sm"><a href="#saas-trap" class="block text-slate-600 dark:text-slate-300 hover:text-ppBlue transition-colors font-medium">Start Here</a><a href="#the-core" class="block text-slate-600 dark:text-slate-300 hover:text-ppBlue transition-colors font-medium">Save & Activate</a><a href="#smart-cards" class="block text-slate-600 dark:text-slate-300 hover:text-ppBlue transition-colors font-medium">Smart Cards</a><a href="#command-center" class="block text-slate-600 dark:text-slate-300 hover:text-ppBlue transition-colors font-medium">Command Center</a><a href="#print-export" class="block text-slate-600 dark:text-slate-300 hover:text-ppBlue transition-colors font-medium">Download & Print</a><a href="#monetization" class="block text-slate-600 dark:text-slate-300 hover:text-ppBlue transition-colors font-medium">Plans & Access</a><a href="#guerrilla-plays" class="block text-slate-600 dark:text-slate-300 hover:text-ppBlue transition-colors font-medium">The Arsenal</a><a href="#graveyard" class="block text-slate-600 dark:text-slate-300 hover:text-ppBlue transition-colors font-medium">Before You Share</a><a href="help.html" class="underline underline-offset-2 font-semibold">Help Center</a></nav>
             </div>
         </aside>
 
         <!-- Content Canvas (Right) -->
-        <main class="flex-1 space-y-8 pb-20">
-            
-            <!-- Section: The SaaS Trap -->
-            <section id="saas-trap" class="bg-white dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 sm:p-8 rounded-2xl shadow-xl scroll-mt-8">
-                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-3">
-                    <span class="text-amber-500">⚡</span> The Anatomy of a Hostage Situation
-                </h2>
-                <div class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed space-y-6">
-                    <div>
-                        <h3 class="font-bold text-lg text-slate-900 dark:text-white mb-2">The Vehicle Wrap Disaster</h3>
-                        <p>A business owner dropped over $3,000 wrapping a fleet of company trucks with massive vinyl signage featuring a QR code linking straight to a booking page[cite: 2]. Fourteen days after a $29/month subscription payment was missed, the billing server pulled the plug[cite: 2]. The entire fleet was left driving around the city displaying a massive, dead link[cite: 2].</p>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-lg text-slate-900 dark:text-white mb-2">The Bait-and-Switch Ransom</h3>
-                        <p>A user stretched their quarterly marketing budget to print 1,000 premium, foil-stamped business cards for a massive industry expo using a "free" code[cite: 2]. After the code was scanned over 300 times in a single weekend, a hidden clause triggered an automated threat to deactivate the codes within 24 hours unless they upgraded to a $99/month Pro Tier[cite: 2].</p>
-                    </div>
-                    <div class="bg-red-50 dark:bg-red-900/20 p-4 rounded-lg border border-red-100 dark:border-red-800">
-                        <h4 class="font-bold text-red-700 dark:text-red-400 mb-2">The Fine Print Horror Show</h4>
-                        <ul class="list-disc pl-5 space-y-2 text-red-600 dark:text-red-300">
-                            <li><strong>The Intellectual Property Hijack:</strong> You grant them an "irrevocable, perpetual, non-exclusive" license to use and modify your traffic funnel[cite: 2].</li>
-                            <li><strong>The Interstitial Ad Trap:</strong> They intercept your traffic, forcing your customer onto an intermediate page plastered with third-party ads before they reach your site[cite: 2].</li>
-                            <li><strong>B2B Corporate Espionage:</strong> They weaponize your free account by sharing your activity with their B2B enterprise sales team to pressure executive leadership into high-ticket contracts[cite: 2].</li>
-                            <li><strong>The Vector Trap:</strong> When you need the crisp SVG vector file for your printer, a pop-up demands a $49/month Pro upgrade[cite: 2].</li>
-                            <li><strong>The "Quishing" Epidemic:</strong> Hidden tracking URLs prevent customers from verifying your domain name, allowing hackers to slap their own dynamic QR stickers over yours and route users to fake payment portals[cite: 2].</li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Section: The Core Mechanics -->
-            <section id="the-core" class="bg-white dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 sm:p-8 rounded-2xl shadow-xl scroll-mt-8">
-                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-3">
-                    <span class="text-ppBlue">⚙️</span> The Core Mechanics
-                </h2>
-                <div class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed space-y-6">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        <div class="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-lg">
-                            <h4 class="font-bold text-slate-900 dark:text-white mb-2">Phase 1: The Core (Data)</h4>
-                            <p>Choose your routing method. Static writes pure data directly into the physical pixels, perfect for offline utility[cite: 2]. Dynamic utilizes Evolution tier telemetry to change the destination URL later without reprinting[cite: 2].</p>
-                        </div>
-                        <div class="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-lg">
-                            <h4 class="font-bold text-slate-900 dark:text-white mb-2">Phase 2: Smart Print Engine</h4>
-                            <p>Type a short, punchy Call-To-Action (e.g., "Scan for Wi-Fi") to automatically render beneath the code[cite: 2]. Select your intended physical medium and PixelPing mathematically optimizes the layout[cite: 2].</p>
-                        </div>
-                        <div class="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-lg">
-                            <h4 class="font-bold text-slate-900 dark:text-white mb-2">Phase 3: Aesthetics</h4>
-                            <p>Use dropdowns to manipulate geometry, soften edges, and inject custom company logos into the dead center of the matrix[cite: 2]. Ensure a high contrast between your data color and background color[cite: 2].</p>
-                        </div>
-                        <div class="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-lg">
-                            <h4 class="font-bold text-slate-900 dark:text-white mb-2">Phase 4: The Export Mandate</h4>
-                            <p>Standard Image (PNG) is for digital applications only[cite: 2]. If you are sending this code to a physical printer, you must download the SVG or PDF format to guarantee razor-sharp edges at any size[cite: 2].</p>
-                        </div>
-                    </div>
-
-                    <h3 class="font-bold text-lg text-slate-900 dark:text-white mt-8 mb-4 border-b border-slate-200 dark:border-slate-700 pb-2">The Design Protocol (How to Force a Scan)</h3>
-                    <ul class="space-y-4">
-                        <li><strong>1. The "Quiet Zone" Mandate:</strong> You must leave a clean, high-contrast margin around the entire perimeter of the code or the camera lens will refuse to scan[cite: 2].</li>
-                        <li><strong>2. Contrast Mathematics:</strong> Always use dark data on a light background[cite: 2]. Never invert the code (white data on a black background), as many older Androids cannot read it[cite: 2].</li>
-                        <li><strong>3. The CTA Imperative:</strong> Explicitly tell the user what will happen and why they should care[cite: 2]. Use strong commands like "Scan to Bypass the Waiting Room" instead of a weak "Scan Me"[cite: 2].</li>
-                        <li><strong>4. Material Science:</strong> Printing on highly reflective glossy materials blinds the smartphone camera with glare[cite: 2]. Printing large codes around cylindrical objects warps the grid[cite: 2]. Always opt for matte finishes and flat surfaces[cite: 2].</li>
-                    </ul>
-                </div>
-            </section>
-
-            <!-- Section: Agency Blueprint -->
-            <section id="monetization" class="bg-white dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 sm:p-8 rounded-2xl shadow-xl scroll-mt-8 border-t-4 border-t-ppGreen">
-                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-3">
-                    <span class="text-ppGreen">💰</span> The Agency Blueprint
-                </h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm">
-                        <h4 class="font-bold text-slate-900 dark:text-white mb-2">1. The Setup Fee</h4>
-                        <p class="text-xs text-slate-500 mb-3 uppercase tracking-wider font-semibold">Physical + Digital Package</p>
-                        <p class="text-sm text-slate-600 dark:text-slate-300">Generate a perfect static URL payload linking to a Google Review page, print it on heavy cardstock, and slide it into premium acrylic table tents[cite: 2]. Walk in and hand the client a finished physical product for a $499 one-time setup fee[cite: 2].</p>
-                    </div>
-                    <div class="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm border-t-2 border-t-ppBlue">
-                        <h4 class="font-bold text-slate-900 dark:text-white mb-2">2. The Evolution Retainer</h4>
-                        <p class="text-xs text-slate-500 mb-3 uppercase tracking-wider font-semibold">Passive Income</p>
-                        <p class="text-sm text-slate-600 dark:text-slate-300">Generate an Evolution code printed permanently on a storefront[cite: 2]. Charge the business a $199/month Retainer[cite: 2]. Spend 45 seconds a week updating the routing destination in your dashboard without ever reprinting the physical code[cite: 2].</p>
-                    </div>
-                    <div class="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 shadow-sm">
-                        <h4 class="font-bold text-slate-900 dark:text-white mb-2">3. The Foot-in-the-Door Audit</h4>
-                        <p class="text-xs text-slate-500 mb-3 uppercase tracking-wider font-semibold">Guerrilla Sales</p>
-                        <p class="text-sm text-slate-600 dark:text-slate-300">Scan broken QR codes at local brick-and-mortar businesses[cite: 2]. Tell the manager they are losing money and charge $100 to replace it with a permanent, branded asset that never breaks[cite: 2]. Rescue them, then upsell the retainer[cite: 2].</p>
-                    </div>
-                </div>
-            </section>
-
-           <!-- Section: Guerrilla Arsenal -->
-<section id="guerrilla-plays" class="bg-white dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 sm:p-8 rounded-2xl shadow-xl scroll-mt-8 relative">
-    <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-3">
-        <span>🎯</span> The Guerrilla Arsenal — More than 50 Preset Plays Included
-    </h2>
-    
-    <!-- Unlocked Plays -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
-        <div class="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5">
-            <h4 class="font-bold text-slate-900 dark:text-white mb-2">The Frictionless Tip Jar</h4>
-            <p class="text-xs text-slate-600 dark:text-slate-400 mb-3"><span class="font-semibold text-ppBlue">Niche:</span> Hospitality, Buskers</p>
-            <p class="text-sm text-slate-600 dark:text-slate-300">Use a Crypto or URL Payload linking to Venmo. Upload the worker's headshot to the center of the code and print on a lanyard badge.</p>
-        </div>
-        
-        <div class="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5">
-            <h4 class="font-bold text-slate-900 dark:text-white mb-2">The Offline Survival Cache</h4>
-            <p class="text-xs text-slate-600 dark:text-slate-400 mb-3"><span class="font-semibold text-ppBlue">Niche:</span> Outdoors, Industrial</p>
-            <p class="text-sm text-slate-600 dark:text-slate-300">Use Nomad — Free Forever to generate a Text Payload containing offline rendezvous coordinates or emergency info for dead zones.</p>
-        </div>
-    </div>
-
-    <!-- The Fade-Out Squeeze Block -->
-    <div class="relative">
-        
-        <!-- Faded Locked Plays -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 select-none pointer-events-none pb-12" style="mask-image: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, transparent 80%); -webkit-mask-image: -webkit-linear-gradient(top, rgba(0,0,0,0.8) 0%, transparent 80%);">
-            <div class="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 blur-[2px]">
-                <h4 class="font-bold text-slate-900 dark:text-white mb-2">The Phantom Speakeasy Menu</h4>
-                <p class="text-xs text-slate-600 dark:text-slate-400 mb-3"><span class="font-semibold text-ppBlue">Niche:</span> Nightlife</p>
-                <p class="text-sm text-slate-600 dark:text-slate-300">Print color-matched, gold-and-black QR codes onto heavy brass coasters. Use the Evolution tier to swap the menu nightly.</p>
-            </div>
-            <div class="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-5 blur-[2px]">
-                <h4 class="font-bold text-slate-900 dark:text-white mb-2">The B2B Hitman</h4>
-                <p class="text-xs text-slate-600 dark:text-slate-400 mb-3"><span class="font-semibold text-ppBlue">Niche:</span> Enterprise Sales</p>
-                <p class="text-sm text-slate-600 dark:text-slate-300">Ditch the paper cards and wear a sleek lanyard holding an SMS Payload code. When someone asks what you do, force a pre-filled text.</p>
-            </div>
-        </div>
-
-        <!-- Clean MailerLite Embed Overlay (Now relative with negative margin) -->
-        <div class="relative z-10 -mt-32 flex justify-center px-4 w-full">
-            <div id="mlb2-45398377" class="ml-subscribe-form ml-subscribe-form-45398377 w-full max-w-md bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded-2xl p-6 sm:p-8 shadow-2xl">
-                
-                <div class="row-form">
-                    <div class="text-center mb-6">
-                        <h4 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Unlock the Full 51-Play Arsenal</h4>
-                        <p class="text-sm text-slate-600 dark:text-slate-400">Drop your email to download the complete manifesto and 51-play guide.</p>
-                    </div>
-
-                    <form class="ml-block-form w-full" action="#" onsubmit="return false" data-code="" method="post" target="_blank">
-                        <div class="mb-4">
-                            <input aria-label="email" aria-required="true" type="email" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-ppBlue" data-inputmask="" name="fields[email]" placeholder="Enter your email address" autocomplete="email">
-                        </div>
-                        <input type="hidden" name="ml-submit" value="1">
-                        <button disabled title="Unavailable in staging" type="submit" class="primary w-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold py-3 px-4 rounded-lg hover:bg-ppBlue dark:hover:bg-ppBlue dark:hover:text-white transition-colors">Download the PDF</button>
-                        <button disabled="disabled" style="display: none;" type="button" class="loading w-full bg-slate-400 text-white font-bold py-3 px-4 rounded-lg cursor-not-allowed">
-                            Loading...
-                        </button>
-                        <input type="hidden" name="anticsrf" value="true">
-                    </form>
-                </div>
-
-                <!-- Success State -->
-                <div class="row-success text-center py-4" style="display: none">
-                    <h4 class="text-xl font-bold text-ppGreen mb-2">Arsenal Dispatched.</h4>
-                    <p class="text-sm text-slate-600 dark:text-slate-300">Check your inbox for the secure download link.</p>
-                </div>
-            </div>
-        </div>
-    </div>
+        <main class="flex-1 min-w-0 space-y-8 pb-20">
+<section id="saas-trap" class="bg-white dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 sm:p-8 rounded-2xl shadow-xl scroll-mt-8"><h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-5">Start here: choose how your QR works</h2>
+<div class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed space-y-4"><p>PixelPing brings QR content, design, printing, and hosted Smart Cards into one workflow. This manual follows the controls in the app. For a specific problem, visit the <a href="help.html" class="underline underline-offset-2 font-semibold">Help Center</a>.</p>
+<h3 class="font-bold text-lg text-slate-900 dark:text-white pt-2">Static or Dynamic?</h3>
+<div class="overflow-x-auto"><table class="w-full text-left text-sm"><caption class="sr-only">Mode reference</caption><thead><tr><th scope="col" class="p-3 border-b border-slate-300 dark:border-slate-600">Mode</th><th scope="col" class="p-3 border-b border-slate-300 dark:border-slate-600">What a scan opens</th><th scope="col" class="p-3 border-b border-slate-300 dark:border-slate-600">What can change later</th></tr>
+</thead>
+<tbody><tr><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Static</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">The content encoded directly in the QR, such as a website address, phone number, or text.</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">The encoded content cannot change after export. To change it, generate and distribute a new QR.</td></tr>
+<tr><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Dynamic — Evolution</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">A hosted PixelPing route that redirects to a website or displays a Smart Card.</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Edit the existing route in the Command Center to keep its URL and printed QR. Hosted routes require internet access and active Evolution access.</td></tr>
+</tbody>
+</table>
+</div>
+<p>Static QR images do not have a PixelPing subscription expiration. A website they point to can still move or go offline. Static generation can work offline after the app has loaded and cached successfully; sign-in, purchases, cloud sync, and Dynamic routing need a connection.</p>
+<h3 class="font-bold text-lg text-slate-900 dark:text-white pt-2">Make your first QR</h3>
+<ol class="list-decimal pl-5 space-y-3"><li>Open the <a href="index.html" class="underline underline-offset-2 font-semibold">generator</a> and select a content tab, such as Website, Phone, Email, SMS, or Coupon.</li>
+<li>Choose Static or Dynamic where supported, then enter your actual content. Placeholder examples are not saved values. Some content types are Static only.</li>
+<li>Give the QR a useful name. Adjust the colors, corner style, and center icon or custom QR logo. Keep the code readable and its clear margin intact.</li>
+<li>For Dynamic, select <strong>Save &amp; Activate</strong> and wait for <strong>Route active</strong>. Correct any highlighted field before continuing.</li>
+<li>Save a reusable design with <strong>Save to My Codes</strong>, then download or preview your print. Scan the exported file and a physical sample before distributing it.</li>
+</ol>
+</div>
 </section>
 
-            <!-- Section: Troubleshooting Graveyard -->
-            <section id="graveyard" class="bg-white dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 sm:p-8 rounded-2xl shadow-xl scroll-mt-8">
-                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-3">
-                    <span>🪦</span> The Troubleshooting Graveyard
-                </h2>
-                <div class="space-y-6">
-                    <div class="border-l-4 border-amber-500 pl-4">
-                        <h4 class="font-bold text-slate-900 dark:text-white mb-1">1. The "Blur" Effect (Vector Violation)</h4>
-                        <p class="text-sm text-slate-600 dark:text-slate-300">If edges bleed into each other, you used a standard PNG image file[cite: 2]. Never send a PNG to a printer; always download the SVG vector math so edges cut like glass[cite: 2].</p>
-                    </div>
-                    <div class="border-l-4 border-red-500 pl-4">
-                        <h4 class="font-bold text-slate-900 dark:text-white mb-1">2. URL Rot (The Dead Link Dilemma)</h4>
-                        <p class="text-sm text-slate-600 dark:text-slate-300">If a perfectly printed code routes to a "404 Page Not Found", you hard-coded a static URL[cite: 2]. For expensive physical prints, always use Evolution (Dynamic) tier so you can update destination routing[cite: 2].</p>
-                    </div>
-                    <div class="border-l-4 border-ppBlue pl-4">
-                        <h4 class="font-bold text-slate-900 dark:text-white mb-1">3. The Error Correction Trade-Off</h4>
-                        <p class="text-sm text-slate-600 dark:text-slate-300">More data creates a denser QR code that can be harder to scan at a small print size. Keep the content concise, preserve a clear margin, and test the finished print in its actual lighting and location.</p>
-                    </div>
-                </div>
-            </section>
 
-        </main>
+<section id="the-core" class="bg-white dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 sm:p-8 rounded-2xl shadow-xl scroll-mt-8"><h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-5">Save, activate, and start a new QR</h2>
+<div class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed space-y-4"><div class="overflow-x-auto"><table class="w-full text-left text-sm"><caption class="sr-only">Control reference</caption><thead><tr><th scope="col" class="p-3 border-b border-slate-300 dark:border-slate-600">Control</th><th scope="col" class="p-3 border-b border-slate-300 dark:border-slate-600">What it does</th></tr>
+</thead>
+<tbody><tr><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Save &amp; Activate</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Publishes the current Dynamic route. It does not download a file or save a design to My Codes.</td></tr>
+<tr><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Save to My Codes</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Stores a named snapshot of the QR content, design, and print settings in your account library. It does not activate a route.</td></tr>
+<tr><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Update Saved Code</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Updates the saved design you opened. It does not change its existing live destination.</td></tr>
+<tr><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Save as New</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Saves a separate design instead of overwriting the opened design.</td></tr>
+<tr><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Clear Form &amp; Canvas</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Starts a fresh form and canvas. Save any design you want to keep first. This is not Delete Route.</td></tr>
+</tbody>
+</table>
+</div>
+<h3 class="font-bold text-lg text-slate-900 dark:text-white pt-2">Forgot an icon or changed the print message?</h3>
+<p>You can keep editing without deleting everything. Visual changes such as a QR center icon, colors, or Smart Print label appear in the next export. Update the saved design, or use Save as New for a separate version. Download or print again to obtain the new appearance; an already printed image cannot change.</p>
+<p>Changing the actual Phone, SMS, Email, or Coupon content in the generator can create a new Dynamic draft. To update a Smart Card that people already scan, use <strong>Edit Page</strong> in the Command Center instead. Check the route URL before exporting.</p>
+<h3 class="font-bold text-lg text-slate-900 dark:text-white pt-2">Recent and My Codes</h3>
+<p><strong>Recent</strong> holds your last five saved or exported designs. <strong>My Codes</strong> holds up to 50 deliberately saved designs across devices when signed in and synced. Search by name or destination. Open restores a design to the canvas; More actions provides Rename, Duplicate, and Delete Saved Design.</p>
+<p>A duplicated Dynamic design needs its own activation and new exported QR. The original route stays separate. If you see “sync pending,” keep this browser’s data and reconnect before assuming the design is available on another device.</p>
+<p>When changing an opened design, a Save Changes / Discard Changes / Cancel prompt protects unsaved work. Deleting a saved design removes its snapshot; it does not delete its live route.</p>
+</div>
+</section>
+
+
+<section id="smart-cards" class="bg-white dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 sm:p-8 rounded-2xl shadow-xl scroll-mt-8"><h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-5">Smart Cards: Phone, SMS, Email, and Coupon</h2>
+<div class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed space-y-4"><p>A Dynamic Phone, SMS, Email, or text Coupon creates an automatic Smart Card: a mobile page with your business name, description, action details, and the appropriate button. A Coupon containing a website URL can follow the website-routing workflow instead. Static actions use their encoded content directly.</p>
+<div class="overflow-x-auto"><table class="w-full text-left text-sm"><caption class="sr-only">Card reference</caption><thead><tr><th scope="col" class="p-3 border-b border-slate-300 dark:border-slate-600">Card</th><th scope="col" class="p-3 border-b border-slate-300 dark:border-slate-600">Visitor action</th></tr>
+</thead>
+<tbody><tr><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Phone</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Call now opens the device dialer. No call is placed automatically.</td></tr>
+<tr><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">SMS</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Send a message opens the messaging app with the recipient and any prepared message. The visitor chooses whether to send.</td></tr>
+<tr><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Email</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Send an email opens a mail app or an app chooser with the recipient and any subject and body. Nothing is sent automatically.</td></tr>
+<tr><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Coupon</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Copy Coupon Code copies the displayed code. An optional Redeem Offer button opens the supplied HTTPS link.</td></tr>
+</tbody>
+</table>
+</div>
+<p>The Smart Card is generated for you; it is not a separate page builder. The business monogram and action artwork are part of the layout. A center logo on the QR itself is separate from the Smart Card. The Powered by PixelPing footer remains on hosted Smart Cards.</p>
+<h3 class="font-bold text-lg text-slate-900 dark:text-white pt-2">Three different kinds of message</h3>
+<ul class="list-disc pl-5 space-y-3"><li><strong>Business description:</strong> the introduction displayed on the Smart Card.</li>
+<li><strong>Prepared SMS or email message:</strong> text placed into the visitor’s messaging or mail app.</li>
+<li><strong>Smart Print label:</strong> headline and message displayed beneath the QR on an export or print. It does not set the prepared email or SMS body.</li>
+</ul>
+<p>For field sizes, see <a href="help.html#limits" class="underline underline-offset-2 font-semibold">character limits</a>. Use a complete international phone number with + and the country code when needed. Supported +1 numbers display with spacing and punctuation while the action still uses the normalized number.</p>
+</div>
+</section>
+
+
+<section id="command-center" class="bg-white dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 sm:p-8 rounded-2xl shadow-xl scroll-mt-8"><h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-5">Manage live routes in the Command Center</h2>
+<div class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed space-y-4"><ol class="list-decimal pl-5 space-y-3"><li>Open the <a href="admin.html" class="underline underline-offset-2 font-semibold">Command Center</a> while signed into the account that owns the route. Select <strong>Sync</strong> to refresh access and route information.</li>
+<li>Find your route using search and the page controls. Use Copy to obtain its URL; a friendly Rename helps you identify it.</li>
+<li>For a website route, choose <strong>Reroute Link</strong>. For a Smart Card, choose <strong>Edit Page</strong>, update its fields, and select <strong>Save Page Changes</strong>. These edit the existing route without replacing its QR.</li>
+<li>Wait for confirmation, then rescan the original QR. If the save result is uncertain, Sync and reopen the editor before retrying.</li>
+<li>Use <strong>Save to My Codes</strong> or <strong>Open in Canvas</strong> when you need a reusable design. A live route record and a saved design are separate items.</li>
+</ol>
+<h3 class="font-bold text-lg text-slate-900 dark:text-white pt-2">Deleting a route is permanent</h3>
+<p><strong>Delete Route stops downloaded and printed copies from working and cannot be undone.</strong> A saved design can remain in My Codes, but it cannot bring the deleted route back. Duplicate its design, activate a new route, and replace the old QR wherever it was distributed.</p>
+<h3 class="font-bold text-lg text-slate-900 dark:text-white pt-2">Scans, activity, and notifications</h3>
+<p>The Command Center displays Dynamic scan totals, account activity, and notice delivery status. Static scans do not pass through PixelPing’s hosted routing service. Opening a Dynamic route while testing can contribute to its activity. Marking notices read does not erase the activity history.</p>
+<p>Email notices may arrive during testing when delivery is enabled. There is currently no user-facing Pause Email control. This manual does not describe planned controls as available features.</p>
+<p>For branded routes, follow <a href="help.html#dns-guide" class="underline underline-offset-2 font-semibold">Custom Domain Setup</a>. For billing or paused routes, see <a href="help.html#account-recovery" class="underline underline-offset-2 font-semibold">Account &amp; Recovery</a>.</p>
+</div>
+</section>
+
+
+<section id="print-export" class="bg-white dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 sm:p-8 rounded-2xl shadow-xl scroll-mt-8"><h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-5">Design, download, and print</h2>
+<div class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed space-y-4"><p>Select a print layout and physical size that match your intended use. Smart Print labels use a bold, centered headline with a regular, centered message below it. Paragraph breaks are preserved. The combined headline and message limit is 1,024 characters, including the line break between fields.</p>
+<div class="overflow-x-auto"><table class="w-full text-left text-sm"><caption class="sr-only">Format or control reference</caption><thead><tr><th scope="col" class="p-3 border-b border-slate-300 dark:border-slate-600">Format or control</th><th scope="col" class="p-3 border-b border-slate-300 dark:border-slate-600">How to use it</th></tr>
+</thead>
+<tbody><tr><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">PNG</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">A raster image for digital use or printing at adequate resolution. Avoid enlarging a small image until its squares blur.</td></tr>
+<tr><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">SVG</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">A vector export that scales cleanly. Useful when a printer or designer needs to resize the artwork.</td></tr>
+<tr><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">PDF</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Uses the print preview workflow. Select Print / Save as PDF, then your browser’s Save as PDF destination.</td></tr>
+<tr><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Preview &amp; Print</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Opens a preview first. Review the layout before opening the browser print dialog.</td></tr>
+</tbody>
+</table>
+</div>
+<p>SVG, PDF, and premium design tools require the corresponding paid access. If a Dynamic route is not active or has unsaved route changes, the export workflow can ask you to activate or save before continuing.</p>
+<ol class="list-decimal pl-5 space-y-3"><li>Keep a clear margin around the code and strong contrast between its data and background. Large logos, pale colors, glare, and a curved surface can make scanning harder.</li>
+<li>Check the actual downloaded file, not just the on-screen canvas. Confirm that its recipient, website, or card is correct.</li>
+<li>Print a sample at the final physical size and test it on the intended material with more than one phone when possible.</li>
+<li>For PDF, review paper size, margins, scaling, and page count in the browser print dialog. Adjust settings if the browser changes the layout.</li>
+</ol>
+<p>No color combination or export format guarantees a scan in every environment. Keep the successful sample as your reference.</p>
+</div>
+</section>
+
+
+<section id="monetization" class="bg-white dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 sm:p-8 rounded-2xl shadow-xl scroll-mt-8"><h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-5">Plans and account access</h2>
+<div class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed space-y-4"><div class="overflow-x-auto"><table class="w-full text-left text-sm"><caption class="sr-only">Plan reference</caption><thead><tr><th scope="col" class="p-3 border-b border-slate-300 dark:border-slate-600">Plan</th><th scope="col" class="p-3 border-b border-slate-300 dark:border-slate-600">Price shown in the app</th><th scope="col" class="p-3 border-b border-slate-300 dark:border-slate-600">Purpose</th></tr>
+</thead>
+<tbody><tr><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Nomad — Free Forever</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">$0</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Standard Static URL, Phone, and Text QR creation, basic design controls, and PNG export.</td></tr>
+<tr><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Rebellion — Master Key</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">$99 one-time</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Adds premium payloads and business tools, custom QR center logos, brand tools, Smart Print labels, and SVG/PDF exports.</td></tr>
+<tr><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Evolution</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">$39/month</td><td class="p-3 align-top border-b border-slate-200 dark:border-slate-700">Includes Rebellion features while subscribed, plus hosted Dynamic routes, Smart Cards, Command Center management, scan telemetry, and cloud-saved link history.</td></tr>
+</tbody>
+</table>
+</div>
+<p>Review the current <a href="index.html#pricing-grid" class="underline underline-offset-2 font-semibold">pricing cards</a> and checkout before buying. “Master Key” remains the license name used in parts of the app. Buying Rebellion alone does not include ongoing Dynamic hosting. A separately purchased lifetime Master Key remains yours if Evolution ends.</p>
+<p>After checkout, sign into the purchasing account, refresh the app, and use Sync. If access remains unverified, contact support before purchasing again. Subscription recovery and retention are explained in <a href="help.html#account-recovery" class="underline underline-offset-2 font-semibold">Account &amp; Recovery</a>.</p>
+</div>
+</section>
+
+
+<section id="guerrilla-plays" class="bg-white dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 sm:p-8 rounded-2xl shadow-xl scroll-mt-8"><h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-5">The Arsenal: put a QR to work</h2>
+<div class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed space-y-4"><p>Open the Arsenal in the generator to choose a play and load its setup instructions. Complete the actual destination and any required fields, review the access needed, and activate a Dynamic route before exporting it.</p>
+<ul class="list-disc pl-5 space-y-3"><li><strong>Table or counter:</strong> link to your menu, booking page, or review destination. Keep the action label clear.</li>
+<li><strong>Contact card:</strong> offer a phone, text, email, or vCard action and test the receiving phone’s handoff.</li>
+<li><strong>Printed campaign:</strong> use a Dynamic route when you need to change a website destination later. Manage it in the Command Center.</li>
+<li><strong>Offer:</strong> use a Coupon Smart Card with a clear code, a short note, and an optional redemption link.</li>
+</ul>
+<p>The Arsenal supplies starting points, not completed business content. Test your own links and permissions before sharing. <a href="index.html" class="underline underline-offset-2 font-semibold">Return to the generator</a>.</p>
+</div>
+</section>
+
+
+<section id="graveyard" class="bg-white dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 sm:p-8 rounded-2xl shadow-xl scroll-mt-8"><h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-5">Before you share</h2>
+<div class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed space-y-4"><ul class="list-disc pl-5 space-y-3"><li>Confirm that a Dynamic route shows Route active and opens from the exported QR.</li>
+<li>Test the action button, including the prepared SMS or email text, without sending anything you do not intend to send.</li>
+<li>Keep the reusable design in My Codes and confirm sync if you need it on another device.</li>
+<li>Test the final printed size and material. Keep the original QR when testing an in-place route update.</li>
+<li>For Route unavailable, missing access, downloads, or DNS issues, use the <a href="help.html" class="underline underline-offset-2 font-semibold">Help Center</a>.</li>
+</ul>
+<p>Need help? Email <a href="mailto:support@senditin.app" class="underline underline-offset-2 font-semibold">support@senditin.app</a> with the steps, result, and a screenshot. Never include passwords, sign-in codes, or API secrets.</p>
+</div>
+</section>
+
+</main>
     </div>
 
     <!-- Your Standard Footer -->
@@ -254,14 +212,7 @@
         </div>
     </footer>
 
-    <!-- MailerLite Scripts -->
-    <script>
-        function ml_webform_success_45398377() {
-            var $ = ml_jQuery || jQuery;
-            $('.ml-subscribe-form-45398377 .row-success').show();
-            $('.ml-subscribe-form-45398377 .row-form').hide();
-        }
-    </script>
+
     
     
 
