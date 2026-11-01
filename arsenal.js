@@ -1101,7 +1101,76 @@ document.addEventListener('DOMContentLoaded', () => {
         finally { opening = false; }
     }
     window.pixelPingArsenal = { open, list: () => Object.entries(arsenalPlays).map(([slug, recipe]) => ({slug, ...JSON.parse(JSON.stringify(recipe))})) };
+    // Browse existing recipes without changing the canvas; Open Play uses the existing guard.
+    const launcher = document.getElementById('btn-arsenal');
+    const picker = document.getElementById('arsenal-picker');
+    const select = document.getElementById('arsenal-play-select');
+    const openButton = document.getElementById('arsenal-open-play');
+    const status = document.getElementById('arsenal-picker-status');
+    if (launcher && picker && select && openButton && status) {
+        const accessLabel = recipe => recipe.tierRequired === 'evolution' ? 'Evolution'
+            : recipe.tierRequired === 'master-key' ? 'Rebellion (Master Key)' : 'Nomad (Free)';
+        const selection = () => Object.hasOwn(arsenalPlays, select.value) ? arsenalPlays[select.value] : null;
+        let loadingPlay = false;
+        const ready = () => Boolean(window.pixelPingOpenArsenal && window.pixelPingAuthReady === true &&
+            window.pixelPingAccountStatusPending !== true && window.pixelPingCommandDraftSettled === true);
+        function updateAvailability() {
+            openButton.disabled = loadingPlay || !selection() || !ready();
+            if (!ready()) status.textContent = 'Waiting for account and canvas checks. If this persists, refresh the app and try again.';
+            else if (status.textContent.startsWith('Waiting for account')) status.textContent = '';
+        }
+        Object.entries(arsenalPlays).sort((a, b) => a[1].number - b[1].number).forEach(([slug, recipe]) => {
+            const option = document.createElement('option');
+            option.value = slug;
+            option.textContent = recipe.number + '. ' + recipe.name;
+            select.appendChild(option);
+        });
+        launcher.addEventListener('click', () => {
+            picker.hidden = !picker.hidden;
+            launcher.setAttribute('aria-expanded', String(!picker.hidden));
+            if (!picker.hidden) { updateAvailability(); select.focus(); }
+        });
+        picker.addEventListener('keydown', event => {
+            if (event.key !== 'Escape' || loadingPlay) return;
+            event.preventDefault();
+            picker.hidden = true;
+            launcher.setAttribute('aria-expanded', 'false');
+            launcher.focus();
+        });
+        select.addEventListener('change', () => {
+            const recipe = selection();
+            document.getElementById('arsenal-selection-access').textContent = recipe
+                ? (recipe.mode === 'dynamic' ? 'Dynamic' : 'Static') + ' · ' + accessLabel(recipe) + ' required' : '';
+            document.getElementById('arsenal-selection-instructions').textContent = recipe?.instructions || '';
+            status.textContent = '';
+            updateAvailability();
+        });
+        openButton.addEventListener('click', async () => {
+            if (loadingPlay || !selection()) return;
+            if (!ready()) { updateAvailability(); return; }
+            const slug = select.value;
+            loadingPlay = true;
+            select.disabled = true;
+            openButton.textContent = 'Opening…';
+            updateAvailability();
+            try {
+                const applied = await open(slug);
+                status.textContent = applied
+                    ? 'Draft opened. Follow the setup instructions below; no route has been activated.'
+                    : 'Play was not opened. Review the canvas status or choose a play to try again.';
+            } finally {
+                loadingPlay = false;
+                select.disabled = false;
+                openButton.textContent = 'Open Play';
+                updateAvailability();
+            }
+        });
+        for (const name of ['pixelping:auth-ready', 'pixelping:entitlement-ready', 'pixelping:command-draft-ready', 'pixelping:canvas-controls-ready'])
+            window.addEventListener(name, updateAvailability);
+        updateAvailability();
+    }
     const openRequested = () => { if (requested && !initialApplied) void open(requested, {initial:true}); };
     for (const name of ['pixelping:auth-ready','pixelping:entitlement-ready','pixelping:command-draft-ready','pixelping:canvas-controls-ready']) window.addEventListener(name, openRequested);
     queueMicrotask(openRequested);
 });
+
