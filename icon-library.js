@@ -16,7 +16,7 @@
     };
     const rawName = id => typeof id === 'string' && id.startsWith(prefix) ? id.slice(prefix.length) : '';
     const managed = id => Object.hasOwn(hashes, rawName(id));
-    const title = id => rawName(id).replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+    const title = id => ({ ticket: 'Coupon / Ticket', 'file-text': 'Text / Document' })[rawName(id)] || rawName(id).replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
     const releasePreview = () => { previewRun++; if (previewUrl) URL.revokeObjectURL(previewUrl); previewUrl = null; };
     function identity() {
         const owner = user();

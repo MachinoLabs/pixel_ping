@@ -418,6 +418,8 @@
         /* Three equal controls; mode color and the selected outline have separate meanings. */
         #qr-content-header { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
         #qr-content-heading { white-space: nowrap; }
+        .pl-input[aria-invalid="true"] { outline: 2px solid #b91c1c; outline-offset: 2px; }
+        .dark .pl-input[aria-invalid="true"] { outline-color: #f87171; }
         #qr-mode-controls { justify-self: center; max-width: 90%; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; width: 100%; min-width: 0; }
         #qr-mode-controls .pp-qr-action { background: transparent; min-width: 0; padding: 9px 8px; white-space: nowrap; border: 1px solid transparent; border-radius: 6px; font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; transition: background-color .15s, box-shadow .15s; color: #475569; }
         #qr-mode-controls .pp-qr-action[aria-pressed="true"] { box-shadow: 0 0 0 2px #17324D; }
@@ -705,8 +707,8 @@
                         </div>
                         <div id="form-email" class="payload-form space-y-3">
                             <div><label class="block text-xs text-slate-500 dark:text-ppLight mb-1">To Address</label><input type="email" id="pl-email-to" placeholder="hello@pixelping.app" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-sm"></div>
-                            <div><label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Subject</label><input type="text" id="pl-email-sub" placeholder="Subject line" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-sm"></div>
-                            <div><label class="block text-xs text-slate-500 dark:text-ppLight mb-1" for="pl-action-email-message">Message (optional)</label><textarea id="pl-action-email-message" maxlength="800" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-sm" rows="3" placeholder="Pre-filled email message..."></textarea></div>
+                            <div><label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Subject</label><input type="text" id="pl-email-sub" aria-describedby="email-subject-count" placeholder="Subject line" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-sm"><p id="email-subject-count" hidden class="mt-1 text-xs text-slate-500 dark:text-slate-400"></p></div>
+                            <div><label class="block text-xs text-slate-500 dark:text-ppLight mb-1" for="pl-action-email-message">Message (optional)</label><textarea id="pl-action-email-message" maxlength="800" aria-describedby="email-body-count" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-sm" rows="3" placeholder="Pre-filled email message..."></textarea><p id="email-body-count" class="mt-1 text-xs text-slate-500 dark:text-slate-400">0 / 800 characters · Prepared email body; separate from the Smart Print label.</p></div>
                         </div>
                         <div id="form-calendar" class="payload-form space-y-3">
                             <div><label class="block text-xs text-slate-500 dark:text-ppLight mb-1">Event Title</label><input type="text" id="pl-cal-title" placeholder="Event Title" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-sm"></div>
@@ -731,7 +733,7 @@
                     <!-- Batch26 Smart Action business fields: Dynamic actions only. -->
                     <section id="smart-action-fields" hidden class="mt-3 space-y-3" aria-labelledby="smart-action-heading">
                         <h3 id="smart-action-heading" class="text-xs font-bold text-slate-700 dark:text-slate-300">Business Details</h3>
-                        <div><label for="pl-action-business-name" class="block text-xs text-slate-500 dark:text-ppLight mb-1">Business Name</label><input type="text" id="pl-action-business-name" maxlength="64" placeholder="Your business name" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-sm"></div>
+                        <div><label for="pl-action-business-name" class="block text-xs text-slate-500 dark:text-ppLight mb-1">Business Name <span class="font-normal">(required)</span></label><input type="text" id="pl-action-business-name" maxlength="64" placeholder="Your business name" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-sm"></div>
                         <div><label for="pl-action-description" class="block text-xs text-slate-500 dark:text-ppLight mb-1">Description <span class="font-normal">(optional)</span></label><input type="text" id="pl-action-description" maxlength="180" placeholder="A short introduction" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-sm"></div>
                         <p data-action-only="phone sms" class="text-xs text-slate-500 dark:text-slate-400">US numbers are accepted. For international numbers, include + and the country code.</p>
                         <div data-action-only="coupon" hidden><label for="pl-action-coupon-note" class="block text-xs text-slate-500 dark:text-ppLight mb-1">Coupon Note <span class="font-normal">(optional)</span></label><input type="text" id="pl-action-coupon-note" maxlength="140" placeholder="How to use this offer" class="pl-input w-full bg-white dark:bg-slate-800/50 text-slate-900 dark:text-white px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-sm"></div>
@@ -862,6 +864,7 @@
                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg>
                             <span>Save &amp; Activate</span>
                         </button>
+                    <p id="smart-action-save-error" hidden role="alert" class="w-full text-xs font-semibold text-red-700 dark:text-red-300"></p>
                     <button id="btn-check-route" type="button" class="text-xs font-bold underline text-slate-700 dark:text-slate-200" hidden>Check Again</button>
                     <p id="dynamic-route-guide" class="text-xs text-slate-600 dark:text-slate-300">Activate the route before downloading or printing. Saving a design to My Codes is separate.</p>
                 </div>
@@ -2174,7 +2177,49 @@ window.pixelPingRetryPurchaseReceipt = () => {
                 return ({ tel: 'phone', sms: 'sms', email: 'email', coupon: 'coupon' })[type] || null;
             }
 
+            function syncEmailCharacterCounts() {
+                const subject = document.getElementById('pl-email-sub');
+                const message = document.getElementById('pl-action-email-message');
+                const dynamicEmail = smartActionDynamic() && smartActionKind() === 'email';
+                const subjectCount = document.getElementById('email-subject-count');
+                subjectCount.hidden = !dynamicEmail;
+                subjectCount.textContent = subject.value.length + ' / 140 characters · Email subject';
+                if (dynamicEmail) subject.maxLength = 140;
+                else subject.removeAttribute('maxlength');
+                document.getElementById('email-body-count').textContent = message.value.length + ' / 800 characters · Prepared email body; separate from the Smart Print label.';
+            }
+
+            function clearSmartActionError() {
+                const notice = document.getElementById('smart-action-save-error');
+                notice.hidden = true;
+                notice.textContent = '';
+                document.querySelectorAll('.pl-input[aria-invalid="true"]').forEach(field => {
+                    field.removeAttribute('aria-invalid');
+                    const help = (field.getAttribute('aria-describedby') || '').split(/\s+/).filter(id => id && id !== 'smart-action-status').join(' ');
+                    if (help) field.setAttribute('aria-describedby', help);
+                    else field.removeAttribute('aria-describedby');
+                });
+            }
+
+            function showSmartActionError(message, fieldId) {
+                clearSmartActionError();
+                smartActionStatus.textContent = message;
+                const notice = document.getElementById('smart-action-save-error');
+                notice.textContent = message;
+                notice.hidden = false;
+                const field = fieldId && document.getElementById(fieldId);
+                if (field) {
+                    field.setAttribute('aria-invalid', 'true');
+                    // Keep existing character-count help available to assistive technology.
+                    const counter = fieldId === 'pl-email-sub' ? 'email-subject-count ' :
+                        fieldId === 'pl-action-email-message' ? 'email-body-count ' : '';
+                    field.setAttribute('aria-describedby', counter + 'smart-action-status');
+                    field.focus();
+                }
+            }
+
             function syncSmartActionFields() {
+                syncEmailCharacterCounts();
                 const kind = smartActionKind();
                 smartActionFields.hidden = !smartActionDynamic() || !kind;
                 smartActionFields.querySelectorAll('[data-action-only]').forEach(field => {
@@ -2196,37 +2241,37 @@ window.pixelPingRetryPurchaseReceipt = () => {
                 const businessName = smartActionFieldValue('pl-action-business-name').trim();
                 const description = smartActionFieldValue('pl-action-description').trim();
                 const controls = /[\u0000-\u001f\u007f]/;
-                if (!businessName || businessName.length > 64 || controls.test(businessName)) return { error: 'Enter a business name of up to 64 characters.' };
-                if (description.length > 180 || controls.test(description)) return { error: 'Keep the business description to 180 characters.' };
+                if (!businessName || businessName.length > 64 || controls.test(businessName)) return { error: 'Enter a business name of up to 64 characters.', fieldId: 'pl-action-business-name' };
+                if (description.length > 180 || controls.test(description)) return { error: 'Keep the business description to 180 characters.', fieldId: 'pl-action-description' };
                 let action;
                 if (kind === 'phone' || kind === 'sms') {
                     const phone = smartActionPhone(smartActionFieldValue(kind === 'phone' ? 'pl-tel' : 'pl-sms-to'));
-                    if (!phone) return { error: 'Enter a 10-digit US number or an international number beginning with + and its country code.' };
+                    if (!phone) return { error: 'Enter a 10-digit US number or an international number beginning with + and its country code.', fieldId: kind === 'phone' ? 'pl-tel' : 'pl-sms-to' };
                     action = { phone };
                     if (kind === 'sms') {
                         const message = smartActionFieldValue('pl-sms-msg');
-                        if (message.length > 320) return { error: 'Keep the prepared SMS to 320 characters.' };
+                        if (message.length > 320) return { error: 'Keep the prepared SMS to 320 characters.', fieldId: 'pl-sms-msg' };
                         action.message = message;
                     }
                 } else if (kind === 'email') {
                     const email = smartActionFieldValue('pl-email-to').trim();
                     const subject = smartActionFieldValue('pl-email-sub').trim();
                     const message = smartActionFieldValue('pl-action-email-message');
-                    if (email.length > 254 || !/^[A-Za-z0-9.!$'*+_~-]+@[A-Za-z0-9](?:[A-Za-z0-9.-]*[A-Za-z0-9])?\.[A-Za-z]{2,}$/.test(email) || email.includes('..') || email.startsWith('.') || email.includes('.@')) return { error: 'Enter a valid email address.' };
-                    if (subject.length > 140 || controls.test(subject)) return { error: 'Keep the subject to 140 characters without line breaks.' };
-                    if (message.length > 800) return { error: 'Keep the prepared email to 800 characters.' };
+                    if (email.length > 254 || !/^[A-Za-z0-9.!$'*+_~-]+@[A-Za-z0-9](?:[A-Za-z0-9.-]*[A-Za-z0-9])?\.[A-Za-z]{2,}$/.test(email) || email.includes('..') || email.startsWith('.') || email.includes('.@')) return { error: 'Enter a valid email address.', fieldId: 'pl-email-to' };
+                    if (subject.length > 140 || controls.test(subject)) return { error: 'Keep the subject to 140 characters without line breaks.', fieldId: 'pl-email-sub' };
+                    if (message.length > 800) return { error: 'Keep the prepared email to 800 characters.', fieldId: 'pl-action-email-message' };
                     action = { email, subject, message };
                 } else {
                     const code = smartActionFieldValue('pl-biz-coupon').trim();
                     const note = smartActionFieldValue('pl-action-coupon-note').trim();
                     const redeemUrl = smartActionFieldValue('pl-action-redeem-url').trim();
-                    if (!code || code.length > 40 || controls.test(code)) return { error: 'Enter a coupon code of up to 40 characters without line breaks.' };
-                    if (note.length > 140 || controls.test(note)) return { error: 'Keep the coupon note to 140 characters.' };
+                    if (!code || code.length > 40 || controls.test(code)) return { error: 'Enter a coupon code of up to 40 characters without line breaks.', fieldId: 'pl-biz-coupon' };
+                    if (note.length > 140 || controls.test(note)) return { error: 'Keep the coupon note to 140 characters.', fieldId: 'pl-action-coupon-note' };
                     if (redeemUrl) {
                         try {
                             const url = new URL(redeemUrl);
                             if (url.protocol !== 'https:' || url.username || url.password || /[\u0000-\u0020\u007f\\]/.test(redeemUrl) || redeemUrl.length > 2048) throw new Error('Invalid offer URL');
-                        } catch { return { error: 'Redeem Offer needs a valid HTTPS address without embedded login details.' }; }
+                        } catch { return { error: 'Redeem Offer needs a valid HTTPS address without embedded login details.', fieldId: 'pl-action-redeem-url' }; }
                     }
                     action = { code, note, redeemUrl: redeemUrl || null };
                 }
@@ -2255,6 +2300,7 @@ window.pixelPingRetryPurchaseReceipt = () => {
             }
 
             function refreshSmartActionDraft() {
+                clearSmartActionError();
                 ensureSmartActionDraftCurrent();
                 syncSmartActionFields();
             }
@@ -2270,11 +2316,12 @@ window.pixelPingRetryPurchaseReceipt = () => {
                 smartActionSaved = null;
                 smartActionUnconfirmed = null;
                 smartActionStatus.textContent = '';
+                clearSmartActionError();
                 // The original Clear handler resets all .pl-input fields and
                 // selects Static. Let it finish before updating this new panel.
                 queueMicrotask(syncSmartActionFields);
             });
-            document.querySelectorAll('#form-tel input, #form-sms input, #form-sms textarea, #form-email input, #form-coupon textarea, #smart-action-fields input, #smart-action-fields textarea').forEach(input => {
+            document.querySelectorAll('#form-tel input, #form-sms input, #form-sms textarea, #form-email input, #form-email textarea, #form-coupon textarea, #smart-action-fields input, #smart-action-fields textarea').forEach(input => {
                 input.addEventListener('input', refreshSmartActionDraft);
                 input.addEventListener('change', refreshSmartActionDraft);
             });
@@ -2285,20 +2332,21 @@ window.pixelPingRetryPurchaseReceipt = () => {
 
             async function createSmartAction() {
                 if (smartActionSaving) return;
+                clearSmartActionError();
                 if (!window.Clerk?.user || !window.pixelPingHasEvolution() || !window.pixelPingHasMasterKey()) {
-                    smartActionStatus.textContent = 'Sign in with your active Evolution account to save this action.';
+                    showSmartActionError('Sign in with your active Evolution account to save this action.');
                     return;
                 }
                 ensureSmartActionDraftCurrent();
                 const slug = window.pendingSlug || window.pixelPingNewSlug();
                 window.pendingSlug = slug;
                 const built = buildSmartAction(slug);
-                if (built.error) { smartActionStatus.textContent = built.error; return; }
+                if (built.error) { showSmartActionError(built.error, built.fieldId); return; }
                 if (smartActionMatches(smartActionSaved) && window.pixelPingDynamicSavedSlug === slug) {
                     return;
                 }
                 if (smartActionMatches(smartActionUnconfirmed)) {
-                    smartActionStatus.textContent = 'The previous save could not be confirmed. Start a new Dynamic QR before retrying.';
+                    showSmartActionError('The previous save could not be confirmed. Start a new Dynamic QR before retrying.');
                     return;
                 }
                 const snapshot = { slug, owner: window.Clerk.user.id, body: JSON.stringify(built.payload) };
@@ -2348,9 +2396,9 @@ window.pixelPingRetryPurchaseReceipt = () => {
                     // A stale response must never mark another draft/account saved.
                     if (window.pendingSlug === slug && window.Clerk?.user?.id === snapshot.owner) {
                         window.pixelPingDynamicSavedSlug = null;
-                        smartActionStatus.textContent = submitted
+                        showSmartActionError(submitted
                             ? 'The save could not be confirmed. Start a new Dynamic QR before retrying.'
-                            : error.message;
+                            : error.message);
                     }
                 } finally {
                     smartActionSaving = null;
