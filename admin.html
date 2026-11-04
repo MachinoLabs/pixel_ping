@@ -116,7 +116,14 @@
         .dark #actionModal :is(p,#closeActionBtn) { color: #CBD5E1; }
         .dark #actionModal #action-edit-feedback { color: #FCA5A5; }
         #actionModal button:disabled { opacity: .65; cursor: wait; }
-        [data-action-edit], [data-action-view] { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
+        [data-action-qr], [data-action-edit], [data-action-view] { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
+        .pp-qr-dialog { width: min(420px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); overflow-y: auto; border: 1px solid var(--pp-border); border-radius: 16px; padding: 24px; color: var(--pp-ink); background: white; box-shadow: 0 20px 40px #0004; }
+        .pp-qr-dialog::backdrop { background: #0009; backdrop-filter: blur(4px); }
+        .dark .pp-qr-dialog { background: #0f172a; color: #f1f5f9; border-color: #475569; }
+        #smart-card-qr-image { width: 100%; max-width: 280px; margin: 16px auto; background: white; }
+        #smart-card-qr-image svg { display: block; width: 100%; height: auto; }
+        #smart-card-qr-url { overflow-wrap: anywhere; font-size: 12px; margin: 12px 0; }
+        .pp-qr-dialog button { min-height: 44px; padding: 10px 16px; border-radius: 9px; background: var(--pp-navy); color: white; font-weight: 700; }
     </style>
     <link rel="stylesheet" href="ui-colors.css">
 </head>
@@ -289,6 +296,17 @@
             <button id="saveEditBtn" class="w-full bg-ppBlue hover:bg-[#356B67] text-white font-extrabold py-3 px-4 rounded-xl transition-all shadow-lg">Save Destination</button>
         </div>
     </div>
+
+    <dialog id="smart-card-qr" class="pp-qr-dialog" aria-labelledby="smart-card-qr-heading" aria-describedby="smart-card-qr-help">
+        <h2 id="smart-card-qr-heading" class="text-xl font-bold">PixelPing Smart Card QR</h2>
+        <p id="smart-card-qr-name" class="font-bold mt-2 break-words"></p>
+        <div id="smart-card-qr-image" role="img" aria-label="Scannable QR for this PixelPing Smart Card"></div>
+        <p id="smart-card-qr-status" role="status" aria-live="polite"></p>
+        <p id="smart-card-qr-url" class="font-mono"></p>
+        <p id="smart-card-qr-help" class="text-sm mb-4">Scan preview. Open My Codes for your saved design.</p>
+        <button id="smart-card-qr-retry" type="button" hidden>Retry</button>
+        <button id="smart-card-qr-close" type="button">Close</button>
+    </dialog>
 
     <!-- PixelPing Smart Cards: edit the existing route in place. -->
     <div id="actionOverlay" class="pp-overlay" hidden></div>
@@ -507,13 +525,14 @@
                 const detail = link.kind === 'coupon' ? link.action.code : link.kind === 'email' ? link.action.email : link.action.phone;
                 card.innerHTML = `<div class="flex justify-between items-start mb-3 gap-2"><div class="min-w-0"><h3 class="font-bold text-lg truncate">${escapeHtml(link.friendlyName || link.title || link.brand.businessName)}</h3><p class="text-xs text-slate-400 break-words">${escapeHtml(link.brand.businessName)}</p><span class="text-[10px] font-bold uppercase text-ppBlue">${escapeHtml(actionLabels[link.kind])} · PixelPing Smart Card</span></div><div class="bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-600 px-2 py-1 rounded-lg text-center"><span class="block text-[10px] text-slate-400">Scans</span><span data-action-scans class="font-extrabold text-ppGreen">${escapeHtml(link.scans || 0)}</span></div></div>
                     <p class="text-xs font-mono text-slate-400 break-all mb-4">${escapeHtml(detail)}</p><div class="flex items-center gap-2 mb-4"><span class="text-xs font-mono break-all flex-1 select-all">${escapeHtml(userBaseDomain)}/${escapeHtml(link.slug)}</span><button type="button" data-action-copy class="pp-action-link text-xs">Copy</button></div>
-                    <div class="flex flex-wrap gap-3 mb-3"><a data-action-view target="_blank" rel="noopener noreferrer" class="pp-action-link text-sm underline">View live card ↗</a></div>
+                    <div class="flex flex-wrap gap-3 mb-3"><button type="button" data-action-qr class="pp-action-link text-sm underline" aria-haspopup="dialog">View QR</button><a data-action-view target="_blank" rel="noopener noreferrer" class="pp-action-link text-sm underline">View live card ↗</a></div>
                     <div class="mt-auto flex flex-wrap gap-2 pt-4 border-t border-slate-700"><button type="button" data-action-edit class="pp-action-link flex-1 text-xs font-bold">Edit PixelPing Smart Card</button><button type="button" data-action-save-design class="pp-route-save flex-1 text-xs font-bold">Save to My Codes</button><button type="button" data-action-delete class="pp-action-link pp-action-danger flex-1 text-xs font-bold">🗑️ Delete Route</button></div>`;
                 const rename=document.createElement('button');rename.type='button';rename.textContent='Rename';rename.className='pp-action-link text-xs font-bold underline mb-3 self-start';rename.addEventListener('click',()=>window.pixelPingRenameRoute(link.slug));card.append(rename);
                 card.querySelector('[data-action-copy]').addEventListener('click', event => {
                     if (suiteOwner !== window.Clerk?.user?.id) return;
                     copyToClipboard(`https://${userBaseDomain}/${link.slug}`, event.currentTarget);
                 });
+                card.querySelector('[data-action-qr]').addEventListener('click', event => openSmartCardQr(link.slug, event.currentTarget));
                 const view = card.querySelector('[data-action-view]');
                 view.href = `https://${userBaseDomain}/${encodeURIComponent(link.slug)}`;
                 view.title = 'Opens the saved PixelPing Smart Card in a new tab. Visits count as scans.';
@@ -523,6 +542,82 @@
                 grid.appendChild(card);
             }
         }
+        const smartQrDialog = document.getElementById('smart-card-qr');
+        const smartQrImage = document.getElementById('smart-card-qr-image');
+        const smartQrStatus = document.getElementById('smart-card-qr-status');
+        const smartQrRetry = document.getElementById('smart-card-qr-retry');
+        let smartQrViewer = null, smartQrGeneration = 0, smartQrLibrary = null;
+        function loadSmartQrLibrary() {
+            if (typeof window.QRCodeStyling === 'function') return Promise.resolve(window.QRCodeStyling);
+            if (smartQrLibrary) return smartQrLibrary;
+            smartQrLibrary = new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                let timer;
+                const finish = error => {
+                    clearTimeout(timer); script.onload = script.onerror = null;
+                    if (error) { script.remove(); smartQrLibrary = null; reject(error); }
+                    else resolve(window.QRCodeStyling);
+                };
+                script.src = 'https://cdn.jsdelivr.net/npm/qr-code-styling@1.5.0/lib/qr-code-styling.js';
+                script.referrerPolicy = 'no-referrer';
+                script.onload = () => finish(typeof window.QRCodeStyling === 'function' ? null : new Error('QR library unavailable'));
+                script.onerror = () => finish(new Error('QR library unavailable'));
+                timer = setTimeout(() => finish(new Error('QR library timed out')), 15000);
+                document.head.appendChild(script);
+            });
+            return smartQrLibrary;
+        }
+        async function renderSmartCardQr() {
+            const viewer = smartQrViewer, generation = ++smartQrGeneration;
+            const current = () => smartQrViewer === viewer && generation === smartQrGeneration &&
+                sameActionSession(viewer) && suiteOwner === viewer.owner && smartQrDialog.open;
+            smartQrImage.replaceChildren(); smartQrRetry.hidden = true;
+            smartQrStatus.textContent = 'Preparing QR…';
+            try {
+                const QRCode = await loadSmartQrLibrary();
+                if (!current()) return;
+                const qr = new QRCode({ width: 280, height: 280, type: 'svg', data: viewer.url,
+                    margin: 32, qrOptions: { errorCorrectionLevel: 'M' },
+                    dotsOptions: { color: '#000000', type: 'square' },
+                    backgroundOptions: { color: '#ffffff' } });
+                const holder = document.createElement('div');
+                qr.append(holder);
+                await qr.getRawData('svg');
+                if (!current()) return;
+                smartQrImage.replaceChildren(holder); smartQrStatus.textContent = '';
+            } catch (_) {
+                if (!current()) return;
+                smartQrStatus.textContent = 'QR preview could not load. Check your connection and try again.';
+                smartQrRetry.hidden = false;
+            }
+        }
+        function closeSmartCardQr() {
+            if (smartQrDialog.open) smartQrDialog.close();
+        }
+        function openSmartCardQr(slug, trigger) {
+            if (!suiteOwner || suiteOwner !== window.Clerk?.user?.id || !window.Clerk?.session) return;
+            const record = globalActionsData.find(link => link.slug === slug);
+            if (!record || smartQrDialog.open) return;
+            smartQrViewer = { owner: suiteOwner, session: window.Clerk.session, trigger,
+                url: `https://${userBaseDomain}/${encodeURIComponent(record.slug)}` };
+            document.getElementById('smart-card-qr-name').textContent = record.friendlyName || record.title || record.brand.businessName;
+            document.getElementById('smart-card-qr-url').textContent = smartQrViewer.url;
+            smartQrDialog.showModal(); renderSmartCardQr();
+        }
+        smartQrDialog.addEventListener('close', () => {
+            const trigger = smartQrViewer?.trigger;
+            ++smartQrGeneration; smartQrViewer = null; smartQrImage.replaceChildren();
+            smartQrStatus.textContent = ''; smartQrRetry.hidden = true;
+            document.getElementById('smart-card-qr-name').textContent = '';
+            document.getElementById('smart-card-qr-url').textContent = '';
+            if (trigger?.isConnected) trigger.focus();
+        });
+        document.getElementById('smart-card-qr-close').addEventListener('click', closeSmartCardQr);
+        smartQrRetry.addEventListener('click', renderSmartCardQr);
+        window.addEventListener('pixelping:command-account', () => {
+            const snapshot = window.pixelPingCommandAccount;
+            if (smartQrViewer && (!sameActionSession(smartQrViewer) || !snapshot || snapshot.account?.tier !== 'evolution')) closeSmartCardQr();
+        });
         function showActionFields() {
             const kind = actionValue('kind');
             document.getElementById('action-phone-fields').hidden = !['phone', 'sms'].includes(kind);
