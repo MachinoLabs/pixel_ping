@@ -100,6 +100,23 @@
             body > header { flex-direction: column; align-items: stretch; gap: 1rem; }
             body > header > div:last-child { justify-content: space-between; }
         }
+        /* Smart Card management uses the existing Command Center palette. */
+        .pp-route-filter { padding: 10px 14px; border: 1px solid var(--pp-border); border-radius: 9px; background: var(--pp-card); color: var(--pp-navy); font-size: 14px; font-weight: 700; min-height: 44px; }
+        .pp-route-filter[aria-pressed="true"] { background: var(--pp-sage); color: white; border-color: var(--pp-navy); }
+        .dark .pp-route-filter { background: #203B50; color: #F6F7F9; border-color: #638B79; }
+        .dark .pp-route-filter[aria-pressed="true"] { background: var(--pp-sage); }
+        .pp-kind-filter { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+        .pp-kind-filter[hidden], #route-filters[hidden] { display: none; }
+        .pp-kind-filter select { color: var(--pp-ink); background: white; border: 1px solid var(--pp-border); border-radius: 8px; padding: 10px; }
+        #actionModal .pp-modal-inner { background: white; color: var(--pp-ink); border-color: var(--pp-border); }
+        #actionModal :is(input,select,textarea) { background: white; color: var(--pp-ink); border-color: var(--pp-border); }
+        #actionModal :is(p,#closeActionBtn) { color: var(--pp-muted); }
+        #actionModal #action-edit-feedback { color: #A12D24; }
+        .dark #actionModal .pp-modal-inner, .dark #actionModal :is(input,select,textarea) { background: #0f172a; color: #f1f5f9; border-color: #475569; }
+        .dark #actionModal :is(p,#closeActionBtn) { color: #CBD5E1; }
+        .dark #actionModal #action-edit-feedback { color: #FCA5A5; }
+        #actionModal button:disabled { opacity: .65; cursor: wait; }
+        [data-action-edit], [data-action-view] { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
     </style>
     <link rel="stylesheet" href="ui-colors.css">
 </head>
@@ -139,15 +156,25 @@
     <main class="w-full max-w-6xl z-10 relative flex flex-col gap-6 flex-1 hidden" id="dashboard-main">
         
         <section aria-labelledby="live-routes-heading">
-            <h2 id="live-routes-heading" class="text-xl font-bold text-slate-900 dark:text-white">Live Dynamic Routes</h2>
-            <p class="text-base font-bold text-[#17324D] dark:text-slate-100 mt-2">Manage the destinations behind your activated Dynamic QR codes here.</p>
+            <h2 id="live-routes-heading" class="text-xl font-bold text-slate-900 dark:text-white">PixelPing Smart Cards &amp; Dynamic Routes</h2>
+            <p class="text-base font-bold text-[#17324D] dark:text-slate-100 mt-2">Update your PixelPing Smart Cards and website destinations here. Keep the same printed QR.</p>
         </section>
+        <div id="route-filters" role="group" aria-label="Show live routes" class="flex flex-wrap gap-2" hidden>
+            <button type="button" data-route-view="all" aria-pressed="true" class="pp-route-filter">All routes</button>
+            <button type="button" data-route-view="cards" aria-pressed="false" class="pp-route-filter">PixelPing Smart Cards</button>
+            <button type="button" data-route-view="web" aria-pressed="false" class="pp-route-filter">Website routes</button>
+            <label id="smart-card-kind-filter" class="pp-kind-filter" hidden>Card type
+                <select id="smart-card-kind"><option value="all">All four types</option><option value="phone">Phone</option><option value="sms">SMS</option><option value="email">Email</option><option value="coupon">Coupon</option></select>
+            </label>
+        </div>
+        <p id="route-results" class="text-sm text-slate-600 dark:text-slate-300" role="status" aria-live="polite"></p>
+        <p id="route-management-feedback" class="text-sm text-ppBlue" role="status" aria-live="polite" hidden></p>
         <div id="route-tools" class="flex flex-col sm:flex-row gap-4 items-center justify-between">
             <div class="relative w-full sm:w-96">
                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                 </div>
-                <input type="text" id="search-input" placeholder="Search by name, code, or URL..." class="w-full bg-white dark:bg-ppDark/80 text-slate-900 dark:text-white pl-10 pr-4 py-3 rounded-xl border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none shadow-sm text-sm">
+                <input type="text" id="search-input" aria-label="Search live routes and PixelPing Smart Cards" placeholder="Search name, business, phone, email, or URL…" class="w-full bg-white dark:bg-ppDark/80 text-slate-900 dark:text-white pl-10 pr-4 py-3 rounded-xl border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none shadow-sm text-sm">
             </div>
             
             <div class="flex items-center gap-3 w-full sm:w-auto">
@@ -221,7 +248,7 @@
             </div>
             <section class="bg-white dark:bg-slate-800/60 rounded-xl border border-slate-200 dark:border-slate-700 p-4 mt-5" aria-labelledby="protected-codes-heading">
                 <h3 id="protected-codes-heading" class="font-bold text-slate-900 dark:text-white">Protected Dynamic QR Inventory <span id="protected-code-count" class="text-xs font-normal text-slate-500 dark:text-slate-400"></span></h3>
-                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Your Dynamic QR routes remain listed here for recovery if your subscription ends. This inventory is read-only; manage destinations in Live Dynamic Routes and designs in My Codes.</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Your Dynamic QR routes remain listed here for recovery if your subscription ends. This inventory is read-only; manage live PixelPing Smart Cards and website routes above, and designs in My Codes.</p>
                 <p id="protected-code-items" class="mt-3 text-xs text-slate-700 dark:text-slate-200">Loading retained routes…</p>
                 <div class="flex flex-wrap gap-3 mt-3">
                     <button id="inventory-open" type="button" class="pp-dialog-action pp-dialog-ordinary">View Recovery Inventory</button>
@@ -263,19 +290,19 @@
         </div>
     </div>
 
-    <!-- Batch 27: separate automatic Smart Action editor -->
+    <!-- PixelPing Smart Cards: edit the existing route in place. -->
     <div id="actionOverlay" class="pp-overlay" hidden></div>
-    <div id="actionModal" class="pp-modal" role="dialog" aria-modal="true" aria-labelledby="action-editor-heading" hidden>
+    <div id="actionModal" class="pp-modal" role="dialog" aria-modal="true" aria-labelledby="action-editor-heading" aria-describedby="action-editor-help" hidden>
         <div class="pp-modal-inner relative" style="max-height:calc(100dvh - 32px);overflow-y:auto">
-            <button id="closeActionBtn" type="button" class="absolute top-4 right-4 text-slate-400" aria-label="Close Smart Action editor">✕</button>
-            <h2 id="action-editor-heading" class="text-xl font-bold mb-1">Edit Smart Action Page</h2>
+            <button id="closeActionBtn" type="button" class="absolute top-4 right-4 text-slate-400" aria-label="Close PixelPing Smart Card editor">✕</button>
+            <h2 id="action-editor-heading" class="text-xl font-bold mb-1">Edit PixelPing Smart Card</h2>
             <p id="action-slug-display" class="text-xs font-mono break-all text-slate-400"></p>
-            <p class="text-xs text-slate-400 mt-2">Print once. Change anytime. Your QR link stays the same.</p>
+            <p id="action-editor-help" class="text-xs text-slate-400 mt-2">Save changes to update this PixelPing Smart Card. Your QR link stays the same.</p>
+            <a id="action-view-saved" target="_blank" rel="noopener noreferrer" class="pp-action-link text-sm underline">View saved PixelPing Smart Card ↗</a>
+            <p class="text-xs mt-1">Opens the live saved version in a new tab. Visits count as scans.</p>
             <form id="actionEditForm" novalidate>
-                <label for="action-title" class="block text-xs font-bold mt-3 mb-1">Code title (Command Center)</label>
-                <input id="action-title" type="text" maxlength="120" placeholder="" class="w-full bg-slate-900 text-white px-3 py-2 rounded-lg border border-slate-700 focus:border-ppBlue focus:outline-none">
-                <label for="action-business-name" class="block text-xs font-bold mt-3 mb-1">Business name</label>
-                <input id="action-business-name" type="text" maxlength="64" placeholder="" class="w-full bg-slate-900 text-white px-3 py-2 rounded-lg border border-slate-700 focus:border-ppBlue focus:outline-none">
+                <label for="action-business-name" class="block text-xs font-bold mt-3 mb-1">Business name (required)</label>
+                <input id="action-business-name" type="text" required maxlength="64" placeholder="" class="w-full bg-slate-900 text-white px-3 py-2 rounded-lg border border-slate-700 focus:border-ppBlue focus:outline-none">
                 <label for="action-description" class="block text-xs font-bold mt-3 mb-1">Business description (optional)</label>
                 <input id="action-description" type="text" maxlength="180" placeholder="" class="w-full bg-slate-900 text-white px-3 py-2 rounded-lg border border-slate-700 focus:border-ppBlue focus:outline-none">
 
@@ -306,9 +333,10 @@
                 <label for="action-redeem-url" class="block text-xs font-bold mt-3 mb-1">HTTPS Redeem Offer link (optional)</label>
                 <input id="action-redeem-url" type="url" maxlength="2048" placeholder="" class="w-full bg-slate-900 text-white px-3 py-2 rounded-lg border border-slate-700 focus:border-ppBlue focus:outline-none">
                 </div>
-                <p class="text-xs text-slate-400 mt-4">Every page includes <a href="https://pixelping.app/" class="underline">Powered by PixelPing</a>.</p>
+                <p class="text-xs text-slate-400 mt-4">Every PixelPing Smart Card includes <a href="https://pixelping.app/" class="underline">Powered by PixelPing</a>.</p>
                 <p id="action-edit-feedback" role="status" aria-live="polite" class="text-sm text-amber-400 mt-3"></p>
-                <button id="saveActionBtn" type="submit" class="w-full bg-ppBlue text-white font-extrabold py-3 rounded-xl mt-3">Save Page Changes</button>
+                <button id="cancelActionBtn" type="button" class="pp-action-link underline mt-3">Cancel</button>
+                <button id="saveActionBtn" type="submit" class="w-full bg-ppBlue text-white font-extrabold py-3 rounded-xl mt-3">Save PixelPing Smart Card</button>
             </form>
         </div>
     </div>
@@ -378,18 +406,47 @@
         const actionLabels = { phone: 'Phone', sms: 'SMS', email: 'Email', coupon: 'Coupon' };
         let globalActionsData = [], suiteOwner = null, suiteGeneration = 0;
         let actionEditor = null, actionPending = false, watchedClerk = null;
+        let routeView = 'all';
+        const routeFilters = document.getElementById('route-filters');
+        const routeResults = document.getElementById('route-results');
+        const kindFilter = document.getElementById('smart-card-kind');
+        const managementFeedback = document.getElementById('route-management-feedback');
+        function setManagementFeedback(text) {
+            managementFeedback.textContent = text; managementFeedback.hidden = !text;
+        }
+        const sameActionSession = editor => editor?.owner === window.Clerk?.user?.id &&
+            editor.session === window.Clerk?.session;
+        function actionSnapshot() {
+            return JSON.stringify([...actionForm.querySelectorAll('input,select,textarea')].map(field => field.value));
+        }
         const actionValue = id => document.getElementById('action-' + id).value;
         const setActionListFeedback = text => {
             const target = document.getElementById('action-list-feedback');
             target.textContent = text; target.hidden = !text;
         };
         const closeActionModal = () => {
+            const trigger = actionEditor?.trigger;
             actionModal.hidden = true; actionOverlay.hidden = true; actionEditor = null;
+            document.getElementById('action-view-saved').removeAttribute('href');
+            if (trigger?.isConnected) trigger.focus();
         };
+        async function requestCloseActionModal() {
+            const editor = actionEditor;
+            if (!editor) return;
+            if (actionPending) { actionFeedback.textContent = 'Saving your PixelPing Smart Card…'; return; }
+            if (!editor.uncertain && actionSnapshot() !== editor.snapshot) {
+                const answer = await window.pixelPingHelp.ask({title:'Discard unsaved card changes?',
+                    message:'Your saved PixelPing Smart Card will stay as it is.',
+                    choices:[['keep','Keep Editing','ordinary'],['discard','Discard Changes','danger']]});
+                if (actionEditor !== editor || !sameActionSession(editor) || actionPending || answer.action !== 'discard') return;
+            }
+            closeActionModal();
+        }
         const invalidateActionIdentity = () => {
             window.pixelPingCommandAccount = null;
             window.dispatchEvent(new Event('pixelping:command-account'));
             ++suiteGeneration; routePage=1; document.getElementById('route-pagination').hidden=true; suiteOwner = null; globalLinksData = []; globalActionsData = [];
+            routeFilters.hidden = true; routeResults.textContent = ''; setManagementFeedback('');
             userBaseDomain = 'qr.pixelping.app'; activeDomainBadge.classList.add('hidden');
             grid.replaceChildren(); closeActionModal(); closeModal(); setActionListFeedback('');
             document.getElementById('route-tools').classList.add('hidden');
@@ -409,11 +466,15 @@
         }
         let routePage=1;
         function renderSuiteCards(webLinks) {
-            const term = searchInput.value.toLowerCase();
+            const term = searchInput.value.trim().toLowerCase();
             let web = webLinks.filter(link => [link.friendlyName, link.title, link.slug, link.destination].some(v => String(v || '').toLowerCase().includes(term)));
             let actions = globalActionsData.filter(link => [link.friendlyName, link.title, link.slug, link.kind,
                 link.brand?.businessName, link.brand?.description, ...Object.values(link.action || {})]
                 .some(v => String(v || '').toLowerCase().includes(term)));
+            if (routeView === 'cards') web = [];
+            if (routeView === 'web') actions = [];
+            if (routeView === 'cards' && kindFilter.value !== 'all') actions = actions.filter(link => link.kind === kindFilter.value);
+            routeResults.textContent = `Loaded routes: ${web.length + actions.length} matches · PixelPing Smart Cards: ${globalActionsData.length} · Website routes: ${webLinks.length}`;
             const total=web.length+actions.length,pages=Math.max(1,Math.ceil(total/6));
             routePage=Math.min(routePage,pages);
             const start=(routePage-1)*6,webCount=web.length;
@@ -425,6 +486,17 @@
                 document.getElementById('route-next').disabled=routePage>=pages;
                 document.getElementById('route-page-status').textContent=`Page ${routePage} of ${pages} · ${total} routes`;}
             renderCards(web);
+            if (!total && document.getElementById('action-list-feedback').hidden) {
+                grid.replaceChildren();
+                const empty = document.createElement('p'); empty.className = 'col-span-full py-8 text-center';
+                empty.textContent = term ? 'No matching routes. Try another search or view.' :
+                    routeView === 'cards' ? 'No PixelPing Smart Cards in this view. Create and activate one in the generator.' :
+                    routeView === 'web' ? 'No website routes yet. Create and activate one in the generator.' :
+                    'No live routes yet. Create and activate a Dynamic QR in the generator.';
+                const create = document.createElement('a'); create.href = 'index.html?ppDraftReturn=1';
+                create.textContent = 'Open Generator'; create.className = 'pp-action-link col-span-full text-center underline';
+                grid.append(empty, create);
+            }
             if (!web.length && actions.length) grid.replaceChildren();
             // A partial-load failure must never claim that the suite is empty.
             if (!web.length && !actions.length && !document.getElementById('action-list-feedback').hidden) grid.replaceChildren();
@@ -433,15 +505,19 @@
                 card.className = 'bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 p-5 rounded-2xl flex flex-col';
                 card.dataset.actionSlug = link.slug;
                 const detail = link.kind === 'coupon' ? link.action.code : link.kind === 'email' ? link.action.email : link.action.phone;
-                card.innerHTML = `<div class="flex justify-between items-start mb-3 gap-2"><div class="min-w-0"><h3 class="font-bold text-lg truncate">${escapeHtml(link.friendlyName || link.title || link.brand.businessName)}</h3><p class="text-xs text-slate-400 break-words">${escapeHtml(link.brand.businessName)}</p><span class="text-[10px] font-bold uppercase text-ppBlue">${escapeHtml(actionLabels[link.kind])} · Smart Action</span></div><div class="bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-600 px-2 py-1 rounded-lg text-center"><span class="block text-[10px] text-slate-400">Scans</span><span data-action-scans class="font-extrabold text-ppGreen">${escapeHtml(link.scans || 0)}</span></div></div>
+                card.innerHTML = `<div class="flex justify-between items-start mb-3 gap-2"><div class="min-w-0"><h3 class="font-bold text-lg truncate">${escapeHtml(link.friendlyName || link.title || link.brand.businessName)}</h3><p class="text-xs text-slate-400 break-words">${escapeHtml(link.brand.businessName)}</p><span class="text-[10px] font-bold uppercase text-ppBlue">${escapeHtml(actionLabels[link.kind])} · PixelPing Smart Card</span></div><div class="bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-600 px-2 py-1 rounded-lg text-center"><span class="block text-[10px] text-slate-400">Scans</span><span data-action-scans class="font-extrabold text-ppGreen">${escapeHtml(link.scans || 0)}</span></div></div>
                     <p class="text-xs font-mono text-slate-400 break-all mb-4">${escapeHtml(detail)}</p><div class="flex items-center gap-2 mb-4"><span class="text-xs font-mono break-all flex-1 select-all">${escapeHtml(userBaseDomain)}/${escapeHtml(link.slug)}</span><button type="button" data-action-copy class="pp-action-link text-xs">Copy</button></div>
-                    <div class="mt-auto flex gap-2 pt-4 border-t border-slate-700"><button type="button" data-action-edit class="pp-action-link flex-1 text-xs font-bold">✏️ Edit Page</button><button type="button" data-action-save-design class="pp-route-save flex-1 text-xs font-bold">Save to My Codes</button><button type="button" data-action-delete class="pp-action-link pp-action-danger flex-1 text-xs font-bold">🗑️ Delete Route</button></div>`;
+                    <div class="flex flex-wrap gap-3 mb-3"><a data-action-view target="_blank" rel="noopener noreferrer" class="pp-action-link text-sm underline">View live card ↗</a></div>
+                    <div class="mt-auto flex flex-wrap gap-2 pt-4 border-t border-slate-700"><button type="button" data-action-edit class="pp-action-link flex-1 text-xs font-bold">Edit PixelPing Smart Card</button><button type="button" data-action-save-design class="pp-route-save flex-1 text-xs font-bold">Save to My Codes</button><button type="button" data-action-delete class="pp-action-link pp-action-danger flex-1 text-xs font-bold">🗑️ Delete Route</button></div>`;
                 const rename=document.createElement('button');rename.type='button';rename.textContent='Rename';rename.className='pp-action-link text-xs font-bold underline mb-3 self-start';rename.addEventListener('click',()=>window.pixelPingRenameRoute(link.slug));card.append(rename);
                 card.querySelector('[data-action-copy]').addEventListener('click', event => {
                     if (suiteOwner !== window.Clerk?.user?.id) return;
                     copyToClipboard(`https://${userBaseDomain}/${link.slug}`, event.currentTarget);
                 });
-                card.querySelector('[data-action-edit]').addEventListener('click', () => openActionEditor(link.slug));
+                const view = card.querySelector('[data-action-view]');
+                view.href = `https://${userBaseDomain}/${encodeURIComponent(link.slug)}`;
+                view.title = 'Opens the saved PixelPing Smart Card in a new tab. Visits count as scans.';
+                card.querySelector('[data-action-edit]').addEventListener('click', event => openActionEditor(link.slug, event.currentTarget));
                 card.querySelector('[data-action-save-design]').addEventListener('click', () => window.pixelPingSaveRouteDesign(link.slug,link.kind));
                 card.querySelector('[data-action-delete]').addEventListener('click', () => deleteAction(link.slug));
                 grid.appendChild(card);
@@ -452,19 +528,22 @@
             document.getElementById('action-phone-fields').hidden = !['phone', 'sms'].includes(kind);
             for (const group of ['sms', 'email', 'coupon']) document.getElementById('action-' + group + '-fields').hidden = group !== kind;
         }
-        function openActionEditor(slug) {
+        function openActionEditor(slug, trigger) {
             if (!suiteOwner || suiteOwner !== window.Clerk?.user?.id || actionPending) return;
             const record = globalActionsData.find(link => link.slug === slug);
             if (!record) return;
             closeModal(); actionForm.reset(); actionSave.disabled = false; actionFeedback.textContent = '';
-            actionEditor = { owner: suiteOwner, slug, logoAssetId: record.brand.logoAssetId ?? null };
-            const values = { title: record.title, 'business-name': record.brand.businessName,
+            actionEditor = { owner: suiteOwner, session: window.Clerk?.session, slug, trigger,
+                logoAssetId: record.brand.logoAssetId ?? null, title: record.title };
+            const values = { 'business-name': record.brand.businessName,
                 description: record.brand.description, kind: record.kind, phone: record.action.phone,
                 'sms-message': record.kind === 'sms' ? record.action.message : '', email: record.action.email,
                 subject: record.action.subject, 'email-message': record.kind === 'email' ? record.action.message : '',
                 code: record.action.code, note: record.action.note, 'redeem-url': record.action.redeemUrl };
             for (const [key, value] of Object.entries(values)) document.getElementById('action-' + key).value = value ?? '';
             document.getElementById('action-slug-display').textContent = `${userBaseDomain}/${slug}`;
+            actionEditor.snapshot = actionSnapshot();
+            document.getElementById('action-view-saved').href = `https://${userBaseDomain}/${encodeURIComponent(slug)}`;
             showActionFields(); actionModal.hidden = false; actionOverlay.hidden = false;
             document.getElementById('action-business-name').focus();
         }
@@ -477,7 +556,7 @@
             };
             const kind = actionValue('kind');
             const brand = { businessName: text('business-name', 64, true), description: text('description', 180), logoAssetId: editor.logoAssetId };
-            const title = text('title', 120) || brand.businessName;
+            const title = editor.title || brand.businessName;
             let action;
             if (kind === 'phone' || kind === 'sms') {
                 const raw = actionValue('phone').trim();
@@ -509,11 +588,12 @@
             return { slug: editor.slug, kind, action, brand, title };
         }
         document.getElementById('action-kind').addEventListener('change', showActionFields);
-        document.getElementById('closeActionBtn').addEventListener('click', closeActionModal);
-        actionOverlay.addEventListener('click', closeActionModal);
+        document.getElementById('closeActionBtn').addEventListener('click', requestCloseActionModal);
+        document.getElementById('cancelActionBtn').addEventListener('click', requestCloseActionModal);
+        actionOverlay.addEventListener('click', requestCloseActionModal);
         document.addEventListener('keydown', event => {
-            if (event.key === 'Escape' && !actionModal.hidden) closeActionModal();
-            if (event.key !== 'Tab' || actionModal.hidden) return;
+            if (event.key === 'Escape' && !actionModal.hidden && !document.querySelector('.pp-help-dialog[open]')) { event.preventDefault(); requestCloseActionModal(); }
+            if (event.key !== 'Tab' || actionModal.hidden || document.querySelector('.pp-help-dialog[open]')) return;
             const focusable = [...actionModal.querySelectorAll('button,input,select,textarea,a[href]')].filter(el => !el.disabled && el.getClientRects().length);
             const first = focusable[0], last = focusable[focusable.length - 1];
             if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
@@ -522,12 +602,12 @@
         actionForm.addEventListener('submit', async event => {
             event.preventDefault();
             const editor = actionEditor;
-            if (!editor || editor.uncertain || editor.owner !== window.Clerk?.user?.id || suiteOwner !== editor.owner || actionPending) return;
+            if (!editor || editor.uncertain || !sameActionSession(editor) || suiteOwner !== editor.owner || actionPending) return;
             let draft; try { draft = actionDraft(editor); } catch (error) { actionFeedback.textContent = error.message; return; }
             actionPending = true; actionSave.disabled = true; actionSave.textContent = 'Saving…';
             // Lock the submitted snapshot; close remains available during the request.
             const fields = [...actionForm.querySelectorAll('input,select,textarea')]; fields.forEach(field => field.disabled = true);
-            const current = () => editor.owner === window.Clerk?.user?.id && actionEditor === editor;
+            const current = () => sameActionSession(editor) && actionEditor === editor;
             try {
                 const headers = await clerkApiHeaders(true);
                 if (!current()) return;
@@ -537,15 +617,19 @@
                 if (!response.ok || !data.success || data.slug !== editor.slug) {
                     if (response.status === 401 || response.status === 403 || response.status === 404) {
                         closeActionModal(); await window.fetchLiveCards();
-                        setActionListFeedback('Page editing is unavailable. Your account and saved codes have been refreshed.'); return;
+                        setActionListFeedback('PixelPing Smart Card editing is unavailable. Your account and saved codes have been refreshed.'); return;
                     }
-                    throw new Error('The page update was not confirmed.');
+                    throw new Error('The PixelPing Smart Card update was not confirmed.');
                 }
                 closeActionModal(); await window.fetchLiveCards();
+                if (sameActionSession(editor)) {
+                    setManagementFeedback('PixelPing Smart Card saved. Your printed QR still opens this same route.');
+                    [...grid.querySelectorAll('[data-action-slug]')].find(card => card.dataset.actionSlug === editor.slug)?.querySelector('[data-action-edit]')?.focus();
+                }
             } catch (error) {
-                if (current()) { editor.uncertain = true; actionFeedback.textContent = 'Update not confirmed. Close this editor and refresh to check the saved page before trying again.'; }
+                if (current()) { editor.uncertain = true; actionFeedback.textContent = 'Update not confirmed. Close this editor and click Sync to check the saved PixelPing Smart Card before trying again.'; }
             } finally {
-                actionPending = false; actionSave.disabled = Boolean(actionEditor?.uncertain); actionSave.textContent = 'Save Page Changes';
+                actionPending = false; actionSave.disabled = Boolean(actionEditor?.uncertain); actionSave.textContent = 'Save PixelPing Smart Card';
                 fields.forEach(field => field.disabled = false);
             }
         });
@@ -582,6 +666,8 @@
                 const isEvolution = account?.tier === 'evolution';
                 suiteOwner = isEvolution ? owner : null;
                 document.getElementById('route-tools').classList.toggle('hidden', !isEvolution);
+                routeFilters.hidden = !isEvolution;
+                if (!isEvolution) { routeResults.textContent = ''; setManagementFeedback(''); }
                 grid.classList.toggle('hidden', !isEvolution);
                 document.getElementById('route-access-message').classList.toggle('hidden', isEvolution);
                 document.getElementById('route-access-message').textContent = !account ?
@@ -616,13 +702,14 @@
                 }
                 const problems = [];
                 if (web.status !== 'fulfilled' || !Array.isArray(web.value.links)) problems.push('Web routes could not be loaded.');
-                if (actions.status !== 'fulfilled' || !Array.isArray(actions.value.actions)) problems.push('Smart Action Pages could not be loaded.');
+                if (actions.status !== 'fulfilled' || !Array.isArray(actions.value.actions)) problems.push('PixelPing Smart Cards could not be loaded.');
                 setActionListFeedback(problems.length ? problems.join(' ') + ' Refresh to retry.' : '');
                 renderSuiteCards(globalLinksData);
                 loadingState.classList.add('hidden'); mainDash.classList.remove('hidden');
             } catch (error) {
                 if (!current()) return;
                 suiteOwner = null; globalLinksData = []; globalActionsData = [];
+                routeFilters.hidden = true; routeResults.textContent = ''; setManagementFeedback('');
                 closeActionModal(); closeModal(); grid.replaceChildren();
                 console.error('Failed to fetch links:', error);
                 setActionListFeedback('Codes could not be loaded. Refresh to retry.');
@@ -782,6 +869,14 @@
             }
         };
 
+        // Filter existing live records without changing any route or card.
+        routeFilters.querySelectorAll('[data-route-view]').forEach(button => button.addEventListener('click', () => {
+            routeView = button.dataset.routeView; routePage = 1;
+            routeFilters.querySelectorAll('[data-route-view]').forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+            document.getElementById('smart-card-kind-filter').hidden = routeView !== 'cards';
+            renderSuiteCards(globalLinksData);
+        }));
+        kindFilter.addEventListener('change', () => { routePage = 1; renderSuiteCards(globalLinksData); });
         // Search Filter
         searchInput.addEventListener('input',()=>{routePage=1;renderSuiteCards(globalLinksData)});
         document.getElementById('route-prev').addEventListener('click',()=>{routePage=Math.max(1,routePage-1);renderSuiteCards(globalLinksData)});
