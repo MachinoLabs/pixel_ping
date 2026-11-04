@@ -8,12 +8,18 @@ const script = [...html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/gi)].find(
 const tick = () => new Promise(resolve=>setImmediate(resolve));
 function harness() {
  const {window,document} = parseHTML(html);
+ delete window.QRCodeStyling;
  // Linkedom omits browser form/select behavior; model only those platform APIs.
  for (const select of document.querySelectorAll('select')) {
   let value=select.querySelector('option')?.value||'';
   Object.defineProperty(select,'value',{get:()=>value,set:v=>{value=String(v)},configurable:true});
  }
  document.getElementById('actionEditForm').reset=()=>{for(const el of document.querySelectorAll('#actionEditForm input,#actionEditForm textarea'))el.value=''};
+ for (const dialog of document.querySelectorAll('dialog')) {
+  Object.defineProperty(dialog,'open',{get:()=>dialog.hasAttribute('open')});
+  dialog.showModal=()=>dialog.setAttribute('open','');
+  dialog.close=()=>{dialog.removeAttribute('open');dialog.dispatchEvent(new window.Event('close'))};
+ }
  window.HTMLElement.prototype.getClientRects=()=>[{}];
  let active=null;window.HTMLElement.prototype.focus=function(){active=this};
  Object.defineProperty(document,'activeElement',{get:()=>active});
@@ -86,5 +92,23 @@ function harness() {
  h=harness();h.run("openActionEditor('card-phone')");h.$('action-kind').value='sms';h.$('action-kind').dispatchEvent(new h.window.Event('change'));h.$('action-sms-message').value='New text action';h.submit();await tick();await tick();assert.equal(h.records[0].slug,'card-phone');assert.equal(h.records[0].kind,'sms');assert.equal(h.records[0].action.message,'New text action');
  console.log('PASS mixed-route pagination, filter reset, non-Evolution gate, rejected save and in-place action change');
 
+
+ const mockQR = h => {const seen=[];h.window.QRCodeStyling=class{constructor(options){seen.push(options)}append(holder){holder.append(h.document.createElement('svg'))}async getRawData(){return {}}};return seen};
+ for(const kind of ['phone','sms','email','coupon']) {
+  h=harness();const seen=mockQR(h);const trigger=h.document.querySelector(`[data-action-slug="card-${kind}"] [data-action-qr]`);
+  h.click(trigger);await tick();assert.equal(h.$('smart-card-qr').open,true);assert.equal(seen.length,1);assert.equal(seen[0].data,'https://qr.pixelping.app/card-'+kind);assert.equal(seen[0].margin,32);assert.equal(seen[0].backgroundOptions.color,'#ffffff');assert.equal(h.requests.length,0);assert.equal(h.$('smart-card-qr-image').querySelectorAll('svg').length,1);
+  h.click(h.$('smart-card-qr-close'));assert.equal(h.$('smart-card-qr').open,false);assert.equal(h.$('smart-card-qr-image').children.length,0);assert.equal(h.$('smart-card-qr-url').textContent,'');assert.equal(h.document.activeElement,trigger);
+ }
+ h=harness();let seen=mockQR(h);h.run("userBaseDomain='qr.customer.example';openSmartCardQr('card-email')");await tick();assert.equal(seen[0].data,'https://qr.customer.example/card-email');
+ h=harness();mockQR(h);h.run("openSmartCardQr('not-owned')");assert.equal(h.$('smart-card-qr').open,false);
+ h=harness();mockQR(h);h.run("suiteOwner=null;openSmartCardQr('card-email')");assert.equal(h.$('smart-card-qr').open,false);
+ h=harness();mockQR(h);h.run("openSmartCardQr('card-email');invalidateActionIdentity()");await tick();assert.equal(h.$('smart-card-qr').open,false);assert.equal(h.$('smart-card-qr-image').children.length,0);
+ h=harness();let resolveLibrary;h.run("loadSmartQrLibrary=()=>window.testLibrary");h.window.testLibrary=new Promise(r=>resolveLibrary=r);h.run("openSmartCardQr('card-email')");h.click(h.$('smart-card-qr-close'));mockQR(h);resolveLibrary(h.window.QRCodeStyling);await tick();assert.equal(h.$('smart-card-qr-image').children.length,0);
+ h=harness();h.run("loadSmartQrLibrary=async()=>{throw Error('Offline')};openSmartCardQr('card-email')");await tick();assert.equal(h.$('smart-card-qr-retry').hidden,false);assert.match(h.$('smart-card-qr-status').textContent,/could not load/);mockQR(h);h.run("loadSmartQrLibrary=async()=>window.QRCodeStyling");h.click(h.$('smart-card-qr-retry'));await tick();assert.equal(h.$('smart-card-qr-retry').hidden,true);assert.equal(h.$('smart-card-qr-image').children.length,1);assert.equal(h.requests.length,0);
+ h=harness();mockQR(h);h.run("openSmartCardQr('card-email');window.pixelPingCommandAccount=null;window.dispatchEvent(new Event('pixelping:command-account'))");await tick();assert.equal(h.$('smart-card-qr').open,false);
+ h=harness();h.run("openSmartCardQr('card-email')");const scripts=()=>[...h.document.head.querySelectorAll('script')].filter(s=>s.src.includes('qr-code-styling'));
+ assert.equal(scripts().length,1);let libraryScript=scripts()[0];libraryScript.onerror();await tick();assert.equal(h.$('smart-card-qr-retry').hidden,false);h.click(h.$('smart-card-qr-retry'));assert.equal(scripts().length,1);mockQR(h);scripts()[0].onload();await tick();assert.equal(h.$('smart-card-qr-image').children.length,1);
+ console.log('PASS QR preview: four same-route URLs, custom domain, no writes, focus/close cleanup, owner/access loss, stale async result, load failure and retry');
  console.log('All Smart Card management checks passed.');
 })().catch(e=>{console.error(e);process.exitCode=1});
+
