@@ -1,0 +1,6 @@
+{
+  "name": "pixelping-command-center-checks",
+  "private": true,
+  "scripts": { "test": "cd .. && node tests/smart-card-management.cjs && node tests/smart-card-route.cjs" },
+  "devDependencies": { "linkedom": "0.18.12" }
+}
