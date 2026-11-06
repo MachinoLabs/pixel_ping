@@ -76,3 +76,19 @@ Draft PR: #13
 
 ## Current status
 Draft PR #13 is NOT mergeable as a complete deployment unit until new Clerk publishable key, issuer and hostname/domain steps are verified and inserted. This document is a runbook, not an authorization to perform production changes.
+
+## Approved public QR domain decision (November 6, 2026)
+Owner explicitly approved `qr.independenceqr.app` as the default customer-visible Dynamic QR hostname; all customer-facing PixelPing brand surfaces are to become IndependenceQR while internal backend codenames remain.
+
+### Staged source updates on the isolated branch
+- `index.html`: all eight `qr.pixelping.app` occurrences changed to `qr.independenceqr.app` (new and restored QR addresses, placeholders, URL generation).
+- `admin.html`: all five default route hostname occurrences changed to the new branded hostname. Customer-owned verified domains still override the default.
+- `pixelping-worker/wrangler.jsonc`: **added** `qr.independenceqr.app` to `DEFAULT_ROUTING_HOSTS` while retaining existing `qr.pixelping.app` and workers.dev entries for transition safety. Live binding not changed.
+- `pixelping-worker/src/index.js`: reserve new `.independenceqr.app` namespace against customer-domain claims, and update the publicly visible health greeting.
+
+### Must be explicitly configured and verified before deploy
+1. Under Cloudflare `independenceqr.app`, add the appropriate proxied `qr` DNS placeholder and **exact** Worker route `qr.independenceqr.app/*` -> `pixelping-worker`, checking the route against any wildcard routing interactions. Validate TLS certificate and a real test QR scan.
+2. Update **live** `DEFAULT_ROUTING_HOSTS` Worker binding to include `qr.independenceqr.app` in the coordinated cutover. The source file change alone does not modify the deployed binding.
+3. `CF_SAAS_ZONE_ID` is still the **pixelping.app** Cloudflare zone, and `CF_SAAS_CNAME_TARGET` remains `qr.pixelping.app`. These are **customer custom-domain onboarding settings**, not the default QR host. Do NOT blindly change the CNAME target to `qr.independenceqr.app` until the SaaS zone/hostname configuration and certificate issuance are validated together. Separate the custom-domain migration from the default QR routing launch if needed.
+4. Do not redirect `qr.pixelping.app/*` until existing test QR links are accounted for. Keep legacy route reachable temporarily to enable recovery.
+5. Retest generated Static/Dynamic QR files, print/download, Smart Cards and route ownership with the new branded URL. No app deployment has occurred from this branch.
