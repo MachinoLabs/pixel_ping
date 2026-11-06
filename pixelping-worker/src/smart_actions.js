@@ -126,7 +126,7 @@ export function renderSmartAction(record, logoDataUrl = null) {
     `<a class="primary-action" id="native-action" href="${e(view.href)}" rel="nofollow"><span id="button-text">${ACTION_LABELS[data.kind]}</span>${arrow}</a>`;
   const redemption = data.kind === 'coupon' && data.action.redeemUrl ?
     `<a class="primary-action secondary-action" id="redeem-action" href="${e(data.action.redeemUrl)}" rel="nofollow noreferrer">Redeem Offer${arrow}</a>` : '';
-  const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#f5f7f5"><title>${e(data.brand.businessName)} - ${view.label} | PixelPing</title><style>${actionPageCss}</style></head>
+  const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#f5f7f5"><title>${e(data.brand.businessName)} - ${view.label} | IndependenceQR</title><style>${actionPageCss}</style></head>
 <body class="action-body">${actionSymbols}<div class="action-layout">${actionHeader}
 <main class="action-card" id="action-card" aria-labelledby="action-title"><div class="card-edge" aria-hidden="true"></div>
 <div class="brand-row">${logo}<div class="company-lines"><span class="company-eyebrow">A QUICK WAY TO CONNECT</span><span id="business-name" class="company-name">${e(data.brand.businessName)}</span></div></div>
@@ -135,7 +135,7 @@ export function renderSmartAction(record, logoDataUrl = null) {
 <div class="detail-pane"><span class="detail-label" id="detail-label">${view.label}</span><span class="detail-value" id="detail-value">${e(view.detail)}</span></div>
 ${button}${redemption}<p class="helper" id="helper">${e(view.helper)}</p><p class="status-message" id="status" role="status" aria-live="polite"></p></div>
 <div class="card-footer"><span class="foot-accent" aria-hidden="true"></span><span>Thoughtful connections, made simple.</span></div></main>
-<footer class="page-footer"><a id="powered-by" href="https://pixelping.app/">Powered by <strong>PixelPing</strong></a><span class="foot-dot" aria-hidden="true"></span><span>Print once. Change anytime.</span></footer></div>
+<footer class="page-footer"><a id="powered-by" href="https://independenceqr.app/">Powered by <strong>IndependenceQR</strong></a><span class="foot-dot" aria-hidden="true"></span><span>Print once. Change anytime.</span></footer></div>
 ${data.kind === 'coupon' ? '<script>' + actionCopyScript + '</script>' : ''}</body></html>`;
   return new Response(html, { status: 200, headers: {
     'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store',
