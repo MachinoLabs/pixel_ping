@@ -15,7 +15,7 @@
     "CLERK_ISSUER_URL": "https://clerk.pixelping.app",
     "EMAIL_NOTIFICATIONS_ENABLED": "true",
     "EMAIL_NOTIFICATIONS_START_AT": "1793283645",
-    "EMAIL_FROM_ADDRESS": "PixelPing <notifications@updates.pixelping.app>"
+    "EMAIL_FROM_ADDRESS": "IndependenceQR <notifications@updates.independenceqr.app>"
   },
   "triggers": {
     "crons": [
