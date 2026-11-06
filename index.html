@@ -4199,7 +4199,7 @@ window.pixelPingRetryPurchaseReceipt = () => {
 if ('serviceWorker' in navigator && window.isSecureContext) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('./pixelping-sw.js', { scope: './' })
-            .catch(error => console.warn('PixelPing offline setup unavailable:', error));
+            .catch(error => console.warn('IndependenceQR offline setup unavailable:', error));
     });
 }
 </script>
