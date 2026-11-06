@@ -12,7 +12,7 @@
   "name": "fourth-rail-checkout",
   "compatibility_date": "2026-09-03",
   "vars": {
-    "CLERK_ISSUER_URL": "https://clerk.pixelping.app",
+    "CLERK_ISSUER_URL": "https://clerk.independenceqr.app",
     "EMAIL_NOTIFICATIONS_ENABLED": "true",
     "EMAIL_NOTIFICATIONS_START_AT": "1793283645",
     "EMAIL_FROM_ADDRESS": "IndependenceQR <notifications@updates.independenceqr.app>"
