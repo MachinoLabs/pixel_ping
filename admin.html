@@ -1283,7 +1283,7 @@
     </script>
     <script>
         (function() {
-            const pubKey = "pk_live_Y2xlcmsucGl4ZWxwaW5nLmFwcCQ";
+            const pubKey = "pk_live_Y2xlcmsuaW5kZXBlbmRlbmNlcXIuYXBwJA";
             const startClerk = async () => {
                 try {
                     await window.Clerk.load({ localization: { signUp: { legalConsent: { checkbox: {
@@ -1306,7 +1306,7 @@
             const script = document.createElement('script');
             script.setAttribute('data-clerk-publishable-key', pubKey);
             script.async = true;
-            script.src = 'https://clerk.pixelping.app/npm/@clerk/clerk-js@latest/dist/clerk.browser.js';
+            script.src = 'https://clerk.independenceqr.app/npm/@clerk/clerk-js@latest/dist/clerk.browser.js';
             script.crossOrigin = 'anonymous';
             script.addEventListener('load', startClerk);
             document.body.appendChild(script);
