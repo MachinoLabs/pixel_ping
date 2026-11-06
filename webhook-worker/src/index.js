@@ -440,7 +440,7 @@ export default {
                     line_items: [{ price: body.priceId, quantity: 1 }],
                     mode: product.mode,
                     allow_promotion_codes: true,
-                    return_url: 'https://pixelping.app/?session_id={CHECKOUT_SESSION_ID}',
+                    return_url: 'https://independenceqr.app/?session_id={CHECKOUT_SESSION_ID}',
                     client_reference_id: auth.userId,
                     ...(product.tier === 'evolution' ? {
                         subscription_data: { metadata: { clerkUserId: auth.userId } }

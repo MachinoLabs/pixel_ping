@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
         "number": 21,
         "mode": "static",
         "layout": "label",
-        "instructions": "Add your existing document or sheet URL. Choose its sharing permissions deliberately; PixelPing does not create the document or grant access.",
+        "instructions": "Add your existing document or sheet URL. Choose its sharing permissions deliberately; IndependenceQR does not create the document or grant access.",
         "inputs": {},
         "required": [
             "pl-url"
@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
         "number": 3,
         "mode": "dynamic",
         "layout": "label",
-        "instructions": "Add your existing warranty or VIP tutorial page URL. PixelPing routes to that page; it does not create a registration service.",
+        "instructions": "Add your existing warranty or VIP tutorial page URL. IndependenceQR routes to that page; it does not create a registration service.",
         "inputs": {},
         "required": [
             "pl-url"

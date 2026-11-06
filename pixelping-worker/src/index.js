@@ -336,7 +336,7 @@ function normalizeCustomerHostname(value) {
     if (labels.length < 3 || labels.some(x => x.length < 1 || x.length > 63 ||
         !/^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(x))) return null;
     if (labels.at(-1).length < 2 || /^\d+$/.test(labels.at(-1))) return null;
-    if (host.endsWith('.pixelping.app') || host.endsWith('.workers.dev') ||
+    if (host.endsWith('.pixelping.app') || host.endsWith('.independenceqr.app') || host.endsWith('.workers.dev') ||
         host.endsWith('.cloudflare.com') || host.endsWith('.localhost') ||
         host === 'localhost') return null;
     return host;
@@ -976,7 +976,7 @@ export default {
             const slug = pathname.substring(1); 
             
             if (!slug) {
-                return new Response("PixelPing Edge Network Online.", { status: 200, headers: corsHeaders });
+                return new Response("IndependenceQR Edge Network Online.", { status: 200, headers: corsHeaders });
             }
 
             // Keep the canonical PixelPing routes working. A customer hostname

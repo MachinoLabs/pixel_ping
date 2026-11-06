@@ -97,8 +97,8 @@ export async function deliverNotices(env, now = Math.floor(Date.now() / 1000)) {
             const recipient = safeEmail(account);
             if (!recipient) throw Object.assign(new Error('No verified customer email address'), { retryable: false });
             const payload = { from: env.EMAIL_FROM_ADDRESS, to: [recipient],
-                subject: `PixelPing — ${String(event.title || 'Account notice').slice(0, 140)}`,
-                text: `${String(event.title || 'Account notice')}\n\n${String(event.detail || '')}\n\nView your account: https://pixelping.app/admin.html\n\nThis is a PixelPing account notification.` };
+                subject: `IndependenceQR — ${String(event.title || 'Account notice').slice(0, 140)}`,
+                text: `${String(event.title || 'Account notice')}\n\n${String(event.detail || '')}\n\nView your account: https://independenceqr.app/admin.html\n\nThis is an IndependenceQR account notification.` };
             const response = await fetch('https://api.resend.com/emails', {
                 method: 'POST', headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`,
                     'Content-Type': 'application/json', 'Idempotency-Key': `pixelping-${item.eventId}` },

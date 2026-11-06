@@ -15,8 +15,8 @@
     "cache_option_enabled"
   ],
   "vars": {
-    "CLERK_ISSUER_URL": "https://clerk.pixelping.app",
-    "DEFAULT_ROUTING_HOSTS": "pixelping-worker.amateuraiguy.workers.dev,qr.pixelping.app",
+    "CLERK_ISSUER_URL": "https://clerk.independenceqr.app",
+    "DEFAULT_ROUTING_HOSTS": "pixelping-worker.amateuraiguy.workers.dev,qr.pixelping.app,qr.independenceqr.app",
     "EMAIL_NOTIFICATIONS_ENABLED": "true",
     "TERMS_STAGING_ENABLED": "true",
     "CF_SAAS_ZONE_ID": "68ad7a630b4883c487a159dbc11209a5",

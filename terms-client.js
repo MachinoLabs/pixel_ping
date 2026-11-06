@@ -21,7 +21,7 @@
   const response=await fetch(API,{method,cache:'no-store',signal:controller.signal,headers:{Authorization:'Bearer '+token,...(method==='PUT'?{'Content-Type':'application/json'}:{})},...(method==='PUT'?{body:JSON.stringify({version:manifest.version,digest:manifest.digest,terms:true,privacy:true})}:{})});
   const data=await response.json();if(controller.signal.aborted||!same(id,session))throw Error('Sign-in changed. Please try again.');
   if(!response.ok)throw Error(data.error||'Agreement could not be saved. Reconnect and try again.');
-  if(!currentManifest(data)||data.owner!==id)throw Error('The policies or account changed. Refresh PixelPing to review the current policies.');return data;
+  if(!currentManifest(data)||data.owner!==id)throw Error('The policies or account changed. Refresh IndependenceQR to review the current policies.');return data;
  })(),new Promise((_,reject)=>{timer=setTimeout(()=>{controller.abort();reject(Error('Agreement could not be confirmed. Reconnect and try again.'))},10000)})])}finally{clearTimeout(timer)}}
  const stamp=(id,session,data)=>{if(!data.accepted||data.acceptance?.version!==manifest.version||data.acceptance?.digest!==manifest.digest||!Number.isFinite(Date.parse(data.acceptance?.acceptedAt)))throw Error('Agreement could not be confirmed. Please try again.');verified={id,session};};
  function close(run,result){if(promptRun!==run)return;const done=finish;finish=null;promptRun=null;if(dialog.open)dialog.close();done?.(result)}

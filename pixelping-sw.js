@@ -3,7 +3,7 @@
  * Increment CACHE_VERSION when deploying a new shell or script version.
  */
 'use strict';
-const CACHE_VERSION = 'pixelping-static-v76-arsenal-picker-1';
+const CACHE_VERSION = 'pixelping-static-v77-independenceqr-launch-1';
 const CACHE_PREFIX = 'pixelping-static-';
 const SCOPE = self.registration.scope;
 const SHELL_URL = new URL('index.html', SCOPE).href;
@@ -12,7 +12,7 @@ const CDN_SCRIPTS = [
     'https://cdn.tailwindcss.com/',
     'https://cdn.jsdelivr.net/npm/qr-code-styling@1.5.0/lib/qr-code-styling.js'
 ];
-const ICON_CLIENT_URLS = ['icon-catalog.js', 'icon-library.js', 'saved-codes-client.js', 'my-codes.js', 'ui-colors.css', 'feature-help.js', 'terms-manifest.js', 'terms-client.js', 'qr-names-client.js', 'recovery-inventory.js', 'terms.html', 'privacy.html', 'terms-2026-10-17-v1.html', 'privacy-2026-10-17-v1.html'].map(path => new URL(path, SCOPE).href);
+const ICON_CLIENT_URLS = ['icon-catalog.js', 'icon-library.js', 'saved-codes-client.js', 'my-codes.js', 'ui-colors.css', 'feature-help.js', 'terms-manifest.js', 'terms-client.js', 'qr-names-client.js', 'recovery-inventory.js', 'terms.html', 'privacy.html', 'terms-2026-10-17-v1.html', 'privacy-2026-10-17-v1.html', 'terms-2026-11-06-v1.html', 'privacy-2026-11-06-v1.html'].map(path => new URL(path, SCOPE).href);
 const STATIC_URLS = [SHELL_URL, ARSENAL_URL, ...ICON_CLIENT_URLS, ...CDN_SCRIPTS];
 
 self.addEventListener('install', event => {

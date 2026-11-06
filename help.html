@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PixelPing | Help Center</title>
+    <title>IndependenceQR | Help Center</title>
 
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='96' fill='%23061a2b'/%3E%3Crect x='28' y='28' width='456' height='456' rx='80' fill='none' stroke='%230f3a5a' stroke-width='4'/%3E%3Crect x='96' y='96' width='96' height='96' rx='18' fill='%23dff4ff'/%3E%3Crect x='320' y='96' width='96' height='96' rx='18' fill='%23dff4ff'/%3E%3Crect x='96' y='288' width='96' height='96' rx='18' fill='%23dff4ff'/%3E%3Crect x='140' y='140' width='16' height='16' rx='4' fill='%2327cfff'/%3E%3C/svg%3E">
     
@@ -134,7 +134,7 @@
 <div class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed space-y-4"><ul class="list-disc pl-5 space-y-3"><li><strong>Phone:</strong> opens the dialer; the visitor confirms the call.</li>
 <li><strong>SMS:</strong> opens the messaging app with the number and prepared text. It does not send automatically.</li>
 <li><strong>Email:</strong> may show an app chooser before a compose window. Select a configured mail app and check the recipient, subject, and body. A missing mail account must be configured on that device.</li>
-<li><strong>Coupon:</strong> Copy Coupon Code copies the exact displayed code. Paste into a note to verify it. Redeem Offer opens the optional link; PixelPing does not automatically apply a discount on the destination website.</li>
+<li><strong>Coupon:</strong> Copy Coupon Code copies the exact displayed code. Paste into a note to verify it. Redeem Offer opens the optional link; IndependenceQR does not automatically apply a discount on the destination website.</li>
 </ul>
 <p>A Smart Card loading correctly and an action opening the intended app are separate checks. Test both. The device and selected app control the final compose or dial screen.</p>
 </div>
@@ -179,9 +179,9 @@
 <section id="dns-guide" class="bg-white dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 sm:p-8 rounded-2xl shadow-xl scroll-mt-8"><h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-5">Custom Domain Setup</h2>
 <div class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed space-y-4"><p>Use an unused subdomain you control, such as qr.example.com, for branded Evolution routes. Root/apex domains require separate support. Do not replace the DNS records that serve your main website or email.</p>
 <ol class="list-decimal pl-5 space-y-3"><li>In the <a href="admin.html" class="underline underline-offset-2 font-semibold">Command Center</a>, select <strong>Add Custom Domain</strong>. Enter the hostname and select <strong>Generate DNS Records</strong>.</li>
-<li>At your DNS provider, add the exact records returned by PixelPing. Match each Type, Name / Host, and Value / Target. Copy record value helps avoid typos; your DNS provider may expect only the subdomain portion of the name.</li>
+<li>At your DNS provider, add the exact records returned by IndependenceQR. Match each Type, Name / Host, and Value / Target. Copy record value helps avoid typos; your DNS provider may expect only the subdomain portion of the name.</li>
 <li>For Cloudflare-managed customer DNS, use a <strong>DNS-only (grey cloud) CNAME</strong> during this initial integration. Use the values in your own setup screen rather than a guessed target.</li>
-<li>Return to PixelPing and select <strong>Check Verification Status</strong>. Review hostname validation, TLS certificate, and whether the CNAME points to PixelPing.</li>
+<li>Return to IndependenceQR and select <strong>Check Verification Status</strong>. Review hostname validation, TLS certificate, and whether the CNAME points to IndependenceQR.</li>
 <li>Wait until <strong>Custom Domain Active</strong>. DNS propagation and certificate checks can take time; there is no fixed activation guarantee. Then test a route using the branded hostname.</li>
 </ol>
 <p>If verification stays pending, compare every record with the setup screen and check for conflicting records at that exact subdomain. If the certificate is still pending, allow time and check again. Send support the hostname and displayed statuses if it remains unresolved. A registered hostname alone is not an active domain.</p>
@@ -191,11 +191,11 @@
 
 <section id="faq" class="bg-white dark:bg-slate-800/50 backdrop-blur-sm border border-slate-200 dark:border-slate-700 p-6 sm:p-8 rounded-2xl shadow-xl scroll-mt-8"><h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-5">Frequently asked questions</h2>
 <div class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed space-y-4"><h3 class="font-bold text-lg text-slate-900 dark:text-white pt-2">Does Static mean offline scanning?</h3>
-<p>A Static QR encodes its own data. Text can be read without visiting PixelPing, but a website still needs a connection and its own hosting. The app must first load and cache successfully for supported offline generation. Dynamic routes, account checks, and sync need internet access.</p>
+<p>A Static QR encodes its own data. Text can be read without visiting IndependenceQR, but a website still needs a connection and its own hosting. The app must first load and cache successfully for supported offline generation. Dynamic routes, account checks, and sync need internet access.</p>
 <h3 class="font-bold text-lg text-slate-900 dark:text-white pt-2">Can I change a printed code?</h3>
 <p>Static encoded content and printed artwork cannot change. An existing Dynamic route’s destination or Smart Card can be updated through the Command Center while keeping the same route URL and QR. Editing a saved design alone does not update that live route.</p>
 <h3 class="font-bold text-lg text-slate-900 dark:text-white pt-2">Will a QR logo change my Smart Card branding?</h3>
-<p>The QR center logo is part of the image you export. Smart Cards use their automatic business-name, monogram, and action layout, including the Powered by PixelPing footer. These are separate surfaces.</p>
+<p>The QR center logo is part of the image you export. Smart Cards use their automatic business-name, monogram, and action layout, including the Powered by IndependenceQR footer. These are separate surfaces.</p>
 <h3 class="font-bold text-lg text-slate-900 dark:text-white pt-2">Where can I read the terms and privacy information?</h3>
 <p>Read <a href="terms.html" class="underline underline-offset-2 font-semibold">Terms</a> and <a href="privacy.html" class="underline underline-offset-2 font-semibold">Privacy</a> for the current policies. Avoid placing secrets in QR content: anyone who receives a QR may be able to read its payload or open its destination.</p>
 <h3 class="font-bold text-lg text-slate-900 dark:text-white pt-2">How do I report a problem?</h3>

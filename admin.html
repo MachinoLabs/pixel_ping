@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>PixelPing | Command Center</title>
+    <title>IndependenceQR | Command Center</title>
 
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='96' fill='%23061a2b'/%3E%3Crect x='28' y='28' width='456' height='456' rx='80' fill='none' stroke='%230f3a5a' stroke-width='4'/%3E%3Crect x='96' y='96' width='96' height='96' rx='18' fill='%23dff4ff'/%3E%3Crect x='320' y='96' width='96' height='96' rx='18' fill='%23dff4ff'/%3E%3Crect x='96' y='288' width='96' height='96' rx='18' fill='%23dff4ff'/%3E%3Crect x='140' y='140' width='16' height='16' rx='4' fill='%2327cfff'/%3E%3C/svg%3E">
     
@@ -144,7 +144,7 @@
             <div>
                 <!-- DYNAMIC HEADER -->
                 <h1 class="text-3xl font-bold tracking-wide text-slate-900 dark:text-white flex items-center gap-2">
-                   PixelPing: <span id="tier-title" class="text-ppGreen font-extrabold">Evolution</span>
+                   IndependenceQR: <span id="tier-title" class="text-ppGreen font-extrabold">Evolution</span>
                     <span id="active-domain-badge" class="hidden px-2 py-0.5 rounded bg-green-500/10 text-green-400 border border-green-500/20 text-[10px] font-bold tracking-widest uppercase">🟢 Branded</span>
                 </h1>
                 <p id="tier-subtitle" class="text-slate-500 dark:text-slate-300 text-[12px] tracking-[0.2em] uppercase">Command Center • Dynamic Edge Routing</p>
@@ -163,12 +163,12 @@
     <main class="w-full max-w-6xl z-10 relative flex flex-col gap-6 flex-1 hidden" id="dashboard-main">
         
         <section aria-labelledby="live-routes-heading">
-            <h2 id="live-routes-heading" class="text-xl font-bold text-slate-900 dark:text-white">PixelPing Smart Cards &amp; Dynamic Routes</h2>
-            <p class="text-base font-bold text-[#17324D] dark:text-slate-100 mt-2">Update your PixelPing Smart Cards and website destinations here. Keep the same printed QR.</p>
+            <h2 id="live-routes-heading" class="text-xl font-bold text-slate-900 dark:text-white">IndependenceQR Smart Cards &amp; Dynamic Routes</h2>
+            <p class="text-base font-bold text-[#17324D] dark:text-slate-100 mt-2">Update your IndependenceQR Smart Cards and website destinations here. Keep the same printed QR.</p>
         </section>
         <div id="route-filters" role="group" aria-label="Show live routes" class="flex flex-wrap gap-2" hidden>
             <button type="button" data-route-view="all" aria-pressed="true" class="pp-route-filter">All routes</button>
-            <button type="button" data-route-view="cards" aria-pressed="false" class="pp-route-filter">PixelPing Smart Cards</button>
+            <button type="button" data-route-view="cards" aria-pressed="false" class="pp-route-filter">IndependenceQR Smart Cards</button>
             <button type="button" data-route-view="web" aria-pressed="false" class="pp-route-filter">Website routes</button>
             <label id="smart-card-kind-filter" class="pp-kind-filter" hidden>Card type
                 <select id="smart-card-kind"><option value="all">All four types</option><option value="phone">Phone</option><option value="sms">SMS</option><option value="email">Email</option><option value="coupon">Coupon</option></select>
@@ -181,7 +181,7 @@
                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                 </div>
-                <input type="text" id="search-input" aria-label="Search live routes and PixelPing Smart Cards" placeholder="Search name, business, phone, email, or URL…" class="w-full bg-white dark:bg-ppDark/80 text-slate-900 dark:text-white pl-10 pr-4 py-3 rounded-xl border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none shadow-sm text-sm">
+                <input type="text" id="search-input" aria-label="Search live routes and IndependenceQR Smart Cards" placeholder="Search name, business, phone, email, or URL…" class="w-full bg-white dark:bg-ppDark/80 text-slate-900 dark:text-white pl-10 pr-4 py-3 rounded-xl border border-slate-300 dark:border-gray-700 focus:border-ppBlue focus:outline-none shadow-sm text-sm">
             </div>
             
             <div class="flex items-center gap-3 w-full sm:w-auto">
@@ -243,7 +243,7 @@
                     <p class="text-xs text-slate-600 dark:text-slate-300 mt-2">Paid access runs through the verified paid-through date. After that: 30-day suspended grace period, then 12 months of recoverable archival.</p>
                     <p class="text-xs text-slate-500 dark:text-slate-400 mt-2">Existing QR addresses stay reserved. A confirmed paid renewal restores retained routes without reprinting.</p>
                     <p id="account-recovery-guidance" class="text-xs text-slate-600 dark:text-slate-300 mt-3" role="status">Load your account to see renewal and recovery guidance.</p>
-                    <a href="mailto:support@senditin.app?subject=PixelPing%20Evolution%20billing%20and%20recovery" class="inline-block text-xs font-semibold text-ppGreen underline mt-2">Renewal &amp; payment help</a>
+                    <a href="mailto:support@senditin.app?subject=IndependenceQR%20Evolution%20billing%20and%20recovery" class="inline-block text-xs font-semibold text-ppGreen underline mt-2">Renewal &amp; payment help</a>
                 </article>
                 <article class="bg-white dark:bg-slate-800/60 rounded-xl border border-slate-200 dark:border-slate-700 p-4">
                     <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Customer communications</h3>
@@ -255,7 +255,7 @@
             </div>
             <section class="bg-white dark:bg-slate-800/60 rounded-xl border border-slate-200 dark:border-slate-700 p-4 mt-5" aria-labelledby="protected-codes-heading">
                 <h3 id="protected-codes-heading" class="font-bold text-slate-900 dark:text-white">Protected Dynamic QR Inventory <span id="protected-code-count" class="text-xs font-normal text-slate-500 dark:text-slate-400"></span></h3>
-                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Your Dynamic QR routes remain listed here for recovery if your subscription ends. This inventory is read-only; manage live PixelPing Smart Cards and website routes above, and designs in My Codes.</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Your Dynamic QR routes remain listed here for recovery if your subscription ends. This inventory is read-only; manage live IndependenceQR Smart Cards and website routes above, and designs in My Codes.</p>
                 <p id="protected-code-items" class="mt-3 text-xs text-slate-700 dark:text-slate-200">Loading retained routes…</p>
                 <div class="flex flex-wrap gap-3 mt-3">
                     <button id="inventory-open" type="button" class="pp-dialog-action pp-dialog-ordinary">View Recovery Inventory</button>
@@ -289,7 +289,7 @@
         <div class="pp-modal-inner relative">
             <button id="closeEditBtn" aria-label="Close destination editor" class="absolute top-4 right-4 text-slate-500 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white">✕</button>
             <h2 class="text-xl font-bold mb-1">Reroute Link</h2>
-            <p class="text-xs text-slate-600 dark:text-slate-300 mb-6 font-mono" id="edit-slug-display">qr.pixelping.app/---</p>
+            <p class="text-xs text-slate-600 dark:text-slate-300 mb-6 font-mono" id="edit-slug-display">qr.independenceqr.app/---</p>
             <label for="edit-destination-input" class="block text-xs font-bold text-slate-700 dark:text-ppLight mb-2 uppercase tracking-wide">New Destination URL</label>
             <input type="url" id="edit-destination-input" aria-describedby="edit-destination-help" placeholder="sscf.app or https://sscf.app/" class="w-full bg-white dark:bg-slate-900 text-slate-900 dark:text-white px-4 py-3 rounded-lg border border-slate-300 dark:border-slate-700 focus:border-ppBlue focus:outline-none mb-2">
             <p id="edit-destination-help" class="text-xs text-slate-600 dark:text-slate-300 mb-6">Enter a website address. We add https:// if needed. Your QR link stays the same.</p>
@@ -298,9 +298,9 @@
     </div>
 
     <dialog id="smart-card-qr" class="pp-qr-dialog" aria-labelledby="smart-card-qr-heading" aria-describedby="smart-card-qr-help">
-        <h2 id="smart-card-qr-heading" class="text-xl font-bold">PixelPing Smart Card QR</h2>
+        <h2 id="smart-card-qr-heading" class="text-xl font-bold">IndependenceQR Smart Card QR</h2>
         <p id="smart-card-qr-name" class="font-bold mt-2 break-words"></p>
-        <div id="smart-card-qr-image" role="img" aria-label="Scannable QR for this PixelPing Smart Card"></div>
+        <div id="smart-card-qr-image" role="img" aria-label="Scannable QR for this IndependenceQR Smart Card"></div>
         <p id="smart-card-qr-status" role="status" aria-live="polite"></p>
         <p id="smart-card-qr-url" class="font-mono"></p>
         <p id="smart-card-qr-help" class="text-sm mb-4">Scan preview. Open My Codes for your saved design.</p>
@@ -312,11 +312,11 @@
     <div id="actionOverlay" class="pp-overlay" hidden></div>
     <div id="actionModal" class="pp-modal" role="dialog" aria-modal="true" aria-labelledby="action-editor-heading" aria-describedby="action-editor-help" hidden>
         <div class="pp-modal-inner relative" style="max-height:calc(100dvh - 32px);overflow-y:auto">
-            <button id="closeActionBtn" type="button" class="absolute top-4 right-4 text-slate-400" aria-label="Close PixelPing Smart Card editor">✕</button>
-            <h2 id="action-editor-heading" class="text-xl font-bold mb-1">Edit PixelPing Smart Card</h2>
+            <button id="closeActionBtn" type="button" class="absolute top-4 right-4 text-slate-400" aria-label="Close IndependenceQR Smart Card editor">✕</button>
+            <h2 id="action-editor-heading" class="text-xl font-bold mb-1">Edit IndependenceQR Smart Card</h2>
             <p id="action-slug-display" class="text-xs font-mono break-all text-slate-400"></p>
-            <p id="action-editor-help" class="text-xs text-slate-400 mt-2">Save changes to update this PixelPing Smart Card. Your QR link stays the same.</p>
-            <a id="action-view-saved" target="_blank" rel="noopener noreferrer" class="pp-action-link text-sm underline">View saved PixelPing Smart Card ↗</a>
+            <p id="action-editor-help" class="text-xs text-slate-400 mt-2">Save changes to update this IndependenceQR Smart Card. Your QR link stays the same.</p>
+            <a id="action-view-saved" target="_blank" rel="noopener noreferrer" class="pp-action-link text-sm underline">View saved IndependenceQR Smart Card ↗</a>
             <p class="text-xs mt-1">Opens the live saved version in a new tab. Visits count as scans.</p>
             <form id="actionEditForm" novalidate>
                 <label for="action-business-name" class="block text-xs font-bold mt-3 mb-1">Business name (required)</label>
@@ -351,10 +351,10 @@
                 <label for="action-redeem-url" class="block text-xs font-bold mt-3 mb-1">HTTPS Redeem Offer link (optional)</label>
                 <input id="action-redeem-url" type="url" maxlength="2048" placeholder="" class="w-full bg-slate-900 text-white px-3 py-2 rounded-lg border border-slate-700 focus:border-ppBlue focus:outline-none">
                 </div>
-                <p class="text-xs text-slate-400 mt-4">Every PixelPing Smart Card includes <a href="https://pixelping.app/" class="underline">Powered by PixelPing</a>.</p>
+                <p class="text-xs text-slate-400 mt-4">Every IndependenceQR Smart Card includes <a href="https://independenceqr.app/" class="underline">Powered by IndependenceQR</a>.</p>
                 <p id="action-edit-feedback" role="status" aria-live="polite" class="text-sm text-amber-400 mt-3"></p>
                 <button id="cancelActionBtn" type="button" class="pp-action-link underline mt-3">Cancel</button>
-                <button id="saveActionBtn" type="submit" class="w-full bg-ppBlue text-white font-extrabold py-3 rounded-xl mt-3">Save PixelPing Smart Card</button>
+                <button id="saveActionBtn" type="submit" class="w-full bg-ppBlue text-white font-extrabold py-3 rounded-xl mt-3">Save IndependenceQR Smart Card</button>
             </form>
         </div>
     </div>
@@ -364,7 +364,7 @@
         <div class="pp-modal-inner relative" id="domain-modal-content">
             <button id="closeDomainBtn" class="absolute top-4 right-4 text-slate-300 hover:text-white">✕</button>
             <h2 class="text-xl font-bold mb-1">Connect Custom Domain</h2>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mb-6">Route your own domain to your PixelPing codes.</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mb-6">Route your own domain to your IndependenceQR codes.</p>
             <label class="block text-xs font-bold text-ppLight mb-2 uppercase tracking-wide">Your Domain</label>
             <input type="text" id="custom-domain-input" placeholder="e.g., links.mybakery.com" class="w-full bg-slate-900 text-white px-4 py-3 rounded-lg border border-slate-700 focus:border-ppBlue focus:outline-none mb-6 font-mono text-sm">
             <button id="saveDomainBtn" class="w-full bg-ppBlue hover:bg-[#356B67] text-white font-extrabold py-3 px-4 rounded-xl transition-all shadow-lg">Generate DNS Records</button>
@@ -400,7 +400,7 @@
         let currentEditSlug = null;
         let currentEditRevision = null;
         let globalLinksData = [];
-        let userBaseDomain = "qr.pixelping.app"; // Default
+        let userBaseDomain = "qr.independenceqr.app"; // Default
 
         const API_URL = "https://pixelping-worker.amateuraiguy.workers.dev/api/links";
         async function clerkApiHeaders(json = false) {
@@ -451,10 +451,10 @@
         async function requestCloseActionModal() {
             const editor = actionEditor;
             if (!editor) return;
-            if (actionPending) { actionFeedback.textContent = 'Saving your PixelPing Smart Card…'; return; }
+            if (actionPending) { actionFeedback.textContent = 'Saving your IndependenceQR Smart Card…'; return; }
             if (!editor.uncertain && actionSnapshot() !== editor.snapshot) {
                 const answer = await window.pixelPingHelp.ask({title:'Discard unsaved card changes?',
-                    message:'Your saved PixelPing Smart Card will stay as it is.',
+                    message:'Your saved IndependenceQR Smart Card will stay as it is.',
                     choices:[['keep','Keep Editing','ordinary'],['discard','Discard Changes','danger']]});
                 if (actionEditor !== editor || !sameActionSession(editor) || actionPending || answer.action !== 'discard') return;
             }
@@ -465,7 +465,7 @@
             window.dispatchEvent(new Event('pixelping:command-account'));
             ++suiteGeneration; routePage=1; document.getElementById('route-pagination').hidden=true; suiteOwner = null; globalLinksData = []; globalActionsData = [];
             routeFilters.hidden = true; routeResults.textContent = ''; setManagementFeedback('');
-            userBaseDomain = 'qr.pixelping.app'; activeDomainBadge.classList.add('hidden');
+            userBaseDomain = 'qr.independenceqr.app'; activeDomainBadge.classList.add('hidden');
             grid.replaceChildren(); closeActionModal(); closeModal(); setActionListFeedback('');
             document.getElementById('route-tools').classList.add('hidden');
             mainDash.classList.add('hidden'); loadingState.classList.remove('hidden');
@@ -492,7 +492,7 @@
             if (routeView === 'cards') web = [];
             if (routeView === 'web') actions = [];
             if (routeView === 'cards' && kindFilter.value !== 'all') actions = actions.filter(link => link.kind === kindFilter.value);
-            routeResults.textContent = `Loaded routes: ${web.length + actions.length} matches · PixelPing Smart Cards: ${globalActionsData.length} · Website routes: ${webLinks.length}`;
+            routeResults.textContent = `Loaded routes: ${web.length + actions.length} matches · IndependenceQR Smart Cards: ${globalActionsData.length} · Website routes: ${webLinks.length}`;
             const total=web.length+actions.length,pages=Math.max(1,Math.ceil(total/6));
             routePage=Math.min(routePage,pages);
             const start=(routePage-1)*6,webCount=web.length;
@@ -508,7 +508,7 @@
                 grid.replaceChildren();
                 const empty = document.createElement('p'); empty.className = 'col-span-full py-8 text-center';
                 empty.textContent = term ? 'No matching routes. Try another search or view.' :
-                    routeView === 'cards' ? 'No PixelPing Smart Cards in this view. Create and activate one in the generator.' :
+                    routeView === 'cards' ? 'No IndependenceQR Smart Cards in this view. Create and activate one in the generator.' :
                     routeView === 'web' ? 'No website routes yet. Create and activate one in the generator.' :
                     'No live routes yet. Create and activate a Dynamic QR in the generator.';
                 const create = document.createElement('a'); create.href = 'index.html?ppDraftReturn=1';
@@ -523,10 +523,10 @@
                 card.className = 'bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 p-5 rounded-2xl flex flex-col';
                 card.dataset.actionSlug = link.slug;
                 const detail = link.kind === 'coupon' ? link.action.code : link.kind === 'email' ? link.action.email : link.action.phone;
-                card.innerHTML = `<div class="flex justify-between items-start mb-3 gap-2"><div class="min-w-0"><h3 class="font-bold text-lg truncate">${escapeHtml(link.friendlyName || link.title || link.brand.businessName)}</h3><p class="text-xs text-slate-400 break-words">${escapeHtml(link.brand.businessName)}</p><span class="text-[10px] font-bold uppercase text-ppBlue">${escapeHtml(actionLabels[link.kind])} · PixelPing Smart Card</span></div><div class="bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-600 px-2 py-1 rounded-lg text-center"><span class="block text-[10px] text-slate-400">Scans</span><span data-action-scans class="font-extrabold text-ppGreen">${escapeHtml(link.scans || 0)}</span></div></div>
+                card.innerHTML = `<div class="flex justify-between items-start mb-3 gap-2"><div class="min-w-0"><h3 class="font-bold text-lg truncate">${escapeHtml(link.friendlyName || link.title || link.brand.businessName)}</h3><p class="text-xs text-slate-400 break-words">${escapeHtml(link.brand.businessName)}</p><span class="text-[10px] font-bold uppercase text-ppBlue">${escapeHtml(actionLabels[link.kind])} · IndependenceQR Smart Card</span></div><div class="bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-600 px-2 py-1 rounded-lg text-center"><span class="block text-[10px] text-slate-400">Scans</span><span data-action-scans class="font-extrabold text-ppGreen">${escapeHtml(link.scans || 0)}</span></div></div>
                     <p class="text-xs font-mono text-slate-400 break-all mb-4">${escapeHtml(detail)}</p><div class="flex items-center gap-2 mb-4"><span class="text-xs font-mono break-all flex-1 select-all">${escapeHtml(userBaseDomain)}/${escapeHtml(link.slug)}</span><button type="button" data-action-copy class="pp-action-link text-xs">Copy</button></div>
                     <div class="flex flex-wrap gap-3 mb-3"><button type="button" data-action-qr class="pp-action-link text-sm underline" aria-haspopup="dialog">View QR</button><a data-action-view target="_blank" rel="noopener noreferrer" class="pp-action-link text-sm underline">View live card ↗</a></div>
-                    <div class="mt-auto flex flex-wrap gap-2 pt-4 border-t border-slate-700"><button type="button" data-action-edit class="pp-action-link flex-1 text-xs font-bold">Edit PixelPing Smart Card</button><button type="button" data-action-save-design class="pp-route-save flex-1 text-xs font-bold">Save to My Codes</button><button type="button" data-action-delete class="pp-action-link pp-action-danger flex-1 text-xs font-bold">🗑️ Delete Route</button></div>`;
+                    <div class="mt-auto flex flex-wrap gap-2 pt-4 border-t border-slate-700"><button type="button" data-action-edit class="pp-action-link flex-1 text-xs font-bold">Edit IndependenceQR Smart Card</button><button type="button" data-action-save-design class="pp-route-save flex-1 text-xs font-bold">Save to My Codes</button><button type="button" data-action-delete class="pp-action-link pp-action-danger flex-1 text-xs font-bold">🗑️ Delete Route</button></div>`;
                 const rename=document.createElement('button');rename.type='button';rename.textContent='Rename';rename.className='pp-action-link text-xs font-bold underline mb-3 self-start';rename.addEventListener('click',()=>window.pixelPingRenameRoute(link.slug));card.append(rename);
                 card.querySelector('[data-action-copy]').addEventListener('click', event => {
                     if (suiteOwner !== window.Clerk?.user?.id) return;
@@ -535,7 +535,7 @@
                 card.querySelector('[data-action-qr]').addEventListener('click', event => openSmartCardQr(link.slug, event.currentTarget));
                 const view = card.querySelector('[data-action-view]');
                 view.href = `https://${userBaseDomain}/${encodeURIComponent(link.slug)}`;
-                view.title = 'Opens the saved PixelPing Smart Card in a new tab. Visits count as scans.';
+                view.title = 'Opens the saved IndependenceQR Smart Card in a new tab. Visits count as scans.';
                 card.querySelector('[data-action-edit]').addEventListener('click', event => openActionEditor(link.slug, event.currentTarget));
                 card.querySelector('[data-action-save-design]').addEventListener('click', () => window.pixelPingSaveRouteDesign(link.slug,link.kind));
                 card.querySelector('[data-action-delete]').addEventListener('click', () => deleteAction(link.slug));
@@ -712,19 +712,19 @@
                 if (!response.ok || !data.success || data.slug !== editor.slug) {
                     if (response.status === 401 || response.status === 403 || response.status === 404) {
                         closeActionModal(); await window.fetchLiveCards();
-                        setActionListFeedback('PixelPing Smart Card editing is unavailable. Your account and saved codes have been refreshed.'); return;
+                        setActionListFeedback('IndependenceQR Smart Card editing is unavailable. Your account and saved codes have been refreshed.'); return;
                     }
-                    throw new Error('The PixelPing Smart Card update was not confirmed.');
+                    throw new Error('The IndependenceQR Smart Card update was not confirmed.');
                 }
                 closeActionModal(); await window.fetchLiveCards();
                 if (sameActionSession(editor)) {
-                    setManagementFeedback('PixelPing Smart Card saved. Your printed QR still opens this same route.');
+                    setManagementFeedback('IndependenceQR Smart Card saved. Your printed QR still opens this same route.');
                     [...grid.querySelectorAll('[data-action-slug]')].find(card => card.dataset.actionSlug === editor.slug)?.querySelector('[data-action-edit]')?.focus();
                 }
             } catch (error) {
-                if (current()) { editor.uncertain = true; actionFeedback.textContent = 'Update not confirmed. Close this editor and click Sync to check the saved PixelPing Smart Card before trying again.'; }
+                if (current()) { editor.uncertain = true; actionFeedback.textContent = 'Update not confirmed. Close this editor and click Sync to check the saved IndependenceQR Smart Card before trying again.'; }
             } finally {
-                actionPending = false; actionSave.disabled = Boolean(actionEditor?.uncertain); actionSave.textContent = 'Save PixelPing Smart Card';
+                actionPending = false; actionSave.disabled = Boolean(actionEditor?.uncertain); actionSave.textContent = 'Save IndependenceQR Smart Card';
                 fields.forEach(field => field.disabled = false);
             }
         });
@@ -793,11 +793,11 @@
                     userBaseDomain = web.value.customDomain;
                     activeDomainBadge.classList.remove('hidden'); activeDomainBadge.textContent = `🟢 ${userBaseDomain}`;
                 } else {
-                    userBaseDomain = 'qr.pixelping.app'; activeDomainBadge.classList.add('hidden');
+                    userBaseDomain = 'qr.independenceqr.app'; activeDomainBadge.classList.add('hidden');
                 }
                 const problems = [];
                 if (web.status !== 'fulfilled' || !Array.isArray(web.value.links)) problems.push('Web routes could not be loaded.');
-                if (actions.status !== 'fulfilled' || !Array.isArray(actions.value.actions)) problems.push('PixelPing Smart Cards could not be loaded.');
+                if (actions.status !== 'fulfilled' || !Array.isArray(actions.value.actions)) problems.push('IndependenceQR Smart Cards could not be loaded.');
                 setActionListFeedback(problems.length ? problems.join(' ') + ' Refresh to retry.' : '');
                 renderSuiteCards(globalLinksData);
                 loadingState.classList.add('hidden'); mainDash.classList.remove('hidden');
@@ -1034,7 +1034,7 @@
                 <div class="text-xs mb-5 space-y-1 text-slate-300">
                     <p>Hostname validation: <strong>${escapeHtml(domain.hostnameStatus)}</strong></p>
                     <p>TLS certificate: <strong>${escapeHtml(domain.sslStatus)}</strong></p>
-                    <p>CNAME points to PixelPing: <strong>${domain.dnsReady === true ? 'Confirmed' : 'Not confirmed'}</strong></p>
+                    <p>CNAME points to IndependenceQR: <strong>${domain.dnsReady === true ? 'Confirmed' : 'Not confirmed'}</strong></p>
                 </div>
                 <div class="dns-scroll max-h-[38vh] overflow-y-auto space-y-2 mb-4">
                     ${activeDnsRecords.map((r,i)=>`<div class="rounded-lg border border-slate-700 p-3 bg-slate-900/50 text-xs">
@@ -1062,7 +1062,7 @@
                 activeDomainBadge.textContent = `🟢 ${userBaseDomain}`;
                 renderSuiteCards(globalLinksData);
             } else {
-                userBaseDomain = 'qr.pixelping.app';
+                userBaseDomain = 'qr.independenceqr.app';
                 activeDomainBadge.classList.add('hidden');
                 renderSuiteCards(globalLinksData);
             }
@@ -1283,7 +1283,7 @@
     </script>
     <script>
         (function() {
-            const pubKey = "pk_live_Y2xlcmsucGl4ZWxwaW5nLmFwcCQ";
+            const pubKey = "pk_live_Y2xlcmsuaW5kZXBlbmRlbmNlcXIuYXBwJA";
             const startClerk = async () => {
                 try {
                     await window.Clerk.load({ localization: { signUp: { legalConsent: { checkbox: {
@@ -1306,7 +1306,7 @@
             const script = document.createElement('script');
             script.setAttribute('data-clerk-publishable-key', pubKey);
             script.async = true;
-            script.src = 'https://clerk.pixelping.app/npm/@clerk/clerk-js@latest/dist/clerk.browser.js';
+            script.src = 'https://clerk.independenceqr.app/npm/@clerk/clerk-js@latest/dist/clerk.browser.js';
             script.crossOrigin = 'anonymous';
             script.addEventListener('load', startClerk);
             document.body.appendChild(script);
