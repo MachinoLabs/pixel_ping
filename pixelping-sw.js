@@ -3,7 +3,7 @@
  * Increment CACHE_VERSION when deploying a new shell or script version.
  */
 'use strict';
-const CACHE_VERSION = 'pixelping-static-v78-independenceqr-brand-20261125';
+const CACHE_VERSION = 'pixelping-static-v79-independenceqr-header-fix-20261125';
 const CACHE_PREFIX = 'pixelping-static-';
 const SCOPE = self.registration.scope;
 const SHELL_URL = new URL('index.html', SCOPE).href;
