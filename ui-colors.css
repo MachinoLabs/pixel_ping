@@ -175,3 +175,22 @@
 #recovery-inventory-dialog[open] {display:flex;flex-direction:column;overflow:hidden;}
 #recovery-inventory-dialog .pp-inventory-list {overflow-y:auto;min-height:0;flex:1;}
 #recovery-inventory-dialog > :not(.pp-inventory-list) {flex-shrink:0;}
+
+/* iqr-approved-branding-2026-11-25: approved wordmark/icon; presentation only. */
+.iqr-brand-icon{display:block;flex-shrink:0;object-fit:contain}
+.iqr-brand-wordmark{display:inline-flex;align-items:center;flex-shrink:0;vertical-align:middle;max-width:100%}
+.iqr-brand-wordmark>img{display:block;width:clamp(185px,24vw,310px);max-width:100%;height:auto}
+.iqr-brand-wordmark>img.iqr-brand-wordmark-dark{display:none}
+.dark .iqr-brand-wordmark>img.iqr-brand-wordmark-light{display:none}
+.dark .iqr-brand-wordmark>img.iqr-brand-wordmark-dark{display:block}
+.iqr-brand-wordmark-small>img{width:clamp(135px,18vw,205px)}
+#main-title{display:flex;flex-wrap:wrap;align-items:center;column-gap:6px;row-gap:2px}
+#main-title .iqr-brand-wordmark>img{width:clamp(180px,23vw,300px)}
+.iqr-title-separator{margin-left:-5px}
+.iqr-cmd-label,.iqr-cmd-tagline{display:block;line-height:1.55}
+.iqr-cmd-tagline{font-size:10px;letter-spacing:.16em}
+.iqr-policy-brand{display:inline-flex;align-items:center}
+.iqr-policy-brand .iqr-brand-wordmark>img{width:clamp(165px,28vw,205px)}
+@media(max-width:640px){#main-title .iqr-brand-wordmark>img{width:clamp(160px,46vw,250px)}.iqr-brand-wordmark-small>img{width:170px}}
+
+@media(max-width:640px){#iqr-command-header>div:first-child{align-items:flex-start;min-width:0}#iqr-command-header>div:first-child>div{min-width:0}#iqr-command-header h1{flex-wrap:wrap;column-gap:6px;row-gap:2px}}

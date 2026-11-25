@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IndependenceQR | Help Center</title>
 
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='96' fill='%23061a2b'/%3E%3Crect x='28' y='28' width='456' height='456' rx='80' fill='none' stroke='%230f3a5a' stroke-width='4'/%3E%3Crect x='96' y='96' width='96' height='96' rx='18' fill='%23dff4ff'/%3E%3Crect x='320' y='96' width='96' height='96' rx='18' fill='%23dff4ff'/%3E%3Crect x='96' y='288' width='96' height='96' rx='18' fill='%23dff4ff'/%3E%3Crect x='140' y='140' width='16' height='16' rx='4' fill='%2327cfff'/%3E%3C/svg%3E">
+    <!-- iqr-approved-branding-2026-11-25 -->
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/independenceqr-icon-32.png">
+    <link rel="icon" type="image/svg+xml" href="assets/independenceqr-icon.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/independenceqr-icon-180.png">
+    <link rel="manifest" href="site.webmanifest">
     
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -36,6 +40,7 @@
         /* Smooth Scrolling */
         html { scroll-behavior: smooth; }
     </style>
+<link rel="stylesheet" href="ui-colors.css">
 </head>
 <body class="text-slate-900 dark:text-ppLight min-h-screen font-sans antialiased flex flex-col items-center p-4 md:p-8 relative z-0">
 
@@ -43,16 +48,9 @@
 
     <header class="w-full max-w-5xl mb-8 flex flex-wrap gap-4 items-center justify-between z-10 relative bg-white/95 dark:bg-ppDark/90 backdrop-blur-md px-6 py-4 rounded-2xl border border-slate-200 dark:border-gray-800 shadow-lg">
         <div class="flex items-center gap-4">
-            <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                <rect width="512" height="512" rx="96" fill="#061a2b"/>
-                <rect x="28" y="28" width="456" height="456" rx="80" fill="none" stroke="#0f3a5a" stroke-width="4"/>
-                <rect x="96" y="96" width="96" height="96" rx="18" fill="#dff4ff"/>
-                <rect x="320" y="96" width="96" height="96" rx="18" fill="#dff4ff"/>
-                <rect x="96" y="288" width="96" height="96" rx="18" fill="#dff4ff"/>
-                <rect x="140" y="140" width="16" height="16" rx="4" fill="#27cfff"/>
-                <rect x="364" y="140" width="16" height="16" rx="4" fill="#27cfff"/>
-            </svg>
+            <img src="assets/independenceqr-icon.svg" alt="" width="40" height="40" class="w-8 h-8 rounded-md iqr-brand-icon">
             <div>
+                <span class="iqr-brand-wordmark iqr-brand-wordmark-small"><img class="iqr-brand-wordmark-light" src="assets/independenceqr-wordmark.svg" alt="IndependenceQR"><img class="iqr-brand-wordmark-dark" src="assets/independenceqr-wordmark-dark.svg" alt="" aria-hidden="true"></span>
                 <h1 class="text-3xl font-bold tracking-wide text-slate-900 dark:text-white">Help <span class="text-ppGreen">Center</span></h1>
                 <p class="text-blue-600 dark:text-ppGreen text-[10px] tracking-[0.2em] uppercase">Guides & Support</p>
             </div>

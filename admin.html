@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>IndependenceQR | Command Center</title>
 
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='96' fill='%23061a2b'/%3E%3Crect x='28' y='28' width='456' height='456' rx='80' fill='none' stroke='%230f3a5a' stroke-width='4'/%3E%3Crect x='96' y='96' width='96' height='96' rx='18' fill='%23dff4ff'/%3E%3Crect x='320' y='96' width='96' height='96' rx='18' fill='%23dff4ff'/%3E%3Crect x='96' y='288' width='96' height='96' rx='18' fill='%23dff4ff'/%3E%3Crect x='140' y='140' width='16' height='16' rx='4' fill='%2327cfff'/%3E%3C/svg%3E">
+    <!-- iqr-approved-branding-2026-11-25 -->
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/independenceqr-icon-32.png">
+    <link rel="icon" type="image/svg+xml" href="assets/independenceqr-icon.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/independenceqr-icon-180.png">
+    <link rel="manifest" href="site.webmanifest">
     
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -131,23 +135,16 @@
 
     <div class="pixel-bg" id="pixel-bg"></div>
 
-    <header class="w-full max-w-6xl mb-8 flex items-center justify-between z-10 relative bg-white/95 dark:bg-ppDark/90 backdrop-blur-md px-6 py-4 rounded-2xl border border-slate-200 dark:border-gray-800 shadow-lg">
+    <header id="iqr-command-header" class="w-full max-w-6xl mb-8 flex flex-wrap md:flex-nowrap gap-3 items-center justify-between z-10 relative bg-white/95 dark:bg-ppDark/90 backdrop-blur-md px-6 py-4 rounded-2xl border border-slate-200 dark:border-gray-800 shadow-lg">
         <div class="flex items-center gap-4">
-            <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                <rect width="512" height="512" rx="96" fill="#061a2b"/>
-                <rect x="28" y="28" width="456" height="456" rx="80" fill="none" stroke="#0f3a5a" stroke-width="4"/>
-                <rect x="96" y="96" width="96" height="96" rx="18" fill="#dff4ff"/>
-                <rect x="320" y="96" width="96" height="96" rx="18" fill="#dff4ff"/>
-                <rect x="96" y="288" width="96" height="96" rx="18" fill="#dff4ff"/>
-                <rect x="140" y="140" width="16" height="16" rx="4" fill="#27cfff"/>
-            </svg>
+            <img src="assets/independenceqr-icon.svg" alt="" width="40" height="40" class="w-8 h-8 rounded-md iqr-brand-icon">
             <div>
                 <!-- DYNAMIC HEADER -->
                 <h1 class="text-3xl font-bold tracking-wide text-slate-900 dark:text-white flex items-center gap-2">
-                   IndependenceQR: <span id="tier-title" class="text-ppGreen font-extrabold">Evolution</span>
+                   <span class="iqr-brand-wordmark"><img class="iqr-brand-wordmark-light" src="assets/independenceqr-wordmark.svg" alt="IndependenceQR"><img class="iqr-brand-wordmark-dark" src="assets/independenceqr-wordmark-dark.svg" alt="" aria-hidden="true"></span><span class="iqr-title-separator" aria-hidden="true">:</span> <span id="tier-title" class="text-ppGreen font-extrabold">Evolution</span>
                     <span id="active-domain-badge" class="hidden px-2 py-0.5 rounded bg-green-500/10 text-green-400 border border-green-500/20 text-[10px] font-bold tracking-widest uppercase">🟢 Branded</span>
                 </h1>
-                <p id="tier-subtitle" class="text-slate-500 dark:text-slate-300 text-[12px] tracking-[0.2em] uppercase">Command Center • Dynamic Edge Routing</p>
+                <p id="tier-subtitle" class="text-slate-500 dark:text-slate-300 text-[12px] tracking-[0.2em] uppercase"><span class="iqr-cmd-label">Command Center</span><span class="iqr-cmd-tagline">Save &bull; Activate &bull; Manage &bull; Update</span></p>
             </div>
         </div>
         <div class="flex items-center gap-4">
