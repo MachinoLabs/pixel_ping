@@ -41,6 +41,36 @@
         html { scroll-behavior: smooth; }
     </style>
 <link rel="stylesheet" href="ui-colors.css">
+
+    <!-- Independent, single-image branding; resilient even before shared CSS loads -->
+    <style id="iqr-wordmark-layout-fix-20261125">
+      .iqr-brand-wordmark { display:inline-flex; flex:0 0 auto; align-items:center; max-width:100%; vertical-align:middle; }
+      .iqr-brand-wordmark > img.iqr-approved-wordmark-image { display:block !important; width:clamp(235px,32vw,435px) !important; height:auto !important; max-width:100% !important; }
+      .iqr-brand-wordmark-small > img.iqr-approved-wordmark-image { width:clamp(170px,21vw,240px) !important; }
+      .iqr-policy-brand .iqr-brand-wordmark > img.iqr-approved-wordmark-image { width:clamp(160px,24vw,230px) !important; }
+      .dark .iqr-brand-wordmark { background:#fff; padding:3px 6px; border-radius:6px; }
+      #app-header #main-title { display:flex; align-items:center; flex-wrap:nowrap; gap:7px; white-space:nowrap; line-height:1.05; }
+      #app-header #main-title .iqr-brand-wordmark > img.iqr-approved-wordmark-image { width:clamp(275px,32vw,445px) !important; }
+      #app-header > div:first-child > div { min-width:0; }
+      #iqr-command-header h1 { display:flex; align-items:center; flex-wrap:nowrap; column-gap:7px; line-height:1.05; }
+      #iqr-command-header .iqr-brand-wordmark > img.iqr-approved-wordmark-image { width:clamp(275px,32vw,445px) !important; }
+      #iqr-command-header .iqr-title-separator { margin-left:0; }
+      #iqr-command-header #tier-title { white-space:nowrap; font-size:clamp(23px,2.3vw,35px); }
+      #iqr-command-header .iqr-cmd-label { display:block !important; font-size:11px; line-height:1.5; letter-spacing:.17em; }
+      #iqr-command-header .iqr-cmd-tagline { display:block !important; margin-top:4px; font-size:11px; line-height:1.5; letter-spacing:.14em; }
+      @media(max-width:950px) {
+        #app-header, #iqr-command-header { flex-wrap:wrap; gap:12px; }
+        #app-header #main-title, #iqr-command-header h1 { flex-wrap:wrap; row-gap:2px; white-space:normal; }
+        #app-header #main-title .iqr-brand-wordmark > img.iqr-approved-wordmark-image,
+        #iqr-command-header .iqr-brand-wordmark > img.iqr-approved-wordmark-image { width:clamp(195px,49vw,355px) !important; }
+      }
+      @media(max-width:560px) {
+        #app-header #main-title .iqr-brand-wordmark > img.iqr-approved-wordmark-image,
+        #iqr-command-header .iqr-brand-wordmark > img.iqr-approved-wordmark-image { width:clamp(175px,53vw,280px) !important; }
+        #iqr-command-header #tier-title { font-size:24px; }
+      }
+    </style>
+
 </head>
 <body class="text-slate-900 dark:text-ppLight min-h-screen font-sans antialiased flex flex-col items-center p-4 md:p-8 relative z-0">
 
@@ -50,7 +80,7 @@
         <div class="flex items-center gap-4">
             <img src="assets/independenceqr-icon.svg" alt="" width="40" height="40" class="w-8 h-8 rounded-md iqr-brand-icon">
             <div>
-                <span class="iqr-brand-wordmark iqr-brand-wordmark-small"><img class="iqr-brand-wordmark-light" src="assets/independenceqr-wordmark.svg" alt="IndependenceQR"><img class="iqr-brand-wordmark-dark" src="assets/independenceqr-wordmark-dark.svg" alt="" aria-hidden="true"></span>
+                <span class="iqr-brand-wordmark iqr-brand-wordmark-small"><img class="iqr-approved-wordmark-image" src="assets/independenceqr-wordmark.svg" alt="IndependenceQR"></span>
                 <h1 class="text-3xl font-bold tracking-wide text-slate-900 dark:text-white">Help <span class="text-ppGreen">Center</span></h1>
                 <p class="text-blue-600 dark:text-ppGreen text-[10px] tracking-[0.2em] uppercase">Guides & Support</p>
             </div>
