@@ -8,7 +8,8 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='48' fill='%23061a2b'/%3E%3Crect x='28' y='28' width='456' height='456' rx='32' fill='none' stroke='%230f3a5a' stroke-width='4'/%3E%3Crect x='96' y='96' width='96' height='96' rx='16' fill='%23dff4ff'/%3E%3Crect x='320' y='96' width='96' height='96' rx='16' fill='%23dff4ff'/%3E%3Crect x='96' y='288' width='96' height='96' rx='16' fill='%23dff4ff'/%3E%3Crect x='140' y='140' width='16' height='16' rx='4' fill='%2327cfff'/%3E%3C/svg%3E">
+    <!-- iqr-approved-branding-2026-11-25 -->
+    <link rel="icon" type="image/svg+xml" href="assets/independenceqr-icon.svg">
 
     <!-- Presentation only: neither a saved draft nor these classes grants access. -->
     <script id="pixelping-startup-presentation">
@@ -573,19 +574,10 @@
 
     <header id="app-header" class="w-full max-w-6xl mb-4 mt-12 flex items-center justify-between z-10 relative">
         <div class="flex items-center gap-3">
-            <svg class="w-9 h-9 md:w-11 md:h-11 shadow-sm rounded-[5px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                <rect width="512" height="512" rx="48" fill="#061a2b"/>
-                <rect x="28" y="28" width="456" height="456" rx="32" fill="none" stroke="#0f3a5a" stroke-width="4"/>
-                <rect x="96" y="96" width="96" height="96" rx="16" fill="#dff4ff"/>
-                <rect x="320" y="96" width="96" height="96" rx="16" fill="#dff4ff"/>
-                <rect x="96" y="288" width="96" height="96" rx="16" fill="#dff4ff"/>
-                <rect x="140" y="140" width="16" height="16" rx="4" fill="#27cfff"/>
-                <rect x="364" y="140" width="16" height="16" rx="4" fill="#27cfff"/>
-                <rect x="140" y="332" width="16" height="16" rx="4" fill="#3cff8f"/>
-            </svg>
+            <img src="assets/independenceqr-icon.svg" alt="" width="40" height="40" class="w-9 h-9 md:w-11 md:h-11 rounded-[5px] iqr-brand-icon">
         <div>
-            <h1 id="main-title" class="text-xl md:text-2xl font-black tracking-tight text-slate-900 dark:text-white transition-colors">IndependenceQR</h1>
-            <p id="sub-title" class="text-blue-600 dark:text-ppGreen text-[10px] tracking-[0.2em] font-bold uppercase mt-2">Generate &bull; Scan &bull; Share</p>
+            <h1 id="main-title" class="text-xl md:text-2xl font-black tracking-tight text-slate-900 dark:text-white transition-colors"><span class="iqr-brand-wordmark"><img class="iqr-brand-wordmark-light" src="assets/independenceqr-wordmark.svg" alt="IndependenceQR"><img class="iqr-brand-wordmark-dark" src="assets/independenceqr-wordmark-dark.svg" alt="" aria-hidden="true"></span></h1>
+            <p id="sub-title" class="text-blue-600 dark:text-ppGreen text-[10px] tracking-[0.2em] font-bold uppercase mt-2">Generate &bull; Scan &bull; Share &bull; Own</p>
         </div>
     </div>
 
@@ -862,7 +854,7 @@
                     </div>
                     
                     <div id="pixelping-watermark" class="text-[12px] font-bold text-[#333] flex items-center justify-center gap-[5px] font-mono mt-3">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='96' fill='%23061a2b'/%3E%3Crect x='28' y='28' width='456' height='456' rx='80' fill='none' stroke='%230f3a5a' stroke-width='4'/%3E%3Crect x='96' y='96' width='96' height='96' rx='18' fill='%23dff4ff'/%3E%3Crect x='320' y='96' width='96' height='96' rx='18' fill='%23dff4ff'/%3E%3Crect x='96' y='288' width='96' height='96' rx='18' fill='%23dff4ff'/%3E%3Crect x='140' y='140' width='16' height='16' rx='4' fill='%2327cfff'/%3E%3C/svg%3E" class="w-3.5 h-3.5 rounded-[3px]" alt="Logo"> Powered by IndependenceQR.app
+                        <img src="assets/independenceqr-icon.svg" class="w-3.5 h-3.5 rounded-[3px]" alt=""> Powered by IndependenceQR.app
                     </div>
 
                     <p id="canvas-qr-name" class="text-xs text-slate-600 mt-2 w-full text-right break-words" aria-live="polite">Unnamed QR</p>
@@ -2369,7 +2361,7 @@ window.pixelPingRetryPurchaseReceipt = () => {
                 const historyState = captureHistoryState();
                 smartActionSaving = snapshot;
                 btnMain.disabled = true;
-                btnMain.textContent = 'Saving to Cloud...';
+                btnMain.textContent = 'Saving and activating your QR...';
                 smartActionStatus.textContent = 'Saving your Smart Action...';
                 const workerUrl = 'https://pixelping-worker.amateuraiguy.workers.dev';
                 let submitted = false;
@@ -2762,7 +2754,7 @@ window.pixelPingRetryPurchaseReceipt = () => {
                 if (!isEvolution && window.pixelPingTelemetryOwner !== null) resetTelemetryDashboard();
 
                 if (isEvolution) {
-                    if (mainTitle) mainTitle.innerHTML = "IndependenceQR: <span class='text-ppGreen'>Evolution</span>";
+                    if (mainTitle) mainTitle.innerHTML = "<span class=\"iqr-brand-wordmark\"><img class=\"iqr-brand-wordmark-light\" src=\"assets/independenceqr-wordmark.svg\" alt=\"IndependenceQR\"><img class=\"iqr-brand-wordmark-dark\" src=\"assets/independenceqr-wordmark-dark.svg\" alt=\"\" aria-hidden=\"true\"></span>" + ": <span class='text-ppGreen'>Evolution</span>";
                     if (subTitle) subTitle.innerHTML = "TELEMETRY • COMMAND • CONTROL";
                     if (nomadTeaser) nomadTeaser.style.display = 'none';
                     if (telemetryDash) {
@@ -2771,7 +2763,7 @@ window.pixelPingRetryPurchaseReceipt = () => {
                     }
                     if (pricingSection) pricingSection.style.display = 'none'; 
                 } else if (isUnlocked) {
-                    if (mainTitle) mainTitle.innerHTML = "IndependenceQR: Rebellion";
+                    if (mainTitle) mainTitle.innerHTML = "<span class=\"iqr-brand-wordmark\"><img class=\"iqr-brand-wordmark-light\" src=\"assets/independenceqr-wordmark.svg\" alt=\"IndependenceQR\"><img class=\"iqr-brand-wordmark-dark\" src=\"assets/independenceqr-wordmark-dark.svg\" alt=\"\" aria-hidden=\"true\"></span>" + ': Rebellion';
                     if (subTitle) subTitle.innerHTML = "<span class='text-yellow-500'>MASTER KEY AUTHENTICATED</span>";
 
                     const pricingH2 = document.querySelector('#pricing-header h2');
@@ -2787,7 +2779,7 @@ window.pixelPingRetryPurchaseReceipt = () => {
                     if (cardTier2) cardTier2.style.display = 'none';
                     if (pricingGrid) pricingGrid.className = "flex justify-center max-w-md mx-auto";
                 } else {
-                    if (mainTitle) mainTitle.innerHTML = "IndependenceQR";
+                    if (mainTitle) mainTitle.innerHTML = "<span class=\"iqr-brand-wordmark\"><img class=\"iqr-brand-wordmark-light\" src=\"assets/independenceqr-wordmark.svg\" alt=\"IndependenceQR\"><img class=\"iqr-brand-wordmark-dark\" src=\"assets/independenceqr-wordmark-dark.svg\" alt=\"\" aria-hidden=\"true\"></span>";
                     if (subTitle) subTitle.innerHTML = "Generate &bull; Scan &bull; Share &bull; Own";
                     if (nomadTeaser) nomadTeaser.style.display = 'flex';
                     if (telemetryDash) telemetryDash.classList.add('hidden');
@@ -3233,7 +3225,7 @@ window.pixelPingRetryPurchaseReceipt = () => {
                         let saved = false;
                         dynamicRouteSaving = true; window.pixelPingDynamicSaving = true;
                         btnMain.disabled = true;
-                        btnMain.innerHTML = 'Saving to Cloud...';
+                        btnMain.innerHTML = updating ? 'Saving destination changes...' : 'Saving and activating your QR...';
                         try {
                             const token = await window.Clerk.session?.getToken();
                             if (!token) throw new Error('Please sign in before saving a dynamic code.');
