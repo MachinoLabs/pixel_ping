@@ -192,3 +192,5 @@
 .iqr-policy-brand{display:inline-flex;align-items:center}
 .iqr-policy-brand .iqr-brand-wordmark>img{width:clamp(165px,28vw,205px)}
 @media(max-width:640px){#main-title .iqr-brand-wordmark>img{width:clamp(160px,46vw,250px)}.iqr-brand-wordmark-small>img{width:170px}}
+
+@media(max-width:640px){#iqr-command-header>div:first-child{align-items:flex-start;min-width:0}#iqr-command-header>div:first-child>div{min-width:0}#iqr-command-header h1{flex-wrap:wrap;column-gap:6px;row-gap:2px}}
